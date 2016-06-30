@@ -4,7 +4,6 @@
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-
 **/
 //==================================================================================================
 #ifndef BOOST_SIMD_DETAIL_STORAGE_OF_HPP_INCLUDED
@@ -24,14 +23,11 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  // Status for emulated SIMD storage via array of scalar
-  using emulated_status   = nsm::int32_t<-1>;
-
   // Status for native SIMD storage
-  using native_status     = nsm::int32_t<+0>;
+  using native_status     = nsm::int32_t<+1>;
 
   // Status for emulated SIMD storage via array of pack
-  using aggregated_status = nsm::int32_t<+1>;
+  using aggregated_status = nsm::int32_t<-1>;
 
   // Status for SIMD storage to be determined
   using unknown_status    = nsm::int32_t<42>;
@@ -42,9 +38,7 @@ namespace boost { namespace simd { namespace detail
   **/
   //================================================================================================
   template< typename T, std::size_t C, typename X>
-  struct storage_status : nsm::int32_t<   (expected_cardinal<T,X>::value != C)
-                                          * ( (expected_cardinal<T,X>::value < C) ? +1 : -1)
-                                          >
+  struct storage_status : nsm::int32_t< (expected_cardinal<T,X>::value<C) ? -1 : +1>
   {};
 
   // If ABI is not supported by current hardware, search for proper emulated storage later
@@ -74,20 +68,6 @@ namespace boost { namespace simd { namespace detail
         : storage_of<Type,Cardinal,boost::simd::simd_,emulated_status>
   #endif
   {};
-
-  // If the cardinal requested is lower than the expected one,
-  // then try to find a suitable storage in parent extension.
-  template< typename Type, std::size_t Cardinal, typename ABI>
-  struct  storage_of<Type,Cardinal,ABI,emulated_status>
-        : storage_of<Type,Cardinal, typename limits<ABI>::parent>
-  {};
-
-  // If the cardinal requested is lower than the expected one then use an array of scalar.
-  template< typename Type, std::size_t Cardinal>
-  struct storage_of<Type,Cardinal,boost::simd::simd_,emulated_status>
-  {
-    using type = std::array<Type,Cardinal>;
-  };
 
   // If the cardinal requested is OK but type is unsupported by this extension,
   // then use an array of scalar.

@@ -29,11 +29,17 @@ namespace boost { namespace simd
   namespace detail
   {
     BOOST_SIMD_DEFINE_PACK_TRAITS(float, 4, __m128);
+    BOOST_SIMD_DEFINE_PACK_TRAITS(float, 2, __m128);
   }
 
   namespace ext
   {
     template<typename Enable> struct abi_of<float,4,Enable>
+    {
+      using type = ::boost::simd::sse_;
+    };
+
+    template<typename Enable> struct abi_of<float,2,Enable>
     {
       using type = ::boost::simd::sse_;
     };

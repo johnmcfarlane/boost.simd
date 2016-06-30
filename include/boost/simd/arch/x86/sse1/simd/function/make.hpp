@@ -29,11 +29,26 @@ namespace boost { namespace simd { namespace ext
   {
     using target_t  = typename Target::type;
 
-    static_assert ( sizeof...(Values) == 4
+    static_assert ( sizeof...(Values) <= 4
                   , "boost::simd::make - Invalid number of parameters"
                   );
 
     BOOST_FORCEINLINE target_t operator()(Target const&, Values const&... vs) const BOOST_NOEXCEPT
+    {
+      return do_(std::integral_constant<int,sizeof...(Values)>{}, vs...);
+    }
+
+    template<typename V0, typename V1>
+    BOOST_FORCEINLINE target_t do_( std::integral_constant<int,2> const&
+                                  , V0 v0, V1 v1
+                                  ) const BOOST_NOEXCEPT
+    {
+      return _mm_setr_ps(v0,v1,0,0);
+    }
+
+    BOOST_FORCEINLINE target_t do_( std::integral_constant<int,4> const&
+                                  , Values const&... vs
+                                  ) const BOOST_NOEXCEPT
     {
       return _mm_setr_ps(static_cast<typename target_t::value_type>(vs)...);
     }

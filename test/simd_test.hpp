@@ -14,6 +14,7 @@
 #include <stf/stf.hpp>
 
 #include <boost/simd/pack.hpp>
+#include <boost/simd/type/complex.hpp>
 
 // -------------------------------------------------------------------------------------------------
 // adapt pack for STF testing
@@ -58,6 +59,18 @@ namespace stf { namespace ext
         max_rel = std::max( max_rel, stf::reldist(T(l[i]),T(r[i])) );
 
       return max_rel;
+    }
+  };
+
+  // -----------------------------------------------------------------------------------------------
+  // STF conformance for complex
+  template<typename T>
+  struct equal<boost::simd::complex<T>,boost::simd::complex<T>>
+  {
+    using type_t = boost::simd::complex<T>;
+    inline bool operator()(type_t const& l, type_t const& r) const
+    {
+      return ext::equal<T,T>()(l.real,r.real) && ext::equal<T,T>()(l.imag,r.imag);
     }
   };
 

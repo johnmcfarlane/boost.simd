@@ -6,5 +6,13 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ##===================================================================================================
 
-add_subdirectory(api)
-add_subdirectory(function)
+set ( SOURCES
+      abs.cpp
+      #sqrt.cpp
+      is_equal.cpp
+      is_not_equal.cpp
+      plus.cpp
+    )
+
+make_unit( "type.complex.function" ${SOURCES})
+make_coverage("type.complex.function" ${SOURCES})

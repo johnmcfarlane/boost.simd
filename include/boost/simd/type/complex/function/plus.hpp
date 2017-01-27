@@ -6,16 +6,10 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef BOOST_SIMD_TYPE_COMPLEX_HPP_INCLUDED
-#define BOOST_SIMD_TYPE_COMPLEX_HPP_INCLUDED
+#ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PLUS_HPP_INCLUDED
+#define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PLUS_HPP_INCLUDED
 
-#include <boost/simd/type/complex/complex.hpp>
-#include <boost/simd/type/complex/function/operators.hpp>
-#include <boost/simd/type/complex/io.hpp>
-
-namespace boost { namespace simd
-{
-  using ::boost::simd::cmplx::complex;
-} }
+#include <boost/simd/function/plus.hpp>
+#include <boost/simd/type/complex/function/impl/plus.hpp>
 
 #endif

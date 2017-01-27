@@ -10,6 +10,8 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_COMPLEX_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_COMPLEX_HPP_INCLUDED
 
+#include <boost/simd/type/complex/function/abs.hpp>
+
 namespace boost { namespace simd { namespace cmplx
 {
   /*!
@@ -20,26 +22,27 @@ namespace boost { namespace simd { namespace cmplx
   **/
   template<typename Type> struct complex
   {
+    using value_type = Type;
+
+    template<typename U> using rebind = complex<U>;
+
     /// @brief Default constructor
     complex() = default;
 
     /// @brief Explicitly construct a complex from a real part and settings its imaginary part to 0.
     template<typename T0>
-    explicit complex(T0 const& rr) : real(rr), imag(T0(0)) {}
+    explicit complex(T0 const& rr) : real(static_cast<Type>(rr)), imag(0) {}
 
     /// @brief Construct a complex from a real and imaginary parts.
     template<typename T0, typename T1>
-    complex(T0 const& rr, T1 const& ii) : real(rr), imag(ii) {}
+    complex(T0 const& rr, T1 const& ii) : real(static_cast<Type>(rr))
+                                        , imag(static_cast<Type>(ii))
+    {}
+
+    Type modulus() const { return bs::abs(*this); }
 
     Type real, imag;
   };
-
-  template<typename Type>
-  auto operator==(complex<Type> const& z1,complex<Type> const& z2)
-                -> decltype(z1.imag == z2.imag)
-  {
-    return z1.real == z2.real && z1.imag == z2.imag;
-  }
 } } }
 
 #endif

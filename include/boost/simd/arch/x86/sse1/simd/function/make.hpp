@@ -11,7 +11,7 @@
 
 #include <boost/simd/meta/is_power_of_2.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/brigand.hpp>
+#include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/detail/nope.hpp>
 
 namespace boost { namespace simd { namespace detail
@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
   template<> struct sse_set<float>
   {
     template<typename... Values, typename... Z> BOOST_FORCEINLINE
-    static __m128 do_(brigand::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
+    static __m128 do_(nsm::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
     {
       return _mm_setr_ps( static_cast<float>(vs)..., detail::nope<float,Z>()... );
     }
@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE target_t operator()(Target const&, Values const&... vs) const BOOST_NOEXCEPT
     {
-      return detail::sse_set<float>::do_( brigand::range<int,sizeof...(Values), 4>{}, vs...);
+      return detail::sse_set<float>::do_( nsm::range<int,sizeof...(Values), 4>{}, vs...);
     }
   };
 } } }

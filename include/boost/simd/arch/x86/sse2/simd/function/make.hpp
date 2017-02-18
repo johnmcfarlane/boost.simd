@@ -13,7 +13,7 @@
 #include <boost/simd/function/insert.hpp>
 #include <boost/simd/meta/is_power_of_2.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/brigand.hpp>
+#include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/detail/nope.hpp>
 
 // -------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
   template<> struct sse_set<double>
   {
     template<typename... Values, typename... Z> BOOST_FORCEINLINE
-    static __m128d do_(brigand::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
+    static __m128d do_(nsm::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
     {
       return _mm_setr_pd( static_cast<double>(vs)..., detail::nope<double,Z>()... );
     }
@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace detail
   template<> struct sse_set<std::int32_t>
   {
     template<typename... Values, typename... Z> BOOST_FORCEINLINE
-    static __m128i do_(brigand::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
+    static __m128i do_(nsm::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
     {
       return _mm_setr_epi32( vs..., detail::nope<std::int32_t,Z>()... );
     }
@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace detail
   template<> struct sse_set<std::int16_t>
   {
     template<typename... Values, typename... Z> BOOST_FORCEINLINE
-    static __m128i do_(brigand::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
+    static __m128i do_(nsm::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
     {
       return _mm_setr_epi16( vs..., detail::nope<std::int16_t,Z>()... );
     }
@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace detail
   template<> struct sse_set<char>
   {
     template<typename... Values, typename... Z> BOOST_FORCEINLINE
-    static __m128i do_(brigand::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
+    static __m128i do_(nsm::list<Z...> const&, Values const&... vs) BOOST_NOEXCEPT
     {
       return _mm_setr_epi8( vs..., detail::nope<char,Z>()... );
     }
@@ -86,7 +86,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE target_t operator()(Target const&, Values const&... vs) const BOOST_NOEXCEPT
     {
-      return detail::sse_set<double>::do_( brigand::range<int,sizeof...(Values), 2>{}, vs...);
+      return detail::sse_set<double>::do_( nsm::range<int,sizeof...(Values), 2>{}, vs...);
     }
   };
 
@@ -148,7 +148,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE target_t operator()(Target const&, Values const&... vs) const BOOST_NOEXCEPT
     {
       using t_t = typename target_t::value_type;
-      return detail::sse_set<t_t>::do_( brigand::range<int, sizeof...(Values)
+      return detail::sse_set<t_t>::do_( nsm::range<int, sizeof...(Values)
                                                           , (16/sizeof(t_t))
                                                       >{}
                                       , static_cast<t_t>(vs)...

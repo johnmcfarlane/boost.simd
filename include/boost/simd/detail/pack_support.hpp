@@ -9,7 +9,7 @@
 #ifndef BOOST_SIMD_DETAIL_PACK_SUPPORT_HPP_INCLUDED
 #define BOOST_SIMD_DETAIL_PACK_SUPPORT_HPP_INCLUDED
 
-#include <boost/simd/detail/brigand.hpp>
+#include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/detail/pack_traits.hpp>
 #include <boost/simd/arch/common/simd/abi_of.hpp>
 

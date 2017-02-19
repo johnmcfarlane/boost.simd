@@ -69,11 +69,12 @@ namespace boost { namespace simd { namespace detail
       static_size = N,                                                                             \
       element_size = 1,                                                                            \
       number_of_vectors = 1,                                                                       \
-      alignment = sizeof(VTYPE)                                                                    \
+      static_alignment = N*sizeof(TYPE),                                                           \
+      alignment = (static_alignment<sizeof(VTYPE)) ? static_alignment : sizeof(VTYPE)              \
     };                                                                                             \
                                                                                                    \
-    using static_range            = nsm::range<std::size_t, 0, N>;                             \
-    using element_range           = nsm::range<std::size_t, 0, N>;                             \
+    using static_range            = nsm::range<std::size_t, 0, N>;                                 \
+    using element_range           = nsm::range<std::size_t, 0, N>;                                 \
                                                                                                    \
     using storage_kind            = ::boost::simd::native_storage;                                 \
                                                                                                    \

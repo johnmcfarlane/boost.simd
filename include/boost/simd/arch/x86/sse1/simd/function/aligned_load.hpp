@@ -13,9 +13,11 @@
 
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/slide.hpp>
+#include <boost/simd/function/load.hpp>
 #include <boost/simd/meta/is_pointing_to.hpp>
 #include <boost/simd/detail/dispatch/adapted/common/pointer.hpp>
 #include <boost/simd/detail/is_aligned.hpp>
+#include <boost/simd/detail/nsm.hpp>
 #include <boost/assert.hpp>
 
 #ifdef BOOST_MSVC
@@ -39,13 +41,24 @@ namespace boost { namespace simd { namespace ext
   {
     using target = typename Target::type;
 
+    BOOST_FORCEINLINE target do_(Pointer p, nsm::size_t<4> const&) const
+    {
+      return _mm_load_ps(p);
+    }
+
+    template<typename N>
+    BOOST_FORCEINLINE target do_(Pointer p, N const&) const
+    {
+      return load<target>(p);
+    }
+
     BOOST_FORCEINLINE target operator()(Pointer p, Target const&) const
     {
       BOOST_ASSERT_MSG( boost::simd::detail::is_aligned(p, target::alignment)
                       , "boost::simd::aligned_load was performed on an unaligned pointer of float"
                       );
 
-      return _mm_load_ps(p);
+      return do_(p, nsm::size_t<target::static_size>{});
     }
   };
 

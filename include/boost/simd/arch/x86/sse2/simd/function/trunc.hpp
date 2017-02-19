@@ -10,6 +10,7 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_TRUNC_HPP_INCLUDED
 
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -22,9 +23,19 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::double_<A0>, bs::sse_>
                          )
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE A0 do_(const A0 & a0, nsm::size_t<1> const&) const BOOST_NOEXCEPT
+    {
+      return A0(bs::trunc(a0[0]));
+    }
+
+    BOOST_FORCEINLINE A0 do_(const A0 & a0, nsm::size_t<2> const&) const BOOST_NOEXCEPT
     {
       return A0(bs::trunc(a0[0]), bs::trunc(a0[1]));
+    }
+
+    BOOST_FORCEINLINE A0 operator()(const A0 & a0) const BOOST_NOEXCEPT
+    {
+      return do_(a0, nsm::size_t<A0::static_size>{});
     }
   };
 } } }

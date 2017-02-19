@@ -27,9 +27,19 @@ namespace boost { namespace simd { namespace ext
                           )
   {
 
-    BOOST_FORCEINLINE A0 operator() (const pedantic_tag &,  A0 const& a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE A0 do_(const A0 & a0, nsm::size_t<1> const&) const BOOST_NOEXCEPT
+    {
+      return A0(bs::pedantic_(bs::acos)(a0[0]));
+    }
+
+    BOOST_FORCEINLINE A0 do_( const A0 & a0, nsm::size_t<2> const&) const BOOST_NOEXCEPT
     {
       return A0(bs::pedantic_(bs::acos)(a0[0]), bs::pedantic_(bs::acos)(a0[1]));
+    }
+
+    BOOST_FORCEINLINE A0 operator() (const pedantic_tag &,  A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return do_(a0, nsm::size_t<A0::static_size>{});
     }
   };
 } } }

@@ -27,8 +27,9 @@ void test(Env& runtime)
   ba::aligned_free(ptr);
 }
 
-STF_CASE_TPL("Check that pack constructs from aligned pointer" , STF_NUMERIC_TYPES)
+STF_CASE_TPL("Check that pack constructs from aligned pointer", STF_NUMERIC_TYPES)
 {
+  test<T,  1>(runtime);
   test<T,  2>(runtime);
   test<T,  4>(runtime);
   test<T,  8>(runtime);

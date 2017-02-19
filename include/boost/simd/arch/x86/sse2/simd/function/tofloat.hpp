@@ -41,30 +41,28 @@ namespace boost { namespace simd { namespace ext
   BOOST_DISPATCH_OVERLOAD ( tofloat_
                           , (typename A0)
                           , bs::sse2_
-                          , bs::pack_<bd::uint64_<A0>, bs::sse_>
+                          , bs::pack_<bd::ints64_<A0>, bs::sse_>
                          )
   {
     using result = bd::as_floating_t<A0>;
     using stype = bd::scalar_of_t<result>;
+
+    BOOST_FORCEINLINE result do_(const A0 & a0, nsm::size_t<1> const&) const BOOST_NOEXCEPT
+    {
+      return result(static_cast<stype>(a0[0]));
+    }
+
+    BOOST_FORCEINLINE result do_( const A0 & a0, nsm::size_t<2> const&) const BOOST_NOEXCEPT
+    {
+      return result(static_cast<stype>(a0[0]), static_cast<stype>(a0[1]));
+    }
+
     BOOST_FORCEINLINE result operator() ( const A0 & a0) const BOOST_NOEXCEPT
     {
-      return {static_cast<stype>(a0[0]), static_cast<stype>(a0[1])};
+      return do_(a0, nsm::size_t<A0::static_size>{});
     }
   };
 
-  BOOST_DISPATCH_OVERLOAD ( tofloat_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
-  {
-    using result = bd::as_floating_t<A0>;
-    using stype = bd::scalar_of_t<result>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return {static_cast<stype>(a0[0]), static_cast<stype>(a0[1])};
-    }
-  };
 
   BOOST_DISPATCH_OVERLOAD ( tofloat_
                           , (typename A0)

@@ -10,6 +10,8 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/nsm.hpp>
+#include <boost/simd/function/insert.hpp>
 
 #ifdef BOOST_MSVC
 # pragma warning(push)
@@ -100,9 +102,24 @@ namespace boost { namespace simd { namespace ext
   {
     using target = typename Target::type;
 
+    BOOST_FORCEINLINE target do_(Value const& v, nsm::size_t<1> const&) const BOOST_NOEXCEPT
+    {
+      target that;
+      insert<0>(that,v);
+      return that;
+    }
+
+    BOOST_FORCEINLINE target do_(Value const& v, nsm::size_t<2> const&) const BOOST_NOEXCEPT
+    {
+      target that;
+      insert<0>(that,v);
+      insert<1>(that,v);
+      return that;
+    }
+
     BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
     {
-      return target(v,v);
+      return do_(v, nsm::size_t<target::static_size>{});
     }
   };
 } } }

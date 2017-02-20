@@ -11,6 +11,7 @@
 
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/bitset.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -23,9 +24,15 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::single_<A0>, bs::sse_>
                          )
   {
-    BOOST_FORCEINLINE bs::bitset<4> operator()( const A0 & a0 ) const BOOST_NOEXCEPT
+    // bitmask fr sub-cardinal pack
+    using mask = nsm::int32_t<(1 << A0::static_size) - 1>;
+
+    BOOST_FORCEINLINE bs::bitset<A0::static_size> operator()( const A0 & a0 ) const BOOST_NOEXCEPT
     {
-      return _mm_movemask_ps(a0);
+      return nsm::select<nsm::bool_<A0::static_size==4>>
+                        ( [&]() { return _mm_movemask_ps(a0); }
+                        , [&]() { return _mm_movemask_ps(a0) & mask::value; }
+                        )();
     }
   };
 } } }

@@ -1013,12 +1013,12 @@ namespace nsm
   {};
 
   template<typename C, typename T, typename F>
-  inline typename std::enable_if<C::value,T&&>::type select(T&& t, F&&)
+  BOOST_FORCEINLINE typename std::enable_if<C::value,T&&>::type select(T&& t, F&&)
   {
     return std::forward<T>(t);
   }
   template<typename C, typename T, typename F>
-  inline typename std::enable_if<!C::value,F&&>::type select(T&&, F&& f)
+  BOOST_FORCEINLINE typename std::enable_if<!C::value,F&&>::type select(T&&, F&& f)
   {
     return std::forward<F>(f);
   }

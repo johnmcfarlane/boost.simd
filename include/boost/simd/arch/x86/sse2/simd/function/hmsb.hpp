@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE bs::bitset<A0::static_size> operator() ( const A0 & a0) const BOOST_NOEXCEPT
     {
-      return nsm::select<nsm::bool_<A0::static_size==2>>
+      return nsm::select<nsm::bool_<A0::static_size==16>>
                         ( [&]() { return _mm_movemask_epi8(a0);     }
                         , [&]() { return _mm_movemask_epi8(a0) & mask::value; }
                         )();

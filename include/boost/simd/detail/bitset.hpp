@@ -11,6 +11,7 @@
 
 #include <boost/simd/detail/dispatch/meta/make_integer.hpp>
 #include <boost/simd/function/scalar/popcnt.hpp>
+#include <boost/config.hpp>
 #include <type_traits>
 #include <cstddef>
 #include <cstdint>
@@ -45,27 +46,31 @@ namespace boost { namespace simd
       static constexpr std::size_t bitmask = (N == 64) ? ~0ULL : (1ULL<<N) - 1;
       using bits_type = bd::make_integer_t<bitset_size<N>::value,unsigned>;
 
-      constexpr bitset()                BOOST_NOEXCEPT : bits_{} {}
-      constexpr bitset(bitset const& v) BOOST_NOEXCEPT : bits_{v.bits_} {}
-      constexpr bitset(std::size_t n)   BOOST_NOEXCEPT : bits_{static_cast<bits_type>(n & bitmask)} {}
+      BOOST_FORCEINLINE constexpr bitset()                BOOST_NOEXCEPT : bits_{} {}
+      BOOST_FORCEINLINE constexpr bitset(bitset const& v) BOOST_NOEXCEPT : bits_{v.bits_} {}
+      BOOST_FORCEINLINE constexpr bitset(std::size_t n)   BOOST_NOEXCEPT
+                                : bits_{static_cast<bits_type>(n & bitmask)} {}
 
+      BOOST_FORCEINLINE
       bitset& reset()               BOOST_NOEXCEPT { bits_ = 0U;                    return *this; }
+      BOOST_FORCEINLINE
       bitset& reset(std::size_t p)  BOOST_NOEXCEPT { bits_ = bits_ & ~((1ULL<<p));  return *this; }
 
-      bitset& set() BOOST_NOEXCEPT { bits_ = ~0ULL; return *this; }
-      bitset& set(std::size_t p, bool v = true) BOOST_NOEXCEPT
+      BOOST_FORCEINLINE bitset& set() BOOST_NOEXCEPT { bits_ = ~0ULL; return *this; }
+      BOOST_FORCEINLINE bitset& set(std::size_t p, bool v = true) BOOST_NOEXCEPT
       {
         reset(p);
         bits_ |= (std::size_t(v)<<p);
         return *this;
       }
 
-      bitset& flip()                { bits_ = ~bits_;     return *this; }
-      bitset& flip(std::size_t p)   { bits_ ^= (1ULL<<p); return *this; }
+      BOOST_FORCEINLINE bitset& flip()                { bits_ = ~bits_;     return *this; }
+      BOOST_FORCEINLINE bitset& flip(std::size_t p)   { bits_ ^= (1ULL<<p); return *this; }
 
+      BOOST_FORCEINLINE
       constexpr bool operator[]( std::size_t p ) const BOOST_NOEXCEPT { return bits_ & (1ULL<<p); }
 
-      bool test( std::size_t p ) const
+      BOOST_FORCEINLINE bool test( std::size_t p ) const
       {
         if(p>N) throw std::out_of_range{"Bit index is out of range"};
         return this->operator[](p);
@@ -73,29 +78,54 @@ namespace boost { namespace simd
 
       static constexpr std::size_t size() BOOST_NOEXCEPT { return N; }
 
+      BOOST_FORCEINLINE
                 std::size_t count() const BOOST_NOEXCEPT { return boost::simd::popcnt(bits_); }
+
+      BOOST_FORCEINLINE
       constexpr bool        all()   const BOOST_NOEXCEPT { return bits_ == bitmask;           }
+
+      BOOST_FORCEINLINE
       constexpr bool        any()   const BOOST_NOEXCEPT { return bits_ != 0;                 }
+
+      BOOST_FORCEINLINE
       constexpr bool        none()  const BOOST_NOEXCEPT { return bits_ == 0;                 }
 
+      BOOST_FORCEINLINE
       constexpr bool operator==(bitset const& other) const BOOST_NOEXCEPT { return bits_ == other.bits_; }
+
+      BOOST_FORCEINLINE
       constexpr bool operator!=(bitset const& other) const BOOST_NOEXCEPT { return bits_ != other.bits_; }
 
+      BOOST_FORCEINLINE
       bitset  operator>> (std::size_t pos) const { return bitset{bits_ >> pos}; }
+
+      BOOST_FORCEINLINE
       bitset  operator<< (std::size_t pos) const { return bitset{bits_ << pos}; }
 
+      BOOST_FORCEINLINE
       bitset& operator<<=(std::size_t pos) { bits_ <<= pos; return *this; }
+      BOOST_FORCEINLINE
       bitset& operator>>=(std::size_t pos) { bits_ >>= pos; return *this; }
 
+      BOOST_FORCEINLINE
       bitset& operator&=( const bitset<N>& other ) BOOST_NOEXCEPT { bits_ &= other.bits_; return *this; }
+
+      BOOST_FORCEINLINE
       bitset& operator|=( const bitset<N>& other ) BOOST_NOEXCEPT { bits_ |= other.bits_; return *this; }
+
+      BOOST_FORCEINLINE
       bitset& operator^=( const bitset<N>& other ) BOOST_NOEXCEPT { bits_ ^= other.bits_; return *this; }
 
+      BOOST_FORCEINLINE
       bitset  operator~() const BOOST_NOEXCEPT { return bitset( ~bits_ ); }
 
+      BOOST_FORCEINLINE
       operator std::bitset<N>() BOOST_NOEXCEPT { return std::bitset<N>{bits_}; }
 
+      BOOST_FORCEINLINE
       constexpr unsigned long      to_ulong()  const BOOST_NOEXCEPT { return bits_; }
+
+      BOOST_FORCEINLINE
       constexpr unsigned long long to_ullong() const BOOST_NOEXCEPT { return bits_; }
 
       private:

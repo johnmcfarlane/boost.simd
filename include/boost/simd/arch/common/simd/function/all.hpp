@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE bool do_(const A0& a0, aggregate_storage const&) const BOOST_NOEXCEPT
     {
       auto const all0 = all(slice_high(a0));
-      auto const all1 = all(slice_low(a0) );
+      auto const all1 = all(slice_low (a0));
       return  all0 && all1;
     }
 
@@ -47,18 +47,17 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_DISPATCH_OVERLOAD_IF( all_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::splatted_tag
-                            , bs::pack_<bd::fundamental_<A0>, X>
-                            )
+  BOOST_DISPATCH_OVERLOAD ( all_
+                          , (typename A0, typename X)
+                          , bd::cpu_
+                          , bs::splatted_tag
+                          , bs::pack_<bd::fundamental_<A0>, X>
+                          )
   {
     BOOST_FORCEINLINE as_logical_t<A0>
     operator()(bs::splatted_tag const&, const A0& a0) const BOOST_NOEXCEPT
     {
-      return as_logical_t<A0>(all(a0));
+      return as_logical_t<A0>(bs::all(a0));
     }
   };
 } } }

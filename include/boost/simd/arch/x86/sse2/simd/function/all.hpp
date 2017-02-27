@@ -11,6 +11,7 @@
 
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/genmask.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -23,9 +24,12 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::type16_<A0>, bs::sse_>
                          )
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
+    // bitmask for sub-cardinal pack
+    using mask = nsm::int32_t<(1 << 2*A0::static_size) - 1>;
+
+    BOOST_FORCEINLINE bool operator()(const A0 & a0) const BOOST_NOEXCEPT
     {
-      return _mm_movemask_epi8(genmask(a0)) == 0xFFFF;
+      return (_mm_movemask_epi8(genmask(a0)) & mask::value) == mask::value;
     }
   };
 } } }

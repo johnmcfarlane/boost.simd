@@ -10,6 +10,8 @@
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_DEINTERLEAVE_SECOND_HPP_INCLUDED
 
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/function/extract.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -23,9 +25,16 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::single_<A0>, bs::sse_>
                          )
   {
+    static_assert ( A0::static_size >= 2
+                  , "deinterleave_first requires at least two elements"
+                  );
+
     BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
     {
-      return _mm_shuffle_ps(a0, a1, _MM_SHUFFLE(3,1,3,1));
+      return nsm::select<nsm::bool_<A0::static_size==4>>
+                        ( [&]() { return _mm_shuffle_ps(a0, a1, _MM_SHUFFLE(3,1,3,1)); }
+                        , [&]() { return make(as_<A0>{},extract<1>(a0), extract<1>(a1)); }
+                        )();
     }
   };
 } } }

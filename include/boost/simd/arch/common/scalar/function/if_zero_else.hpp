@@ -20,6 +20,20 @@
 namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;
+
+  BOOST_DISPATCH_OVERLOAD ( if_zero_else_
+                          , (typename A0, typename A1)
+                          , bd::cpu_
+                          , bd::scalar_< bd::bool_<A0> >
+                          , bd::scalar_< bd::unspecified_<A1> >
+                          )
+  {
+    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1 const& a1) const BOOST_NOEXCEPT
+    {
+      return !a0 ? a1 : Zero<A1>();
+    }
+  };
+
   BOOST_DISPATCH_OVERLOAD ( if_zero_else_
                           , (typename A0, typename A1)
                           , bd::cpu_

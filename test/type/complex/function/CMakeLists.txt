@@ -8,10 +8,10 @@
 
 set ( SOURCES
       abs.cpp
-      #sqrt.cpp
       is_equal.cpp
       is_not_equal.cpp
       plus.cpp
+      sqrt.cpp
     )
 
 make_unit( "type.complex.function" ${SOURCES})

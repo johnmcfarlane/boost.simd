@@ -9,6 +9,11 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQRT_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQRT_HPP_INCLUDED
 
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/dispatch/function/make_callable.hpp>
+#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
+#include <boost/simd/detail/dispatch.hpp>
+
 namespace boost { namespace simd
 {
   namespace tag
@@ -27,6 +32,7 @@ namespace boost { namespace simd
   }
 } }
 
+#include <boost/simd/function/sqrt.hpp>
 #include <boost/simd/type/complex/function/impl/sqrt.hpp>
 
 #endif

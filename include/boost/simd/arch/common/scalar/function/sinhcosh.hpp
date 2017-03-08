@@ -1,12 +1,10 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SINHCOSH_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SINHCOSH_HPP_INCLUDED
@@ -31,6 +29,7 @@ namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
+
   BOOST_DISPATCH_OVERLOAD ( sinhcosh_
                           , (typename A0)
                           , bd::cpu_
@@ -46,21 +45,19 @@ namespace boost { namespace simd { namespace ext
     // * in the second     sinh and cosh are (e/2)*e (avoiding undue overflow)
     // Threshold is Maxlog - Log_2
     //////////////////////////////////////////////////////////////////////////////
-    using result_t = std::pair<A0, A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE detail::sinhcosh_result<A0> operator()(A0 a0) const BOOST_NOEXCEPT
     {
-      A0 x = bs::abs(a0);
-      auto test1 = (x >  Maxlog<A0>()-Log_2<A0>());
-      A0 fac = (test1? Half<A0>(): One<A0>());
-      A0 tmp = exp(x*fac);
-      A0 tmp1 = Half<A0>()*tmp;
-      A0 rtmp = rec(tmp);
-      A0 r =  test1 ? tmp1*tmp : tmp1-Half<A0>()*rtmp;
-      return {bitwise_xor(((x < One<A0>())
-                           ? detail::sinh_kernel<A0>::compute(x, sqr(x))
-                           : r),
-                          bitofsign(a0)),
-          test1 ? r : bs::average(tmp, rtmp)};
+      A0 x        = bs::abs(a0);
+      auto test1  = (x > Maxlog<A0>()-Log_2<A0>());
+      A0 tmp      = exp(x*(test1? Half<A0>(): One<A0>()));
+      A0 tmp1     = Half<A0>()*tmp;
+      A0 rtmp     = rec(tmp);
+      A0 r        =  test1 ? tmp1*tmp : tmp1-Half<A0>()*rtmp;
+      return  { bitwise_xor ( ((x < One<A0>()) ? detail::sinh_kernel<A0>::compute(x, sqr(x)) : r)
+                            , bitofsign(a0)
+                            )
+              , test1 ? r : bs::average(tmp, rtmp)
+              };
     }
   };
 } } }

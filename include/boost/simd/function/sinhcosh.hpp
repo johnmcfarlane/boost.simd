@@ -17,8 +17,12 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-hyperbolic
-    This function object computes simultaneously  and at lower cost
-    the @c sinh and @c cosh of the input
+
+    This function object bothcomputes the @c sinh and @c cosh of its argument using an algorithm
+    faster than sequential calls to each function.
+
+    The return type is implementation defined POD type that contains two members @c sinh and
+    @c cosh that contains the results.
 
     @par Header <boost/simd/function/sinhcosh.hpp>
 
@@ -33,7 +37,7 @@ namespace boost { namespace simd
       @snippet sinhcosh.txt sinhcosh
 
   **/
-  std::pair<IEEEValue, IEEEValue> sinhcosh(IEEEValue const& x);
+  implementation-defined sinhcosh(IEEEValue const& x);
 } }
 #endif
 

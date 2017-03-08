@@ -17,24 +17,22 @@ using pack_ft =  bs::pack <float, 4>;
 int main()
 {
   pack_ft pf = { 1.0f, -2.0f, 3.0f, -4.0 };
-  pack_ft s, e;
-  std::tie(s, e) = bs::sinhcosh(pf);
+  auto pc = bs::sinhcosh(pf);
   std::cout
     <<  "---- simd" << '\n'
     << " <- pf =                                  " << pf << '\n'
     << "  std::tie(s, e) = bs::sinhcosh(pf, qf)   " << '\n'
-    << " ->  s =                                  " << s << '\n'
-    << " ->  e =                                  " << e << '\n';
+    << " ->  s =                                  " << pc.sinh << '\n'
+    << " ->  e =                                  " << pc.cosh << '\n';
 
   float xf = 3.0f;
-  float ss, se;
-  std::tie(ss, se) = bs::sinhcosh(xf);
+  auto sc = bs::sinhcosh(xf);
   std::cout
     << "---- scalar"  << '\n'
     << " xf =                                     " << xf << '\n'
     << "  std::tie(ss, se) = bs::sinhcosh(xf, yf) " << '\n'
-    << " ->  ss =                                 " << ss << '\n'
-    << " ->  se =                                 " << se << '\n';
+    << " ->  ss =                                 " << sc.sinh << '\n'
+    << " ->  se =                                 " << sc.cosh << '\n';
 
   return 0;
 }

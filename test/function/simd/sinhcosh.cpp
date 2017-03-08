@@ -6,18 +6,14 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#include <simd_test.hpp>
 #include <boost/simd/function/sinhcosh.hpp>
 #include <boost/simd/pack.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/constant/nan.hpp>
-#include <boost/simd/constant/one.hpp>
-#include <boost/simd/constant/mone.hpp>
-#include <boost/simd/constant/zero.hpp>
-#include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/function/cosh.hpp>
 #include <boost/simd/function/sinh.hpp>
+#include <simd_test.hpp>
 
 namespace bs = boost::simd;
 
@@ -30,16 +26,17 @@ void test(Env& runtime)
   for(std::size_t i = 0; i < N; ++i)
   {
     a1[i] = (i%2) ? T(i)/2 : -T(i)/2;
-    std::tie(s[i], c[i])= bs::sinhcosh(a1[i]) ;
+    auto sc = bs::sinhcosh(a1[i]);
+    s[i] = sc.sinh;
+    c[i] = sc.cosh;
   }
 
   p_t aa1(&a1[0], &a1[0]+N);
   p_t ss (&s[0], &s[0]+N);
   p_t cc (&c[0], &c[0]+N);
-  p_t ss1, cc1;
-  std::tie(ss1, cc1)= bs::sinhcosh(aa1) ;
-  STF_ULP_EQUAL(ss1, ss, 0.5);
-  STF_ULP_EQUAL(cc1, cc, 0.5);
+  auto sc = bs::sinhcosh(aa1) ;
+  STF_ULP_EQUAL(sc.sinh, ss, 0.5);
+  STF_ULP_EQUAL(sc.cosh, cc, 0.5);
 }
 
 STF_CASE_TPL("Check sincosh on pack" , STF_IEEE_TYPES)
@@ -51,26 +48,22 @@ STF_CASE_TPL("Check sincosh on pack" , STF_IEEE_TYPES)
   test<T, N*2>(runtime);
 }
 
-
-STF_CASE_TPL("sinhcosh", STF_IEEE_TYPES)
+STF_CASE_TPL("Validate sinhcosh corner cases", STF_IEEE_TYPES)
 {
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;
   using p_t = bs::pack<T>;
   using bs::sinhcosh;
 
-  p_t a[] = {bs::Zero<p_t>(), bs::One<p_t>(), p_t(5), p_t(-5)};
+  p_t a[] = {p_t(0), p_t(1), p_t(5), p_t(-5)};
   size_t N =  sizeof(a)/sizeof(p_t);
-  STF_EXPR_IS( (sinhcosh(p_t()))
-                  , (std::pair<p_t,p_t>)
-                  );
 
   {
     for(size_t i=0; i < N; ++i)
     {
-      std::pair<p_t,p_t> p = sinhcosh(a[i]);
-      STF_ULP_EQUAL(p.first,  bs::sinh(a[i]), 1);
-      STF_ULP_EQUAL(p.second, bs::cosh(a[i]), 1);
+      auto p = sinhcosh(a[i]);
+      STF_ULP_EQUAL(p.sinh, bs::sinh(a[i]), 1);
+      STF_ULP_EQUAL(p.cosh, bs::cosh(a[i]), 1);
     }
   }
 
@@ -81,9 +74,9 @@ STF_CASE_TPL("sinhcosh", STF_IEEE_TYPES)
   {
     for(size_t i=0; i < N; ++i)
     {
-      std::pair<p_t,p_t> p = sinhcosh(b[i]);
-      STF_ULP_EQUAL(p.first,  bs::sinh(b[i]), 1);
-      STF_ULP_EQUAL(p.second, bs::cosh(b[i]), 1);
+      auto p = sinhcosh(b[i]);
+      STF_ULP_EQUAL(p.sinh, bs::sinh(b[i]), 1);
+      STF_ULP_EQUAL(p.cosh, bs::cosh(b[i]), 1);
     }
   }
 #endif

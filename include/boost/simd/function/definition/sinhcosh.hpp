@@ -30,7 +30,11 @@ namespace boost { namespace simd
 
   BOOST_DISPATCH_CALLABLE_DEFINITION(tag::sinhcosh_,sinhcosh);
 
-
+  namespace detail
+  {
+    // Type used to return sinhcosh values
+    template<typename T> struct sinhcosh_result { T sinh, cosh; };
+  }
 } }
 
 #endif

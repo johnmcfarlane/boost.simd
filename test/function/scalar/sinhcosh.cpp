@@ -27,29 +27,26 @@ STF_CASE_TPL("sinhcosh", STF_IEEE_TYPES)
 
   T a[] = {bs::Zero<T>(), bs::One<T>(), T(5), T(-5)};
   size_t N =  sizeof(a)/sizeof(T);
-  STF_EXPR_IS( (sinhcosh(T()))
-                  , (std::pair<T,T>)
-                  );
 
   {
     for(size_t i=0; i < N; ++i)
     {
-      std::pair<T,T> p = sinhcosh(a[i]);
-      STF_ULP_EQUAL(p.first,  bs::sinh(a[i]), 1);
-      STF_ULP_EQUAL(p.second, bs::cosh(a[i]), 1);
+      auto p = sinhcosh(a[i]);
+      STF_ULP_EQUAL(p.sinh,  bs::sinh(a[i]), 1);
+      STF_ULP_EQUAL(p.cosh, bs::cosh(a[i]), 1);
     }
   }
 
   T b[] = {bs::Inf<T>(), bs::Minf<T>(), bs::Nan<T>()};
   N =  sizeof(b)/sizeof(T);
-#ifndef BOOST_SIMD_NO_INVALIDS
 
+#ifndef BOOST_SIMD_NO_INVALIDS
   {
     for(size_t i=0; i < N; ++i)
     {
-      std::pair<T,T> p = sinhcosh(b[i]);
-      STF_ULP_EQUAL(p.first,  bs::sinh(b[i]), 1);
-      STF_ULP_EQUAL(p.second, bs::cosh(b[i]), 1);
+      auto p = sinhcosh(b[i]);
+      STF_ULP_EQUAL(p.sinh,  bs::sinh(b[i]), 1);
+      STF_ULP_EQUAL(p.cosh, bs::cosh(b[i]), 1);
     }
   }
 #endif

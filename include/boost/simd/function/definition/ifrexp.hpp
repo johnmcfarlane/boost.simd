@@ -15,6 +15,7 @@
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
 #include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 namespace boost { namespace simd
 {
@@ -31,6 +32,15 @@ namespace boost { namespace simd
   BOOST_DISPATCH_CALLABLE_DEFINITION(tag::ifrexp_,ifrexp);
 
 
+  namespace detail
+  {
+    // Type used to return ifrexp values
+    template<typename T> struct ifrexp_result
+    {
+      T mantissa;
+      boost::dispatch::as_integer_t<T> exponent;
+    };
+  }
 } }
 
 #endif

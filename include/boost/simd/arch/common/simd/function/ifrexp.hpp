@@ -28,7 +28,6 @@
 #include <boost/simd/function/if_plus.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <utility>
 
 #ifndef BOOST_SIMD_NO_DENORMALS
 #include <boost/simd/function/logical_and.hpp>
@@ -52,10 +51,10 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::floating_<A0>, X>
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(pedantic_tag const&, A0 const& a0) const
+    BOOST_FORCEINLINE detail::ifrexp_result<A0> operator()(pedantic_tag const&, A0 const& a0) const
     {
       using s_type = typename A0::value_type;
+      using i_t = bd::as_integer_t<A0, signed>;
 
 #ifndef BOOST_SIMD_NO_DENORMALS
       auto test = logical_and(is_less(bs::abs(a0), Smallestposval<A0>()), is_nez(a0));
@@ -78,45 +77,44 @@ namespace boost { namespace simd { namespace ext
       r1 -= t ;
 #endif
 
-      return  { if_else_zero(test0, if_plus(test1,r0,aa0))
-              , r1
-              };
+      return  detail::ifrexp_result<A0>{ if_else_zero(test0, if_plus(test1,r0,aa0)), r1};
     }
   };
 
-  BOOST_DISPATCH_OVERLOAD( ifrexp_
+  BOOST_DISPATCH_OVERLOAD ( ifrexp_
                           , (typename A0, typename X)
                           , bd::cpu_
                           , bs::pack_< bd::floating_<A0>, X>
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
-
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(A0 const& a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE detail::ifrexp_result<A0> operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       auto that = raw_(ifrexp)(a0);
-      return  { if_else_zero(a0,that.first), if_else_zero(a0,that.second) };
+      return detail::ifrexp_result<A0>{ if_else_zero(a0,that.mantissa)
+                                      , if_else_zero(a0,that.exponent)
+                                      };
     }
   };
 
-  BOOST_DISPATCH_OVERLOAD( ifrexp_
+  BOOST_DISPATCH_OVERLOAD ( ifrexp_
                           , (typename A0, typename X)
                           , bd::cpu_
                           , bs::raw_tag
                           , bs::pack_< bd::floating_<A0>, X>
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
 
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(bs::raw_tag const&,A0 const& a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::ifrexp_result<A0> operator()(bs::raw_tag const&,A0 const& a0) const BOOST_NOEXCEPT
     {
+      using i_t = bd::as_integer_t<A0, signed>;
       auto m1f = Mask1frexp<A0>();
       auto r1 = bitwise_cast<i_t>(bitwise_and(m1f, a0));
       auto x  = bitwise_andnot(a0, m1f);
 
-      return  { bitwise_or(x,Mask2frexp<A0>())
-              , shr(r1,Nbmantissabits<typename A0::value_type>()) - Maxexponentm1<A0>()
-              };
+      return  detail::ifrexp_result<A0> { bitwise_or(x,Mask2frexp<A0>())
+                                        , shr(r1,Nbmantissabits<typename A0::value_type>()) - Maxexponentm1<A0>()
+                                        };
     }
   };
 } } }

@@ -24,10 +24,10 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::floating_<A0>, X>
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(A0 const& a0) const
+    BOOST_FORCEINLINE detail::frexp_result<A0> operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       auto r = ifrexp(a0);
-      return {r.first, tofloat(r.second)};
+      return detail::frexp_result<A0>{r.mantissa, tofloat(r.exponent)};
     }
   };
 
@@ -38,10 +38,11 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::floating_<A0>, X>
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(bs::pedantic_tag const&, A0 const& a0) const
+    BOOST_FORCEINLINE
+    detail::frexp_result<A0> operator()(bs::pedantic_tag const&, A0 const& a0) const BOOST_NOEXCEPT
     {
       auto r = pedantic_(ifrexp)(a0);
-      return {r.first, tofloat(r.second)};
+      return detail::frexp_result<A0>{r.mantissa, tofloat(r.exponent)};
     }
   };
 
@@ -52,10 +53,11 @@ namespace boost { namespace simd { namespace ext
                           , bs::pack_<bd::floating_<A0>, X>
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(bs::raw_tag const&, A0 const& a0) const
+    BOOST_FORCEINLINE
+    detail::frexp_result<A0> operator()(bs::raw_tag const&, A0 const& a0) const BOOST_NOEXCEPT
     {
       auto r = raw_(ifrexp)(a0);
-      return {r.first, tofloat(r.second)};
+      return detail::frexp_result<A0>{r.mantissa, tofloat(r.exponent)};
     }
   };
 } } }

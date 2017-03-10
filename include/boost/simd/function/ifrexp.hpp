@@ -17,8 +17,10 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-ieee
-    This function object computes a mantissa and an exponent pair for the input
+    This function object both computes a mantissa and an integral exponent of its argument.
 
+    The return type is implementation defined POD type that contains two members @c mantissa and
+    @c exponent that contains the results.
 
     @par Header <boost/simd/function/ifrexp.hpp>
 
@@ -68,7 +70,7 @@ namespace boost { namespace simd
       @snippet ifrexp.txt ifrexp
 
   **/
-  std::pair<IEEEValue, as_integer_t<IEEEValue>> ifrexp(IEEEValue const& x);
+  implementation-defined ifrexp(IEEEValue const& x);
 } }
 #endif
 

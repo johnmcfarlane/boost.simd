@@ -18,7 +18,7 @@ namespace boost { namespace simd
   /*!
     @ingroup group-hyperbolic
 
-    This function object bothcomputes the @c sinh and @c cosh of its argument using an algorithm
+    This function object both computes the @c sinh and @c cosh of its argument using an algorithm
     faster than sequential calls to each function.
 
     The return type is implementation defined POD type that contains two members @c sinh and

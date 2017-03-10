@@ -26,10 +26,10 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator() ( A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE detail::frexp_result<A0> operator()(A0 a0) const BOOST_NOEXCEPT
     {
       auto that = ifrexp(a0);
-      return {that.first, tofloat(that.second)};
+      return detail::frexp_result<A0>{that.mantissa, tofloat(that.exponent)};
     }
   };
 
@@ -40,10 +40,11 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const pedantic_tag &, A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::frexp_result<A0> operator()(const pedantic_tag&, A0 a0) const BOOST_NOEXCEPT
     {
       auto that = pedantic_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
+      return detail::frexp_result<A0>{that.mantissa, tofloat(that.exponent)};
     }
   };
 
@@ -54,10 +55,11 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const raw_tag &, A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::frexp_result<A0> operator()(const raw_tag&, A0 a0) const BOOST_NOEXCEPT
     {
       auto that = raw_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
+      return detail::frexp_result<A0>{that.mantissa, tofloat(that.exponent)};
     }
   };
 
@@ -68,10 +70,11 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const std_tag &, A0 a0 ) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::frexp_result<A0> operator()(const std_tag&, A0 a0) const BOOST_NOEXCEPT
     {
       auto that = std_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
+      return detail::frexp_result<A0>{that.mantissa, tofloat(that.exponent)};
     }
   };
 } } }

@@ -16,29 +16,25 @@ namespace bd = boost::dispatch;
 
 STF_CASE_TPL("Check basic behavior of ifrexp", STF_IEEE_TYPES)
 {
-  STF_EXPR_IS ( (bs::ifrexp(T(0)))
-              , (std::pair<T,bd::as_integer_t<T,signed>>)
-              );
-
   auto p = bs::ifrexp(T(1));
-  STF_EQUAL(p.first  , T(0.5));
-  STF_EQUAL(p.second , T(1));
+  STF_EQUAL(p.mantissa  , T(0.5));
+  STF_EQUAL(p.exponent , T(1));
 }
 
 STF_CASE_TPL("Check behavior of ifrexp on Zero", STF_IEEE_TYPES)
 {
   auto r = bs::ifrexp(T(0));
 
-  STF_EQUAL (r.first , T(0));
-  STF_EQUAL (r.second, T(0));
-  STF_EQUAL (ldexp(r.first,r.second), T(0));
+  STF_EQUAL (r.mantissa , T(0));
+  STF_EQUAL (r.exponent, T(0));
+  STF_EQUAL (ldexp(r.mantissa,static_cast<int>(r.exponent)), T(0));
 }
 
 STF_CASE_TPL("Check behavior of ifrexp on Valmax", STF_IEEE_TYPES)
 {
   auto r = bs::ifrexp(bs::Valmax<T>());
 
-  STF_ULP_EQUAL (r.first , T(1)-bs::Halfeps<T>(), 1);
-  STF_EQUAL     (r.second, bs::Limitexponent<T>());
-  STF_EQUAL     (ldexp(r.first,r.second),bs::Valmax<T>());
+  STF_ULP_EQUAL (r.mantissa , T(1)-bs::Halfeps<T>(), 1);
+  STF_EQUAL     (r.exponent, bs::Limitexponent<T>());
+  STF_EQUAL     (ldexp(r.mantissa,static_cast<int>(r.exponent)),bs::Valmax<T>());
 }

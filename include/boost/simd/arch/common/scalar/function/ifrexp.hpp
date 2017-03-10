@@ -13,7 +13,6 @@
 #include <boost/simd/function/pedantic.hpp>
 #include <boost/simd/function/std.hpp>
 
-
 #ifndef BOOST_SIMD_NO_DENORMALS
 #include <boost/simd/constant/twotonmb.hpp>
 #include <boost/simd/function/is_eqz.hpp>
@@ -35,7 +34,6 @@
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/config.hpp>
-#include <utility>
 #include <cmath>
 
 namespace boost { namespace simd { namespace ext
@@ -49,12 +47,13 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(const pedantic_tag &, A0 a0) const BOOST_NOEXCEPT
+    inline detail::ifrexp_result<A0> operator()(const pedantic_tag &, A0 a0) const BOOST_NOEXCEPT
     {
+      using i_t = bd::as_integer_t<A0, signed>;
+
       if (a0 == 0 || is_invalid(a0))
       {
-        return {a0, i_t(0)};
+        return detail::ifrexp_result<A0>{a0, i_t(0)};
       }
       else
       {
@@ -81,7 +80,7 @@ namespace boost { namespace simd { namespace ext
         r1 -= t;
 #endif
 
-        return {bitwise_or(x,Mask2frexp<A0>()), r1};
+        return detail::ifrexp_result<A0>{bitwise_or(x,Mask2frexp<A0>()), r1};
       }
     }
   };
@@ -93,10 +92,9 @@ namespace boost { namespace simd { namespace ext
                           )
   {
     using i_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE detail::ifrexp_result<A0> operator()(A0 a0) const BOOST_NOEXCEPT
     {
-      if(!a0) return {A0(0),i_t(0)};
-      else    return raw_(simd::ifrexp)(a0);
+      return !a0 ? detail::ifrexp_result<A0>{A0(0),i_t(0)} : raw_(simd::ifrexp)(a0);
     }
   };
 
@@ -107,16 +105,18 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(const raw_tag &,  A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::ifrexp_result<A0> operator()(const raw_tag &,  A0 a0) const BOOST_NOEXCEPT
     {
+      using i_t = bd::as_integer_t<A0, signed>;
       auto m1f  = Mask1frexp<A0>();
-      auto r1   = bitwise_cast<i_t>(bitwise_and(m1f, a0));
-      A0    x   = bitwise_andnot(a0, m1f);
 
-      return  { bitwise_or(x,Mask2frexp<A0>())
-              , shr(r1,Nbmantissabits<A0>()) - Maxexponentm1<A0>()
-              };
+      return detail::ifrexp_result<A0>{   bitwise_or(bitwise_andnot(a0, m1f),Mask2frexp<A0>())
+                                      ,   shr ( bitwise_cast<i_t>(bitwise_and(m1f, a0))
+                                              , Nbmantissabits<A0>()
+                                              )
+                                        - Maxexponentm1<A0>()
+                                      };
     }
   };
 
@@ -127,12 +127,15 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_< bd::floating_<A0> >
                           )
   {
-    using i_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE std::pair<A0,i_t> operator()(const std_tag &, A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE
+    detail::ifrexp_result<A0> operator()(const std_tag &, A0 a0) const BOOST_NOEXCEPT
     {
+      using i_t = bd::as_integer_t<A0, signed>;
+
       int e(0);
       A0 r = std::frexp(a0, &e);
-      return {r, i_t(e)};
+
+      return detail::ifrexp_result<A0>{r, i_t(e)};
     }
   };
 } } }

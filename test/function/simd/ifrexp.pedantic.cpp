@@ -32,7 +32,9 @@ void test(Env& runtime)
   for(std::size_t i = 0; i < N; ++i)
   {
     a1[i] = (i%2) ? T(1+i) : -T(1+i);
-    std::tie(m[i], e[i])   = bs::pedantic_(bs::ifrexp)(a1[i]);
+    auto ife   = bs::pedantic_(bs::ifrexp)(a1[i]);
+    m[i] = ife.mantissa;
+    e[i] = ife.exponent;
   }
 
   p_T  in(&a1[0], &a1[0]+N);
@@ -41,8 +43,8 @@ void test(Env& runtime)
 
   auto that = bs::pedantic_(bs::ifrexp)(in);
 
-  STF_EQUAL(that.first, mm);
-  STF_EQUAL(that.second, ee);
+  STF_EQUAL(that.mantissa, mm);
+  STF_EQUAL(that.exponent, ee);
 }
 
 STF_CASE_TPL("Check basic behavior of pedantic(ifrexp) on pack" , STF_IEEE_TYPES)
@@ -58,16 +60,16 @@ STF_CASE_TPL("Check behavior of pedantic_(ifrexp) on Zero", STF_IEEE_TYPES)
   using iT = bd::as_integer_t<T>;
   auto r = bs::pedantic_(bs::ifrexp)(bs::pack<T>(0));
 
-  STF_EQUAL (r.first , bs::pack< T>(0));
-  STF_EQUAL (r.second, bs::pack<iT>(0));
+  STF_EQUAL (r.mantissa , bs::pack< T>(0));
+  STF_EQUAL (r.exponent, bs::pack<iT>(0));
 }
 
 STF_CASE_TPL("Check behavior of pedantic_(ifrexp) on Valmax", STF_IEEE_TYPES)
 {
   auto r = bs::pedantic_(bs::ifrexp)(bs::Valmax<bs::pack<T>>());
 
-  STF_ULP_EQUAL (r.first , 1-bs::Halfeps<bs::pack<T>>(), 1);
-  STF_EQUAL (r.second, bs::Limitexponent<bs::pack<T>>());
+  STF_ULP_EQUAL (r.mantissa , 1-bs::Halfeps<bs::pack<T>>(), 1);
+  STF_EQUAL (r.exponent, bs::Limitexponent<bs::pack<T>>());
 }
 
 #ifndef BOOST_SIMD_NO_INVALID
@@ -77,8 +79,8 @@ STF_CASE_TPL("Check behavior of pedantic_(ifrexp) on NaN", STF_IEEE_TYPES)
   using iT = bd::as_integer_t<T>;
   auto r = bs::pedantic_(bs::ifrexp)(bs::Nan<bs::pack<T>>());
 
-  STF_IEEE_EQUAL(r.first , bs::Nan<bs::pack<T>>());
-  STF_EQUAL     (r.second, bs::pack<iT>(0));
+  STF_IEEE_EQUAL(r.mantissa , bs::Nan<bs::pack<T>>());
+  STF_EQUAL     (r.exponent, bs::pack<iT>(0));
 }
 #endif
 
@@ -92,11 +94,11 @@ STF_CASE_TPL("Check behavior of pedantic_(ifrexp) on infinites", STF_IEEE_TYPES)
   auto r = bs::pedantic_(bs::ifrexp)(bs::Inf<bs::pack<T>>());
   auto q = bs::pedantic_(bs::ifrexp)(bs::Minf<bs::pack<T>>());
 
-  STF_IEEE_EQUAL(r.first , bs::Inf<bs::pack<T>>());
-  STF_EQUAL     (r.second, bs::pack<iT>(0));
+  STF_IEEE_EQUAL(r.mantissa , bs::Inf<bs::pack<T>>());
+  STF_EQUAL     (r.exponent, bs::pack<iT>(0));
 
-  STF_IEEE_EQUAL(q.first , bs::Minf<bs::pack<T>>());
-  STF_EQUAL     (q.second, bs::pack<iT>(0));
+  STF_IEEE_EQUAL(q.mantissa , bs::Minf<bs::pack<T>>());
+  STF_EQUAL     (q.exponent, bs::pack<iT>(0));
 }
 
 #endif
@@ -109,8 +111,8 @@ STF_CASE_TPL("Check behavior of pedantic_(ifrexp) on denormals", STF_IEEE_TYPES)
 {
   auto r = bs::pedantic_(bs::ifrexp)(bs::Mindenormal<bs::pack<T>>());
 
-  STF_ULP_EQUAL(r.first , bs::pack<T>(0.5), 1);
-  STF_EQUAL     (r.second, bs::Minexponent<bs::pack<T>>()-bs::Nbmantissabits<bs::pack<T>>()+1);
+  STF_ULP_EQUAL(r.mantissa , bs::pack<T>(0.5), 1);
+  STF_EQUAL     (r.exponent, bs::Minexponent<bs::pack<T>>()-bs::Nbmantissabits<bs::pack<T>>()+1);
 }
 
 #endif

@@ -11,31 +11,28 @@
 #include <boost/simd/pack.hpp>
 #include <iostream>
 
-
 namespace bs =  boost::simd;
 using pack_ft = bs::pack <float, 4>;
 
 int main()
 {
   pack_ft pf = {1.0f, 2.0f, -1.0f, 0.5f};
-  pack_ft pm, pe;
-  std::tie(pm, pe) = bs::frexp(pf);
+  auto pfe = bs::frexp(pf);
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                               " << pf << '\n'
     << "-> std::tie(pm, pe) = bs::frexp(pf) = " << '\n'
-    << "-> pm  =                              " << pm << '\n'
-    << "-> pie =                              " << pe<< '\n'   ;
+    << "-> pm  =                              " << pfe.mantissa << '\n'
+    << "-> pie =                              " << pfe.exponent << '\n'   ;
 
   float xf = 2.0f;
-  float m, e;
-  std::tie(m, e) = bs::frexp(xf);
+  auto fe = bs::frexp(xf);
   std::cout
     << "---- scalar"  << '\n'
     << " xf =                                 " << xf << '\n'
     << "-> std::tie(m, e) = bs::frexp(xf) =   " << '\n'
-    << "-> m  =                               " << m << '\n'
-    << "-> e =                                " << e << '\n'   ;
+    << "-> m  =                               " << fe.mantissa << '\n'
+    << "-> e =                                " << fe.exponent << '\n'   ;
 
   return 0;
 }

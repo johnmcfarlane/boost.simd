@@ -30,7 +30,11 @@ namespace boost { namespace simd
 
   BOOST_DISPATCH_CALLABLE_DEFINITION(tag::frexp_,frexp);
 
-
+  namespace detail
+  {
+    // Type used to return frexp values
+    template<typename T> struct frexp_result { T mantissa, exponent; };
+  }
 } }
 
 #endif

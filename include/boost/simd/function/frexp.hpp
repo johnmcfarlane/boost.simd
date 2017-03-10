@@ -17,8 +17,10 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-ieee
-    This function object returns a mantissa and an exponent pair for the input
+    This function object both computes a mantissa and an exponent of its argument.
 
+    The return type is implementation defined POD type that contains two members @c mantissa and
+    @c exponent that contains the results.
 
     @par Header <boost/simd/function/frexp.hpp>
 
@@ -27,7 +29,7 @@ namespace boost { namespace simd
     For every parameter of floating type
 
     @code
-    std::tie(m, e)= frexp(x);
+    std::tie(m, e) = frexp(x);
     @endcode
 
     is similar to:
@@ -71,7 +73,7 @@ namespace boost { namespace simd
       @snippet frexp.txt frexp
 
   **/
-  std::pair<IEEEValue, IEEEValue> frexp(IEEEValue const& x);
+  implementation-defined frexp(IEEEValue const& x);
 } }
 #endif
 

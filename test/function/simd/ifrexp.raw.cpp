@@ -32,7 +32,9 @@ void test(Env& runtime)
   for(std::size_t i = 0; i < N; ++i)
   {
     a1[i] = (i%2) ? T(1+i) : -T(1+i);
-    std::tie(m[i], e[i])   = bs::raw_(bs::ifrexp)(a1[i]);
+    auto ife = bs::raw_(bs::ifrexp)(a1[i]);
+    m[i] = ife.mantissa;
+    e[i] = ife.exponent;
   }
 
   p_T  in(&a1[0], &a1[0]+N);
@@ -41,8 +43,8 @@ void test(Env& runtime)
 
   auto that = bs::raw_(bs::ifrexp)(in);
 
-  STF_EQUAL(that.first, mm);
-  STF_EQUAL(that.second, ee);
+  STF_EQUAL(that.mantissa, mm);
+  STF_EQUAL(that.exponent, ee);
 }
 
 STF_CASE_TPL("Check basic behavior of raw(ifrexp) on pack" , STF_IEEE_TYPES)
@@ -57,6 +59,6 @@ STF_CASE_TPL("Check behavior of raw_(ifrexp) on Valmax", STF_IEEE_TYPES)
 {
   auto r = bs::raw_(bs::ifrexp)(bs::Valmax<bs::pack<T>>());
 
-  STF_ULP_EQUAL (r.first , 1-bs::Halfeps<bs::pack<T>>(), 1);
-  STF_EQUAL (r.second, bs::Limitexponent<bs::pack<T>>());
+  STF_ULP_EQUAL (r.mantissa , 1-bs::Halfeps<bs::pack<T>>(), 1);
+  STF_EQUAL (r.exponent, bs::Limitexponent<bs::pack<T>>());
 }

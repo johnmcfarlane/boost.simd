@@ -11,6 +11,7 @@
 #define BOOST_SIMD_TYPE_COMPLEX_COMPLEX_HPP_INCLUDED
 
 #include <boost/simd/type/complex/function/abs.hpp>
+#include <boost/simd/type/complex/function/arg.hpp>
 
 namespace boost { namespace simd { namespace cmplx
 {
@@ -39,7 +40,8 @@ namespace boost { namespace simd { namespace cmplx
                                         , imag(static_cast<Type>(ii))
     {}
 
-    Type modulus() const { return bs::abs(*this); }
+    Type modulus()  const { return bs::abs(*this); }
+    Type argument() const { return bs::arg(*this); }
 
     Type real, imag;
   };

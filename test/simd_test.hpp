@@ -48,6 +48,7 @@ namespace stf { namespace ext
     }
   };
 
+
   template<typename T, std::size_t N, typename A>
   struct reldist<boost::simd::pack<T,N,A>,boost::simd::pack<T,N,A>>
   {
@@ -71,6 +72,36 @@ namespace stf { namespace ext
     inline bool operator()(type_t const& l, type_t const& r) const
     {
       return ext::equal<T,T>()(l.real,r.real) && ext::equal<T,T>()(l.imag,r.imag);
+    }
+  };
+
+  template<typename T>
+  struct ulpdist<boost::simd::complex<T>,boost::simd::complex<T>>
+  {
+    using type_t  = boost::simd::complex<T>;
+    inline double operator()(type_t const& l, type_t const& r) const
+    {
+      return std::max(stf::ulpdist(l.real, r.real), stf::ulpdist(l.imag, r.imag));
+    }
+  };
+
+  template<typename T>
+  struct ulpdist<boost::simd::complex<T>,T>
+  {
+    using type_t  = boost::simd::complex<T>;
+    inline double operator()(type_t const& l, T const& r) const
+    {
+      return std::max(stf::ulpdist(l.real, r), stf::ulpdist(l.imag,T(0)));
+    }
+  };
+
+  template<typename T>
+  struct ulpdist<T, boost::simd::complex<T>>
+  {
+    using type_t  = boost::simd::complex<T>;
+    inline double operator()(T const& l, type_t const& r) const
+    {
+      return stf::ulpdist(r, l);
     }
   };
 

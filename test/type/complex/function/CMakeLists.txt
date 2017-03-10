@@ -8,10 +8,26 @@
 
 set ( SOURCES
       abs.cpp
+      arg.cpp
+      conj.cpp
+      divides.cpp
+      if_else.cpp
       is_equal.cpp
+      is_eqz.cpp
+      is_finite.cpp
+      is_inf.cpp
       is_not_equal.cpp
+      is_imag.cpp
+      is_nan.cpp
+      is_real.cpp
+      minus.cpp
+      mul_i.cpp
+      multiplies.cpp
       plus.cpp
+      sqr_abs.cpp
       sqrt.cpp
+      unary_minus.cpp
+      unary_plus.cpp
     )
 
 make_unit( "type.complex.function" ${SOURCES})

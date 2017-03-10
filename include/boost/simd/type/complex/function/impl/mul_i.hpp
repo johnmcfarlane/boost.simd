@@ -6,44 +6,49 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 **/
 //==================================================================================================
-#ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMPL_ABS_HPP_INCLUDED
-#define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMPL_ABS_HPP_INCLUDED
+#ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMPL_MUL_I_HPP_INCLUDED
+#define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMPL_MUL_I_HPP_INCLUDED
 
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/type/complex/detail/hierarchy.hpp>
-#include <boost/simd/function/hypot.hpp>
-#include <boost/simd/function/pedantic.hpp>
+#include <boost/simd/constant/zero.hpp>
+#include <boost/simd/function/unary_minus.hpp>
 #include <boost/config.hpp>
+
+
+template<typename T> inline std::string type_id( const T& )
+{
+  return type_id<T>();
+}
 
 namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
+  BOOST_DISPATCH_OVERLOAD ( mul_i_
                           , (typename A0)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
                           )
   {
-    BOOST_FORCEINLINE auto operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-    (
-      bs::hypot(a0.real, a0.imag)
-    )
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return {-a0.imag, a0.real};
+    }
   };
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
+  BOOST_DISPATCH_OVERLOAD ( mul_i_
                           , (typename A0)
                           , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::cmplx::complex_<A0>
+                          , bd::generic_< bd::arithmetic_<A0> >
                           )
   {
-    BOOST_FORCEINLINE auto operator()(bs::pedantic_tag const &
-                                     , A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-    (
-       bs::pedantic_(bs::hypot)(a0.real, a0.imag)
-    )
+    using result_t = cmplx::complex<A0>;
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return { Zero<A0>(), a0};
+    }
   };
 } } }
 

@@ -12,12 +12,18 @@
 #include <simd_test.hpp>
 
 namespace bs = boost::simd;
-/*
+
 STF_CASE_TPL( "Complex sqrt on complex<T>", STF_IEEE_TYPES)
 {
 
+  bs::complex<T> c1(0, 2), c2(-3, 4);
+  STF_ULP_EQUAL( bs::cmplx::sqrt(c1), bs::complex<T>(1, 1), 0.5);
+  STF_ULP_EQUAL( bs::cmplx::sqrt(c2), bs::complex<T>(1, 2), 0.5);
+  STF_ULP_EQUAL( bs::pedantic_(bs::cmplx::sqrt)(c1), bs::complex<T>(1, 1), 0.5);
+  STF_ULP_EQUAL( bs::pedantic_(bs::cmplx::sqrt)(c2), bs::complex<T>(1, 2), 0.5);
+
 }
-*/
+
 STF_CASE_TPL( "Complex sqrt on T", STF_IEEE_TYPES)
 {
   T r0(0), r1(9), r2(-16);
@@ -27,12 +33,12 @@ STF_CASE_TPL( "Complex sqrt on T", STF_IEEE_TYPES)
   STF_EQUAL( bs::cmplx::sqrt(r2), bs::complex<T>(0,4));
 }
 
-/*
-STF_CASE_TPL( "Complex sqrt complex<pack<T>>", STF_IEEE_TYPES)
-{
 
-}
-*/
+// STF_CASE_TPL( "Complex sqrt complex<pack<T>>", STF_IEEE_TYPES)
+// {
+
+// }
+
 
 STF_CASE_TPL( "Complex sqrt on pack<T>", STF_IEEE_TYPES)
 {

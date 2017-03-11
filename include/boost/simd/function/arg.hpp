@@ -18,7 +18,7 @@ namespace boost { namespace simd
   /*!
     @ingroup group-arithmetic
     This function computes the angular orientation of its floating parameter
-    (the result is undifined for Nan entries if the @c pedantic_ decorator is not
+    (the result is undefined for Nan entries if the @c pedantic_ decorator is not
     used)
 
 

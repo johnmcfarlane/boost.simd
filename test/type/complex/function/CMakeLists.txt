@@ -26,6 +26,8 @@ set ( SOURCES
       mul_i.cpp
       multiplies.cpp
       plus.cpp
+      polar.cpp
+      proj.cpp
       real.cpp
       sqr_abs.cpp
       sqrt.cpp

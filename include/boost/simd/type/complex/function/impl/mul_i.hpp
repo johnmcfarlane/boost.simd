@@ -16,11 +16,6 @@
 #include <boost/config.hpp>
 
 
-template<typename T> inline std::string type_id( const T& )
-{
-  return type_id<T>();
-}
-
 namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;

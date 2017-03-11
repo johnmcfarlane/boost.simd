@@ -13,6 +13,7 @@
 #include <boost/simd/type/complex/detail/hierarchy.hpp>
 #include <boost/simd/meta/is_pack.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 
 namespace boost { namespace simd { namespace ext
 {

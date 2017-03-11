@@ -32,6 +32,7 @@ SET( SOURCES
     iceil.cpp
     ifix.cpp
     ifloor.cpp
+    imag.cpp
     inc.cpp
     inearbyint.cpp
     iround.cpp
@@ -45,6 +46,7 @@ SET( SOURCES
     oneminus.cpp
     plus.cpp
     quadrant.cpp
+    real.cpp
     rec.cpp
     rem.cpp
     remquo.cpp

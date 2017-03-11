@@ -132,7 +132,7 @@ namespace boost { namespace simd { namespace ext
                         sqrtx*sqrt(Half<rtype>()*inc(rr)),
                         bs::sqrt(y)*bs::sqrt(Half<rtype>()*(r+rr)));
        auto is_real_a0 = is_real(a0);
-//       std::cout << type_id(is_real_a0) <<  std::endl;
+
        A0 z = A0(if_else(is_real_a0, sqrtx, w), if_zero_else(is_real_a0, iaa0*Half<rtype>()/w));
        z = if_else(gezra0, z, A0(z.imag, z.real));
        if (bs::all(bs::is_finite(z))) return if_else(negimag, conj(z), z);

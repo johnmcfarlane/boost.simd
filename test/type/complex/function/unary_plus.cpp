@@ -16,7 +16,7 @@ namespace bs = boost::simd;
 STF_CASE_TPL( "Complex unary_minus on complex<T>", STF_IEEE_TYPES)
 {
 
-  bs::complex<T> c1(2 4);
+  bs::complex<T> c1(2, 4);
   STF_EQUAL( +c1, c1);
 
 }

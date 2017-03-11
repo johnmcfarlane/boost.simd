@@ -53,11 +53,15 @@ namespace boost { namespace simd { namespace ext
       auto rr =  bs::abs(a1.real);
       auto ii =  bs::abs(a1.imag);
       auto e =  -if_else((rr < ii), exponent(ii), exponent(rr));
-      result_t aa1 =  bs::ldexp(a1, e);
+//       std::cout << "bs::ldexp(a1, e) "<< bs::ldexp(a1, e) << std::endl;
+//       std::cout << "a1               "<< a1 << std::endl;
+//       std::cout << "a0               "<< a0 << std::endl;
+//       return a0;
+      result_t aa1(bs::ldexp(a1, e));
       auto denom =  sqr_abs(aa1);
       result_t num = bs::multiplies(a0, conj(aa1));
       result_t r =  ldexp(bs::divides(num, denom), e);
-      return r;
+     return r;
     }
   };
 
@@ -74,7 +78,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      return a0*rec(a1);
+      return a0*rec(value_t(a1));
     }
   };
 
@@ -91,8 +95,8 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      result_t tmp = a0/sqr_abs(a1);
-      return if_else(is_inf(a1), tmp, tmp*conj(a1));
+      auto tmp = a0/sqr_abs(a1);
+      return if_else(is_inf(a1), result_t(tmp), tmp*conj(a1));
     }
   };
 
@@ -164,7 +168,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE result_t operator()( pedantic_tag const &
                                          , A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      return divides(a0, a1));
+      return divides(a0, a1);
     }
   };
 

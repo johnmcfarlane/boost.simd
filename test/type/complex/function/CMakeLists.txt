@@ -12,6 +12,7 @@ set ( SOURCES
       conj.cpp
       divides.cpp
       if_else.cpp
+      imag.cpp
       is_equal.cpp
       is_eqz.cpp
       is_finite.cpp
@@ -20,10 +21,12 @@ set ( SOURCES
       is_imag.cpp
       is_nan.cpp
       is_real.cpp
+      ldexp.cpp
       minus.cpp
       mul_i.cpp
       multiplies.cpp
       plus.cpp
+      real.cpp
       sqr_abs.cpp
       sqrt.cpp
       unary_minus.cpp

@@ -45,6 +45,7 @@ namespace boost { namespace simd { namespace ext
        bs::pedantic_(bs::hypot)(a0.real, a0.imag)
     )
   };
+
 } } }
 
 #endif

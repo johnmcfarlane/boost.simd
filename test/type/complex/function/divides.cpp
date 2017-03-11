@@ -7,6 +7,7 @@
 */
 //==================================================================================================
 #include <boost/simd/type/complex.hpp>
+#include <boost/simd/type/complex/function/abs.hpp>
 #include <boost/simd/pack.hpp>
 #include <simd_test.hpp>
 
@@ -29,9 +30,9 @@ STF_CASE_TPL( "Divides with complex<T>/T", STF_IEEE_TYPES)
   bs::complex<T> r0(6,0), r1(0,2), r2(2,2);
 
   STF_EQUAL(r0 / 3 , bs::complex<T>(2,0));
-  STF_EQUAL(3  / r0, bs::complex<T>(1/3.0,0));
-  STF_EQUAL(r1 / 3 , bs::complex<T>(0, 2.0/3));
-  STF_EQUAL(3  / r1, bs::complex<T>(0, -1/3.0));
+  STF_EQUAL(3  / r0, bs::complex<T>(0.5,0));
+  STF_EQUAL(r1 / 3 , bs::complex<T>(0, 2.0/3.0));
+  STF_EQUAL(3  / r1, bs::complex<T>(0, -1.5));
   STF_EQUAL(r2 / 2 , bs::complex<T>(1, 1));
   STF_EQUAL(4  / r2, bs::complex<T>(1, -1));
 }
@@ -59,9 +60,14 @@ STF_CASE_TPL( "Divides with to complex<pack<T>>/complex<pack<T>>", STF_IEEE_TYPE
   using pc_t = bs::complex<p_t>;
 
   p_t   r1(1,2,3,4), r2(4, 3, 2, 1), r3(5,6,7,8);
-  pc_t  c0(r1, r3), c1(r2, r1), c2(p_t(-1,   -6,  -15,  -28), p_t(21,   22,   23,   24));
+  p_t   z1(0.529411764705882,   1.384615384615385,   2.076923076923077,   2.117647058823529),
+    z2(1.117647058823529,   1.076923076923077,   0.384615384615385,  -0.470588235294118);
 
-  STF_EQUAL(c0 / c1, c2);
+  pc_t  c0(r1, r3), c1(r2, r1), c2(z1, z2);
+  std::cout << bs::abs((c0/c1)*c1-c0) << std::endl;
+  std::cout << bs::abs(c2*c1-c0) << std::endl;
+
+  STF_ULP_EQUAL(c0 / c1, c2, 3.5);
 }
 
 STF_CASE_TPL( "Divides with to complex<pack<T>>/pack<T>", STF_IEEE_TYPES)
@@ -81,23 +87,25 @@ STF_CASE_TPL( "Divides with to complex<pack<T>>/pack<T>", STF_IEEE_TYPES)
 //   using p_t  = bs::pack<T,4>;
 //   using c_t  = bs::complex<T>;
 //   using pc_t = bs::complex<p_t>;
-
-//   c_t   i(1,3);
-//   p_t   rr{0,5,-2,-5};
-//   pc_t  r(p_t( 0,   5,  -2,  -5), p_t(0,   15,   -6,  -15));
-
-//   STF_EQUAL(rr / i, r);
-// }
-
-// STF_CASE_TPL( "Divides with to complex<pack<T>>/T", STF_IEEE_TYPES)
-// {
-//   using p_t  = bs::pack<T,4>;
-//   using pc_t = bs::complex<p_t>;
-
-//   p_t   r(1,2,3,4), i(4, 3, 2, 1);
 //   p_t   r3(3, 6, 9, 12), i3(12, 9, 6, 3);
-//   pc_t  c0(r,i), c1(r3, i3);
+//   p_t   r1(1, 2, 3, 4), i1(4, 3, 2, 1);
+//   c_t   i(1,3);
+//   pc_t  c1(r3, i3), c2(-i1, r1);
 
-//   STF_EQUAL(c0 / 3  , c1);
-//   STF_EQUAL(3 / c0 , c1);
+//   STF_EQUAL(c1 / i, c2);
 // }
+
+STF_CASE_TPL( "Divides with to complex<pack<T>>/T", STF_IEEE_TYPES)
+{
+  using p_t  = bs::pack<T,4>;
+  using pc_t = bs::complex<p_t>;
+
+  p_t   r(1,2,3,4), i(4, 3, 2, 1);
+  p_t   r3(3, 6, 9, 12), i3(12, 9, 6, 3);
+  p_t   r4(0.176470588235294,   0.461538461538462,   0.692307692307692,   0.705882352941177),
+    i4(-0.705882352941177,  -0.692307692307692,  -0.461538461538462,  -0.176470588235294);
+  pc_t  c0(r,i), c1(r3, i3), c2(r4, i4);
+
+  STF_ULP_EQUAL(c1 / 3  , c0, 0.5);
+  STF_ULP_EQUAL(3 / c0 , c2,  4);
+}

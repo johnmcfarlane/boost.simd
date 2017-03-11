@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       using value_t =  typename A0::value_type;
-      return if_else(is_inf(a0), A0(Inf<value_t>(), copysign(Zero<value_t>(), a0.imag));
+      return if_else(is_inf(a0), A0(Inf<value_t>(), copysign(Zero<value_t>(), a0.imag)), a0);
     }
   };
 

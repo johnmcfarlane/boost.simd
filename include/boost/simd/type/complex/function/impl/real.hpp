@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE auto operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
     (
-      a0.real;
+      a0.real
     )
   };
 

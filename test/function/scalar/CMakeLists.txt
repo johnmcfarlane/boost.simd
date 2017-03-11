@@ -179,6 +179,7 @@ set ( SOURCES
    ifrexp.pedantic.cpp
    ilog2.cpp
    ilogb.cpp
+   imag.cpp
    inc.regular.cpp
    inc.saturated.cpp
    indeg.cpp
@@ -302,6 +303,7 @@ set ( SOURCES
    predecessor.cpp
    prev.cpp
    prod.cpp
+   real.cpp
    rec.cpp
    rem_2pi.cpp
    rem_pio2_cephes.cpp

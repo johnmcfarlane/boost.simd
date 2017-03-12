@@ -36,24 +36,6 @@
 #include <boost/simd/type/complex/function/is_real.hpp>
 #include <boost/config.hpp>
 
-// #include <boost/core/demangle.hpp>
-// #include <type_traits>
-
-// template<typename T> inline std::string type_id()
-// {
-//   typedef std::is_const<typename std::remove_reference<T>::type>  const_t;
-//   typedef std::is_lvalue_reference<T>                             lref_t;
-//   typedef std::is_rvalue_reference<T>                             rref_t;
-//   std::string s = boost::core::demangle(typeid(T).name());
-//   s += const_t::value ? " const"  : "";
-//   s += lref_t::value   ? "&"      : "";
-//   s += rref_t::value   ? "&&"     : "";
-//   return s;
-// }
-// template<typename T> inline std::string type_id( const T& )
-// {
-//   return type_id<T>();
-// }
 namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;

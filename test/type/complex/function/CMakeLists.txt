@@ -10,7 +10,11 @@ set ( SOURCES
       abs.cpp
       arg.cpp
       conj.cpp
+      cosh.cpp
       divides.cpp
+      exp.cpp
+      exp_i.cpp
+      exp_ipi.cpp
       if_else.cpp
       imag.cpp
       is_equal.cpp
@@ -19,16 +23,21 @@ set ( SOURCES
       is_inf.cpp
       is_not_equal.cpp
       is_imag.cpp
+      is_invalid.cpp
       is_nan.cpp
       is_real.cpp
       ldexp.cpp
+      log.cpp
+      log10.cpp
       minus.cpp
       mul_i.cpp
       multiplies.cpp
       plus.cpp
       polar.cpp
+      pow.cpp
       proj.cpp
       real.cpp
+      sinh.cpp
       sqr_abs.cpp
       sqrt.cpp
       unary_minus.cpp

@@ -9,7 +9,12 @@
 set ( SOURCES
       abs.cpp
       acos.cpp
+      acosh.cpp
       arg.cpp
+      asin.cpp
+      asinh.cpp
+      atan.cpp
+      atanh.cpp
       conj.cpp
       cos.cpp
       cosh.cpp

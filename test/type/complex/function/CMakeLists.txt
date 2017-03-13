@@ -8,6 +8,7 @@
 
 set ( SOURCES
       abs.cpp
+      acos.cpp
       arg.cpp
       conj.cpp
       cos.cpp

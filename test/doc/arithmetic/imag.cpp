@@ -22,14 +22,14 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                " << pf << '\n'
-    << "-> bs::imag(pf) =      " << bs::imag(pf) << '\n'
+    << "-> bs::imag(pf) =      " << bs::imag(pf) << '\n';
 
   float xf = -32768.0f;
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                " << xf << '\n'
-    << "-> bs::imag(xf) =      " << bs::imag(xf) << '\n'
+    << "-> bs::imag(xf) =      " << bs::imag(xf) << '\n';
   return 0;
 }
 //! [imag]

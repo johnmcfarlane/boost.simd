@@ -22,14 +22,14 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf =                 " << pf << '\n'
-    << "-> bs::real(pf) =       " << bs::real(pf) << '\n'
+    << "-> bs::real(pf) =       " << bs::real(pf) << '\n';
 
   float xf = -32768.0f;
 
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf =                 " << xf << '\n'
-    << "-> bs::real(xf) =       " << bs::real(xf) << '\n'
+    << "-> bs::real(xf) =       " << bs::real(xf) << '\n';
   return 0;
 }
 //! [real]

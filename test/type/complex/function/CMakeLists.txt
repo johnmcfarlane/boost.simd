@@ -10,6 +10,7 @@ set ( SOURCES
       abs.cpp
       arg.cpp
       conj.cpp
+      cos.cpp
       cosh.cpp
       divides.cpp
       exp.cpp
@@ -31,15 +32,19 @@ set ( SOURCES
       log10.cpp
       minus.cpp
       mul_i.cpp
+      mul_mi.cpp
       multiplies.cpp
       plus.cpp
       polar.cpp
       pow.cpp
       proj.cpp
       real.cpp
+      sin.cpp
       sinh.cpp
       sqr_abs.cpp
       sqrt.cpp
+      tan.cpp
+      tanh.cpp
       unary_minus.cpp
       unary_plus.cpp
     )

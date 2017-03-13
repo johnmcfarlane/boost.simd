@@ -249,6 +249,7 @@ namespace boost { namespace simd
 #include <boost/simd/function/iceil.hpp>
 #include <boost/simd/function/ifix.hpp>
 #include <boost/simd/function/ifloor.hpp>
+#include <boost/simd/function/imag.hpp>
 #include <boost/simd/function/inc.hpp>
 #include <boost/simd/function/inearbyint.hpp>
 #include <boost/simd/function/iround.hpp>
@@ -259,6 +260,7 @@ namespace boost { namespace simd
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/function/oneminus.hpp>
 #include <boost/simd/function/quadrant.hpp>
+#include <boost/simd/function/real.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/rem.hpp>
 #include <boost/simd/function/remquo.hpp>

@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace ext
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
- BOOST_DISPATCH_OVERLOAD ( cmplx_sqrt_
+ BOOST_DISPATCH_OVERLOAD (sqrt_
                           , (typename A0)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
@@ -87,7 +87,7 @@ namespace boost { namespace simd { namespace ext
   };
 
 
-   BOOST_DISPATCH_OVERLOAD ( cmplx_sqrt_
+   BOOST_DISPATCH_OVERLOAD ( sqrt_
                           , (typename A0)
                           , bd::cpu_
                           , bs::pedantic_tag

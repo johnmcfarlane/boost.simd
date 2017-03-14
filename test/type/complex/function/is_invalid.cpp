@@ -16,7 +16,6 @@
 #include <boost/simd/meta/as_logical.hpp>
 
 namespace bs = boost::simd;
-namespace bsc =  bs::cmplx;
 
 STF_CASE_TPL( "Complex is_invalid on complex<T>", STF_IEEE_TYPES)
 {

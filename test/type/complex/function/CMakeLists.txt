@@ -47,6 +47,7 @@ set ( SOURCES
       real.cpp
       sin.cpp
       sinh.cpp
+      sqr.cpp
       sqr_abs.cpp
       sqrt.cpp
       tan.cpp

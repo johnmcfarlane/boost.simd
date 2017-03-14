@@ -15,6 +15,7 @@
 #include <boost/simd/function/sqr.hpp>
 #include <boost/simd/type/complex.hpp>
 #include <boost/simd/type/complex/function/sqr_abs.hpp>
+#include <boost/simd/type/complex/function/sqr.hpp>
 #include <complex>
 
 // if you want to see the julia set
@@ -114,7 +115,7 @@ struct mandelbrot
         T n2 =  bs::sqr_abs(z);
         while (n2 < 4 && iteration < max_iter) {
           n2 = bs::sqr_abs(z);
-          z =  z*z + z0;
+          z =  bs::sqr(z) + z0;
           ++iteration;
         }
         iterations[j + i * size] = iteration;
@@ -174,7 +175,7 @@ struct mandelbrot
         pack_l mask;
         do {
           pack_t n2 = bs::sqr_abs(z);
-          z = z*z + z0;
+          z = bs::sqr(z) + z0;
           mask = n2 < 4;
           ++iteration;
           iter = bs::if_inc(mask, iter);

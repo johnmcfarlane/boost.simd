@@ -6,9 +6,6 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
-NS_include(make_bench)
-
-set(CMAKE_BUILD_TYPE "Release")
-
-add_subdirectory(function)
-add_subdirectory(type)
+add_subdirectory(scalar)
+add_subdirectory(simd)
+add_subdirectory(std)

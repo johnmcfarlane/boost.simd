@@ -13,6 +13,9 @@
 #include <boost/simd/function/fma.hpp>
 #include <boost/simd/function/if_inc.hpp>
 #include <boost/simd/function/sqr.hpp>
+#include <boost/simd/type/complex.hpp>
+#include <boost/simd/type/complex/function/sqr_abs.hpp>
+#include <complex>
 
 // if you want to see the julia set
 // uncomment the two include lines and the two other commented areas with the
@@ -29,6 +32,7 @@ namespace bs = boost::simd;
 using pack_t = bs::pack<T>;
 using pack_i = bs::pack<int>;
 using pack_l = bs::as_logical_t<pack_t>;
+using cpack_t= bs::complex<pack_t>;
 
 struct mandelbrot
 {
@@ -75,7 +79,51 @@ struct mandelbrot
   }
   //! [mandelbrot-scalar]
 
-  //! [mandelbrot-simd]
+  //! [mandelbrot-complex-std]
+  void evaluate_complex_std()
+  {
+    using c_t =  std::complex<T>;
+    for (int i = 0; i < size; ++i) {
+      T  x0(T(i) / T(size) * x_range + x_min);
+      for (int j = 0; j < size; ++j) {
+        int iteration = 0;
+        c_t z0(T(j) / T(size) * y_range + y_min, x0);
+        c_t z(0);
+        T n2 =  std::norm(z);
+        while (n2 < 4 && iteration < max_iter) {
+          n2 = std::norm(z);
+          z =  z*z + z0;
+          ++iteration;
+        }
+        iterations[j + i * size] = iteration;
+      }
+    }
+  }
+  //! [mandelbrot-complex-std]
+
+  //! [mandelbrot-complex-scalar]
+  void evaluate_complex_scalar()
+  {
+    using c_t =  bs::complex<T>;
+    for (int i = 0; i < size; ++i) {
+      c_t z0(T(i) / T(size) * x_range + x_min);
+      for (int j = 0; j < size; ++j) {
+        int iteration = 0;
+        z0.imag = T(j) / T(size) * y_range + y_min;
+        c_t z(0);
+        T n2 =  bs::sqr_abs(z);
+        while (n2 < 4 && iteration < max_iter) {
+          n2 = bs::sqr_abs(z);
+          z =  z*z + z0;
+          ++iteration;
+        }
+        iterations[j + i * size] = iteration;
+      }
+    }
+  }
+  //! [mandelbrot-complex-scalar]
+
+//! [mandelbrot-simd]
   void evaluate_simd()
   {
     pack_t step =
@@ -108,6 +156,37 @@ struct mandelbrot
   }
   //! [mandelbrot-simd]
 
+  //! [mandelbrot-complex-simd]
+  void evaluate_complex_simd()
+  {
+    pack_t step =
+      bs::enumerate<pack_t>(0); // produce a vector containing {0, 1, ..., pack_t::static_size-1}
+    for (int i = 0; i < size; ++i) {
+      cpack_t z0{T(i) / T(size) * x_range + x_min};
+      pack_t fac{y_range / T(size)};
+      pack_t y_min_t{y_min};
+      for (int j = 0; j < size; j += pack_t::static_size) {
+        int iteration = 0;
+        z0.imag = bs::fma(step + j, fac, y_min_t);
+
+        cpack_t z{0};
+        pack_i iter{0};
+        pack_l mask;
+        do {
+          pack_t n2 = bs::sqr_abs(z);
+          z = z*z + z0;
+          mask = n2 < 4;
+          ++iteration;
+          iter = bs::if_inc(mask, iter);
+        } while (bs::any(mask) && iteration < max_iter);
+        bs::aligned_store(iter, &iterations[j + i * size]);
+      }
+    }
+  }
+  //! [mandelbrot-complex-simd]
+
+
+
   // if you want to see the julia set
   //    void display() {
   //      cv::Mat display;
@@ -133,9 +212,24 @@ int main(int argc, char** argv)
   std::cout << " scalar " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
 
   t0 = hrc::now();
+  image.evaluate_complex_std();
+  t1 = hrc::now();
+  std::cout << " complex std " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
+
+  t0 = hrc::now();
+  image.evaluate_complex_scalar();
+  t1 = hrc::now();
+  std::cout << " complex scalar " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
+
+  t0 = hrc::now();
   image.evaluate_simd();
   t1 = hrc::now();
   std::cout << " simd " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
+
+  t0 = hrc::now();
+  image.evaluate_complex_simd();
+  t1 = hrc::now();
+  std::cout << " complex simd " << chr::duration_cast<chr::milliseconds>(t1 - t0).count() << std::endl;
   // if you want to see the julia set
   //  image.display();
 }

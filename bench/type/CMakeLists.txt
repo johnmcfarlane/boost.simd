@@ -8,7 +8,4 @@
 
 NS_include(make_bench)
 
-set(CMAKE_BUILD_TYPE "Release")
-
-add_subdirectory(function)
-add_subdirectory(type)
+add_subdirectory(complex)

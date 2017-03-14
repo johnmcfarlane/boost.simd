@@ -12,7 +12,7 @@
 
 #include <boost/simd/type/complex/function/abs.hpp>
 #include <boost/simd/type/complex/function/arg.hpp>
-
+#include <complex>
 namespace boost { namespace simd { namespace cmplx
 {
   /*!
@@ -34,11 +34,16 @@ namespace boost { namespace simd { namespace cmplx
     template<typename T0>
     explicit complex(T0 const& rr) : real(static_cast<Type>(rr)), imag(0) {}
 
+
     /// @brief Construct a complex from a real and imaginary parts.
     template<typename T0, typename T1>
     complex(T0 const& rr, T1 const& ii) : real(static_cast<Type>(rr))
                                         , imag(static_cast<Type>(ii))
     {}
+
+    /// @brief std::complex compatibility
+    explicit complex(std::complex<Type> const& cc)
+      : real(std::real(cc)), imag(std::imag(cc)) {}
 
     Type modulus()  const { return bs::abs(*this); }
     Type argument() const { return bs::arg(*this); }

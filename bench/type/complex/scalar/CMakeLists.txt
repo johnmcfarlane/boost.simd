@@ -1,14 +1,13 @@
 ## -------------------------------------------------------------------------------------------------
-##                              Copyright 2016 - NumScale SAS
+##                              Copyright 2017 - NumScale SAS
 ##
 ##                   Distributed under the Boost Software License, Version 1.0.
 ##                        See accompanying file LICENSE.txt or copy at
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
-NS_include(make_bench)
+add_subdirectory(cos)
+add_subdirectory(sqr_abs)
+add_subdirectory(sqrt)
 
-set(CMAKE_BUILD_TYPE "Release")
 
-add_subdirectory(function)
-add_subdirectory(type)

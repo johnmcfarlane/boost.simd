@@ -6,9 +6,9 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## -------------------------------------------------------------------------------------------------
 
-NS_include(make_bench)
+## benches for functor abs in std mode.
 
-set(CMAKE_BUILD_TYPE "Release")
+add_subdirectory(cos)
+add_subdirectory(sqr_abs)
+add_subdirectory(sqrt)
 
-add_subdirectory(function)
-add_subdirectory(type)

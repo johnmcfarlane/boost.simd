@@ -20,7 +20,7 @@ namespace bs =  boost::simd;
   BOOST_FORCEINLINE bs::complex<T> operator()(const T & r, const T & i) const BOOST_NOEXCEPT
   {
     bs::complex<T> z{r, i};
-    return bs::cmplx::sqrt(z);
+    return bs::sqrt(z);
   }
 };
 

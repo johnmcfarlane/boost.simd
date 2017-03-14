@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace ext
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD_IF ( cmplx_pow_
+  BOOST_DISPATCH_OVERLOAD_IF ( pow_
                              , (typename A0, typename A1)
                              , ( std::is_same< bd::value_of_t<typename A0::value_type>
                                , bd::value_of_t<typename A1::value_type>
@@ -52,6 +52,20 @@ namespace boost { namespace simd { namespace ext
                           , (typename A0, typename A1)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
+                          , bs::cmplx::complex_<A1>
+                          )
+  {
+    BOOST_FORCEINLINE auto operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT_DECLTYPE_BODY
+      (
+        bs::pow(a0, a1)
+      )
+   };
+
+
+  BOOST_DISPATCH_OVERLOAD ( pow_
+                          , (typename A0, typename A1)
+                          , bd::cpu_
+                          , bs::cmplx::complex_<A0>
                           , bd::generic_< bd::floating_<A1> >
                           )
   {
@@ -69,6 +83,19 @@ namespace boost { namespace simd { namespace ext
   BOOST_DISPATCH_OVERLOAD ( cmplx_pow_
                           , (typename A0, typename A1)
                           , bd::cpu_
+                          , bs::cmplx::complex_<A0>
+                          , bd::generic_< bd::floating_<A1> >
+                          )
+   {
+     BOOST_FORCEINLINE auto operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT_DECLTYPE_BODY
+       (
+         bs::pow(a0, a1)
+       )
+   };
+
+  BOOST_DISPATCH_OVERLOAD ( pow_
+                          , (typename A0, typename A1)
+                          , bd::cpu_
                           , bd::generic_< bd::floating_<A0> >
                           , bs::cmplx::complex_<A1>
                           )
@@ -80,6 +107,19 @@ namespace boost { namespace simd { namespace ext
     {
       return bs::exp(a1*bs::cmplx::log(a0));
     }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_pow_
+                          , (typename A0, typename A1)
+                          , bd::cpu_
+                          , bd::generic_< bd::floating_<A0> >
+                          , bs::cmplx::complex_<A1>
+                          )
+  {
+    BOOST_FORCEINLINE auto operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT_DECLTYPE_BODY
+      (
+        bs::pow(a0, a1)
+      )
   };
 
   BOOST_DISPATCH_OVERLOAD ( cmplx_pow_

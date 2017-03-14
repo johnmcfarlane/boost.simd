@@ -16,6 +16,7 @@
 #include <boost/simd/type/complex/function/is_invalid.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/acos.hpp>
+#include <boost/simd/function/all.hpp>
 #include <boost/simd/function/any.hpp>
 #include <boost/simd/function/atan.hpp>
 #include <boost/simd/function/average.hpp>
@@ -55,7 +56,7 @@ namespace boost { namespace simd { namespace ext
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( cmplx_acos_
+  BOOST_DISPATCH_OVERLOAD ( acos_
                           , (typename A0)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
@@ -201,6 +202,32 @@ namespace boost { namespace simd { namespace ext
       r = if_else(ltzra0, Pi<rtype>()-r, r);
       i = if_neg(gtzia0, i);
       return {r, i};
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_acos_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bs::cmplx::complex_<A0>
+                          )
+  {
+    BOOST_FORCEINLINE auto operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
+      (
+        bs::acos(a0)
+      )
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_acos_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bd::floating_<A0>
+                          )
+  {
+    using result_type =  cmplx::complex<A0>;
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::acos(a0.real),Zero<A0>()} ;
+    return bs::acos(result_type(a0.real, Zero<A0>())); //TODO optimize it
     }
   };
 

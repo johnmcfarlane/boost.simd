@@ -65,12 +65,7 @@ STF_CASE_TPL( "Complex sqr_abs std::complex<T>", STF_IEEE_TYPES)
   T z2 = bs::sqr_abs(c2);
   T z4 = bs::sqr_abs(bc_t(a));
   T z5 = sqr_abs(a);
-//  auto z3 = bs::sqr_abs(bc_t(a));
-  std::cout << std::setprecision(20) << z1 << std::endl;
-  std::cout << z2 << std::endl;
-  std::cout << z4 << std::endl;
-  std::cout << z5 << std::endl;
-  STF_ULP_EQUAL(z1, z2, 0.);
   STF_ULP_EQUAL(z1, z2, 0.5);
+  STF_ULP_EQUAL(z1, z5, 0.5);
   STF_ULP_EQUAL(z1, z4, 0.5);
 }

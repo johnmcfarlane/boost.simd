@@ -10,6 +10,7 @@
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMPL_ASIN_HPP_INCLUDED
 
 #include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/type/complex.hpp>
 #include <boost/simd/type/complex/detail/hierarchy.hpp>
 #include <boost/simd/type/complex/function/is_real.hpp>
 #include <boost/simd/type/complex/function/is_imag.hpp>
@@ -56,7 +57,9 @@ namespace boost { namespace simd { namespace ext
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( cmplx_asin_
+
+
+  BOOST_DISPATCH_OVERLOAD ( asin_
                           , (typename A0)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
@@ -203,6 +206,32 @@ namespace boost { namespace simd { namespace ext
       r = if_neg(ltzra0, r);
       i = if_neg(ltzia0, i);
       return {r, i};
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_asin_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bs::cmplx::complex_<A0>
+                          )
+  {
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return bs::asin(a0);
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_asin_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bd::floating_<A0>
+                          )
+  {
+    using result_type =  bs::complex<A0>;
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::asin(a0.real),Zero<A0>()} ;
+      return bs::asin(result_type(a0.real, Zero<A0>())); //TODO optimize it
     }
   };
 

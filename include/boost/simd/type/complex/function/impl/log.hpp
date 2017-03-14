@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace ext
   namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( cmplx_log_
+  BOOST_DISPATCH_OVERLOAD ( log_
                           , (typename A0)
                           , bd::cpu_
                           , bs::cmplx::complex_<A0>
@@ -35,8 +35,21 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       using rtype = typename A0::value_type;
-      rtype a = if_zero_else(logical_and(bs::is_real(a0), bs::is_nan(a0.imag)), bs::arg(a0)) ;
+      rtype a = if_zero_else(logical_and(bs::is_real(a0), bs::is_nan(a0.imag))
+                            , bs::arg(a0)) ;
       return {bs::log(bs::abs(a0)), a};
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( cmplx_log_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bs::cmplx::complex_<A0>
+                          )
+  {
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return bs::log(a0);
     }
   };
 

@@ -15,7 +15,7 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
-struct sqr_abs
+struct sqr_abs_std
 {
   template < typename T >
   BOOST_FORCEINLINE T operator()(const std::complex<T> & a0) const
@@ -27,6 +27,6 @@ struct sqr_abs
 DEFINE_BENCH_MAIN()
 {
   using T = std::complex<float>;
-  run<T>(sqr_abs(), nsbg::rand<T>(-10, 10, -10, 10));
+  run<T>(sqr_abs_std(), nsbg::rand<T>(-10, 10, -10, 10));
 }
 

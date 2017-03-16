@@ -23,9 +23,8 @@ namespace bs =  boost::simd;
   }
 };
 
-DEFINE_SCALAR_BENCH(scalar_sqr_abs, sqr_abs_bench());
-
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<scalar_sqr_abs, float>(-10, 10, -10, 10);
+  using T = float;
+  run<T>(sqr_abs_bench(), nsbg::rand<T>(-10, 10), nsbg::rand<T>(-10, 10));
 }

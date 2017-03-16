@@ -14,19 +14,8 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct sqrt_bench
-{
-  template < class T >
-  BOOST_FORCEINLINE bs::complex<T> operator()(const T & r, const T & i) const BOOST_NOEXCEPT
-  {
-    bs::complex<T> z{r, i};
-    return bs::sqrt(z);
-  }
-};
-
-DEFINE_SCALAR_BENCH(scalar_sqrt, sqrt_bench());
-
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<scalar_sqrt, double>(-10, 10, -10, 10);
+  using T = bs::complex<double>;
+  run<T>(bs::sqrt, nsbg::rand<T>(-10, 10, -10, 10));
 }

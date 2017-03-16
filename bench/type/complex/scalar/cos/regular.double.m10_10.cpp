@@ -14,20 +14,8 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct cos_bench
-{
-  template < typename T>
-  BOOST_FORCEINLINE bs::complex<T>
-  operator()(const T & r, const T & i) const BOOST_NOEXCEPT
-  {
-    bs::complex<T> z{r, i};
-    return bs::cos(z);
-  }
-};
-
-DEFINE_SCALAR_BENCH(scalar_cos, cos_bench());
-
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<scalar_cos, double>(-10, 10, -10, 10);
+  using T = bs::complex<double>;
+  run<T>(bs::cos, nsbg::rand<T>(-10, 10, -10, 10));
 }

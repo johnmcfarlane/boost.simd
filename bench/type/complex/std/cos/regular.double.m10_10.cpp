@@ -8,23 +8,15 @@
 
 /// bench for functor cos in std mode for double type with no decorator (regular call).
 #include <simd_bench.hpp>
-#include <complex>
+#include <boost/simd/pack.hpp>
+#include <boost/simd/type/complex.hpp>
+#include <boost/simd/type/complex/function/cos.hpp>
 
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct cos_bench
-{
-  template < class T >
-  BOOST_FORCEINLINE std::complex<T> operator()(const T & r, const T & i) const BOOST_NOEXCEPT
-  {
-    std::complex<T> z{r, i};
-    return std::cos(z);
-  }
-};
-
 DEFINE_BENCH_MAIN()
 {
-  using T = double;
-  run<T>(sqr_abs_bench(), nsbg::rand<T>(-10, 10), nsbg::rand<T>(-10, 10));
+  using T = std::complex<double>;
+  run<T>(bs::std_(bs::cos), nsbg::rand<T>(-10, 10, -10, 10));
 }

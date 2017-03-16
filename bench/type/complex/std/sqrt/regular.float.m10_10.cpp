@@ -8,24 +8,15 @@
 
 /// bench for functor sqrt in std mode for float type with no decorator (regular call).
 #include <simd_bench.hpp>
-#include <complex>
+#include <boost/simd/pack.hpp>
+#include <boost/simd/type/complex.hpp>
+#include <boost/simd/type/complex/function/sqrt.hpp>
 
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct sqrt_bench
-{
-  template < class T >
-  BOOST_FORCEINLINE std::complex<T> operator()(const T & r, const T & i) const BOOST_NOEXCEPT
-  {
-    std::complex<T> z{r, i};
-    return std::sqrt(z);
-  }
-};
-
-DEFINE_SCALAR_BENCH(scalar_sqrt, sqrt_bench());
-
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<scalar_sqrt, float>(-10, 10, -10, 10);
+  using T = std::complex<float>;
+  run<T>(bs::std_(bs::sqrt), nsbg::rand<T>(-10, 10, -10, 10));
 }

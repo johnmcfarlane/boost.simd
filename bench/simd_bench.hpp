@@ -16,9 +16,15 @@
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/algorithm/string/erase.hpp>
 #include <ns/bench.hpp>
+#include <ns/bench/type_id.hpp>
 #include <boost/simd/type/complex.hpp>
+#include <boost/simd/meta/is_scalar.hpp>
+#include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
 namespace ns { namespace bench {
+
+ namespace tt = nsm::type_traits;
 
 template <typename T, std::size_t N>
 struct format_type<boost::simd::pack<T, N>>
@@ -32,124 +38,219 @@ struct format_type<boost::simd::pack<T, N>>
   }
 };
 
+template <typename T, template < typename > typename C, std::size_t N>
+struct format_type<C<boost::simd::pack<T, N>>>
+{
+  static std::string to_string()
+  {
+    std::stringstream ss;
+
+    ss << "complex < pack<" << format_type<T>::to_string() << " > , " << N << ">";
+    return ss.str();
+  }
+};
 } }
 
 namespace ns { namespace bench { namespace generators {
 
-// template <typename T, std::size_t N>
-// struct rand<boost::simd::pack<T, N>>
-// {
-//   using pack_type = boost::simd::pack<T, N>;
-//   using value_type = typename pack_type::value_type;
+  namespace bs = boost::simd;
 
-//   template <typename U>
-//   rand( U min = static_cast<U>(std::numeric_limits<value_type>::min())
-//       , U max = static_cast<U>(std::numeric_limits<value_type>::max())
-//       ) : r(min, max)
-//   {
-//   }
-
-//   inline pack_type operator()() {
-//     std::array<value_type, sizeof(pack_type) / sizeof(value_type)> v;
-//     std::transform(v.begin(), v.end(), v.begin(), [this](value_type const&) { return r.random(); });
-//     return {v.begin(), v.end()};
-//   }
-
-//   std::string description() const {
-//     return "TODO";
-//   }
-
-//   private :
-//   rand<value_type> r;
-// };
-
-template <typename C>
-struct rand_complex_base {
-  using complex_type = C;
-  using value_type = typename complex_type::value_type;
+template <typename T, std::size_t N>
+struct rand<boost::simd::pack<T, N>>
+{
+  using pack_type = bs::pack<T, N>;
+  using value_type = typename pack_type::value_type;
 
   template <typename U>
-  rand_complex_base( U pmin = static_cast<U>(std::numeric_limits<value_type>::min())
-                   , U pmax = static_cast<U>(std::numeric_limits<value_type>::max())
-                   ) : rmin_(pmin), rmax_(pmax), rmin_(pmin), rmax_(pmax)
+  rand( U min = static_cast<U>(std::numeric_limits<value_type>::min())
+      , U max = static_cast<U>(std::numeric_limits<value_type>::max())
+      ) : min_(min), max_(max), r(min, max)
   {
-    if (std::is_unsigned<value_type>::value) {
-      pmin = std::abs(pmin);
-      pmax = std::abs(pmax);
-    }
-    if (pmin > pmax) std::swap(pmin, pmax);
-    if (pmin == pmax) pmin = value_type(0);
-    imin_ = rmin_ = pmin;
-    imax_ = rmax_ = pmax;
   }
 
-  template <typename U, typename V>
-  rand_complex_base( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
-                   , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
-                   , V imin = static_cast<V>(std::numeric_limits<value_type>::min())
-                   , V imax = static_cast<V>(std::numeric_limits<value_type>::max())
-                   ) : rmin_(rmin), rmax_(rmax), imin_(imin), imax_(imax)
-  {
-    if (std::is_unsigned<value_type>::value) {
-      rmin = std::abs(rmin);
-      rmax = std::abs(rmax);
-      imin = std::abs(imin);
-      imax = std::abs(imax);
-    }
-    if (rmin > rmax) std::swap(rmin, rmax);
-    if (rmin == rmax) rmin = value_type(0);
-    rmin_ = rmin;
-    rmax_ = rmax;
-    if (imin > imax) std::swap(imin, imax);
-    if (imin == imax) imin = value_type(0);
-    imin_ = imin;
-    imax_ = imax;
+  inline pack_type operator()() {
+    std::array<value_type, sizeof(pack_type) / sizeof(value_type)> v;
+    std::transform(v.begin(), v.end(), v.begin(), [this](value_type const&) { return r.random(); });
+    return {v.begin(), v.end()};
+  }
 
+  std::string description() const {
+    std::stringstream ss;
+    ss << "rand<pack<" << format_type<pack_type>::to_string() << ", " << N
+       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << ") ]";
+    return ss.str();
   }
-  /// Generate a random value between `min` and `max`
-  complex_type random() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_real_distribution<> dist(0.0, 1.0);
-    double f = (rmax_ - rmin_);
-    double g = (imax_- imin_);
-    return { rmin_ + f * dist(gen),  imin_+ g * dist(gen)};
+   value_type const& rmin() const { return min_; }
+   value_type const& rmax() const { return max_; }
+
+  private :
+  value_type min_, max_;
+  rand<value_type> r;
+};
+
+
+template <typename T, std::size_t N>
+struct rand<bs::complex<bs::pack<T, N>>>
+{
+  using complex_type = bs::complex<bs::pack<T, N>>;
+  using pack_type = bs::pack<T, N>;
+  using value_type = typename pack_type::value_type;
+
+   template <typename U, typename V>
+   rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+       , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+       , V imin = static_cast<V>(std::numeric_limits<value_type>::min())
+       , V imax = static_cast<V>(std::numeric_limits<value_type>::max())
+       ) : rmin_(rmin), rmax_(rmax), imin_(imin), imax_(imax)
+         , r(rand<value_type>(rmin_, rmax_))
+         , i(rand<value_type>(imin_, imax_))
+  { }
+
+  template <typename U>
+  rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+      , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+      ) :rmin_(rmin), rmax_(rmax), imin_(rmin), imax_(rmax),
+         r(rand<value_type>(rmin_, rmax_)),
+         i(rand<value_type>(rmin_, rmax_))
+  { }
+
+
+  complex_type random()
+  {
+    std::array<value_type, sizeof(value_type) / sizeof(value_type)> v, w;
+    std::transform(v.begin(), v.end(), v.begin(), [this](value_type const&) { return r.random(); });
+    std::transform(w.begin(), w.end(), w.begin(), [this](value_type const&) { return i.random(); });
+    return {pack_type{v.begin(), v.end()}, pack_type{w.begin(), w.end()}};
   }
+  /// Generate the next value
+  inline complex_type operator()() {
+    return random();
+  }
+   value_type const& rmin() const { return rmin_; }
+   value_type const& rmax() const { return rmax_; }
+   value_type const& imin() const { return imin_; }
+   value_type const& imax() const { return imax_; }
+
+  std::string description() const {
+    std::stringstream ss;
+    ss << "rand<complex<pack<" << format_type<value_type>::to_string() << ", " << N
+       << ">>>[(" << format(rmin()) << ", " << format(rmax()) << "),  ("
+       <<           format(imin()) << ", " << format(imax()) << ")]";
+    return ss.str();
+  }
+
+  private :
+  value_type rmin_, rmax_, imin_, imax_;
+  rand<value_type> r, i;
+};
+
+template <typename T>
+struct rand<bs::complex<T>>
+{
+  using complex_type = bs::complex<T>;
+  using value_type = T;
+
+   template <typename U, typename V>
+   rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+       , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+       , V imin = static_cast<V>(std::numeric_limits<value_type>::min())
+       , V imax = static_cast<V>(std::numeric_limits<value_type>::max())
+       ) : rmin_(rmin), rmax_(rmax), imin_(imin), imax_(imax)
+         , r(rand<value_type>(rmin_, rmax_))
+         , i(rand<value_type>(imin_, imax_))
+  { }
+
+  template <typename U>
+  rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+      , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+      ) :rmin_(rmin), rmax_(rmax), imin_(rmin), imax_(rmax),
+         r(rand<value_type>(rmin_, rmax_)),
+         i(rand<value_type>(rmin_, rmax_))
+  { }
+
+
+   /// Generate a random value between `min` and `max`
+   complex_type random() {
+     return { r.random(), i.random()};
+   }
 
   /// Generate the next value
   inline complex_type operator()() {
     return random();
   }
+   value_type const& rmin() const { return rmin_; }
+   value_type const& rmax() const { return rmax_; }
+   value_type const& imin() const { return imin_; }
+   value_type const& imax() const { return imax_; }
 
-  /// Get the description of the generator
   std::string description() const {
     std::stringstream ss;
-    ss << "rand<" << format_type<value_type>::to_string()
-       << ">[ (" << format(rmin()) << ", " << format(rmax()) << "),  ("
-       <<           format(imin()) << ", " << format(imax()) << ") ]";
+    ss << "rand<complex<" << format_type<value_type>::to_string()
+       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << "),  ("
+       <<           format(imin()) << ", " << format(imax()) << "), ]";
     return ss.str();
   }
 
-  value_type const& rmin() const { return rmin_; }
-  value_type const& rmax() const { return rmax_; }
-  value_type const& imin() const { return imin_; }
-  value_type const& imax() const { return imax_; }
-
-  private:
+  private :
   value_type rmin_, rmax_, imin_, imax_;
+  rand<value_type> r, i;
 };
 
 template <typename T>
-struct rand<boost::simd::complex<T>> : rand_complex_base<boost::simd::complex<T>> {
-  using rand_complex_base<boost::simd::complex<T>>::rand_complex_base;
+struct rand<std::complex<T>>
+{
+  using complex_type = std::complex<T>;
+  using value_type = T;
+
+   template <typename U, typename V>
+   rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+       , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+       , V imin = static_cast<V>(std::numeric_limits<value_type>::min())
+       , V imax = static_cast<V>(std::numeric_limits<value_type>::max())
+       ) : rmin_(rmin), rmax_(rmax), imin_(imin), imax_(imax)
+         , r(rand<value_type>(rmin_, rmax_))
+         , i(rand<value_type>(imin_, imax_))
+  { }
+
+  template <typename U>
+  rand( U rmin = static_cast<U>(std::numeric_limits<value_type>::min())
+      , U rmax = static_cast<U>(std::numeric_limits<value_type>::max())
+      ) :rmin_(rmin), rmax_(rmax), imin_(rmin), imax_(rmax),
+         r(rand<value_type>(rmin_, rmax_)),
+         i(rand<value_type>(rmin_, rmax_))
+  { }
+
+
+   /// Generate a random value between `min` and `max`
+   complex_type random() {
+     return { r.random(), i.random()};
+   }
+
+  /// Generate the next value
+  inline complex_type operator()() {
+//     std::cout << ns::bench::type_id<complex_type>() << std::endl;
+//     std::cout << ns::bench::type_id<value_type>()<< std::endl;
+    return random();
+  }
+   value_type const& rmin() const { return rmin_; }
+   value_type const& rmax() const { return rmax_; }
+   value_type const& imin() const { return imin_; }
+   value_type const& imax() const { return imax_; }
+
+  std::string description() const {
+    std::stringstream ss;
+    ss << "rand<<std::complex<" << format_type<value_type>::to_string()
+       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << "),  ("
+       <<           format(imin()) << ", " << format(imax()) << "), ]";
+    return ss.str();
+  }
+
+  private :
+  value_type rmin_, rmax_, imin_, imax_;
+  rand<value_type> r, i;
 };
 
-template <typename T>
-struct rand<std::complex<T>> : rand_complex_base<std::complex<T>> {
-  using rand_complex_base<std::complex<T>>::rand_complex_base;
-};
-
- } } }
+} } }
 
 // -------------------------------------------------------------------------------------------------
 
@@ -225,6 +326,11 @@ template <typename T> struct experiment_size_of {
 
 template <typename T, std::size_t N>
 struct experiment_size_of<boost::simd::pack<T, N>>  {
+  enum { value = N };
+};
+
+template <typename T, std::size_t N>
+struct experiment_size_of<boost::simd::complex<boost::simd::pack<T, N>>>  {
   enum { value = N };
 };
 

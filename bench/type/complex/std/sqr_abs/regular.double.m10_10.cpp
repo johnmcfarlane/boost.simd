@@ -6,7 +6,7 @@
 //                            http://www.boost.org/LICENSE_1_0.txt
 // -------------------------------------------------------------------------------------------------
 
-/// bench for functor sqr_abs in std mode for double type with no decorator (regular call).
+/// bench for functor sqr_abs in std mode for float type with no decorator (regular call).
 #include <simd_bench.hpp>
 #include <boost/simd/pack.hpp>
 #include <boost/simd/type/complex.hpp>
@@ -20,3 +20,4 @@ DEFINE_BENCH_MAIN()
   using T = std::complex<double>;
   run<T>(bs::std_(bs::sqr_abs), nsbg::rand<T>(-10, 10, -10, 10));
 }
+

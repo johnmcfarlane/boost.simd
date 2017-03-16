@@ -6,7 +6,7 @@
 //                            http://www.boost.org/LICENSE_1_0.txt
 // -------------------------------------------------------------------------------------------------
 
-/// bench for functor cos in std mode for float type with no decorator (regular call).
+/// bench for functor cos in std mode for double type with no decorator (regular call).
 #include <simd_bench.hpp>
 #include <boost/simd/pack.hpp>
 #include <boost/simd/type/complex.hpp>
@@ -15,8 +15,20 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
+struct cos_bench
+{
+  template < class T >
+  BOOST_FORCEINLINE std::complex<T> operator()(const std::complex<T> & a0)
+    const BOOST_NOEXCEPT
+  {
+    return std::cos(a0);
+  }
+};
+
 DEFINE_BENCH_MAIN()
 {
   using T = std::complex<float>;
-  run<T>(bs::std_(bs::cos), nsbg::rand<T>(-10, 10, -10, 10));
+  run<T>(cos_bench(), nsbg::rand<T>(-10, 10, -10, 10));
 }
+
+

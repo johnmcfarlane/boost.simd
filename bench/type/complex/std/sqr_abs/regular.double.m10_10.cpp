@@ -13,20 +13,17 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct sqr_abs_bench
+struct sqr_abs
 {
-  template < class T >
-  BOOST_FORCEINLINE T operator()(const T & r, const T & i) const BOOST_NOEXCEPT
+  template < typename T >
+  BOOST_FORCEINLINE T operator()(const std::complex<T> & a0) const
   {
-    std::complex<T> z{r, i};
-    return std::norm(z);
+    return std::norm(a0);
   }
 };
 
-DEFINE_SCALAR_BENCH(scalar_sqr_abs, sqr_abs_bench());
-
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<scalar_sqr_abs, double>(-10, 10, -10, 10);
+  using T = std::complex<double>;
+  run<T>(sqr_abs(), nsbg::rand<T>(-10, 10, -10, 10));
 }
-

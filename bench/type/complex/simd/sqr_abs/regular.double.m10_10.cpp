@@ -24,11 +24,10 @@ namespace bs =  boost::simd;
   }
 };
 
-DEFINE_SIMD_BENCH(simd_sqr_abs, sqr_abs_bench());
 
 DEFINE_BENCH_MAIN()
 {
-  nsb::for_each<simd_sqr_abs, double>(-10, 10, -10, 10);
+  using T = bs::pack<double>;
+  run<T>(sqr_abs_bench(), nsbg::rand<T>(-10, 10), nsbg::rand<T>(-10, 10));
 }
-
 

@@ -6,8 +6,7 @@
 //                            http://www.boost.org/LICENSE_1_0.txt
 // -------------------------------------------------------------------------------------------------
 
-
-/// bench for functor sqrt in scalar mode for float type with no decorator (regular call).
+/// bench for functor sqrt in scalar mode for double type with no decorator (regular call).
 #include <simd_bench.hpp>
 #include <boost/simd/type/complex.hpp>
 #include <boost/simd/type/complex/function/sqrt.hpp>

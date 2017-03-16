@@ -14,20 +14,27 @@
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
- struct sqr_abs_bench
-{
-  template < class T >
-  BOOST_FORCEINLINE T operator()(const T & r, const T & i) const BOOST_NOEXCEPT
-  {
-    bs::complex<T> z{r, i};
-    return bs::sqr_abs(z);
-  }
-};
+// before
+//  struct sqr_abs_bench
+// {
+//   template < class T >
+//   BOOST_FORCEINLINE T operator()(const T & r, const T & i) const BOOST_NOEXCEPT
+//   {
+//     bs::complex<T> z{r, i};
+//     return bs::sqr_abs(z);
+//   }
+// };
 
 
+// DEFINE_BENCH_MAIN()
+// {
+//   using T = bs::pack<double>;
+//   run<T>(sqr_abs_bench(), nsbg::rand<T>(-10, 10), nsbg::rand<T>(-10, 10));
+// }
+
+// after complex adaptation
 DEFINE_BENCH_MAIN()
 {
-  using T = bs::pack<double>;
-  run<T>(sqr_abs_bench(), nsbg::rand<T>(-10, 10), nsbg::rand<T>(-10, 10));
+  using T = std::complex<bs::pack<double>>;
+  run<T>(bs::sqr_abs, nsbg::rand<T>(-10, 10, -10, 10));
 }
-

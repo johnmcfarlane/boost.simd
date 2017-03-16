@@ -16,6 +16,6 @@ namespace bs =  boost::simd;
 
 DEFINE_BENCH_MAIN()
 {
-  using T = bs::complex<bs::pack<float>>;
+  using T = bs::complex<bs::pack<double>>;
   run<T>(bs::cos, nsbg::rand<T>(-10, 10, -10, 10));
 }

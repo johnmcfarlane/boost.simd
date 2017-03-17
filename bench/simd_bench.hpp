@@ -15,6 +15,9 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/algorithm/string/erase.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/replace.hpp>
 #include <ns/bench.hpp>
 #include <ns/bench/type_id.hpp>
 #include <boost/simd/type/complex.hpp>
@@ -77,7 +80,7 @@ struct rand<boost::simd::pack<T, N>>
   std::string description() const {
     std::stringstream ss;
     ss << "rand<pack<" << format_type<pack_type>::to_string() << ", " << N
-       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << ") ]";
+       << ">>[(" << format(rmin()) << ", " << format(rmax()) << ")]";
     return ss.str();
   }
    value_type const& rmin() const { return min_; }
@@ -134,7 +137,7 @@ struct rand<bs::complex<bs::pack<T, N>>>
   std::string description() const {
     std::stringstream ss;
     ss << "rand<complex<pack<" << format_type<value_type>::to_string() << ", " << N
-       << ">>>[(" << format(rmin()) << ", " << format(rmax()) << "),  ("
+       << ">>>[(" << format(rmin()) << ", " << format(rmax()) << "), ("
        <<           format(imin()) << ", " << format(imax()) << ")]";
     return ss.str();
   }
@@ -186,8 +189,8 @@ struct rand<bs::complex<T>>
   std::string description() const {
     std::stringstream ss;
     ss << "rand<complex<" << format_type<value_type>::to_string()
-       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << "),  ("
-       <<           format(imin()) << ", " << format(imax()) << "), ]";
+       << ">>[(" << format(rmin()) << ", " << format(rmax()) << "), ("
+       <<           format(imin()) << ", " << format(imax()) << ")]";
     return ss.str();
   }
 
@@ -240,8 +243,8 @@ struct rand<std::complex<T>>
   std::string description() const {
     std::stringstream ss;
     ss << "rand<<std::complex<" << format_type<value_type>::to_string()
-       << ">>[ (" << format(rmin()) << ", " << format(rmax()) << "),  ("
-       <<           format(imin()) << ", " << format(imax()) << "), ]";
+       << ">>[(" << format(rmin()) << ", " << format(rmax()) << "), ("
+       <<           format(imin()) << ", " << format(imax()) << ")]";
     return ss.str();
   }
 
@@ -283,7 +286,7 @@ inline std::string sanitized_simd()
   namespace ba = boost::algorithm;
   auto s = nsb::type_id<BOOST_SIMD_DEFAULT_SITE>();
   ba::ierase_all(s, "boost::simd::");
-  ba::ierase_all(s, "_");
+  ba::trim_right_if(s,boost::is_any_of("_"));
   return s;
 }
 
@@ -296,7 +299,8 @@ inline std::string sanitized_function()
   ba::ierase_all(s, "boost::simd::tag::");
   ba::ierase_all(s, "<");
   ba::ierase_all(s, ">");
-  ba::ierase_all(s, "_");
+  ba::replace_all(s, "_,", ", ");
+  ba::trim_right_if(s,boost::is_any_of("_"));
   ba::ierase_all(s, " ");
   auto i = s.find(",");
   if (i != std::string::npos) {

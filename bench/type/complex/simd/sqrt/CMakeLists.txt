@@ -6,11 +6,12 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## --------------------------------------------------------------------------------------
 
-## benches for functor sqr_abs in scalar complex mode.
+## benches for functor sqr_abs in simd complex mode.
 
 set(SOURCES
   regular.float.m10_10.cpp
   regular.double.m10_10.cpp
+  real.float.m10_10.cpp
 )
 
 make_bench("type.complex.simd.sqrt" ${SOURCES})

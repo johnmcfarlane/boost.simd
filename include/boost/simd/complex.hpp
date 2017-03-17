@@ -92,7 +92,7 @@ namespace boost { namespace simd
        <center>
          |                  |                 |                   |              |              |
          |:----------------:|:---------------:|:-----------------:|:------------:|:------------:|
-         | @ref is_equal    | @ref is_eqz     | @ref s_finite     | @ref is_imag | @ref is_inf  |
+         | @ref is_equal    | @ref is_eqz     | @ref is_finite    | @ref is_imag | @ref is_inf  |
          | @ref is_invalid  | @ref is_nan     | @ref is_not_equal | @ref is_real |              |
        </center>
 

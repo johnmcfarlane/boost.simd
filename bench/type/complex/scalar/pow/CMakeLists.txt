@@ -11,6 +11,8 @@
 set(SOURCES
     regular.double.m10_10_m10_10.cpp
     regular.float.m10_10_m10_10.cpp
+    real.float.m10_10_m10_10.cpp
+    real.double.m10_10_m10_10.cpp
 )
 
 make_bench("type.complex.scalar.pow" ${SOURCES})

@@ -96,6 +96,8 @@ namespace boost { namespace simd
          | @ref is_invalid  | @ref is_nan     | @ref is_not_equal | @ref is_real |              |
        </center>
 
+         - all these predicates,  when applied to complex data return logical values associated to their (real) base type.
+
     - Exponential functions
 
         <center>
@@ -105,8 +107,8 @@ namespace boost { namespace simd
          | @ref log10      |                 |               |                  |
         </center>
 
-          - `exp_i(x)` computes  `exp(mul_i(x))
-          - `exp_ipi(x)` computes  `exp(mul_i(x)*pi)
+          - `exp_i(x)` computes  `exp(mul_i(x))`
+          - `exp_ipi(x)` computes  `exp(mul_i(x)*pi)`
 
     - Trigonometric functions
 

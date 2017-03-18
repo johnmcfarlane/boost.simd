@@ -210,11 +210,11 @@ namespace boost { namespace simd { namespace ext
                           , bs::cmplx::complex_<A0>
                           )
   {
-    BOOST_FORCEINLINE auto operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-      (
-        bs::atanh(a0)
-      )
-    };
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return bs::atanh(a0);
+    }
+  };
 
   BOOST_DISPATCH_OVERLOAD ( cmplx_atanh_
                           , (typename A0)
@@ -222,10 +222,11 @@ namespace boost { namespace simd { namespace ext
                           , bd::generic_ < bd::floating_<A0>>
                           )
   {
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    using result_t =  bs::complex<A0>;
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
-      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::atanh(a0.real),Zero<A0>()} ;
-      return bs::atanh(result_type(a0, Zero<A0>())); //TODO optimize it
+      if (bs::all(bs::abs(a0) <= One<A0>())) return result_t{bs::atanh(a0),Zero<A0>()} ;
+      return bs::atanh(result_t(a0, Zero<A0>())); //TODO optimize it
     }
   };
 

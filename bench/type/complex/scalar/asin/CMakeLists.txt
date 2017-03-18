@@ -6,7 +6,7 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ## --------------------------------------------------------------------------------------
 
-## benches for functor acosh in simd complex mode.
+## benches for functor acosh in scalar complex mode.
 
 set(SOURCES
     regular.float.m10_10.cpp
@@ -15,6 +15,6 @@ set(SOURCES
     real.double.m10_10.cpp
 )
 
-make_bench("type.complex.simd.acosh" ${SOURCES})
+make_bench("type.complex.scalar.asin" ${SOURCES})
 
 ## --------------------------------------------------------------------------------------

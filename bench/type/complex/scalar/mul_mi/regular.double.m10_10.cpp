@@ -6,15 +6,17 @@
 //                            http://www.boost.org/LICENSE_1_0.txt
 // -------------------------------------------------------------------------------------------------
 
-/// bench for functor ldexp in simd mode for bs::complex<float> type with no decorator (regular call).
 #include <simd_bench.hpp>
-#include <boost/simd/type/complex/function/ldexp.hpp>
+#include <boost/simd/pack.hpp>
+#include <boost/simd/type/complex.hpp>
+#include <boost/simd/type/complex/function/mul_mi.hpp>
 
 namespace nsb = ns::bench;
 namespace bs =  boost::simd;
 
 DEFINE_BENCH_MAIN()
 {
-  using T = bs::complex<bs::pack<float>>;
-  run<T>(bs::ldexp, nsbg::rand<T>(-10, 10), nsbg::rand<std::int32_t>(-10, 10) );
+  using T = bs::complex<double>;
+  run<T>(bs::mul_mi, nsbg::rand<T>(-10, 10, -10, 10));
 }
+

@@ -11,6 +11,8 @@
 set(SOURCES
     regular.float.m10_10.cpp
     regular.double.m10_10.cpp
+    real.float.m10_10.cpp
+    real.double.m10_10.cpp
 )
 
 make_bench("type.complex.scalar.acosh" ${SOURCES})

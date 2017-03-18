@@ -151,14 +151,14 @@ namespace boost { namespace simd
 
      - **complex operations**
 
-       Boost.SIMD  does not provides complex number operations yet, but it will soon. So
-       the following functors that have a meaning as a restriction to real number of complex
-       functions, can be seen as a prequel:
+       Boost.SIMD  provides complex number operations. So
+       the following functors can be used as being a restriction to real number of complex
+       functions:
 
       <center>
         |           |             |             |             |                 |
         |:---------:|:-----------:|:-----------:|:-----------:|:---------------:|
-        | @ref arg  | @ref conj   | imag        | real        | @ref sqr_abs    |
+        | @ref arg  | @ref conj   | @ref imag   | @ref real        | @ref sqr_abs    |
       </center>
 
         For real entries @ref conj and real are identity, imag always 0,

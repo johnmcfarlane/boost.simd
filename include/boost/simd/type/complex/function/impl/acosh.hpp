@@ -50,10 +50,10 @@ namespace boost { namespace simd { namespace ext
                           , bs::cmplx::complex_<A0>
                           )
   {
-    BOOST_FORCEINLINE auto operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-      (
-        bs::acosh(a0)
-      )
+    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return bs::acosh(a0);
+    }
   };
 
   BOOST_DISPATCH_OVERLOAD ( cmplx_acosh_
@@ -62,14 +62,13 @@ namespace boost { namespace simd { namespace ext
                           , bd::generic_< bd::floating_<A0> >
                           )
   {
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
+    using result_t  = cmplx::complex<A0>;
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
-      using result_t  = cmplx::complex<A0>;
-     (
-       if (all(a0 >= One<A0>())) return A0(bs::acosh(a0));
-       return bs::acosh(A0(a0, Zero<A0>());
-      )
-  }:
+      if (all(a0 >= One<A0>())) return result_t(bs::acosh(a0));
+      return bs::acosh(result_t(a0, Zero<A0>()));
+    }
+  };
 
 } } }
 

@@ -224,7 +224,7 @@ namespace boost { namespace simd { namespace ext
                           )
   {
     using result_type =  cmplx::complex<A0>;
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE result_type operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::acos(a0.real),Zero<A0>()} ;
     return bs::acos(result_type(a0.real, Zero<A0>())); //TODO optimize it

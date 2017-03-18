@@ -224,14 +224,14 @@ namespace boost { namespace simd { namespace ext
   BOOST_DISPATCH_OVERLOAD ( cmplx_asin_
                           , (typename A0)
                           , bd::cpu_
-                          , bd::floating_<A0>
+                          , bd::generic_<bd::floating_<A0>>
                           )
   {
-    using result_type =  bs::complex<A0>;
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
+    using result_t =  bs::complex<A0>;
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
-      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::asin(a0.real),Zero<A0>()} ;
-      return bs::asin(result_type(a0.real, Zero<A0>())); //TODO optimize it
+      if (bs::all(bs::abs(a0) <= One<A0>())) return result_t{bs::asin(a0),Zero<A0>()} ;
+      return bs::asin(result_t(a0, Zero<A0>())); //TODO optimize it
     }
   };
 

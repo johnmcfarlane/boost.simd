@@ -1,12 +1,10 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2016 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_POW_ABS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_POW_ABS_HPP_INCLUDED
@@ -15,6 +13,7 @@
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/function/is_nan.hpp>
 #endif
+
 #include <boost/simd/arch/common/detail/generic/pow_kernel.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/log2_em1.hpp>
@@ -23,7 +22,6 @@
 #include <boost/simd/detail/constant/powlargelim.hpp>
 #include <boost/simd/detail/constant/powlowlim.hpp>
 #include <boost/simd/constant/ratio.hpp>
-#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/exp.hpp>
 #include <boost/simd/function/floor.hpp>
@@ -40,7 +38,6 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
-#include <tuple>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -60,21 +57,26 @@ namespace boost { namespace simd { namespace ext
       using i_t = bd::as_integer_t<A0>;
       const i_t Sixteen = Ratio<i_t, 16>();
       A0 x =  bs::abs(a0);
-      if (x == One<A0>()) return x;
-      if (is_eqz(x)) return is_eqz(a1) ? One<A0>() : is_ltz(a1) ? Inf<A0>() : Zero<A0>();
+      if (x == A0(1)) return x;
+      if (is_eqz(x)) return is_eqz(a1) ? A0(1) : is_ltz(a1) ? Inf<A0>() : A0(0);
+
     #ifndef BOOST_SIMD_NO_INFINITIES
       if(x == a1 && a1 == Inf<A0>())  return Inf<A0>();
-      if(x == Inf<A0>() && a1 == Minf<A0>()) return Zero<A0>();
-      if(a1 == Inf<A0>()) return (x < One<A0>()) ? Zero<A0>() : Inf<A0>();
-      if(a1 == Minf<A0>()) return (x >  One<A0>()) ? Zero<A0>() : Inf<A0>();
-      if(x == Inf<A0>()) return (a1 < Zero<A0>()) ? Zero<A0>() : ((a1 == Zero<A0>()) ? One<A0>() : Inf<A0>());
+      if(x == Inf<A0>() && a1 == Minf<A0>()) return A0(0);
+      if(a1 == Inf<A0>()) return (x < A0(1)) ? A0(0) : Inf<A0>();
+      if(a1 == Minf<A0>()) return (x >  A0(1)) ? A0(0) : Inf<A0>();
+      if(x == Inf<A0>()) return (a1 < A0(0)) ? A0(0) : ((a1 == A0(0)) ? A0(1) : Inf<A0>());
     #endif
+
     #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_nan(a0)) return is_eqz(a1) ? One<A0>() : a0;
+      if(is_nan(a0)) return is_eqz(a1) ? A0(1) : a0;
       if(is_nan(a1)) return Nan<A0>();
     #endif
-      i_t e;
-      std::tie(x, e) = pedantic_(bs::ifrexp)(x);
+
+      auto me = pedantic_(bs::ifrexp)(x);
+      auto& e = me.exponent;
+      x = me.mantissa;
+
       i_t i  = detail::pow_kernel<A0>::select(x);
       A0 z = sqr(x);
       A0 w = detail::pow_kernel<A0>::pow1(x, z);
@@ -97,8 +99,9 @@ namespace boost { namespace simd { namespace ext
 
       // Test the power of 2 for overflow
       if( w > Powlargelim<A0>() ) return Inf<A0>();
-      if( w < Powlowlim<A0>()   ) return Zero<A0>();
-      e = w;
+      if( w < Powlowlim<A0>()   ) return A0(0);
+      e = static_cast<decltype(me.exponent)>(w);
+
       Wb = W - Wb;  //
       if( Wb > 0.0f ) //
       {
@@ -113,7 +116,8 @@ namespace boost { namespace simd { namespace ext
       z = pedantic_(ldexp)( z, i );
       return z;
     }
-  private :
+
+    private :
     static BOOST_FORCEINLINE A0 reduc(A0 x) BOOST_NOEXCEPT
     {
       // Find a multiple of 1/16 that is within 1/16 of x.
@@ -134,10 +138,6 @@ namespace boost { namespace simd { namespace ext
       return bs::exp(a1*bs::log(bs::abs(a0)));
     }
   };
-
-
-
 } } }
-
 
 #endif

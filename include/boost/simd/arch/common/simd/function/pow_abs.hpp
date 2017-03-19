@@ -1,17 +1,15 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2016 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_POW_ABS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_POW_ABS_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/log2_em1.hpp>
 #include <boost/simd/constant/mhalf.hpp>
@@ -20,7 +18,6 @@
 #include <boost/simd/detail/constant/powlowlim.hpp>
 #include <boost/simd/constant/sixteen.hpp>
 #include <boost/simd/function/abs.hpp>
-#include <boost/simd/function/divides.hpp>
 #include <boost/simd/function/exp.hpp>
 #include <boost/simd/function/fma.hpp>
 #include <boost/simd/function/ifrexp.hpp>
@@ -52,8 +49,6 @@
 #include <boost/simd/function/toint.hpp>
 #include <boost/simd/function/unary_minus.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <utility>
-
 
 #ifndef BOOST_SIMD_NO_INFINITIES
 #include <boost/simd/constant/minf.hpp>
@@ -81,10 +76,12 @@ namespace boost { namespace simd { namespace ext
     inline A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
     {
       using iA0 = bd::as_integer_t<A0>;
-      iA0 e;
-      A0 ax = bs::abs(a0);
-      A0 x;
-      std::tie(x, e) = pedantic_(ifrexp)(ax);
+
+      auto ax = bs::abs(a0);
+      auto me = pedantic_(ifrexp)(ax);
+      auto& x = me.mantissa;
+      auto& e = me.exponent;
+
       iA0 i  = detail::pow_kernel<A0>::select(x);
       A0 z = sqr(x);
       A0 w = detail::pow_kernel<A0>::pow1(x, z);
@@ -104,6 +101,7 @@ namespace boost { namespace simd { namespace ext
       W = Wb + u;
       Wb = reduc(W);
       w = Sixteen<A0>()*(Wa + Wb);
+
       // Test the power of 2 for over/underflow
       auto inf_ret = is_greater(w, Powlargelim<A0>());
       auto zer_ret = is_less(w, Powlowlim<A0>());
@@ -118,6 +116,7 @@ namespace boost { namespace simd { namespace ext
       w =  detail::pow_kernel<A0>::twomio16(e);
       z = fma(w, z, w);
       z = pedantic_(ldexp)( z, i );
+
 #ifndef BOOST_SIMD_NO_INFINITIES
       auto gtax1 = is_greater(ax,One<A0>());
       z =  if_else(is_equal(a1,  Inf<A0>()),if_else_zero(gtax1, Inf<A0>()), z);
@@ -128,6 +127,7 @@ namespace boost { namespace simd { namespace ext
                            if_zero_else_one(is_ltz(a1))),
                    z);
 #endif
+
       z = if_zero_else(zer_ret, z);
       z = if_else(inf_ret, Inf<A0>(), z);
       z = if_else(is_equal(ax, One<A0>()), ax, z);
@@ -138,21 +138,22 @@ namespace boost { namespace simd { namespace ext
                          ),
                   z
                  );
+
 #ifndef BOOST_SIMD_NO_NANS
-      z = if_else(is_nan(a0),
-                  if_else_nan(is_eqz(a1), One<A0>()),
-                  z
-                 );
+      z = if_else(is_nan(a0),if_else_nan(is_eqz(a1), One<A0>()),z);
 #endif
+
       return z;
     }
-  private :
+
+    private :
     static BOOST_FORCEINLINE A0 reduc(const A0& x)
     {
       // Find a multiple of 1/16 that is within 1/16 of x.
       return Ratio<A0, 1, 16>()*floor(Sixteen<A0>()*x);
     }
   };
+
   BOOST_DISPATCH_OVERLOAD_IF ( pow_abs_
                              , (typename A0, typename X)
                              , (detail::is_native<X>)
@@ -162,13 +163,11 @@ namespace boost { namespace simd { namespace ext
                              , bs::pack_< bd::floating_<A0>, X>
                              )
   {
-    BOOST_FORCEINLINE A0 operator()(const raw_tag &,
-                                    A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE A0 operator()(const raw_tag&, A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
     {
       return bs::exp(a1*bs::log(bs::abs(a0)));
     }
   };
 } } }
-
 
 #endif

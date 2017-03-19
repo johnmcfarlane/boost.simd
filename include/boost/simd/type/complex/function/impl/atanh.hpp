@@ -222,7 +222,7 @@ namespace boost { namespace simd { namespace ext
                           , bd::generic_ < bd::floating_<A0>>
                           )
   {
-    using result_t =  bs::complex<A0>;
+    using result_t =  bs::cmplx::complex<A0>;
     BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
       if (bs::all(bs::abs(a0) <= One<A0>())) return result_t{bs::atanh(a0),Zero<A0>()} ;

@@ -33,14 +33,5 @@ namespace boost { namespace simd { namespace detail
   {};
 } } }
 
-#include <complex>
-#include <boost/simd/type/complex.hpp>
-namespace boost { namespace simd { namespace detail
-{
-  template < typename T> struct is_complex : std::false_type{};
-  template < typename T> struct is_complex < boost::simd::complex<T>> : std::true_type{};
-  template < typename T> struct is_complex < std::complex<T>> : std::true_type {};
-} } }
-
 
 #endif

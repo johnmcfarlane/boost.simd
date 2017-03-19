@@ -1,12 +1,10 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2016 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_NEXTPOW2_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_NEXTPOW2_HPP_INCLUDED
@@ -20,9 +18,7 @@
 #include <boost/simd/function/reversebits.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
-#include <tuple>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -37,8 +33,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
     {
-      if (!a0) return a0;
-      return sizeof(A0)*8-ffs(reversebits(a0));
+      return !a0 ? a0 : sizeof(A0)*8-ffs(reversebits(a0));
     }
   };
 
@@ -50,8 +45,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
     {
-      if (!a0) return a0;
-      return sizeof(A0)*8-ffs(reversebits(saturated_(abs)(a0)));
+      return !a0 ? a0 : sizeof(A0)*8-ffs(reversebits(saturated_(abs)(a0)));
     }
   };
 
@@ -61,17 +55,12 @@ namespace boost { namespace simd { namespace ext
                           , bd::scalar_ < bd::floating_<A0> >
                           )
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE bd::as_integer_t<A0, signed> operator() ( A0 a0) const BOOST_NOEXCEPT
     {
-      A0 m;
-      result_t p;
-      std::tie(m, p) = pedantic_(ifrexp)(bs::abs(a0));
-      return (m == Half<A0>()) ? saturated_(dec)(p) :  p;
+      auto me = pedantic_(ifrexp)(bs::abs(a0));
+      return (me.mantissa == Half<A0>()) ? saturated_(dec)(me.exponent) : me.exponent;
     }
   };
 } } }
 
-
 #endif
-

@@ -52,14 +52,15 @@ namespace boost { namespace simd { namespace ext
 {
    namespace bd = boost::dispatch;
    namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(cbrt_
-                          , (typename A0,typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::single_<A0>, X>
-                          )
+
+  BOOST_DISPATCH_OVERLOAD_IF( cbrt_
+                            , (typename A0,typename X)
+                            , (detail::is_native<X>)
+                            , bd::cpu_
+                            , bs::pack_<bd::single_<A0>, X>
+                            )
    {
-      BOOST_FORCEINLINE A0 operator()(const A0& a0 ) const BOOST_NOEXCEPT
+      inline A0 operator()(const A0& a0 ) const BOOST_NOEXCEPT
       {
         A0 z =  bs::abs(a0);
         using int_type =  bd::as_integer_t<A0, signed>;
@@ -72,8 +73,11 @@ namespace boost { namespace simd { namespace ext
         const A0 CBRT4  = Constant< A0, 0x3fcb2ff5> ();
         const A0 CBRT2I = Constant< A0, 0x3f4b2ff5> ();
         const A0 CBRT4I = Constant< A0, 0x3f214518> ();
-        int_type e;
-        A0 x; std::tie(x, e) = ifrexp(z);
+
+        auto me = ifrexp(z);
+        auto& x = me.mantissa;
+        auto& e = me.exponent;
+
         x = horn <A0,
           0x3ece0609,
           0x3f91eb77,
@@ -83,16 +87,17 @@ namespace boost { namespace simd { namespace ext
           > (x);
         auto flag = is_gez(e);
         int_type e1 =  bs::abs(e);
-        int_type rem = e1;
+        int_type rem_ = e1;
         e1 /= Three<int_type>();
-        rem -= e1*Three<int_type>();
+        rem_ -= e1*Three<int_type>();
         e = negate(e1, e);
         const A0 cbrt2 = if_else(flag, CBRT2, CBRT2I);
         const A0 cbrt4 = if_else(flag, CBRT4, CBRT4I);
-        A0 fact = if_else(is_equal(rem, One<int_type>()), cbrt2, One<A0>());
-        fact = if_else(is_equal(rem, Two<int_type>()), cbrt4, fact);
+        A0 fact = if_else(is_equal(rem_, One<int_type>()), cbrt2, One<A0>());
+        fact = if_else(is_equal(rem_, Two<int_type>()), cbrt4, fact);
         x = ldexp(x*fact, e);
         x -= (x-z/sqr(x))*Third<A0>();
+
   #ifndef BOOST_SIMD_NO_DENORMALS
         x = bitwise_or(x, bitofsign(a0))*f;
   #else
@@ -104,17 +109,17 @@ namespace boost { namespace simd { namespace ext
         return if_else(is_eqz(a0), a0, x);
   #endif
       }
-   };
+  };
 
 
-   BOOST_DISPATCH_OVERLOAD_IF(cbrt_
-                          , (typename A0,typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::double_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(const A0& a0 ) const BOOST_NOEXCEPT
+  BOOST_DISPATCH_OVERLOAD_IF( cbrt_
+                            , (typename A0,typename X)
+                            , (detail::is_native<X>)
+                            , bd::cpu_
+                            , bs::pack_<bd::double_<A0>, X>
+                            )
+  {
+      inline A0 operator()(const A0& a0 ) const BOOST_NOEXCEPT
       {
         using int_type =  bd::as_integer_t<A0, signed>;
         A0 z =  bs::abs(a0);
@@ -127,9 +132,11 @@ namespace boost { namespace simd { namespace ext
         const A0 CBRT4  = Constant< A0, 0x3ff965fea53d6e3dll> ();
         const A0 CBRT2I = Constant< A0, 0x3fe965fea53d6e3dll> ();
         const A0 CBRT4I = Constant< A0, 0x3fe428a2f98d728bll> ();
-        int_type e;
-        A0 x;
-        std::tie(x, e) = ifrexp(z);
+
+        auto me = ifrexp(z);
+        auto& x = me.mantissa;
+        auto& e = me.exponent;
+
         x = horn <A0,
           0x3fd9c0c12122a4fell,
           0x3ff23d6ee505873all,
@@ -138,17 +145,18 @@ namespace boost { namespace simd { namespace ext
           0xbfc13c93386fdff6ll >  (x);
         auto flag = is_gez(e);
         int_type e1 =  bs::abs(e);
-        int_type rem = e1;
+        int_type rem_ = e1;
         e1 /= Three<int_type>();
-        rem -= e1*Three<int_type>();
+        rem_ -= e1*Three<int_type>();
         e =  negate(e1, e);
         const A0 cbrt2 = if_else(flag, CBRT2, CBRT2I);
         const A0 cbrt4 = if_else(flag, CBRT4, CBRT4I);
-        A0 fact = if_else(is_equal(rem, One<int_type>()), cbrt2, One<A0>());
-        fact = if_else(is_equal(rem, Two<int_type>()), cbrt4, fact);
+        A0 fact = if_else(is_equal(rem_, One<int_type>()), cbrt2, One<A0>());
+        fact = if_else(is_equal(rem_, Two<int_type>()), cbrt4, fact);
         x = ldexp(x*fact, e);
         x -= (x-z/sqr(x))*Third<A0>();
         x -= (x-z/sqr(x))*Third<A0>(); //two newton passes
+
       #ifndef BOOST_SIMD_NO_DENORMALS
         x = bitwise_or(x, bitofsign(a0))*f;
       #else
@@ -160,11 +168,7 @@ namespace boost { namespace simd { namespace ext
         return if_else(is_eqz(a0), a0, x);
       #endif
     }
-   };
-
-
-}
-
-} }
+  };
+} } }
 
 #endif

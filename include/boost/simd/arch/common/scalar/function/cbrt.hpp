@@ -38,7 +38,6 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <cmath>
-#include <tuple>
 
 namespace boost { namespace simd { namespace ext
 {
@@ -74,9 +73,11 @@ namespace boost { namespace simd { namespace ext
       const A0 CBRT2I = Constant< A0, 0x3fe965fea53d6e3dll> ();
       const A0 CBRT4I = Constant< A0, 0x3fe428a2f98d728bll> ();
       using i_t = bd::as_integer_t<A0, signed>;
-      i_t e;
-      A0 x;
-      std::tie(x, e) = ifrexp(z);
+
+      auto me = ifrexp(z);
+      auto& x = me.mantissa;
+      auto& e = me.exponent;
+
       x = horn<A0,
                0x3fd9c0c12122a4fell,
                0x3ff23d6ee505873all,
@@ -86,14 +87,14 @@ namespace boost { namespace simd { namespace ext
                > (x);
       const auto flag = is_gez(e);
       i_t e1 =  bs::abs(e);
-      i_t rem = e1;
+      i_t rem_ = e1;
       e1 /= Three<i_t>();
-      rem -= e1*Three<i_t>();
+      rem_ -= e1*Three<i_t>();
       e =  negate(e1, e);
       const A0 cbrt2 = flag ? CBRT2 : CBRT2I;
       const A0 cbrt4 = flag ? CBRT4 : CBRT4I;
-      A0 fact = (rem == One<i_t>()) ? cbrt2: One<A0>();
-      fact = (rem == Two<i_t>() ? cbrt4 : fact);
+      A0 fact = (rem_ == One<i_t>()) ? cbrt2: One<A0>();
+      fact = (rem_ == Two<i_t>() ? cbrt4 : fact);
       x = ldexp(x*fact, e);
       x -= (x-z/sqr(x))*Third<A0>();
       x -= (x-z/sqr(x))*Third<A0>(); //two newton passes
@@ -104,6 +105,7 @@ namespace boost { namespace simd { namespace ext
     #endif
     }
   };
+
   BOOST_DISPATCH_OVERLOAD ( cbrt_
                           , (typename A0)
                           , bd::cpu_
@@ -131,9 +133,11 @@ namespace boost { namespace simd { namespace ext
       const A0 CBRT2I = Constant< A0, 0x3f4b2ff5> ();
       const A0 CBRT4I = Constant< A0, 0x3f214518> ();
       using i_t = bd::as_integer_t<A0, signed>;
-      i_t e;
-      A0 x;
-      std::tie(x, e)= ifrexp(z);
+
+      auto me = ifrexp(z);
+      auto& x = me.mantissa;
+      auto& e = me.exponent;
+
       x = horn<A0,
                0x3ece0609,
                0x3f91eb77,
@@ -143,15 +147,15 @@ namespace boost { namespace simd { namespace ext
                > (x);
       const auto flag = is_gez(e);
       i_t e1 =  bs::abs(e);
-      i_t rem = e1;
+      i_t rem_ = e1;
       e1 /= Three<i_t>();
-      rem -= e1*Three<i_t>();
+      rem_ -= e1*Three<i_t>();
       e =  negate(e1, e);
 
       const A0 cbrt2 = flag ? CBRT2 : CBRT2I;
       const A0 cbrt4 = flag ? CBRT4 : CBRT4I;
-      A0 fact = (rem ==  One<i_t>()) ? cbrt2 : One<A0>();
-      fact = (rem == Two<i_t>()) ? cbrt4 : fact;
+      A0 fact = (rem_ ==  One<i_t>()) ? cbrt2 : One<A0>();
+      fact = (rem_ == Two<i_t>()) ? cbrt4 : fact;
       x = ldexp(x*fact, e);
       x -= (x-z/sqr(x))*Third<A0>();
     #ifndef BOOST_SIMD_NO_DENORMALS
@@ -161,6 +165,7 @@ namespace boost { namespace simd { namespace ext
     #endif
     }
   };
+
   BOOST_DISPATCH_OVERLOAD ( cbrt_
                           , (typename A0)
                           , bd::cpu_

@@ -18,6 +18,7 @@
 #include <boost/simd/function/copysign.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/rec.hpp>
+#include <boost/simd/function/tofloat.hpp>
 #include <boost/simd/type/complex/function/conj.hpp>
 #include <boost/simd/type/complex/function/if_else.hpp>
 #include <boost/simd/type/complex/function/is_inf.hpp>
@@ -26,7 +27,24 @@
 #include <boost/simd/type/complex/function/sqr_abs.hpp>
 #include <boost/simd/meta/is_pack.hpp>
 #include <boost/config.hpp>
+#include <boost/core/demangle.hpp>
+#include <type_traits>
 
+// template<typename T> inline std::string type_id()
+// {
+//   typedef std::is_const<typename std::remove_reference<T>::type>  const_t;
+//   typedef std::is_lvalue_reference<T>                             lref_t;
+//   typedef std::is_rvalue_reference<T>                             rref_t;
+//   std::string s = boost::core::demangle(typeid(T).name());
+//   s += const_t::value ? " const"  : "";
+//   s += lref_t::value   ? "&"      : "";
+//   s += rref_t::value   ? "&&"     : "";
+//   return s;
+// }
+// template<typename T> inline std::string type_id( const T& )
+// {
+//   return type_id<T>();
+// }
 namespace boost { namespace simd { namespace ext
 {
   namespace bd = boost::dispatch;
@@ -53,15 +71,29 @@ namespace boost { namespace simd { namespace ext
       auto rr =  bs::abs(a1.real);
       auto ii =  bs::abs(a1.imag);
       auto e =  -if_else((rr < ii), exponent(ii), exponent(rr));
-//       std::cout << "bs::ldexp(a1, e) "<< bs::ldexp(a1, e) << std::endl;
-//       std::cout << "a1               "<< a1 << std::endl;
-//       std::cout << "a0               "<< a0 << std::endl;
-//       return a0;
-      result_t aa1(bs::ldexp(a1, e));
+      auto aa1(bs::ldexp(a1, e));
       auto denom =  sqr_abs(aa1);
       result_t num = bs::multiplies(a0, conj(aa1));
       result_t r =  ldexp(bs::divides(num, denom), e);
      return r;
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( divides_
+                          , (typename A0,typename A1)
+                          , bd::cpu_
+                          , bs::cmplx::complex_<A0>
+                          , bd::scalar_< bd::arithmetic_<A1> >
+                          )
+  {
+    using value_t   = typename A0::value_type;
+    using value1_t  = bd::scalar_of_t<value_t>;
+    using base_t    = typename nsm::if_c<is_pack_t<A1>::value, A1, value_t>::type;
+    using result_t  = cmplx::complex<base_t>;
+
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
+    {
+      return a0*rec(static_cast<value1_t>(a1));
     }
   };
 
@@ -78,7 +110,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      return a0*rec(value_t(a1));
+      return a0*rec(a1);
     }
   };
 

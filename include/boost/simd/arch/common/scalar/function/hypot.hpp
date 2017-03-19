@@ -22,6 +22,7 @@
 #include <boost/simd/detail/constant/minexponent.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/exponent.hpp>
+#include <boost/simd/function/fma.hpp>
 #include <boost/simd/function/ldexp.hpp>
 #include <boost/simd/function/max.hpp>
 #include <boost/simd/function/min.hpp>

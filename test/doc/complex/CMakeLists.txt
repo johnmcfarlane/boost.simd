@@ -9,4 +9,6 @@
 add_subdirectory(arithmetic)
 add_subdirectory(exponential)
 add_subdirectory(hyperbolic)
+add_subdirectory(operator)
+add_subdirectory(predicates)
 add_subdirectory(trigonometric)

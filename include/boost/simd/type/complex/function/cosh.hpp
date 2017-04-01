@@ -52,7 +52,7 @@ namespace boost { namespace simd { namespace cmplx
       - If z is (+0,NaN), the result is(NaN,\f$\pm0\f$) (the sign of the imaginary part is unspecified)
       - If z is (x,\f$\infty\f$) (for any finite non-zero x), the result is (NaN,NaN)
       - If z is (x,NaN) (for any finite non-zero x), the result is(NaN,NaN)
-      - If z is (\f$\infty\f$,+0), the result is(+∞,+0)
+      - If z is (\f$\infty\f$,+0), the result is (\f$\infty\f$,+0)
       - If z is (\f$\infty\f$,y) (for any finite non-zero y), the result is (\f$\infty e^{iy}\f$\)
       - If z is (\f$\infty, \infty\f$), the result is(\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (\f$\infty\f$,NaN), the result is(\f$\infty\f$,NaN)

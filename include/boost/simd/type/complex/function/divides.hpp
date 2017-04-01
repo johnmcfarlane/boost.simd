@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-acos  Complex acos
+    @defgroup group-complex-divides  Complex divides
 
-    This function object implements the binary division operators for complex arithmetic
+    This function object implements the binary division operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
@@ -29,11 +29,11 @@ namespace boost { namespace simd { namespace cmplx
 
     @par Example:
 
-       @snippet c_divides.cpp acos
+       @snippet c_divides.cpp divides
 
     @par Possible output:
 
-       @snippet c_divides.txt acos
+       @snippet c_divides.txt divides
 
   **/
   complex<IEEEValue> divides(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);

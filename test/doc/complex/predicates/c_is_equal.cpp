@@ -6,9 +6,10 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-//! [cosh]
+//! [is_equal]
 #include <boost/simd/type/complex.hpp>
-#include <boost/simd/type/complex/function/cosh.hpp>
+#include <boost/simd/type/complex/function/is_equal.hpp>
+#include <boost/simd/function/asin.hpp>
 #include <boost/simd/pack.hpp>
 #include <boost/simd/constant/pi.hpp>
 #include <iostream>
@@ -18,21 +19,20 @@ using p_t  = bs::pack<float, 4>;
 using cp_t = bs::complex<p_t>;
 
 int main() {
-  cp_t pf{p_t{1.0f, 2.0f, -1.0f, 0.5f}, p_t{0.0, 1.0, -1.0, 3.0}};
+  cp_t pf{p_t{1.0f, 2.0f, -1.0f, 0.5f}, p_t{0.0f, 1.0f, -1.0f, 3.0f}};
+  cp_t qf{p_t{1.0f, 2.0f,  1.0f, 0.0f}, p_t{0.0f, 1.0f, -1.0f, 2.0f}};
 
   std::cout << "---- simd" << '\n'
             << "<- pf =          " << pf << '\n'
-            << "-> bs::cosh(pf) = " << bs::cosh(pf) << '\n';
+            << "<- qf =          " << qf << '\n'
+            << "-> pf == qf    = " << (pf == qf) << '\n';
 
-  bs::complex<float> xf{0.0f, 1.0f};
-  float yf{2.0};
+  bs::complex<float> xf{1, 1}, yf(1, 1);
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                   " << xf << '\n'
-            << "-> bs::cosh(xf) =        " << bs::cosh(xf) << '\n'
-            << "<- yf =                   " << yf << '\n'
-            << "-> bs::cosh(yf) =        " << bs::cosh(yf) << '\n';
-
+            << "<- xf =          " << xf << '\n'
+            << "<- yf =          " << yf << '\n'
+            << "-> xf == yf    = " <<(xf == yf) << '\n';
   return 0;
 }
-//! [cosh]
+//! [is_equal]

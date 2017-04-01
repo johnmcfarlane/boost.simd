@@ -43,7 +43,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - The mathematical definition of the principal value of arc sine is \f$\frac{\pi}2 + i \log(iz+\sqrt{1-z^2})\f$
 
-    - `acos(std::conj(z))`is always equal to `conj(std::acos(z))`
+    - `acos(bs::conj(z))` is always equal to `conj(bs::acos(z))`
 
     - we always have:
 

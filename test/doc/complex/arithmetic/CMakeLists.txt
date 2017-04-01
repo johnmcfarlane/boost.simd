@@ -10,6 +10,8 @@ SET( SOURCES
     c_abs.cpp
     c_arg.cpp
     c_conj.cpp
+    c_imag.cpp
+    c_real.cpp
    )
 
 make_unit( "doc.complex.arithmetic" ${SOURCES})

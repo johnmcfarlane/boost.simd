@@ -8,7 +8,37 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_EXP_I_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_EXP_I_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
 
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-exp_i  Complex exp_i
+
+    This function object computes \f$ e^{iz}\f$
+
+
+    `complex<IEEEValue> exp_i(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/exp_i.hpp>
+
+
+    @par Example:
+
+       @snippet c_exp_i.cpp exp_i
+
+    @par Possible output:
+
+       @snippet c_exp_i.txt exp_i
+
+  **/
+  complex<IEEEValue> exp_i(complex<IEEEValue> const& z);
+} } }
+
+
+#endif
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>

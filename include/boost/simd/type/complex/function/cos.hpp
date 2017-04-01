@@ -8,6 +8,37 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_COS_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_COS_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+namespace boost { namespace simd
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-cos  Complex cos
+    This function object returns the complex cosine of a complex value z.
+
+    `complex<IEEEValue> cos(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/cos.hpp>
+
+    @par Notes
+
+     - special cases are handled as if the operation is implemented by `bs::cosh(i*z)`,
+       where i is the imaginary unit.
+
+    @par Example:
+
+       @snippet c_cos.cpp cos
+
+    @par Possible output:
+
+       @snippet c_cos.txt cos
+
+  **/
+  complex<IEEEValue> cos(complex<IEEEValue> const& z);
+} }
+
+#endif
 
 #include <boost/simd/function/cos.hpp>
 #include <boost/simd/type/complex/function/impl/cos.hpp>

@@ -14,11 +14,14 @@
 #include <boost/simd/type/complex/function/abs.hpp>
 #include <boost/simd/type/complex/function/arg.hpp>
 #include <boost/simd/type/complex/function/is_real.hpp>
+#include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/if_zero_else.hpp>
 #include <boost/simd/function/is_positive.hpp>
 #include <boost/simd/function/is_nan.hpp>
+#include <boost/simd/function/is_inf.hpp>
 #include <boost/simd/function/log.hpp>
 #include <boost/simd/function/logical_and.hpp>
+#include <boost/simd/constant/inf.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace ext
@@ -34,10 +37,28 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
+      auto absa0 = bs::abs(a0);
+      auto arga0 = if_else(is_eqz(absa0), bs::arg(a0.real), bs::arg(a0));
+      return {bs::log(absa0), arga0};
+    }
+  };
+
+  BOOST_DISPATCH_OVERLOAD ( log_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bs::pedantic_tag
+                          , bs::cmplx::complex_<A0>
+                          )
+  {
+    BOOST_FORCEINLINE A0 operator()(pedantic_tag const &
+                                   , A0 const& a0) const BOOST_NOEXCEPT
+    {
       using rtype = typename A0::value_type;
-      rtype a = if_zero_else(logical_and(bs::is_real(a0), bs::is_nan(a0.imag))
-                            , bs::arg(a0)) ;
-      return {bs::log(bs::abs(a0)), a};
+      rtype arga0 = bs::pedantic_(bs::arg)(a0);
+      rtype absa0 = bs::pedantic_(bs::abs)(a0);
+      absa0 = if_else( bs::is_nan(a0.real) && (bs::Inf<rtype>() == a0.imag)
+                     , bs::Inf<rtype>(), absa0);
+      return A0{bs::log(absa0), arga0};
     }
   };
 

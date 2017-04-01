@@ -12,6 +12,7 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/type/complex/detail/hierarchy.hpp>
 #include <boost/simd/type/complex/function/asin.hpp>
+#include <boost/simd/function/asinh.hpp>
 #include <boost/simd/type/complex/function/mul_i.hpp>
 #include <boost/simd/type/complex/function/mul_mi.hpp>
 #include <boost/config.hpp>
@@ -36,7 +37,18 @@ namespace boost { namespace simd { namespace ext
       return  mul_i(bs::cmplx::asin(mul_mi(a0)));
     }
   };
-
+  BOOST_DISPATCH_OVERLOAD ( cmplx_asinh_
+                          , (typename A0)
+                          , bd::cpu_
+                          , bd::generic_< bd::floating_<A0> >
+                          )
+  {
+    using result_t  = cmplx::complex<A0>;
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0) const BOOST_NOEXCEPT
+    {
+      return bs::asinh(a0);
+    }
+  };
 } } }
 
 #endif

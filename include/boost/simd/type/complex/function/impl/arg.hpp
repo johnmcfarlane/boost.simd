@@ -42,7 +42,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE auto operator()(bs::pedantic_tag const &
                                      , A0 const& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
     (
-       bs::pedantic_(bs::atan2)(a0.ima, a0.real)
+       bs::pedantic_(bs::atan2)(a0.imag, a0.real)
     )
   };
 } } }

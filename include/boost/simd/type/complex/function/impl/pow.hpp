@@ -17,7 +17,9 @@
 #include <boost/simd/type/complex/function/exp_i.hpp>
 #include <boost/simd/type/complex/function/exp_ipi.hpp>
 #include <boost/simd/type/complex/function/if_else.hpp>
+#include <boost/simd/type/complex/function/is_eqz.hpp>
 #include <boost/simd/type/complex/function/log.hpp>
+#include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/is_positive.hpp>
 #include <boost/config.hpp>
 
@@ -42,9 +44,9 @@ namespace boost { namespace simd { namespace ext
     using base_t    = typename std::conditional<is_pack_t<value0_t>::value,value0_t,value1_t>::type;
     using result_t  = cmplx::complex<base_t>;
 
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      return bs::exp(a1*bs::cmplx::log(a0));
+      return if_else(is_eqz(a0)&&is_eqz(a1), result_t(1),bs::exp(a1*bs::log(a0)));;
     }
   };
 
@@ -76,7 +78,7 @@ namespace boost { namespace simd { namespace ext
     {
       base_t t = bs::arg(a0);
       base_t a = bs::abs(a0);
-      return bs::pow(a, a1)*bs::exp_i(t*a1);
+      return if_else(is_eqz(a)&&is_eqz(a1), result_t(1), bs::pow(a, a1)*bs::exp_i(t*a1));
     }
   };
 
@@ -105,7 +107,7 @@ namespace boost { namespace simd { namespace ext
     using result_t  = cmplx::complex<base_t>;
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
-      return bs::exp(a1*bs::cmplx::log(a0));
+      return if_else(is_eqz(a0)&&is_eqz(a1), result_t(1), bs::exp(a1*bs::cmplx::log(a0)));
     }
   };
 
@@ -134,7 +136,8 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
     {
       result_t z = if_else(is_positive(a0), result_t(One<base_t>()), bs::exp_ipi(a1));
-      return bs::exp(a1*bs::log(bs::abs(a0)))*z;
+      return if_else(is_eqz(a0)&&is_eqz(a1), result_t(1),
+                     bs::exp(a1*bs::log(bs::abs(a0)))*z);
 
     }
   };

@@ -53,6 +53,7 @@ namespace boost
 
       - boost::simd::pack which encapsulates SIMD registers
       - boost::simd::logical which encapsulates typed boolean values
+      - boost::simd::complex which encapsulates complex values
     **/
 
     /*!

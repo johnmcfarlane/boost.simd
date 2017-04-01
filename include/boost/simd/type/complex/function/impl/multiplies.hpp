@@ -23,10 +23,10 @@
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/if_zero_else.hpp>
 #include <boost/simd/function/is_finite.hpp>
-#include <boost/simd/function/is_real.hpp>
-#include <boost/simd/function/is_imag.hpp>
 #include <boost/simd/type/complex/function/mul_i.hpp>
 #include <boost/simd/type/complex/function/is_finite.hpp>
+#include <boost/simd/type/complex/function/is_real.hpp>
+#include <boost/simd/type/complex/function/is_imag.hpp>
 #include <boost/simd/meta/is_pack.hpp>
 #include <boost/config.hpp>
 

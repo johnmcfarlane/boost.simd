@@ -8,6 +8,37 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MULTIPLIES_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MULTIPLIES_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-acos  Complex acos
+
+    This function object implements the binary division operators for complex arithmetic
+    and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
+    with the real part equal to the argument and the imaginary part set to zero
+    with possible optimization of the computations.
+
+    `complex<IEEEValue> multiplies(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
+
+    @par Header <boost/simd/type/complex/function/multiplies.hpp>
+
+
+    @par Example:
+
+       @snippet c_multiplies.cpp acos
+
+    @par Possible output:
+
+       @snippet c_multiplies.txt acos
+
+  **/
+  complex<IEEEValue> multiplies(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+} } }
+#endif
 
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/type/complex/function/impl/multiplies.hpp>

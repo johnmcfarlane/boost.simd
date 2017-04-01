@@ -9,6 +9,33 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_CONJ_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_CONJ_HPP_INCLUDED
 
+#if defined(DOXYGEN_ONLY)
+namespace boost { namespace simd
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-conj  Complex conj
+
+    This function object computes the complex conjugate of z by reversing the sign of the imaginary part.
+
+    `IEEEValue conj(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/conj.hpp>
+
+    @par Example:
+
+       @snippet c_conj.cpp conj
+
+    @par Possible output:
+
+       @snippet c_conj.txt conj
+
+  **/
+  complex<IEEEValue> boost::simd::conj(complex<IEEEValue> const& z);
+} }
+#endif
+
 #include <boost/simd/function/conj.hpp>
 #include <boost/simd/type/complex/function/impl/conj.hpp>
 

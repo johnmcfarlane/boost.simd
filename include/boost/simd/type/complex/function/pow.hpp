@@ -13,6 +13,41 @@
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
 #include <boost/simd/detail/dispatch.hpp>
 
+#if defined(DOXYGEN_ONLY)
+namespace boost { namespace simd
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-pow  Complex pow
+
+    This function object computes complex x raised to a complex power y with a branch cut
+    along the negative real axis for the first argument.
+
+    `IEEEValue pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);`
+
+    @par Header <boost/simd/type/complex/function/pow.hpp>
+
+    @par Notes
+
+    - take care that with non complex arguments, the real pow function is called except if you prefix it by the `cmplx::`
+      namespace (see example below).
+
+    - by choice pow(0, 0) return 1.
+
+     @par Example:
+
+       @snippet c_pow.cpp pow
+
+    @par Possible output:
+
+       @snippet c_pow.txt pow
+
+  **/
+  complex<IEEEValue> boost::simd::pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);
+} }
+#endif
+
 namespace boost { namespace simd
 {
   namespace tag

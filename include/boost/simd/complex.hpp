@@ -15,7 +15,7 @@
 namespace boost { namespace simd
 {
   /*!
-    @ingroup group-functions
+    @ingroup group-api
     @defgroup group-complex Complex functions
 
     These functions provide scalar and SIMD implementation for classical complex functions.
@@ -131,6 +131,8 @@ namespace boost { namespace simd
       </center>
 
       - As in the real case sinhcosh compute simultaneously the sinh and the cosh of the input as lower cost.
+
+
   **/
 } }
 
@@ -149,6 +151,8 @@ namespace boost { namespace simd
 #include <boost/simd/type/complex/function/exp_i.hpp>
 #include <boost/simd/type/complex/function/exp_mi.hpp>
 #include <boost/simd/type/complex/function/imag.hpp>
+#include <boost/simd/type/complex/function/log.hpp>
+#include <boost/simd/type/complex/function/log10.hpp>
 #include <boost/simd/type/complex/function/multiplies.hpp>
 #include <boost/simd/type/complex/function/mul_i.hpp>
 #include <boost/simd/type/complex/function/mul_mi.hpp>

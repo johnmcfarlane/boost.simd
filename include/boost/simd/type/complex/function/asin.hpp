@@ -14,6 +14,50 @@
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
 #include <boost/simd/detail/dispatch.hpp>
 
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-asin  Complex asin
+
+    This function object computes complex arc sine of a complex value z. Branch cut exists outside
+    the interval \f$[-1, +1]\f$ along the real axis.
+
+
+    `complex<IEEEValue> asin(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/asin.hpp>
+
+    @par Notes
+
+    - take care that with non complex arguments, the real asin function is called except if you prefix it by the `cmplx::`
+      namespace (see example below).
+
+    - For any z, asin(z) = acos(-z) - \f$\pi/2\f$ (see asin for limiting cases detail)
+
+    - inverse sine (or arc sine) is a multivalued function and requires a branch cut on the complex plane.
+      The branch cut is conventionally placed at the line segments  \f$[-\infty, +1]\f$ and  \f$[1, \infty]\f$ of the real axis.
+
+    - The mathematical definition of the principal value of arc sine is \f$-i \log(iz+\sqrt{1-z^2})\f$
+
+    @par Example:
+
+       @snippet c_asin.cpp asin
+
+    @par Possible output:
+
+       @snippet c_asin.txt asin
+
+  **/
+  complex<IEEEValue> asin(complex<IEEEValue> const& z);
+} } }
+
+
+#endif
+
 namespace boost { namespace simd
 {
   namespace tag

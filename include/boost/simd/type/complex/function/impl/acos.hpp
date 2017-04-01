@@ -220,14 +220,14 @@ namespace boost { namespace simd { namespace ext
   BOOST_DISPATCH_OVERLOAD ( cmplx_acos_
                           , (typename A0)
                           , bd::cpu_
-                          , bd::floating_<A0>
+                          , bd::generic_< bd::floating_<A0> >
                           )
   {
     using result_type =  cmplx::complex<A0>;
     BOOST_FORCEINLINE result_type operator()(A0 const& a0) const BOOST_NOEXCEPT
     {
-      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::acos(a0.real),Zero<A0>()} ;
-    return bs::acos(result_type(a0.real, Zero<A0>())); //TODO optimize it
+      if (bs::all(bs::abs(a0) <= One<A0>())) return {bs::acos(a0),Zero<A0>()} ;
+      return bs::acos(result_type(a0, Zero<A0>())); //TODO optimize it
     }
   };
 

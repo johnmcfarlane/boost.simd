@@ -31,11 +31,11 @@ namespace boost { namespace simd
 
     @par Example:
 
-      @snippet exp.cpp exp
+       @snippet exp.cpp exp
 
     @par Possible output:
 
-      @snippet exp.txt exp
+       @snippet exp.txt exp
 
   **/
   IEEEValue exp(IEEEValue const& x);

@@ -35,3 +35,16 @@ STF_CASE_TPL( "Complex arg on complex<T>", STF_IEEE_TYPES)
   STF_EQUAL(bs::arg(r5),  -3*bs::Pi<T>()/4);
 }
 
+STF_CASE_TPL( "Complex pedantic_(arg) on complex<T>", STF_IEEE_TYPES)
+{
+  bs::complex<T> r0(0,4), r1(4,0), r2(3,3), r3(-1,0), r4(0,-1), r5(-2,-2);
+  using bs::arg;
+
+  STF_EQUAL(bs::pedantic_(arg)(r0),  bs::Pi<T>()/2);
+  STF_EQUAL(bs::pedantic_(arg)(r1),  bs::Zero<T>());
+  STF_EQUAL(bs::pedantic_(arg)(r2),  bs::Pi<T>()/4);    ;
+  STF_EQUAL(bs::pedantic_(arg)(r3),  bs::Pi<T>());
+  STF_EQUAL(bs::pedantic_(arg)(r4),  -bs::Pi<T>()/2);
+  STF_EQUAL(bs::pedantic_(arg)(r5),  -3*bs::Pi<T>()/4);
+}
+

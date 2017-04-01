@@ -112,7 +112,7 @@ namespace boost { namespace simd { namespace ext
       // r is computed
       r = if_else((b <= b_crossover), r, bs::asin(b));
       //compute am 1 temporary for i for a <= a_crossover
-      rtype tmp = yy/(r+xp1);
+      rtype tmp = yy/(tr+xp1);
       rtype am1 = if_else(lexone,
                           bs::average(tmp, yy/(ts-xm1)),
                           bs::average(tmp, (ts+xm1)));

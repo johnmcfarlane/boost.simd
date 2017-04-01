@@ -13,7 +13,37 @@
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
 #include <boost/simd/detail/dispatch.hpp>
+#if defined(DOXYGEN_ONLY)
 
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-exp_ipi  Complex exp_ipi
+
+    This function object computes \f$ e^{i\pi z}\f$
+
+
+    `complex<IEEEValue> exp_ipi(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/exp_ipi.hpp>
+
+
+    @par Example:
+
+       @snippet c_exp_ipi.cpp exp_ipi
+
+    @par Possible output:
+
+       @snippet c_exp_ipi.txt exp_ipi
+
+  **/
+  complex<IEEEValue> exp_ipi(complex<IEEEValue> const& z);
+} } }
+
+
+#endif
 namespace boost { namespace simd
 {
   namespace tag

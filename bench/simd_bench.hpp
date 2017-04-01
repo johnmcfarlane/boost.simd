@@ -41,7 +41,7 @@ struct format_type<boost::simd::pack<T, N>>
   }
 };
 
-template <typename T, template < typename > typename C, std::size_t N>
+template <typename T, template < typename > class C, std::size_t N>
 struct format_type<C<boost::simd::pack<T, N>>>
 {
   static std::string to_string()

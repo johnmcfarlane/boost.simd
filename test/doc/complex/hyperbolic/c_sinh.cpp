@@ -31,8 +31,7 @@ int main() {
             << "<- xf =                   " << xf << '\n'
             << "-> bs::sinh(xf) =        " << bs::sinh(xf) << '\n'
             << "<- yf =                   " << yf << '\n'
-            << "-> bs::sinh(yf) =        " << bs::sinh(yf) << '\n'
-            << "-> bs::cmplx::sinh(yf) = " << bs::cmplx::sinh(yf) << '\n';
+            << "-> bs::sinh(yf) =        " << bs::sinh(yf) << '\n';
 
   return 0;
 }

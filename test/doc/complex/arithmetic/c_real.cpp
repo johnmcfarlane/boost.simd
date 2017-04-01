@@ -6,9 +6,10 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-//! [cosh]
+//! [real]
 #include <boost/simd/type/complex.hpp>
-#include <boost/simd/type/complex/function/cosh.hpp>
+#include <boost/simd/type/complex/function/real.hpp>
+#include <boost/simd/function/asin.hpp>
 #include <boost/simd/pack.hpp>
 #include <boost/simd/constant/pi.hpp>
 #include <iostream>
@@ -22,17 +23,13 @@ int main() {
 
   std::cout << "---- simd" << '\n'
             << "<- pf =          " << pf << '\n'
-            << "-> bs::cosh(pf) = " << bs::cosh(pf) << '\n';
+            << "-> bs::real(pf) = " << bs::real(pf) << '\n';
 
-  bs::complex<float> xf{0.0f, 1.0f};
-  float yf{2.0};
+  bs::complex<float> xf{1, 2};
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                   " << xf << '\n'
-            << "-> bs::cosh(xf) =        " << bs::cosh(xf) << '\n'
-            << "<- yf =                   " << yf << '\n'
-            << "-> bs::cosh(yf) =        " << bs::cosh(yf) << '\n';
-
+            << "<- xf =          " << xf << '\n'
+            << "-> bs::real(xf) = " << bs::real(xf) << '\n';
   return 0;
 }
-//! [cosh]
+//! [real]

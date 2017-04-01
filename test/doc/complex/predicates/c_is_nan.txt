@@ -1,0 +1,8 @@
+//! [is_nan]
+---- simd
+<- pf =                (1, 2, -1, -nan) + i * (0, -nan, -1, 3)
+-> bs::is_nan(pf) = (false, true, false, true)
+---- scalar
+<- xf =                1 + i * -nan
+-> bs::is_nan(xf) = true
+//! [is_nan]

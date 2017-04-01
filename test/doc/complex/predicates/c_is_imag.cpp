@@ -6,11 +6,10 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-//! [cosh]
+//! [is_imag]
 #include <boost/simd/type/complex.hpp>
-#include <boost/simd/type/complex/function/cosh.hpp>
+#include <boost/simd/type/complex/function/is_imag.hpp>
 #include <boost/simd/pack.hpp>
-#include <boost/simd/constant/pi.hpp>
 #include <iostream>
 
 namespace bs = boost::simd;
@@ -21,18 +20,14 @@ int main() {
   cp_t pf{p_t{1.0f, 2.0f, -1.0f, 0.5f}, p_t{0.0, 1.0, -1.0, 3.0}};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =          " << pf << '\n'
-            << "-> bs::cosh(pf) = " << bs::cosh(pf) << '\n';
+            << "<- pf =                " << pf << '\n'
+            << "-> bs::is_imag(pf) = " << bs::is_imag(pf) << '\n';
 
-  bs::complex<float> xf{0.0f, 1.0f};
-  float yf{2.0};
+  bs::complex<float> xf{1, 1};
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                   " << xf << '\n'
-            << "-> bs::cosh(xf) =        " << bs::cosh(xf) << '\n'
-            << "<- yf =                   " << yf << '\n'
-            << "-> bs::cosh(yf) =        " << bs::cosh(yf) << '\n';
-
+            << "<- xf =                " << xf << '\n'
+            << "-> bs::is_imag(xf) = " << bs::is_imag(xf) << '\n';
   return 0;
 }
-//! [cosh]
+//! [is_imag]

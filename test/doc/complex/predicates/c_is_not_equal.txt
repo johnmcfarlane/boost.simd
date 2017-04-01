@@ -1,0 +1,10 @@
+//! [is_not_equal]
+---- simd
+<- pf =          (1, 2, -1, 0.5) + i * (0, 1, -1, 3)
+<- qf =          (1, 2, 1, 0) + i * (0, 1, -1, 2)
+-> pf != qf    = (false, false, true, true)
+---- scalar
+<- xf =          1 + i * 1
+<- yf =          1 + i * 1
+-> xf != yf    = 0
+//! [is_not_equal]

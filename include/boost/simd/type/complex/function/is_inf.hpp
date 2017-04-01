@@ -8,7 +8,33 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INF_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INF_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+namespace boost { namespace simd
+{
 
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-is_inf  Complex is_inf
+
+    This function object returns True if and only if real or imaginary part
+    of the parameters is inf.
+
+    `as_logical<IEEEValue> is_inf(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/is_inf.hpp>
+
+    @par Example:
+
+       @snippet c_is_inf.cpp is_inf
+
+    @par Possible output:
+
+       @snippet c_is_inf.txt is_inf
+
+  **/
+  as_logical<IEEEValue> boost::simd::is_inf(complex<IEEEValue);
+} }
+#endif
 #include <boost/simd/function/is_inf.hpp>
 #include <boost/simd/type/complex/function/impl/is_inf.hpp>
 

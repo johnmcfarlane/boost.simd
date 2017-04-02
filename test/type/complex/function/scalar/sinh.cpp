@@ -24,3 +24,57 @@ STF_CASE_TPL( "Complex sinh on complex<T>", STF_IEEE_TYPES)
 }
 
 
+STF_CASE_TPL ( "sinh complex limits",  STF_IEEE_TYPES)
+{
+   using bs::sinh;
+   using c_t = bs::complex<T>;
+
+  {
+    const int N = 2;
+    c_t inputs[] =
+      { c_t(bs::Zero<T>(),bs::Zero<T>()),
+        c_t(bs::Zero<T>(),bs::Pi <T>()),
+      };
+
+    c_t results[] =
+      { c_t(bs::Zero<T>(),bs::Zero<T>()),
+        c_t(bs::Zero<T>(),bs::Zero<T>())
+      };
+
+    for(int i=0; i < N; i++)
+    {
+      STF_ULP_EQUAL(bs::sinh(inputs[i]), results[i], 1);
+      STF_ULP_EQUAL(bs::sinh(-inputs[i]), -results[i], 1);
+    }
+  }
+#ifndef BOOST_SIMD_NO_INVALIDS
+  {
+   const int N = 23;
+    c_t inputs[N] =
+      { c_t(bs::Zero<T>(),bs::Zero<T>()),c_t(bs::Inf<T>(),bs::Zero<T>()),c_t(bs::Minf<T>(),bs::Zero<T>()),c_t(bs::Nan<T>(),bs::Zero<T>()),
+        c_t(bs::Zero<T>(),bs::Inf<T>()), c_t(bs::Inf<T>(),bs::Inf<T>()), c_t(bs::Minf<T>(),bs::Inf<T>()), c_t(bs::Nan<T>(),bs::Inf<T>()),
+        c_t(bs::Zero<T>(),bs::Minf<T>()),c_t(bs::Inf<T>(),bs::Minf<T>()),c_t(bs::Minf<T>(),bs::Minf<T>()),c_t(bs::Nan<T>(),bs::Minf<T>()),
+        c_t(bs::Zero<T>(),bs::Nan<T>()), c_t(bs::Inf<T>(),bs::Nan<T>()), c_t(bs::Minf<T>(),bs::Nan<T>()), c_t(bs::Nan<T>(),bs::Nan<T>()),
+        c_t(bs::Zero<T>(),bs::Pi <T>()), c_t(bs::Nan<T>(),bs::Pi <T>()), c_t(bs::Nan<T>(),bs::Zero<T>()), c_t(bs::One<T>(),bs::Nan<T>()),
+        c_t(bs::One<T>(),bs::Inf<T>()), c_t(bs::Nan<T>(),bs::One<T>()), c_t(bs::Inf<T>(),bs::One<T>())
+      };
+
+    c_t results[N] =
+      { c_t(bs::Zero<T>(),bs::Zero<T>()),c_t(bs::Inf<T>(),bs::Zero<T>()),c_t(bs::Minf<T>(),bs::Zero<T>()),c_t(bs::Nan<T>(),bs::Zero<T>()),
+        c_t(bs::Zero<T>(),bs::Nan<T>()),c_t(bs::Inf<T>(),bs::Nan<T>()), c_t(bs::Minf<T>(),bs::Nan<T>()), c_t(bs::Nan<T>(),bs::Nan<T>()),
+        c_t(bs::Zero<T>(),bs::Nan<T>()),c_t(bs::Inf<T>(),bs::Nan<T>()), c_t(bs::Minf<T>(),bs::Nan<T>()), c_t(bs::Nan<T>(),bs::Nan<T>()),
+        c_t(bs::Zero<T>(),bs::Nan<T>()), c_t(bs::Inf<T>(),bs::Nan<T>()), c_t(bs::Minf<T>(),bs::Nan<T>()),c_t(bs::Nan<T>(),bs::Nan<T>()),
+        c_t(bs::Zero<T>(),bs::Zero<T>()), c_t(bs::Nan<T>(),bs::Nan <T>()), c_t(bs::Nan<T>(),bs::Zero<T>()),c_t(bs::Nan<T>(),bs::Nan<T>()),
+        c_t(bs::Nan<T>(),bs::Nan<T>()), c_t(bs::Nan<T>(),bs::Nan<T>()), c_t(bs::Inf<T>(),bs::Inf<T>())
+      };
+
+    for(int i=0; i < N; i++)
+    {
+      STF_ULP_EQUAL(bs::pedantic_(bs::sinh)(inputs[i]), results[i], 1);
+      STF_ULP_EQUAL(bs::pedantic_(bs::sinh)(-inputs[i]), -results[i], 1);
+    }
+
+  }
+#endif
+
+} // end of test for floating_

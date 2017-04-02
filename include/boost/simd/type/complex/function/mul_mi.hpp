@@ -8,6 +8,34 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MUL_MI_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MUL_MI_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-mul_mi  Complex mul_mi
+
+    This function object returns the input  the parameter multiplied by -i (with \f$i^2 = -1\f$).
+
+    `complex<IEEEValue> mul_mi(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/mul_mi.hpp>
+
+
+    @par Example:
+
+       @snippet c_mul_mi.cpp mul_mi
+
+    @par Possible output:
+
+       @snippet c_mul_mi.txt mul_mi
+
+  **/
+  complex<IEEEValue> mul_mi(complex<IEEEValue> const& z1);
+} } }
+#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

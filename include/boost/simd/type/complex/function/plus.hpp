@@ -17,26 +17,26 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup group-complex-plus  Complex plus
 
-    This function object implements the binary difference operator for complex arithmetic
+    This function object implements the binary addition  operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
 
-    `complex<IEEEValue> minus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
+    `complex<IEEEValue> plus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
 
-    @par Header <boost/simd/type/complex/function/minus.hpp>
+    @par Header <boost/simd/type/complex/function/plus.hpp>
 
 
     @par Example:
 
-       @snippet c_minus.cpp plus
+       @snippet c_plus.cpp plus
 
     @par Possible output:
 
-       @snippet c_minus.txt plus
+       @snippet c_plus.txt plus
 
   **/
-  complex<IEEEValue> minus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+  complex<IEEEValue> plus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
 } } }
 #endif
 

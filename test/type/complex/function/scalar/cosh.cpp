@@ -51,7 +51,6 @@ STF_CASE_TPL ( "cosh limiting values", STF_IEEE_TYPES)
       STF_IEEE_EQUAL(bs::cosh(inputs[i]), bs::cos(bs::mul_i(inputs[i])));
     }
   }
-  std::cout << "------------------------------------------" << std::endl;
 #ifndef BOOST_SIMD_NO_INVALIDS
   {
     const int N = 20;
@@ -104,7 +103,6 @@ STF_CASE_TPL ( "cosh limiting values", STF_IEEE_TYPES)
 
     for(int i=0; i < N; i++)
     {
-      std::cout << i <<  "-> " << inputs[i] << std::endl;
       STF_IEEE_EQUAL(bs::cosh(inputs[i]), results[i]);
       STF_IEEE_EQUAL(bs::cosh(-inputs[i]), bs::cosh(inputs[i]));
       STF_IEEE_EQUAL(bs::cosh(inputs[i]), bs::cos(bs::mul_i(inputs[i])));

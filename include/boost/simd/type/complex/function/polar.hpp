@@ -8,6 +8,34 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_POLAR_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_POLAR_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-polar  Complex polar
+
+    This function object constructs a complex from its modulus and arggument.
+
+    `complex<IEEEValue> polar(IEEEValue const& rho, IEEEValue const& theta);`
+
+    @par Header <boost/simd/type/complex/function/polar.hpp>
+
+
+    @par Example:
+
+       @snippet c_polar.cpp polar
+
+    @par Possible output:
+
+       @snippet c_polar.txt polar
+
+  **/
+  complex<IEEEValue> polar(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+} } }
+#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

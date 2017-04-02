@@ -8,6 +8,39 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PROJ_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PROJ_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-mul_i  Complex mul_i
+
+    This function object returns the projection of the complex number z onto the Riemann sphere.
+
+    For most z, `proj(z)==z`, but all complex infinities, even the numbers
+    where one component is infinite and the other is NaN,
+    become positive real infinity, (\f$\infty\f$, 0) or (\f$\infty\f$, -0).
+    The sign of the imaginary (zero) component is the sign of imag(z).
+
+    `complex<IEEEValue> proj(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/proj.hpp>
+
+
+    @par Example:
+
+       @snippet c_proj.cpp proj
+
+    @par Possible output:
+
+       @snippet c_proj.txt proj
+
+  **/
+  complex<IEEEValue> proj(complex<IEEEValue> const& z);
+} } }
+#end
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

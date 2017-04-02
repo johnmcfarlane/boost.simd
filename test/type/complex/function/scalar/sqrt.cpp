@@ -32,3 +32,66 @@ STF_CASE_TPL( "Complex sqrt on T", STF_IEEE_TYPES)
 }
 
 
+STF_CASE_TPL ( "sqrt complex  limits", STF_IEEE_TYPES )
+{
+  using bs::sqrt;
+  using c_t = bs::complex<T>;
+
+  auto sqt =  bs::sqrt;
+
+  // specific values testss
+#ifndef BOOST_SIMD_NO_INVALIDS
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>())), c_t(bs::Inf<T>()), 0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),bs::Zero<T>())), c_t(bs::Zero<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan<T>(),bs::Nan<T>())),c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>(),bs::Nan<T>())),c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>())), c_t(0, bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan <T>(),bs::Inf<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::One<T>(), bs::Nan<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>(), bs::Nan<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),bs::Nan<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan <T>(),bs::Nan<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),bs::One<T>())), c_t(bs::Zero<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),bs::Mone<T>())),c_t(bs::Zero<T>(),bs::Minf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>(),bs::Nan<T>())),  c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan<T>(),bs::One<T>())),  c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan<T>(),bs::Nan<T>())),  c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::One<T>(), -bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>(), -bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),-bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan <T>(),-bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),-bs::One<T>())), c_t(bs::Zero<T>(),-bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Minf<T>(),-bs::Mone<T>())),c_t(bs::Zero<T>(),-bs::Minf<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Inf<T>(), -bs::Nan<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan<T>(), -bs::One<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan<T>(), -bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::Nan <T>(),-bs::Inf<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(sqt(c_t(bs::One<T>(), bs::Nan<T>())), c_t(bs::Nan<T>(),-bs::Nan<T>()),0.5);
+  auto psqrt =  bs::pedantic_(bs::sqrt);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Inf<T>(),bs::Inf<T>())),c_t(bs::Inf<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Zero<T>(),bs::Inf<T>())),c_t(bs::Inf<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Nan<T>(),bs::Zero<T>())), c_t(bs::Nan<T>(),bs::Nan<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::One<T>(), bs::Inf<T>())), c_t(bs::Inf<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Inf<T>(), bs::Inf<T>())), c_t(bs::Inf<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Minf<T>(),bs::Inf<T>())), c_t(bs::Inf<T>(),bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Inf<T>(), -bs::Inf<T>())), c_t(bs::Inf<T>(),-bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::Minf<T>(),-bs::Inf<T>())), c_t(bs::Inf<T>(),-bs::Inf<T>()),0.5);
+  STF_ULP_EQUAL(psqrt(c_t(bs::One<T>(), -bs::Inf<T>())), c_t(bs::Inf<T>(),-bs::Inf<T>()),0.5);
+
+#endif
+//    STF_ULP_EQUAL(psqrt(c_t(1)), c_t(1), 0);
+//    STF_ULP_EQUAL(psqrt(c_t(bs::Mone<T>())), c_t(0, bs::One<T>()),0.5);
+//    STF_ULP_EQUAL(psqrt(c_t(bs::One<T>())), c_t(bs::One<T>()),0.5);
+//    STF_ULP_EQUAL(psqrt(c_t(bs::Zero<T>())), c_t(bs::Zero<T>()),0.5);
+//    STF_ULP_EQUAL(psqrt(c_t(bs::Zero<T>(),bs::Zero<T>())), c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
+//    STF_ULP_EQUAL(psqrt(c_t(bs::Mzero<T>(),bs::Zero<T>())),c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
+//    STF_ULP_EQUAL(psqrt(c_t(0, 2)), c_t(1, 1), 1);
+//    for(T i=-5; i <=  T(5) ; i+= T(0.5))
+//    {
+//      for(T j =-5; j < T(5); j+= T(0.5))
+//      {
+//        std::cout << i << "+i*(" << j << ") -> " << psqrt(c_t(i, j)) << std::endl;
+//        STF_ULP_EQUAL(bs::sqr(psqrt(c_t(i, j))), c_t(i, j), 10);
+//      }
+//    }
+}

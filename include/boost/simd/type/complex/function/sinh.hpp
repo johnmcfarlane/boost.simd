@@ -47,18 +47,23 @@ namespace boost { namespace simd { namespace cmplx
 
     - limiting values
 
+      We always have
+
       - If z is (+0,+0)}}, the result is (+0,+0)
+      - If z is (NaN,NaN), the result is(NaN,NaN)
+      - If z is (x,NaN) (for any finite positive  x), the result is(NaN,NaN)
+      - If z is (x,\f$\infty\f$) (for any finite  positive x), the result is (NaN,NaN)
+      - If z is (NaN,+y) (for any finite non-zero y), the result is(NaN,NaN)
+      - If z is (\f$\infty\f$,y) (for any positive finite y), the result is (\f$\infty e^{iy}\f$\)
+
+     And with pedantic_ decorator the remaining IEEE limits values are fulfilled
+
       - If z is (+0,\f$\infty\f$), the result is(\f$\pm0\f$, NaN) (the sign of the real part is unspecified)
       - If z is (+0,NaN), the result is(\f$\pm0\f$, NaN) (the sign of the real part is unspecified)
-      - If z is (x,\f$\infty\f$) (for any finite  positive x), the result is (NaN,NaN)
-      - If z is (x,NaN) (for any finite positive  x), the result is(NaN,NaN)
       - If z is (\f$\infty\f$,+0), the result is(\f$\infty\f$,+0)
-      - If z is (\f$\infty\f$,y) (for any positive finite y), the result is (\f$\infty e^{iy}\f$\)
       - If z is (\f$\infty, \infty\f$), the result is(\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (\f$\infty\f$,NaN), the result is(\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (NaN,+0), the result is(NaN,+0)
-      - If z is (NaN,+y) (for any finite non-zero y), the result is(NaN,NaN)
-      - If z is (NaN,NaN), the result is(NaN,NaN)
 
     @par Example:
 

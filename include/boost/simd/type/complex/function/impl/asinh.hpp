@@ -37,7 +37,7 @@ namespace boost { namespace simd { namespace ext
       return  mul_i(bs::cmplx::asin(mul_mi(a0)));
     }
   };
-  BOOST_DISPATCH_OVERLOAD ( cmplx_asinh_
+  BOOST_DISPATCH_OVERLOAD ( asinh_
                           , (typename A0)
                           , bd::cpu_
                           , bd::generic_< bd::floating_<A0> >

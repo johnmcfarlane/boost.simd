@@ -8,6 +8,61 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQRT_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQRT_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+
+namespace boost { namespace simd { namespace cmplx
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup group-complex-sqrt  Complex sqrt
+
+    This function object computes complex square root of a complex value z.
+
+    `complex<IEEEValue> sqrt(complex<IEEEValue> const& z);`
+
+    @par Header <boost/simd/type/complex/function/sqrt.hpp>
+
+    @par Notes
+
+    - take care that with non complex arguments, the real sqrt function is called except if you prefix it by the `cmplx::`
+      namespace (see example below).
+
+    - if no errors occur, sqyare root is returned in the range of the right half-plane,
+      including the imaginary axis \f$[0,-\infty]\f$ along the real axis and \f$[-\infty,\infty ]\f$ along the imaginary axis.)
+
+    - If the argument is a negative real number, the result lies on the positive imaginary axis.
+
+    - `bs::ssqrt(conj(z)) == conj(bs::sqrt(z))`
+
+    - we always have:
+
+        - If z is (\f$\pm0,\pm0\f$), the result is (\f$\pm0,\pm0\f$)
+        - If z is (NaN,NaN), the result is (NaN,NaN)
+        - If z is (\f$-\infty\f$, y), the result is (\f$0,\infty\f$) for finite positive y
+        - If z is (\f$\infty\f$, y), the result is (\f$\infty\f$, 0) for finite positive y
+        - If z is (\f$-\infty\f$, Nan), the result is (Nan, \f$\pm\infty\f$)  (sign of imaginary part unspecified)
+        - If z is (\f$\infty\f$, Nan), the result is (\f$\infty\f$, Nan),
+        - If z is (x, Nan), the result is (Nan, Nan), (unless x is \f$\pm\infty\f$)
+
+
+        - If z is (Nan, y),  the result is (NaN,NaN)
+        - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)
+
+    @par Example:
+
+       @snippet c_sqrt.cpp sqrt
+
+    @par Possible output:
+
+       @snippet c_sqrt.txt sqrt
+
+  **/
+  complex<IEEEValue> sqrt(complex<IEEEValue> const& z);
+} } }
+
+
+#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

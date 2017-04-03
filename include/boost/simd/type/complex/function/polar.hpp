@@ -17,7 +17,7 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup group-complex-polar  Complex polar
 
-    This function object constructs a complex from its modulus and arggument.
+    This function object constructs a complex from its modulus and argument.
 
     `complex<IEEEValue> polar(IEEEValue const& rho, IEEEValue const& theta);`
 

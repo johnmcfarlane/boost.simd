@@ -13,6 +13,7 @@ SET( SOURCES
     c_log.cpp
     c_log10.cpp
     c_pow.cpp
+    c_sqrt.cpp
    )
 
 make_unit( "doc.complex.exponential" ${SOURCES})

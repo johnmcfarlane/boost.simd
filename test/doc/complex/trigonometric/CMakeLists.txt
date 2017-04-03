@@ -9,8 +9,10 @@
 SET( SOURCES
    c_acos.cpp
    c_asin.cpp
+   c_atan.cpp
    c_cos.cpp
    c_sin.cpp
+   c_tan.cpp
    )
 
 make_unit( "doc.complex.trigonometric" ${SOURCES})

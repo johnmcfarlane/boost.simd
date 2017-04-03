@@ -51,6 +51,7 @@ EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/arithmetic
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/exponential
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/hyperbolic
+EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/operator
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/predicates
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/complex/trigonometric
 EXAMPLE_PATH          += @PROJECT_SOURCE_DIR@/test/doc/exponential

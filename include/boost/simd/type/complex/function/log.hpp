@@ -22,7 +22,7 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup group-complex-log  Complex log
 
-    This function object computes complex natural (base e) logarithm of a complex value z with a branch cut along the negative real axis.
+    This function object computes complex natural (base e) logarithm of a complex value z.
 
     `complex<IEEEValue> log(complex<IEEEValue> const& z);`
 
@@ -32,6 +32,8 @@ namespace boost { namespace simd { namespace cmplx
 
     - take care that with non complex arguments, the real log function is called except if you prefix it by the `cmplx::`
       namespace (see example below).
+
+    - The function have  a branch cut along the negative real axis.
 
     - The function is continuous onto the branch cut taking into account the sign of imaginary part
 

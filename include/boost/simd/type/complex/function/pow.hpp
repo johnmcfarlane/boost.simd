@@ -21,8 +21,7 @@ namespace boost { namespace simd
     @ingroup group-complex
     @defgroup group-complex-pow  Complex pow
 
-    This function object computes complex x raised to a complex power y with a branch cut
-    along the negative real axis for the first argument.
+    This function object computes complex x raised to a complex power y
 
     `IEEEValue pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);`
 
@@ -32,6 +31,8 @@ namespace boost { namespace simd
 
     - take care that with non complex arguments, the real pow function is called except if you prefix it by the `cmplx::`
       namespace (see example below).
+
+    - The function have a branch cut along the negative real axis for the first argument.
 
     - by choice pow(0, 0) return 1.
 

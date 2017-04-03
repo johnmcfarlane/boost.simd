@@ -15,7 +15,7 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-mul_i  Complex mul_i
+    @defgroup group-complex-proj  Complex proj
 
     This function object returns the projection of the complex number z onto the Riemann sphere.
 
@@ -40,7 +40,7 @@ namespace boost { namespace simd { namespace cmplx
   **/
   complex<IEEEValue> proj(complex<IEEEValue> const& z);
 } } }
-#end
+#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

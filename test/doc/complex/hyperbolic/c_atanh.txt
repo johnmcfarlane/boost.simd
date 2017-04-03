@@ -6,6 +6,6 @@
 <- xf =                   0 + i * 1
 -> bs::atanh(xf) =        0 + i * 0.785398
 <- yf =                   2
--> bs::atanh(yf) =        nan
+-> bs::atanh(yf) =        -nan
 -> bs::cmplx::atanh(yf) = 0.549306 + i * 1.5708
 //! [atanh]

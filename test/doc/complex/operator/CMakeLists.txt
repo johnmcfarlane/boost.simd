@@ -7,6 +7,10 @@
 ##===================================================================================================
 
 SET( SOURCES
+   c_divides.cpp
+   c_plus.cpp
+   c_minus.cpp
+   c_multiplies.cpp
    )
 
 make_unit( "doc.complex.operator" ${SOURCES})

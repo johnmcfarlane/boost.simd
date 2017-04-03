@@ -15,14 +15,20 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-is_finite  Complex is_finite
+    @defgroup complex-is_finite is_finite (object function)
 
     This function object returns True if and only if real and imaginary part
     of the parameters are both finite.
 
-    `as_logical<IEEEValue> is_finite(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    as_logical<IEEEValue> is_finite(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/is_finite.hpp>
+
+    @see (real) is_finite
 
     @par Example:
 

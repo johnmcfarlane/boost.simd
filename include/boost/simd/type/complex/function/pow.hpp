@@ -19,11 +19,15 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-pow  Complex pow
+    @defgroup complex-pow pow (object function)
 
     This function object computes complex x raised to a complex power y
 
-    `IEEEValue pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);`
+    @par Description
+
+    @code
+    IEEEValue pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/pow.hpp>
 
@@ -35,6 +39,8 @@ namespace boost { namespace simd
     - The function have a branch cut along the negative real axis for the first argument.
 
     - by choice pow(0, 0) return 1.
+
+    @see (real) pow
 
      @par Example:
 

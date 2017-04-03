@@ -14,14 +14,20 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-is_inf  Complex is_inf
+    @defgroup complex-is_inf is_inf (object function)
 
     This function object returns True if and only if real or imaginary part
     of the parameters is inf.
 
-    `as_logical<IEEEValue> is_inf(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    as_logical<IEEEValue> is_inf(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/is_inf.hpp>
+
+    @see (real) is_inf
 
     @par Example:
 

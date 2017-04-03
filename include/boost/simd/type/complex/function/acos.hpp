@@ -15,18 +15,22 @@
 #include <boost/simd/detail/dispatch.hpp>
 #if defined(DOXYGEN_ONLY)
 
-namespace boost { namespace simd { namespace cmplx
+namespace boost { namespace simd
 {
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-acos  Complex acos
+    @defgroup complex-acos acos (object function)
 
-    This function object computes complex arc sine of a complex value z. Branch cut exists outside
+    This function object computes complex arc cosine of a complex value z. Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
 
-    `complex<IEEEValue> acos(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    complex<IEEEValue> acos(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/acos.hpp>
 
@@ -60,6 +64,8 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,\f$\infty\f$), the result is (NaN,\f$-\infty\f$)
         - If z is (NaN,NaN), the result is (NaN,NaN))
 
+    @see (real) acos
+
     @par Example:
 
        @snippet c_acos.cpp acos
@@ -69,8 +75,7 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_acos.txt acos
 
   **/
-  complex<IEEEValue> acos(complex<IEEEValue> const& z);
-} } }
+} }
 
 
 #endif

@@ -15,11 +15,15 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-sqrt  Complex sqrt
+    @defgroup complex-sqrt sqrt (object function)
 
     This function object computes complex square root of a complex value z.
 
-    `complex<IEEEValue> sqrt(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    complex<IEEEValue> sqrt(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/sqrt.hpp>
 
@@ -49,6 +53,8 @@ namespace boost { namespace simd { namespace cmplx
 
         - If z is (Nan, y),  the result is (NaN,NaN)
         - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)
+
+    @see (real) sqrt
 
     @par Example:
 

@@ -16,12 +16,16 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-atan  Complex atan
+    @defgroup complex-atan atan (object function)
 
     This function object computes complex arc tangent of a complex value z.
     Branch cut exists outside the interval [-i ; +i] along the imaginary axis.
 
-    `complex<IEEEValue> atan(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    complex<IEEEValue> atan(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/atan.hpp>
 
@@ -36,6 +40,8 @@ namespace boost { namespace simd { namespace cmplx
       The branch cut is conventionally placed at the line segments  \f$[-\infty, -1]\f$ and  \f$[1, \infty]\f$ of the real axis.
 
     - The mathematical definition of the principal value of inverse tangent is \f$ \frac12 i (\log(1-iz)-\log(1+iz)))\f$
+
+    @see (real) atan
 
     @par Example:
 

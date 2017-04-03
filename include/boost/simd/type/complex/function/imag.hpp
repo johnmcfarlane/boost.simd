@@ -15,13 +15,19 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-imag  Complex imag
+    @defgroup complex-imag imag (object function)
 
     This function object computes the imaginary part of the parameter.
 
-    `IEEEValue imag(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    IEEEValue imag(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/imag.hpp>
+
+    @see (real) imag
 
     @par Example:
 

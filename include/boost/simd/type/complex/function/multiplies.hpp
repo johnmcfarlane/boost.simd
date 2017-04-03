@@ -15,17 +15,23 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-multiplies  Complex multiplies
+    @defgroup complex-multiplies multiplies (object function)
 
     This function object implements the binary product operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
 
-    `complex<IEEEValue> multiplies(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
+    @par Description
+
+    @code
+    complex<IEEEValue> multiplies(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/multiplies.hpp>
 
+
+    @see (real) multiplies
 
     @par Example:
 

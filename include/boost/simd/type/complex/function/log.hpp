@@ -20,11 +20,15 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-log  Complex log
+    @defgroup complex-log log (object function)
 
     This function object computes complex natural (base e) logarithm of a complex value z.
 
-    `complex<IEEEValue> log(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    complex<IEEEValue> log(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/log.hpp>
 
@@ -57,6 +61,8 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (\f$\pm\infty\f$,NaN), the result is (\f$\infty\f$,NaN)
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
+
+    @see (real) log
 
     @par Example:
 

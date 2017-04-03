@@ -7,6 +7,7 @@
 */
 //==================================================================================================
 #include <boost/simd/type/complex/function/sqrt.hpp>
+#include <boost/simd/type/complex/function/sqr.hpp>
 #include <boost/simd/type/complex.hpp>
 #include <boost/simd/pack.hpp>
 #include <simd_test.hpp>
@@ -79,19 +80,18 @@ STF_CASE_TPL ( "sqrt complex  limits", STF_IEEE_TYPES )
   STF_ULP_EQUAL(psqrt(c_t(bs::One<T>(), -bs::Inf<T>())), c_t(bs::Inf<T>(),-bs::Inf<T>()),0.5);
 
 #endif
-//    STF_ULP_EQUAL(psqrt(c_t(1)), c_t(1), 0);
-//    STF_ULP_EQUAL(psqrt(c_t(bs::Mone<T>())), c_t(0, bs::One<T>()),0.5);
-//    STF_ULP_EQUAL(psqrt(c_t(bs::One<T>())), c_t(bs::One<T>()),0.5);
-//    STF_ULP_EQUAL(psqrt(c_t(bs::Zero<T>())), c_t(bs::Zero<T>()),0.5);
-//    STF_ULP_EQUAL(psqrt(c_t(bs::Zero<T>(),bs::Zero<T>())), c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
-//    STF_ULP_EQUAL(psqrt(c_t(bs::Mzero<T>(),bs::Zero<T>())),c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
-//    STF_ULP_EQUAL(psqrt(c_t(0, 2)), c_t(1, 1), 1);
-//    for(T i=-5; i <=  T(5) ; i+= T(0.5))
-//    {
-//      for(T j =-5; j < T(5); j+= T(0.5))
-//      {
-//        std::cout << i << "+i*(" << j << ") -> " << psqrt(c_t(i, j)) << std::endl;
-//        STF_ULP_EQUAL(bs::sqr(psqrt(c_t(i, j))), c_t(i, j), 10);
-//      }
-//    }
+   STF_ULP_EQUAL(sqt(c_t(1)), c_t(1), 0);
+   STF_ULP_EQUAL(sqt(c_t(bs::Mone<T>())), c_t(0, bs::One<T>()),0.5);
+   STF_ULP_EQUAL(sqt(c_t(bs::One<T>())), c_t(bs::One<T>()),0.5);
+   STF_ULP_EQUAL(sqt(c_t(bs::Zero<T>())), c_t(bs::Zero<T>()),0.5);
+   STF_ULP_EQUAL(sqt(c_t(bs::Zero<T>(),bs::Zero<T>())), c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
+   STF_ULP_EQUAL(sqt(c_t(bs::Mzero<T>(),bs::Zero<T>())),c_t(bs::Zero<T>(),bs::Zero<T>()),0.5);
+   STF_ULP_EQUAL(sqt(c_t(0, 2)), c_t(1, 1), 1);
+   for(T i=-5; i <=  T(5) ; i+= T(0.5))
+   {
+     for(T j =-5; j < T(5); j+= T(0.5))
+     {
+       STF_ULP_EQUAL(bs::sqr(bs::sqrt(c_t(i, j))), c_t(i, j), 10.0);
+     }
+   }
 }

@@ -11,7 +11,14 @@ SET( SOURCES
     c_arg.cpp
     c_conj.cpp
     c_imag.cpp
+    c_ldexp.cpp
+    c_mul_i.cpp
+    c_mul_mi.cpp
+    c_polar.cpp
+    c_proj.cpp
     c_real.cpp
+    c_sqr.cpp
+    c_sqr_abs.cpp
    )
 
 make_unit( "doc.complex.arithmetic" ${SOURCES})

@@ -45,6 +45,7 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (\f$\infty\f$, Nan), the result is (\f$\infty\f$, Nan),
         - If z is (x, Nan), the result is (Nan, Nan), (unless x is \f$\pm\infty\f$)
 
+     - and with the pedantic_ decorator:
 
         - If z is (Nan, y),  the result is (NaN,NaN)
         - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)

@@ -22,7 +22,7 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup group-complex-log10 Complex log10
 
-    This function object computes complex common (base 10) logarithm of a complex value z with a branch cut along the negative real axis.
+    This function object computes complex common (base 10) logarithm of a complex value z.
 
     `complex<IEEEValue> log10(complex<IEEEValue> const& z);`
 
@@ -34,6 +34,8 @@ namespace boost { namespace simd { namespace cmplx
       namespace (see example below).
 
     - The function is continuous onto the branch cut taking into account the sign of imaginary part
+
+    - The function have  a branch cut along the negative real axis.
 
     - `log(std::conj(z))`is always equal to `conj(std::log(z))`
 

@@ -7,9 +7,12 @@
 ##===================================================================================================
 
 SET( SOURCES
+   c_acosh.cpp
+   c_asinh.cpp
    c_atanh.cpp
    c_cosh.cpp
    c_sinh.cpp
+   c_tanh.cpp
    )
 
 make_unit( "doc.complex.hyperbolic" ${SOURCES})

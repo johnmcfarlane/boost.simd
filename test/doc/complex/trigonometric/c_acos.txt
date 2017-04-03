@@ -6,5 +6,5 @@
 <- xf =                 0 + i * 1
 -> bs::acos(xf) =        1.5708 + i * -0.881374
 <- yf =                 -2
--> bs::acos(yf) =        nan
+-> bs::acos(yf) =        -nan
 //! [acos]

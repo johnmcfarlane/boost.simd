@@ -17,8 +17,7 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup group-complex-sinh  Complex sinh
 
-    This function object computes the complex inverse hyperbolic tangent of z Branch cut exists outside
-    the interval \f$[-1, +1]\f$ along the real axis.
+    This function object computes the complex inverse hyperbolic tangent of z
 
 
     `complex<IEEEValue> sinh(complex<IEEEValue> const& z);`
@@ -34,6 +33,7 @@ namespace boost { namespace simd { namespace cmplx
     - take care that with non complex arguments, the real sinh function is called except if you prefix it by the `cmplx::`
       namespace (see example below).
 
+    - Branch cut exists outside the interval \f$[-1, +1]\f$ along the real axis.
 
     - Inverse hyperbolic tangent is a multivalued function and requires a branch cut on the complex plane.
       The branch cut is conventionally placed at the line segmentd \f$[-\infty, -1]\f$ and  \f$[1, \infty]\f$ of the real axis.

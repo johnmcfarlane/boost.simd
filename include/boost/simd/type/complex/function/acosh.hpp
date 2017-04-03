@@ -9,6 +9,7 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ACOSH_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ACOSH_HPP_INCLUDED
 
+
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>

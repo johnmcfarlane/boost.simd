@@ -15,14 +15,20 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-is_imag  Complex is_imag
+    @defgroup complex-is_imag is_imag (object function)
 
     This function object returns True if and only if real part
     of the parameter is zero.
 
-    `as_logical<IEEEValue> is_imag(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    as_logical<IEEEValue> is_imag(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/is_imag.hpp>
+
+    @see (real) is_imag
 
     @par Example:
 

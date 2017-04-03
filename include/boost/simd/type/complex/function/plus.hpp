@@ -15,17 +15,23 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-plus  Complex plus
+    @defgroup complex-plus plus (object function)
 
     This function object implements the binary addition  operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
 
-    `complex<IEEEValue> plus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
+    @par Description
+
+    @code
+    complex<IEEEValue> plus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/plus.hpp>
 
+
+    @see (real) plus
 
     @par Example:
 

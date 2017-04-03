@@ -20,13 +20,17 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-atanh  Complex atanh
+    @defgroup complex-atanh atanh (object function)
 
     This function object computes the complex inverse hyperbolic tangent of z Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
 
-    `complex<IEEEValue> atanh(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    complex<IEEEValue> atanh(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/atanh.hpp>
 
@@ -63,6 +67,8 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,y) (for any finite y), the result is {{tt|(NaN,NaN)
         - If z is (NaN,\f$\infty\f$), the result is (\f$\pm0, \pi/2\f$) (the sign of the real part is unspecified)
         - If z is (NaN,NaN), the result is (NaN,NaN)
+
+    @see (real) atanh
 
     @par Example:
 

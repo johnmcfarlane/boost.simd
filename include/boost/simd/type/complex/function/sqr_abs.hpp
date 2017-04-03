@@ -14,18 +14,25 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-sqr_abs  Complex sqr_abs
+    @defgroup complex-sqr_abs sqr_abs (object function)
 
     This function object calculates the square of the modulus of the complex z
 
-    `IEEEValue sqr_abs(complex<IEEEValue> const& z);`
-
     @par Header <boost/simd/type/complex/function/sqr_abs.hpp>
+
+    @par Description
+
+        @code
+        IEEEValue sqr_abs(complex<IEEEValue> const& z);
+        @endcode
 
     @par Notes
 
-      - This function is a lot faster than @ref "Complex abs" abs  and is well suited for comparisons if overflow
-        has no risk to occur.
+      - This function is a lot faster than complex [abs](@ref complex-abs) and is well
+        suited for comparisons if overflow has no risk to occur.
+
+    @see (real) abs, sqr_abs,  (complex) [abs](@ref complex-abs)
+
     @par Example:
 
        @snippet c_sqr_abs.cpp sqr_abs
@@ -35,7 +42,6 @@ namespace boost { namespace simd
        @snippet c_sqr_abs.txt sqr_abs
 
   **/
-  IEEEValue boost::simd::sqr_abs(complex<IEEEValue> const& z);
 } }
 #endif
 

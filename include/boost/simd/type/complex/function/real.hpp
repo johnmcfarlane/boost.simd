@@ -14,13 +14,19 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-real  Complex real
+    @defgroup complex-real real (object function)
 
     This function object computes the real part of the parameter.
 
-    `IEEEValue real(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    IEEEValue real(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/real.hpp>
+
+    @see (real) real
 
     @par Example:
 

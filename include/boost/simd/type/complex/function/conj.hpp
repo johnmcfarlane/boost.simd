@@ -15,13 +15,19 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-conj  Complex conj
+    @defgroup complex-conj conj (object function)
 
     This function object computes the complex conjugate of z by reversing the sign of the imaginary part.
 
-    `IEEEValue conj(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    IEEEValue conj(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/conj.hpp>
+
+    @see (real) conj
 
     @par Example:
 

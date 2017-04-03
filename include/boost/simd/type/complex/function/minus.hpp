@@ -15,17 +15,23 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-minus  Complex minus
+    @defgroup complex-minus minus (object function)
 
     This function object implements the binary difference operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
 
-    `complex<IEEEValue> minus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);`
+    @par Description
+
+    @code
+    complex<IEEEValue> minus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/minus.hpp>
 
+
+    @see (real) minus
 
     @par Example:
 

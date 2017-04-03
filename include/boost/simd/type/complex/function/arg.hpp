@@ -9,16 +9,20 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ARG_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ARG_HPP_INCLUDED
 #if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
+namespace boost { namespace simd { namespace cmplx
 {
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-arg  Complex arg
+    @defgroup complex-arg arg (object function)
 
     This function object calculates the phase angle (in radians) of the complex number z
 
-    `IEEEValue arg(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    IEEEValue arg(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/arg.hpp>
 
@@ -30,6 +34,8 @@ namespace boost { namespace simd
 
       - The computation use @ref atan2, the pedantic version uses @ref  atan2 with pedantic_ decorator
 
+    @see (real) arg
+
     @par Example:
 
        @snippet c_arg.cpp arg
@@ -39,8 +45,8 @@ namespace boost { namespace simd
        @snippet c_arg.txt arg
 
   **/
-  IEEEValue boost::simd::arg(complex<IEEEValue> const& z);
-} }
+} } }
+
 #endif
 
 #include <boost/simd/function/arg.hpp>

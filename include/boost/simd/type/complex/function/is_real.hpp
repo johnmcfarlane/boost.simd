@@ -15,14 +15,20 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-is_real  Complex is_real
+    @defgroup complex-is_real is_real (object function)
 
     This function object returns True if and only if imaginary part
     of the parameter is zero.
 
-    `as_logical<IEEEValue> is_real(complex<IEEEValue> const& z);`
+    @par Description
+
+    @code
+    as_logical<IEEEValue> is_real(complex<IEEEValue> const& z);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/is_real.hpp>
+
+    @see (real) is_real
 
     @par Example:
 

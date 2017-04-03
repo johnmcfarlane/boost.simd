@@ -14,13 +14,19 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-ldexp  Complex ldexp
+    @defgroup complex-ldexp ldexp (object function)
 
     This function object returns ldexp aplied to both real and imaginary parts of the first input.
 
-    `as_logical<IEEEValue> ldexp(complex<IEEEValue> const& z, Value const & e);`
+    @par Description
+
+    @code
+    as_logical<IEEEValue> ldexp(complex<IEEEValue> const& z, Value const & e);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/ldexp.hpp>
+
+    @see (real) ldexp
 
     @par Example:
 

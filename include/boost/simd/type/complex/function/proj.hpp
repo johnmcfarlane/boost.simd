@@ -15,11 +15,15 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-proj  Complex proj
+    @defgroup complex-proj proj (object function)
 
     This function object returns the projection of the complex number z onto the Riemann sphere.
 
-    For most z, `proj(z)==z`, but all complex infinities, even the numbers
+    @par Description
+
+    @code
+    For most z, proj(z)==z, but all complex infinities, even the numbers
+    @endcode
     where one component is infinite and the other is NaN,
     become positive real infinity, (\f$\infty\f$, 0) or (\f$\infty\f$, -0).
     The sign of the imaginary (zero) component is the sign of imag(z).
@@ -28,6 +32,8 @@ namespace boost { namespace simd { namespace cmplx
 
     @par Header <boost/simd/type/complex/function/proj.hpp>
 
+
+    @see (real) proj
 
     @par Example:
 

@@ -15,12 +15,16 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-abs Complex abs
+    @defgroup complex-abs abs (object function)
 
     This function object returns the magnitude of the complex number z also
     named modulus or absolute value.
 
-    `IEEEValue abs(complex<IEEEValue> const& z);`
+    @par Description
+
+        @code
+        IEEEValue abs(complex<IEEEValue> const& z);
+        @endcode
 
     @par Header <boost/simd/type/complex/function/abs.hpp>
 
@@ -29,6 +33,9 @@ namespace boost { namespace simd { namespace cmplx
      - limiting cases are properly handled using the pedantic_ decorator
 
      - The computation use @ref hypot, the pedantic version uses @ref hypot with pedantic_ decorator
+
+
+    @see (real) abs, sqr_abs,  (complex) [sqr_abs](@ref complex-sqr_abs)
 
     @par Example:
 
@@ -39,7 +46,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_abs.txt abs
 
   **/
-  IEEEValue abs(complex<IEEEValue> const& z);
 } } }
 
 #endif

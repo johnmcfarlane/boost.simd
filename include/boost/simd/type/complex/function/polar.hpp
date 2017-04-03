@@ -15,14 +15,20 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup group-complex-polar  Complex polar
+    @defgroup complex-polar polar (object function)
 
     This function object constructs a complex from its modulus and argument.
 
-    `complex<IEEEValue> polar(IEEEValue const& rho, IEEEValue const& theta);`
+    @par Description
+
+    @code
+    complex<IEEEValue> polar(IEEEValue const& rho, IEEEValue const& theta);
+    @endcode
 
     @par Header <boost/simd/type/complex/function/polar.hpp>
 
+
+    @see (real) polar
 
     @par Example:
 

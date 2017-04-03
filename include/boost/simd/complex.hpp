@@ -43,8 +43,11 @@ namespace boost { namespace simd
            In any case the complex behaviour can be ensured by calling bs::cmplx::sqrt
 
                - `bs::cmplx::sqrt(-1.0)` will return (0.0, 1.0);
+               - `bs::cmplx::sqrt(bs::complex<double>(-1.0, 0.0)` will also return (0.0, 1.0);
 
-           Involved functions are `sqrt`, `log`, `log10`, `pow`, `acos`, `asin` `asin`, `atanh`.
+           Involved functions are [sqrt](@ref complex-sqrt), [log] (@ref complex-log), [log10] (@ref complex-log10), [pow] (@ref complex-pow),
+           [acos] (@ref complex-acos), [asin] (@ref complex-asin), [acosh] (@ref complex-acosh), [atanh] (@ref complex-atanh),  i.e. all
+           complex functions which restricted to the real axis are not surjective (onto).
 
            In fact all implemented functions for which some parts of the real axis would need to
            return complex value to be consistenly defined.
@@ -53,17 +56,17 @@ namespace boost { namespace simd
 
 
        <center>
-          | Name                    | op  | arity |
-          |-------------------------|-----|-------|
-          | @ref divides            | /   |  2    |
-          | @ref if_else            | NA  |  3    |
-          | @ref is_equal           | ==  |  2    |
-          | @ref is_not_equal       | !=  |  2    |
-          | @ref minus              | -   |  2    |
-          | @ref multiplies         | *   |  2    |
-          | @ref plus               | +   |  2    |
-          | @ref unary_minus        | -   |  1    |
-          | @ref unary_plus         | +   |  1    |
+          | Name                                              | op  | arity |
+          |---------------------------------------------------|-----|-------|
+          | [divides](@ref complex-divides)                   | /   |  2    |
+          | [if_else](@ref complex-if_else)                   | NA  |  3    |
+          | [is_equal](@ref complex-is_equal)                 | ==  |  2    |
+          | [is_not_equal](@ref complex-is_not_equal)         | !=  |  2    |
+          | [minus](@ref complex-minus)                       | -   |  2    |
+          | [multiplies](@ref complex-multiplies)             | *   |  2    |
+          | [plus](@ref complex-plus)                         | +   |  2    |
+          | [unary_minus](@ref complex-unary_minus)           | -   |  1    |
+          | [unary_plus](@ref complex-unary_plus)             | +   |  1    |
        </center>
 
        Arity 2 operators can mix simd/scalar types real/complex types (but not different base types,
@@ -74,15 +77,15 @@ namespace boost { namespace simd
     -  Basic functions
 
        <center>
-         |                  |                 |                 |              |              |
-         |:----------------:|:---------------:|:---------------:|:------------:|:------------:|
-         | @ref abs         | @ref arg        | @ref conj       | @ref imag    | @ref mul_i   |
-         | @ref mul_mi      | @ref polar      | @ref proj       | @ref real    | @ref sqr     |
-         | @ref sqr_abs     |                 |                 |              |              |
+         |                                     |                              |                             |                           |                                |
+         |:-----------------------------------:|:----------------------------:|:---------------------------:|:-------------------------:|:------------------------------:|
+         | [abs](@ref complex-abs)             | [arg](@ref complex-arg)      |  [conj](@ref complex-conj)  | [imag](@ref complex-imag) | [mul_i](@ref complex-mul_i)    |
+         | [mul_mi](@ref complex-mul_mi)       | [polar](@ref complex-polar)  |  [proj](@ref complex-proj)  | [real](@ref complex-real) | [sqr](@ref complex-sqr)        |
+         | [sqr_abs](@ref complex-sqr_abs)     | [sqrt](@ref complex-sqrt)    |                             |                           |                                |
        </center>
 
-        - `std::norm` is implemented under the name @ref sqr_abs because the name `norm` is deceiving.
-          The sum of the squares of the ral and the imaginary parts of a complex is not a mathematical norm,
+        - `std::norm` is implemented under the name [sqr_abs](@ref complex-sqr_abs) because the name `norm` is deceiving.
+          The sum of the squares of the real and imaginary parts of a complex is not a mathematical norm,
           The `abs` function defines a mathematical norm.
 
         - `mul_i` and  `mul_mi` respectively return their input multiplied by i (respectively -i) (with i*i ==  -1)
@@ -92,19 +95,19 @@ namespace boost { namespace simd
        <center>
          |                  |                 |                   |              |              |
          |:----------------:|:---------------:|:-----------------:|:------------:|:------------:|
-         | @ref is_equal    | @ref is_eqz     | @ref is_finite    | @ref is_imag | @ref is_inf  |
-         | @ref is_invalid  | @ref is_nan     | @ref is_not_equal | @ref is_real |              |
+         | [is_equal]   (@ref complex-is_equal)     |[is_eqz]  (@ref complex-is_eqz)      |[is_finite]    (@ref complex-is_finite)     |[is_imag] (@ref  complex-is_imag)  |[is_inf]  (@ref complex-is_inf)   |
+         | i[s_invalid] (@ref complex-is_invalid)   |[is_nan]  (@ref complex-is_nan)      |[is_not_equal] (@ref complex-is_not_equal)  |[is_real] (@ref  complex-is_real)  |              |
        </center>
 
-         - all these predicates,  when applied to complex data return logical values associated to their (real) base type.
+         - all these predicates, when applied to complex data return logical values associated to their (real) base type.
 
     - Exponential functions
 
         <center>
-         |                 |                 |               |                  |
-         |:---------------:|:---------------:|:-------------:|:----------------:|
-         | @ref exp        |  @ref exp_i     | @ref exp_ipi  |  @ref log        |
-         | @ref log10      |                 |               |                  |
+         |                 |                 |               |                  |                 |
+         |:---------------:|:---------------:|:-------------:|:----------------:|:---------------:|
+         | [exp] (@ref complex-exp)  | [exp_i] (@ref complex-exp_i)     | [exp_ipi] (@ref complex-exp_ipi)  | [log] (@ref complex-log)        | [log10] (@ref complex-log10)      |
+         | [pow] (@ref complex-pow)  |                                  |                                   |                                 |                                   |
         </center>
 
           - `exp_i(x)` computes  `exp(mul_i(x))`
@@ -115,8 +118,8 @@ namespace boost { namespace simd
       <center>
         |             |             |             |             |                 |
         |:-----------:|:-----------:|:-----------:|:-----------:|:---------------:|
-        | @ref acos   |  @ref asin  |  @ref atan  | @ref cos    | @ref sin        |
-        | @ref sincos |  @ref tan   |             |             |                 |
+        | [acos]   (@ref complex-acos)    |  [asin] (@ref complex-asin)   | [atan]  (@ref complex-atan)   | [cos] (@ref complex-cos)     | [sin]   (@ref complex-sin)         |
+        | [sincos] (@ref complex-sincos)  |  [tan]  (@ref complex-tan)    |             |             |                 |
       </center>
 
         - As in the real case sincos compute simultaneously the sin and the cos of the input as lower cost.
@@ -124,10 +127,10 @@ namespace boost { namespace simd
     - hyperbolic functions
 
       <center>
-        |               |              |              |             |                 |
-        |:-------------:|:------------:|:------------:|:-----------:|:---------------:|
-        | @ref acosh    |  @ref asinh  |  @ref atanh  | @ref cosh   | @ref sinh       |
-        | @ref sinhcosh |  @ref tanh   |              |             |                 |
+        |             |             |             |             |                 |
+        |:-----------:|:-----------:|:-----------:|:-----------:|:---------------:|
+        | [acosh]   (@ref complex-acosh)    |  [asinh] (@ref complex-asinh)   | [atanh]  (@ref complex-atanh)   | [cosh] (@ref complex-cosh)     | [sinh]   (@ref complex-sinh)         |
+        | [sinhcosh] (@ref complex-sinhcosh)  |  [tanh]  (@ref complex-tanh)    |             |             |                 |
       </center>
 
       - As in the real case sinhcosh compute simultaneously the sinh and the cosh of the input as lower cost.

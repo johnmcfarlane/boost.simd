@@ -17,7 +17,7 @@ namespace boost { namespace simd { namespace cmplx
     @ingroup group-complex
     @defgroup complex-mul_mi mul_mi (object function)
 
-    This function object returns the input  the parameter multiplied by -i (with \f$i^2 = -1\f$).
+    This function object returns the input parameter multiplied by -i (with \f$i^2 = -1\f$).
 
     @par Description
 

@@ -27,6 +27,13 @@ namespace boost { namespace simd
   }
 
   BOOST_DISPATCH_CALLABLE_DEFINITION(tag::split_multiplies_,split_multiplies);
+
+  namespace detail
+  {
+    // Type used to return split_multiplies values
+    template<typename T> struct split_multiplies_result { T low,high; };
+  }
+
 } }
 
 #endif

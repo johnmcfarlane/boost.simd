@@ -25,14 +25,14 @@ namespace boost { namespace simd { namespace ext
                             , bs::pack_<bd::arithmetic_<A0>, X>
                             )
   {
-    using result_t = std::pair<bd::upgrade_t<A0>,bd::upgrade_t<A0>>;
+    using result_t = detail::split_multiplies_result<bd::upgrade_t<A0>>;
 
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
     {
       auto s0 = split(a0);
       auto s1 = split(a1);
 
-      return { s0[0]*s1[0], s0[1]*s1[1] };
+      return result_t{ s0[0]*s1[0], s0[1]*s1[1] };
     }
   };
 } } }

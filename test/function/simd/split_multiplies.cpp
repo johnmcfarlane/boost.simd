@@ -31,14 +31,13 @@ void test( Env& runtime, tt::true_type const& )
    dref[i] = static_cast<type>(data[i])*static_cast<type>(data[i]);
 
   bs::pack<T,N>                 value (&data[0]     , &data[0]+N    );
-  bd::upgrade_t<bs::pack<T,N>>  valuel, valueh;
   bd::upgrade_t<bs::pack<T,N>>  refl  (&dref[0]     , &dref[0]+N/2  );
   bd::upgrade_t<bs::pack<T,N>>  refh  (&dref[0]+N/2 , &dref[0]+N    );
 
-  std::tie(valuel,valueh) = bs::split_multiplies(value,value);
+  auto values = bs::split_multiplies(value,value);
 
-  STF_EQUAL( valuel , refl);
-  STF_EQUAL( valueh , refh);
+  STF_EQUAL( values.low , refl);
+  STF_EQUAL( values.high , refh);
 }
 
 STF_CASE_TPL("split_multiplies two pack<T,N> into a pair of pack<T^2,N/2>", STF_NUMERIC_TYPES)

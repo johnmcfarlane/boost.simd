@@ -25,7 +25,7 @@ namespace boost { namespace simd
     @c split_multiplies multiplies two x-bit SIMD registers and returns two 2x-bit registers
     each having half the cardinal of the original inputs.
   **/
-  std::pair<upgrade_t<Value>, upgrade_t<Value>> split_multiplies(Value const& x, Value const& y);
+  implementation-defined split_multiplies(Value const& x, Value const& y);
 } }
 #endif
 

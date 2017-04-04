@@ -46,8 +46,9 @@ namespace boost { namespace simd { namespace ext
       using untype = bd::as_unsigned_t<A0>;
       using utype  = bd::upgrade_t<A0>;
 
-      utype res0, res1;
-      std::tie(res0, res1) = split_multiplies(a0, a1);
+      auto res = split_multiplies(a0, a1);
+      auto& res0 = res.low;
+      auto& res1 = res.high;
 
       untype res2 = shift_right(bitwise_cast<untype>(a0 ^ a1), sizeof(stype)*CHAR_BIT-1)
                   + static_cast<typename bd::scalar_of<untype>::type>(Valmax<stype>());
@@ -80,8 +81,9 @@ namespace boost { namespace simd { namespace ext
       using stype  = bd::scalar_of_t<A0>;
       using utype  = bd::upgrade_t<A0>;
 
-      utype res0, res1;
-      std::tie(res0, res1) = split_multiplies(a0, a1);
+      auto res = split_multiplies(a0, a1);
+      auto& res0 = res.low;
+      auto& res1 = res.high;
 
       return group(res0, res1)
            | genmask( group( shift_right(res0, sizeof(stype)*CHAR_BIT)
@@ -90,7 +92,6 @@ namespace boost { namespace simd { namespace ext
                     );
     }
   };
-
 } } }
 
 #endif

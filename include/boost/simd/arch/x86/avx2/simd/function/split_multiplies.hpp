@@ -26,16 +26,16 @@ namespace boost { namespace simd { namespace ext
                          )
   {
     using up_t = bd::upgrade_t<A0>;
-    using result_t = std::pair<up_t,up_t>;
+    using result_t = detail::split_multiplies_result<up_t>;
 
     BOOST_FORCEINLINE result_t operator()(const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
     {
       A0 lo = _mm256_mullo_epi16(a0, a1);
       A0 hi = _mm256_mulhi_epi16(a0, a1);
 
-      return  { bitwise_cast<up_t>(interleave_first(lo, hi))
-              , bitwise_cast<up_t>(interleave_second(lo, hi))
-              };
+      return  result_t{ bitwise_cast<up_t>(interleave_first(lo, hi))
+                      , bitwise_cast<up_t>(interleave_second(lo, hi))
+                      };
     }
   };
 
@@ -47,16 +47,16 @@ namespace boost { namespace simd { namespace ext
                          )
   {
     using up_t = bd::upgrade_t<A0>;
-    using result_t = std::pair<up_t,up_t>;
+    using result_t = detail::split_multiplies_result<up_t>;
 
     BOOST_FORCEINLINE result_t operator()(const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
     {
       A0 lo = _mm256_mullo_epi16(a0, a1);
       A0 hi = _mm256_mulhi_epu16(a0, a1);
 
-      return  { bitwise_cast<up_t>(interleave_first(lo, hi))
-              , bitwise_cast<up_t>(interleave_second(lo, hi))
-              };
+      return  result_t{ bitwise_cast<up_t>(interleave_first(lo, hi))
+                      , bitwise_cast<up_t>(interleave_second(lo, hi))
+                      };
     }
   };
 
@@ -68,14 +68,14 @@ namespace boost { namespace simd { namespace ext
                          )
   {
     using up_t = bd::upgrade_t<A0>;
-    using result_t = std::pair<up_t,up_t>;
+    using result_t = detail::split_multiplies_result<up_t>;
 
     BOOST_FORCEINLINE result_t operator()(const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
     {
       up_t lo = _mm256_mul_epi32(a0, a1);
       up_t hi = _mm256_mul_epi32(_mm256_srli_si256(a0, 4), _mm256_srli_si256(a1, 4));
 
-      return { interleave_first(lo, hi), interleave_second(lo, hi) };
+      return result_t{ interleave_first(lo, hi), interleave_second(lo, hi) };
     }
   };
 
@@ -87,14 +87,14 @@ namespace boost { namespace simd { namespace ext
                          )
   {
     using up_t = bd::upgrade_t<A0>;
-    using result_t = std::pair<up_t,up_t>;
+    using result_t = detail::split_multiplies_result<up_t>;
 
     BOOST_FORCEINLINE result_t operator()(const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
     {
       up_t lo = _mm256_mul_epu32(a0, a1);
       up_t hi = _mm256_mul_epu32(_mm256_srli_si256(a0, 4), _mm256_srli_si256(a1, 4));
 
-      return { interleave_first(lo, hi), interleave_second(lo, hi) };
+      return result_t{ interleave_first(lo, hi), interleave_second(lo, hi) };
     }
   };
 } } }

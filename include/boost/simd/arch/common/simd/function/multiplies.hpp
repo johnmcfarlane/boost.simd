@@ -49,7 +49,7 @@ namespace boost { namespace simd { namespace ext
     A0 operator()(const saturated_tag &, const A0& a0, const A0& a1) const BOOST_NOEXCEPT
     {
       auto sm = split_multiplies(a0, a1);
-      return saturated_(group)(sm.first, sm.second);
+      return saturated_(group)(sm.low, sm.high);
     }
   };
 } } }

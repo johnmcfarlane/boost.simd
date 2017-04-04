@@ -26,13 +26,13 @@ namespace boost { namespace simd { namespace ext
                          )
   {
     using up_t = bd::upgrade_t<A0>;
-    using result_t = std::pair<up_t,up_t>;
+    using result_t = detail::split_multiplies_result<up_t>;
 
     BOOST_FORCEINLINE result_t operator()(const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
     {
-      up_t lo = _mm_mul_epi32(a0, a1);
-      up_t hi = _mm_mul_epi32(_mm_srli_si128(a0, 4), _mm_srli_si128(a1, 4));
-      return { interleave_first(lo, hi), interleave_second(lo, hi) };
+      up_t lo_p = _mm_mul_epi32(a0, a1);
+      up_t hi_p = _mm_mul_epi32(_mm_srli_si128(a0, 4), _mm_srli_si128(a1, 4));
+      return result_t{ interleave_first(lo_p, hi_p), interleave_second(lo_p, hi_p) };
     }
   };
 } } }

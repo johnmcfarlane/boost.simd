@@ -14,10 +14,12 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_equal is_equal (object function)
+    @defgroup complex-is_equal is_equal (function object)
 
     This function object returns True if and only if real and imaginary parts
     of the parameters are equal.
+
+    @headerref{<boost/simd/type/complex/function/is_equal.hpp>}
 
     @par Description
 
@@ -25,9 +27,8 @@ namespace boost { namespace simd
     as_logical<IEEEValue> is_equal(complex<IEEEValue> const& z1,complex<IEEEValue> const& z2);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/is_equal.hpp>
 
-    @see (real) is_equal
+    @see ( %real ) is_equal
 
     @par Example:
 

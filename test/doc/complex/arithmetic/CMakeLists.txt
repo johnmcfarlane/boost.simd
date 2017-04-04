@@ -19,6 +19,8 @@ SET( SOURCES
     c_real.cpp
     c_sqr.cpp
     c_sqr_abs.cpp
+    c_unary_minus.cpp
+    c_unary_plus.cpp
    )
 
 make_unit( "doc.complex.arithmetic" ${SOURCES})

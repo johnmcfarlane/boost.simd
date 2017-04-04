@@ -21,11 +21,13 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-asin asin (object function)
+    @defgroup complex-asin asin (function object)
 
     This function object computes complex arc sine of a complex value z. Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
+
+    @headerref{<boost/simd/type/complex/function/asin.hpp>}
 
     @par Description
 
@@ -33,7 +35,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> asin(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/asin.hpp>
 
     @par Notes
 
@@ -47,7 +48,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - The mathematical definition of the principal value of arc sine is \f$-i \log(iz+\sqrt{1-z^2})\f$
 
-    @see (real) asin
+    @see ( %real ) asin
 
     @par Example:
 

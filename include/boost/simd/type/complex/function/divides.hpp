@@ -15,12 +15,14 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-divides divides (object function)
+    @defgroup complex-divides divides (function object)
 
     This function object implements the binary division operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.
+
+    @headerref{<boost/simd/type/complex/function/divides.hpp>}
 
     @par Description
 
@@ -28,10 +30,9 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> divides(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/divides.hpp>
 
 
-    @see (real) divides
+    @see ( %real ) divides
 
     @par Example:
 

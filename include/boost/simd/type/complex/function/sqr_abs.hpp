@@ -18,7 +18,7 @@ namespace boost { namespace simd
 
     This function object calculates the square of the modulus of the complex z
 
-    @par Header <boost/simd/type/complex/function/sqr_abs.hpp>
+    headerref{<boost/simd/type/complex/function/sqr_abs.hpp>}
 
     @par Description
 
@@ -31,7 +31,7 @@ namespace boost { namespace simd
       - This function is a lot faster than complex [abs](@ref complex-abs) and is well
         suited for comparisons if overflow has no risk to occur.
 
-    @see (real) abs, sqr_abs,  (complex) [abs](@ref complex-abs)
+    @see ( %real ) abs, sqr_abs,  ( %complex ) [abs](@ref complex-abs)
 
     @par Example:
 

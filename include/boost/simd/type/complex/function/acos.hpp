@@ -20,11 +20,13 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-acos acos (object function)
+    @defgroup complex-acos acos (function object)
 
     This function object computes complex arc cosine of a complex value z. Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
+
+    @headerref{<boost/simd/type/complex/function/acos.hpp>}
 
     @par Description
 
@@ -32,24 +34,25 @@ namespace boost { namespace simd
     complex<IEEEValue> acos(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/acos.hpp>
 
     @par Notes
 
-    - take care that with non complex arguments, the real acos function is called except if you prefix it by the `cmplx::`
-      namespace (see example below).
+       - take care that with non complex arguments, the real acos function is called except if you prefix it by the `cmplx::`
+         namespace (see example below).
 
-    - f no errors occur, complex arc cosine of {z is returned, in the range \f$]0, \infty, ]\f$ along the real axis
-      and in the range \f$]-i\pi, i\pi, ]\f$ along the imaginary axis.
+       - f no errors occur, complex arc cosine of {z is returned, in the range \f$]0, \infty, ]\f$ along the real axis
+         and in the range \f$]-i\pi, i\pi, ]\f$ along the imaginary axis.
 
-    - inverse cosine (or arc cosine) is a multivalued function and requires a branch cut on the complex plane.
-      The branch cut is conventionally placed at the line segments  \f$[-\infty, +1]\f$ and  \f$[1, \infty]\f$ of the real axis.
+       - inverse cosine (or arc cosine) is a multivalued function and requires a branch cut on the complex plane.
+         The branch cut is conventionally placed at the line segments  \f$[-\infty, +1]\f$ and  \f$[1, \infty]\f$ of the real axis.
 
-    - The mathematical definition of the principal value of arc sine is \f$\frac{\pi}2 + i \log(iz+\sqrt{1-z^2})\f$
+       - The mathematical definition of the principal value of arc sine is \f$\frac{\pi}2 + i \log(iz+\sqrt{1-z^2})\f$
 
-    - `acos(conj(z))` is always equal to `conj(acos(z))`
+       - `acos(conj(z))` is always equal to `conj(acos(z))`
 
-    - we always have:
+   @par Limits
+
+      - we always have:
 
         - If z is (\f$\pm0,+0\f$), the result is (\f$\frac{\pi}2, -0\f$)
         - If z is (\f$\pm0\f$,NaN), the result is  (\f$\frac{\pi}2\f$, NaN)
@@ -64,7 +67,7 @@ namespace boost { namespace simd
         - If z is (NaN,\f$\infty\f$), the result is (NaN,\f$-\infty\f$)
         - If z is (NaN,NaN), the result is (NaN,NaN))
 
-    @see (real) acos
+    @see ( %real ) acos, ( %complex ) [acosh](@ref complex-acosh),  [asin](@ref complex-asin), [atan](@ref complex-atan)
 
     @par Example:
 

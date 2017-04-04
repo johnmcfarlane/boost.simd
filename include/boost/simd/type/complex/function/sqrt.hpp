@@ -15,9 +15,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sqrt sqrt (object function)
+    @defgroup complex-sqrt sqrt (function object)
 
     This function object computes complex square root of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/sqrt.hpp>}
 
     @par Description
 
@@ -25,36 +27,37 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> sqrt(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/sqrt.hpp>
 
     @par Notes
 
-    - take care that with non complex arguments, the real sqrt function is called except if you prefix it by the `cmplx::`
-      namespace (see example below).
+      - take care that with non complex arguments, the real sqrt function is called except if you prefix it by the `cmplx::`
+        namespace (see example below).
 
-    - if no errors occur, sqyare root is returned in the range of the right half-plane,
-      including the imaginary axis \f$[0,-\infty]\f$ along the real axis and \f$[-\infty,\infty ]\f$ along the imaginary axis.)
+      - if no errors occur, sqyare root is returned in the range of the right half-plane,
+        including the imaginary axis \f$[0,-\infty]\f$ along the real axis and \f$[-\infty,\infty ]\f$ along the imaginary axis.)
 
-    - If the argument is a negative real number, the result lies on the positive imaginary axis.
+      - If the argument is a negative real number, the result lies on the positive imaginary axis.
 
-    - `bs::ssqrt(conj(z)) == conj(bs::sqrt(z))`
+      - `sqrt(conj(z)) == conj(sqrt(z))`
 
-    - we always have:
+    @par Limits
 
-        - If z is (\f$\pm0,\pm0\f$), the result is (\f$\pm0,\pm0\f$)
-        - If z is (NaN,NaN), the result is (NaN,NaN)
-        - If z is (\f$-\infty\f$, y), the result is (\f$0,\infty\f$) for finite positive y
-        - If z is (\f$\infty\f$, y), the result is (\f$\infty\f$, 0) for finite positive y
-        - If z is (\f$-\infty\f$, Nan), the result is (Nan, \f$\pm\infty\f$)  (sign of imaginary part unspecified)
-        - If z is (\f$\infty\f$, Nan), the result is (\f$\infty\f$, Nan),
-        - If z is (x, Nan), the result is (Nan, Nan), (unless x is \f$\pm\infty\f$)
+      - we always have:
 
-     - and with the pedantic_ decorator:
+         - If z is (\f$\pm0,\pm0\f$), the result is (\f$\pm0,\pm0\f$)
+         - If z is (NaN,NaN), the result is (NaN,NaN)
+         - If z is (\f$-\infty\f$, y), the result is (\f$0,\infty\f$) for finite positive y
+         - If z is (\f$\infty\f$, y), the result is (\f$\infty\f$, 0) for finite positive y
+         - If z is (\f$-\infty\f$, Nan), the result is (Nan, \f$\pm\infty\f$)  (sign of imaginary part unspecified)
+         - If z is (\f$\infty\f$, Nan), the result is (\f$\infty\f$, Nan),
+         - If z is (x, Nan), the result is (Nan, Nan), (unless x is \f$\pm\infty\f$)
 
-        - If z is (Nan, y),  the result is (NaN,NaN)
-        - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)
+      - and with the pedantic_ decorator:
 
-    @see (real) sqrt
+         - If z is (Nan, y),  the result is (NaN,NaN)
+         - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)
+
+    @see ( %real ) sqrt
 
     @par Example:
 

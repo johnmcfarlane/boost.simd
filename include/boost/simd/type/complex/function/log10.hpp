@@ -20,9 +20,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-log10 log10 (object function)
+    @defgroup complex-log10 log10 (function object)
 
     This function object computes complex common (base 10) logarithm of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/log10.hpp>}
 
     @par Description
 
@@ -30,20 +32,20 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> log10(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/log10.hpp>
 
     @par Notes
 
-    - take care that with non complex arguments, the real log function is called except if you prefix it by the `cmplx::`
-      namespace (see example below).
+      - take care that with non complex arguments, the real log function is called except if you prefix it by the `cmplx::`
+        namespace (see example below).
 
-    - The function is continuous onto the branch cut taking into account the sign of imaginary part
+      - The function is continuous onto the branch cut taking into account the sign of imaginary part
 
-    - The function have  a branch cut along the negative real axis.
+      - The function have  a branch cut along the negative real axis.
 
-    - `log(std::conj(z))`is always equal to `conj(std::log(z))`
+      - `log(std::conj(z))`is always equal to `conj(std::log(z))`
 
-    - we always have:
+    @par Limits
+      - we always have:
 
         - If z is (-0,+0), the result is (\f$-\infty, \pi\f$)
         - If z is (+0,+0), the result is (\f$-\infty\f$, +0)
@@ -66,7 +68,7 @@ namespace boost { namespace simd { namespace cmplx
     @see pow, exp, log
 
 
-    @see (real) log10
+    @see ( %real ) log10
 
     @par Example:
 
@@ -77,7 +79,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_log10.txt log10
 
   **/
-  boost::simd::complex<IEEEValue> boost::simd::cmplx::log(boost::simd::complex<IEEEValue> const& z);
 } } }
 
 #endif

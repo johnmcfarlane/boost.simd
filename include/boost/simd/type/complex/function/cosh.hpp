@@ -15,11 +15,13 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-cosh cosh (object function)
+    @defgroup complex-cosh cosh (function object)
 
     This function object computes the complex inverse hyperbolic tangent of z Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
+
+    @headerref{<boost/simd/type/complex/function/cosh.hpp>}
 
     @par Description
 
@@ -27,7 +29,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> cosh(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/cosh.hpp>
 
     @par Notes
 
@@ -64,7 +65,7 @@ namespace boost { namespace simd { namespace cmplx
       - If z is (NaN,+y) (for any finite non-zero y), the result is(NaN,NaN)
       - If z is (NaN,NaN), the result is(NaN,NaN)
 
-    @see (real) cosh
+    @see ( %real ) cosh
 
     @par Example:
 

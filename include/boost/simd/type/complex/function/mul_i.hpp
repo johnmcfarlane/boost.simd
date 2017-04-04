@@ -15,9 +15,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-mul_i mul_i (object function)
+    @defgroup complex-mul_i mul_i (function object)
 
     This function object returns the input parameter multiplied by i (with \f$i^2 = -1\f$).
+
+    @headerref{<boost/simd/type/complex/function/mul_i.hpp>}
 
     @par Description
 
@@ -25,10 +27,9 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> mul_i(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/mul_i.hpp>
 
 
-    @see (real) mul_i
+    @see ( %real ) mul_i
 
     @par Example:
 

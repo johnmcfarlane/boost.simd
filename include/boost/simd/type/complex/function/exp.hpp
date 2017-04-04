@@ -15,8 +15,10 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-exp exp (object function)
+    @defgroup complex-exp exp (function object)
     This function object returns the complex exp argument: \f$e^{z}\f$
+
+    @headerref{<boost/simd/type/complex/function/exp.hpp>}
 
     @par Description
 
@@ -24,7 +26,6 @@ namespace boost { namespace simd
     complex<IEEEValue> exp(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/exp.hpp>
 
     @par Notes
       for z = x+iy
@@ -46,7 +47,7 @@ namespace boost { namespace simd
     @see pow, log, log10
 
 
-    @see (real) exp
+    @see ( %real ) exp
 
     @par Example:
 

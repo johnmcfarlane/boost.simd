@@ -14,9 +14,11 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-tan tan (object function)
+    @defgroup complex-tan tan (function object)
 
     This function object computes complex tangent of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/tan.hpp>}
 
     @par Description
 
@@ -24,7 +26,6 @@ namespace boost { namespace simd
     IEEEValue tan(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/tan.hpp>
 
     @par Notes
 
@@ -32,7 +33,8 @@ namespace boost { namespace simd
         implemented by `-i * std::tanh(i*z)`, where i is the imaginary unit.
 
       - Mathematical definition of the tangent is \f$ i\frac{e^{-iz}-e^{iz}}{e^{-i}z+e^{iz}}\f$
-    @see (real) tan
+
+    @see ( %real ) tan
 
     @par Example:
 

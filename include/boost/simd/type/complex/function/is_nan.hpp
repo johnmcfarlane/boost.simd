@@ -15,10 +15,12 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_nan is_nan (object function)
+    @defgroup complex-is_nan is_nan (function object)
 
     This function object returns True if and only if real or imaginary part
     of the parameters is a nan.
+
+    @headerref{<boost/simd/type/complex/function/is_nan.hpp>}
 
     @par Description
 
@@ -26,9 +28,8 @@ namespace boost { namespace simd
     as_logical<IEEEValue> is_nan(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/is_nan.hpp>
 
-    @see (real) is_nan
+    @see ( %real ) is_nan
 
     @par Example:
 

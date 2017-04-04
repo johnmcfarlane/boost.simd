@@ -14,10 +14,12 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_eqz is_eqz (object function)
+    @defgroup complex-is_eqz is_eqz (function object)
 
     This function object returns True if and only if real and imaginary part
     of the parameters are both zero.
+
+    @headerref{<boost/simd/type/complex/function/is_eqz.hpp>}
 
     @par Description
 
@@ -25,9 +27,8 @@ namespace boost { namespace simd
     as_logical<IEEEValue> is_eqz(complex<IEEEValue> const& z1,complex<IEEEValue> const& z2);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/is_eqz.hpp>
 
-    @see (real) is_eqz
+    @see ( %real ) is_eqz
 
     @par Example:
 
@@ -38,7 +39,6 @@ namespace boost { namespace simd
        @snippet c_is_eqz.txt is_eqz
 
   **/
-  as_logical<IEEEValue> boost::simd::is_eqz(complex<IEEEValue> const& z);
 } }
 #endif
 #include <boost/simd/function/is_eqz.hpp>

@@ -19,9 +19,11 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-pow pow (object function)
+    @defgroup complex-pow pow (function object)
 
     This function object computes complex x raised to a complex power y
+
+    @headerref{<boost/simd/type/complex/function/pow.hpp>}
 
     @par Description
 
@@ -29,7 +31,6 @@ namespace boost { namespace simd
     IEEEValue pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/pow.hpp>
 
     @par Notes
 
@@ -40,7 +41,7 @@ namespace boost { namespace simd
 
     - by choice pow(0, 0) return 1.
 
-    @see (real) pow
+    @see ( %real ) pow
 
      @par Example:
 
@@ -51,7 +52,6 @@ namespace boost { namespace simd
        @snippet c_pow.txt pow
 
   **/
-  complex<IEEEValue> boost::simd::pow(complex<IEEEValue> const& x, complex<IEEEValue> const& y);
 } }
 #endif
 

@@ -23,3 +23,30 @@ STF_CASE_TPL( "Complex asinh on complex<T>", STF_IEEE_TYPES)
 }
 
 
+STF_CASE_TPL ( "complex asinh limits",   STF_IEEE_TYPES)
+{
+  using bs::asinh;
+  using cT =  bs::complex<T> ;
+
+  // specific values tests
+#ifndef BOOST_SIMD_NO_INVALIDS
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), bs::Zero<T>())), cT(bs::Nan <T>(), bs::Zero<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::One  <T>(), bs::Inf <T>())), cT(bs::Inf<T>(),  bs::Pio_2<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::One  <T>(), bs::Nan <T>())), cT(bs::Nan<T>(),  bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), bs::One <T>())), cT(bs::Inf <T>(), bs::Zero<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), bs::Inf<T>())),  cT(bs::Inf <T>(), bs::Pi<T>()/4), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), bs::Nan<T>())),  cT(bs::Inf <T>(), bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), bs::One<T>())),  cT(bs::Nan <T>(), bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), bs::Inf<T>())),  cT(bs::Minf <T>(), bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), bs::Nan<T>())),  cT(bs::Nan <T>(), bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::One  <T>(), -bs::Inf <T>())), cT(bs::Inf<T>(),  -bs::Pio_2<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::One  <T>(), -bs::Nan <T>())), cT(bs::Nan<T>(),  -bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), -bs::One <T>())), cT(bs::Inf <T>(), -bs::Zero<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), -bs::Inf<T>())),  cT(bs::Inf <T>(), -bs::Pi<T>()/4), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Inf  <T>(), -bs::Nan<T>())),  cT(bs::Inf <T>(), -bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), -bs::One<T>())),  cT(bs::Nan <T>(), -bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), -bs::Inf<T>())),  cT(bs::Minf <T>(), -bs::Nan<T>()), 0.75);
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Nan  <T>(), -bs::Nan<T>())),  cT(bs::Nan <T>(), -bs::Nan<T>()), 0.75);
+#endif
+   STF_ULP_EQUAL(bs::asinh(cT(bs::Zero<T>(),  bs::Zero<T>())), cT(bs::Zero<T>(), bs::Zero<T>()), 0.75);
+}

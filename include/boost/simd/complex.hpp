@@ -119,10 +119,8 @@ namespace boost { namespace simd
         |             |             |             |             |                 |
         |:-----------:|:-----------:|:-----------:|:-----------:|:---------------:|
         | [acos]   (@ref complex-acos)    |  [asin] (@ref complex-asin)   | [atan]  (@ref complex-atan)   | [cos] (@ref complex-cos)     | [sin]   (@ref complex-sin)         |
-        | [sincos] (@ref complex-sincos)  |  [tan]  (@ref complex-tan)    |             |             |                 |
+        | [tan]  (@ref complex-tan)   |  |             |             |                 |
       </center>
-
-        - As in the real case sincos compute simultaneously the sin and the cos of the input as lower cost.
 
     - hyperbolic functions
 
@@ -130,11 +128,8 @@ namespace boost { namespace simd
         |             |             |             |             |                 |
         |:-----------:|:-----------:|:-----------:|:-----------:|:---------------:|
         | [acosh]   (@ref complex-acosh)    |  [asinh] (@ref complex-asinh)   | [atanh]  (@ref complex-atanh)   | [cosh] (@ref complex-cosh)     | [sinh]   (@ref complex-sinh)         |
-        | [sinhcosh] (@ref complex-sinhcosh)  |  [tanh]  (@ref complex-tanh)    |             |             |                 |
+        |  [tanh]  (@ref complex-tanh)    |  |           |             |                 |
       </center>
-
-      - As in the real case sinhcosh compute simultaneously the sinh and the cosh of the input as lower cost.
-
 
   **/
 } }

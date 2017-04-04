@@ -9,6 +9,41 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IF_ELSE_HPP_INCLUDED
+#if defined(DOXYGEN_ONLY)
+namespace boost { namespace simd
+{
+
+  /*!
+    @ingroup group-complex
+    @defgroup complex-if_else if_else (object function)
+
+    This function object conditionally returns @c t (respectively @c f) if @c c
+    is @ref True (respectively  @ref False)
+
+    @pre If both parameters are pack, they must have same cardinal.
+
+    @par Header <boost/simd/type/complex/function/if_else.hpp>
+
+    @par Description
+
+        @code
+        IEEEValue if_else(Value const & c, complex<IEEEValue> const& t, complex<IEEEValue> const& f);
+        @endcode
+
+
+    @see (real) if_else
+
+    @par Example:
+
+       @snippet c_if_else.cpp if_else
+
+    @par Possible output:
+
+       @snippet c_if_else.txt if_else
+
+  **/
+} }
+#endif
 
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/type/complex/function/impl/if_else.hpp>

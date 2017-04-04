@@ -30,7 +30,11 @@ namespace boost { namespace simd
 
   BOOST_DISPATCH_CALLABLE_DEFINITION(tag::two_add_,two_add);
 
-
+  namespace detail
+  {
+    // Type used to return two_add values
+    template<typename T> struct two_add_result { T low,high; };
+  }
 } }
 
 #endif

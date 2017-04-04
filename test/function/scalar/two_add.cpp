@@ -8,17 +8,11 @@
 */
 //==================================================================================================
 #include <boost/simd/function/scalar/two_add.hpp>
-#include <scalar_test.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/constant/mone.hpp>
-#include <boost/simd/constant/nan.hpp>
-#include <boost/simd/constant/one.hpp>
-#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/eps.hpp>
-#include <boost/simd/constant/half.hpp>
-#include <utility>
+#include <scalar_test.hpp>
 
 STF_CASE_TPL(" two_add", STF_IEEE_TYPES)
 {
@@ -26,33 +20,26 @@ STF_CASE_TPL(" two_add", STF_IEEE_TYPES)
   namespace bd = boost::dispatch;
   using bs::two_add;
 
-
-  STF_EXPR_IS( (two_add(T(), T()))
-                  , (std::pair<T,T>)
-                  );
-
   T inf_    = bs::Inf<T>();
-  T zero_   = bs::Zero<T>();
-  T one_    = bs::One<T>();
-  T half_   = bs::Half<T>();
+  T zero_   = T(0);
+  T one_    = T(1);
+  T half_   = T(0.5);
   T eps_    = bs::Eps<T>();
   T eps_2_  = eps_/T(2);
 
-  std::pair<T,T> p;
-
-  p = two_add(inf_,zero_);
-  STF_EQUAL(p.first, inf_);
-  STF_EQUAL(p.second, zero_);
+  auto p = two_add(inf_,zero_);
+  STF_EQUAL(p.low, inf_);
+  STF_EQUAL(p.high, zero_);
 
   p = two_add(zero_, inf_);
-  STF_EQUAL(p.first, inf_);
-  STF_EQUAL(p.second, zero_);
+  STF_EQUAL(p.low, inf_);
+  STF_EQUAL(p.high, zero_);
 
   p = two_add(half_+ eps_2_, half_);
-  STF_EQUAL(p.first, one_);
-  STF_EQUAL(p.second, eps_2_);
+  STF_EQUAL(p.low, one_);
+  STF_EQUAL(p.high, eps_2_);
 
   p = two_add(half_, half_+ eps_2_);
-  STF_EQUAL(p.first, one_);
-  STF_EQUAL(p.second, eps_2_);
+  STF_EQUAL(p.low, one_);
+  STF_EQUAL(p.high, eps_2_);
 }

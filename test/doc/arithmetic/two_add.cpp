@@ -20,26 +20,24 @@ int main()
 {
   pack_ft pf = { 1.0f, -2.0f, 3.0f, -4.0 };
   pack_ft qf(bs::Eps<float>());
-  pack_ft s, e;
-  std::tie(s, e) = bs::two_add(pf, qf);
+  auto pr = bs::two_add(pf, qf);
   std::cout
     <<  "---- simd" << std::setprecision(8) << '\n'
-    << " <- pf =                                  " << pf << '\n'
-    << " <- qf =                                  " << qf << '\n'
-    << "  std::tie(s, e) = bs::two_add(pf, qf)    " << '\n'
-    << " ->  s =                                  " << s << '\n'
-    << " ->  e =                                  " << e << '\n';
+    << " <- pf =                                   " << pf << '\n'
+    << " <- qf =                                   " << qf << '\n'
+    << "  auto pr = bs::two_add(pf, qf)    " << '\n'
+    << " ->  pr.low  =                             " << pr.low << '\n'
+    << " ->  pr.high =                             " << pr.high << '\n';
 
   float xf = 3.0f, yf = bs::Eps<float>();
-  float ss, se;
-  std::tie(ss, se) = bs::two_add(xf, yf);
+  auto sr = bs::two_add(xf, yf);
   std::cout
     << "---- scalar"  << '\n'
     << " xf =                                     " << xf << '\n'
     << " yf =                                     " << yf << '\n'
-    << "  std::tie(ss, se) = bs::two_add(xf, yf)  " << '\n'
-    << " ->  ss =                                 " << ss << '\n'
-    << " ->  se =                                 " << se << '\n';
+    << "  auto sr = bs::two_add(xf, yf)  " << '\n'
+    << " ->  sr.low  =                            " << ss << '\n'
+    << " ->  sr.high =                            " << se << '\n';
 
   return 0;
 }

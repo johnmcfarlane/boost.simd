@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace ext
                           , bd::generic_< bd::floating_<A0> >
                           )
   {
-    using result_t = std::pair<A0,A0>                                  ;
+    using result_t = detail::two_add_result<A0>;
 
     BOOST_FORCEINLINE result_t operator() ( A0 const& a,A0 const& b) const BOOST_NOEXCEPT
     {
@@ -43,7 +43,7 @@ namespace boost { namespace simd { namespace ext
 #else
       A0 r1 = if_zero_else(is_inf(r0), (a-(r0-z))+(b-z));
 #endif
-      return {r0, r1};
+      return result_t{r0, r1};
     }
   };
 } } }

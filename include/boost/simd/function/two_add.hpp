@@ -44,7 +44,7 @@ namespace boost { namespace simd
 
 
   **/
-  std::pair<Value, Value> two_add(Value const& x, Value const& y);
+  implementation-defined two_add(Value const& x, Value const& y);
 } }
 #endif
 

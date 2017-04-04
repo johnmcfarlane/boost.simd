@@ -14,9 +14,11 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-ldexp ldexp (object function)
+    @defgroup complex-ldexp ldexp (function object)
 
     This function object returns ldexp aplied to both real and imaginary parts of the first input.
+
+    @headerref{<boost/simd/type/complex/function/ldexp.hpp>}
 
     @par Description
 
@@ -24,9 +26,8 @@ namespace boost { namespace simd
     as_logical<IEEEValue> ldexp(complex<IEEEValue> const& z, Value const & e);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/ldexp.hpp>
 
-    @see (real) ldexp
+    @see ( %real ) ldexp
 
     @par Example:
 
@@ -37,7 +38,6 @@ namespace boost { namespace simd
        @snippet c_ldexp.txt ldexp
 
   **/
-  as_logical<IEEEValue> boost::simd::ldexp(complex<IEEEValue, Value const & e);
 } }
 #endif
 #include <boost/simd/function/ldexp.hpp>

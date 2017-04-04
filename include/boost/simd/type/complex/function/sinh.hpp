@@ -15,10 +15,12 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sinh sinh (object function)
+    @defgroup complex-sinh sinh (function object)
 
     This function object computes the complex inverse hyperbolic tangent of z
 
+
+    @headerref{<boost/simd/type/complex/function/sinh.hpp>}
 
     @par Description
 
@@ -26,7 +28,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> sinh(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/sinh.hpp>
 
     @par Notes
 
@@ -69,7 +70,7 @@ namespace boost { namespace simd { namespace cmplx
       - If z is (\f$\infty\f$,NaN), the result is(\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (NaN,+0), the result is(NaN,+0)
 
-    @see (real) sinh
+    @see ( %real ) sinh
 
     @par Example:
 

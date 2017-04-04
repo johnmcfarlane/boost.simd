@@ -20,9 +20,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-log log (object function)
+    @defgroup complex-log log (function object)
 
     This function object computes complex natural (base e) logarithm of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/log.hpp>}
 
     @par Description
 
@@ -30,20 +32,21 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> log(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/log.hpp>
 
     @par Notes
 
-    - take care that with non complex arguments, the real log function is called except if you prefix it by the `cmplx::`
-      namespace (see example below).
+      - take care that with non complex arguments, the real log function is called except if you prefix it by the `cmplx::`
+        namespace (see example below).
 
-    - The function have  a branch cut along the negative real axis.
+      - The function have  a branch cut along the negative real axis.
 
-    - The function is continuous onto the branch cut taking into account the sign of imaginary part
+      - The function is continuous onto the branch cut taking into account the sign of imaginary part
 
-    - `log(std::conj(z))`is always equal to `conj(std::log(z))`
+      - `log(std::conj(z))`is always equal to `conj(std::log(z))`
 
-    - we always have:
+   @par Limits
+
+     - we always have:
 
         - If z is (\f$-0,+0\f$), the result is (\f$-\infty, \pi\f$)
         - If z is (\f$+0,+0\f$), the result is (\f$-\infty\f$, +0)
@@ -54,7 +57,7 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,y) (for any finite y), the result is (NaN,NaN)
         - If z is (NaN,NaN), the result is (NaN,NaN)
 
-    - and with the pedantic_ decorator:
+     - and with the pedantic_ decorator:
 
         - If z is (\f$-\infty\f$,\f$\infty\f$), the result is (\f$\infty\f$, \f$3\pi/4\f$)
         - If z is (\f$\infty\f$,\f$\infty\f$), the result is (\f$\infty\f$, \f$\pi/4\f$)
@@ -62,7 +65,7 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
 
-    @see (real) log
+    @see ( %real ) log
 
     @par Example:
 
@@ -73,7 +76,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_log.txt log
 
   **/
-  complex<IEEEValue> log(complex<IEEEValue> const& z);
 } } }
 
 

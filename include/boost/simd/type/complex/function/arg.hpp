@@ -14,9 +14,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-arg arg (object function)
+    @defgroup complex-arg arg (function object)
 
     This function object calculates the phase angle (in radians) of the complex number z
+
+    @headerref{<boost/simd/type/complex/function/arg.hpp>}
 
     @par Description
 
@@ -24,7 +26,6 @@ namespace boost { namespace simd { namespace cmplx
     IEEEValue arg(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/arg.hpp>
 
     @par Notes
 
@@ -34,7 +35,7 @@ namespace boost { namespace simd { namespace cmplx
 
       - The computation use @ref atan2, the pedantic version uses @ref  atan2 with pedantic_ decorator
 
-    @see (real) arg
+    @see ( %real ) arg
 
     @par Example:
 

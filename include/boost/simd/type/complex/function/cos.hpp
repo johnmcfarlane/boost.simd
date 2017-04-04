@@ -14,8 +14,10 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-cos cos (object function)
+    @defgroup complex-cos cos (function object)
     This function object returns the complex cosine of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/cos.hpp>}
 
     @par Description
 
@@ -23,14 +25,13 @@ namespace boost { namespace simd
     complex<IEEEValue> cos(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/cos.hpp>
 
     @par Notes
 
      - special cases are handled as if the operation is implemented by `bs::cosh(i*z)`,
        where i is the imaginary unit.
 
-    @see (real) cos
+    @see ( %real ) cos
 
     @par Example:
 

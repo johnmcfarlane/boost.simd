@@ -14,8 +14,10 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sin sin (object function)
+    @defgroup complex-sin sin (function object)
     This function object returns the complex sine of a complex value z.
+
+    @headerref{<boost/simd/type/complex/function/sin.hpp>}
 
     @par Description
 
@@ -23,14 +25,13 @@ namespace boost { namespace simd
     complex<IEEEValue> sin(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/sin.hpp>
 
     @par Notes
 
      - special cases are handled as if the operation is implemented by `-i*bs::sinh(i*z)`,
        where i is the imaginary unit.
 
-    @see (real) sin
+    @see ( %real ) sin
 
     @par Example:
 

@@ -14,11 +14,13 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-unary_plus unary_plus (object function)
+    @defgroup complex-unary_plus unary_plus (function object)
 
     This function object computes the unary plus of its complex parameter
     (in fact acts as identity).
     Infix notation can be used with operator '-'
+
+    @headerref{<boost/simd/type/complex/function/unary_plus.hpp>}
 
     @par Description
 
@@ -26,9 +28,8 @@ namespace boost { namespace simd
     IEEEValue unary_plus(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/unary_plus.hpp>
 
-    @see (real) unary_plus
+    @see ( %real ) unary_plus
 
     @par Example:
 

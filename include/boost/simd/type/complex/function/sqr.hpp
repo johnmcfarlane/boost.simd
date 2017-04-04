@@ -15,9 +15,11 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sqr sqr (object function)
+    @defgroup complex-sqr sqr (function object)
 
     This function object returns the square of the input.
+
+    @headerref{<boost/simd/type/complex/function/sqr.hpp>}
 
     @par Description
 
@@ -25,10 +27,9 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> sqr(complex<IEEEValue> const& z);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/sqr.hpp>
 
 
-    @see (real) sqr
+    @see ( %real ) sqr
 
     @par Example:
 

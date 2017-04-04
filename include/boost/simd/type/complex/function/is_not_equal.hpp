@@ -14,10 +14,12 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_not_equal is_not_equal (object function)
+    @defgroup complex-is_not_equal is_not_equal (function object)
 
     This function object returns True if and only if real or imaginary part
     of the parameters are not equal.
+
+    @headerref{<boost/simd/type/complex/function/is_not_equal.hpp>}
 
     @par Description
 
@@ -25,9 +27,8 @@ namespace boost { namespace simd
     as_logical<IEEEValue> is_not_equal(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
     @endcode
 
-    @par Header <boost/simd/type/complex/function/is_not_equal.hpp>
 
-    @see (real) is_not_equal
+    @see ( %real ) is_not_equal
 
     @par Example:
 
@@ -38,7 +39,6 @@ namespace boost { namespace simd
        @snippet c_is_not_equal.txt is_not_equal
 
   **/
-  as_logical<IEEEValue> boost::simd::is_not_equal(complex<IEEEValue> const& z1,complex<IEEEValue> const& z2);
 } }
 #endif
 #include <boost/simd/function/is_not_equal.hpp>

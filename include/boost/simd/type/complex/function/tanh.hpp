@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace cmplx
 
      -  `tanh(-z)` is always equal to `-tanh(z)`
 
-     - limiting values
+     - limit values
 
         -  If z is (+0,+0), the result is (+0,+0)
         -  If z is (x,\f$\infty\f$) (for any finite non zero x), the result is (NaN,NaN)

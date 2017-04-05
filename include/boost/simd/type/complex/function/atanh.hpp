@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - `atanh(-z)` is always equal to `-atanh(z)`
 
-    - limiting values
+    - limit values
 
         - If z is (+0,+0), the result is (+0,+0)
         - If z is (+0,NaN), the result is (+0,NaN)

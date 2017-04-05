@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace cmplx
     - take care that with non complex arguments, the real asin function is called except if you prefix it by the `cmplx::`
       namespace (see example below).
 
-    - For any z, asin(z) = acos(-z) - \f$\pi/2\f$ (see asin for limiting cases detail)
+    - For any z, asin(z) = acos(-z) - \f$\pi/2\f$ (see [acos](@ref complex-acos) for limit cases detail)
 
     - inverse sine (or arc sine) is a multivalued function and requires a branch cut on the complex plane.
       The branch cut is conventionally placed at the line segments  \f$[-\infty, +1]\f$ and  \f$[1, \infty]\f$ of the real axis.

@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace cmplx
       - take care that with non complex arguments, the real sqrt function is called except if you prefix it by the `cmplx::`
         namespace (see example below).
 
-      - if no errors occur, sqyare root is returned in the range of the right half-plane,
+      - square root is returned in the range of the right half-plane,
         including the imaginary axis \f$[0,-\infty]\f$ along the real axis and \f$[-\infty,\infty ]\f$ along the imaginary axis.)
 
       - If the argument is a negative real number, the result lies on the positive imaginary axis.

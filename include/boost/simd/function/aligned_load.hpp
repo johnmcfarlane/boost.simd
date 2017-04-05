@@ -31,7 +31,7 @@ namespace boost { namespace simd
 
   /*!
     @overload
-  */
+  **/
   template<typename T, typename Pointer> T aligned_load(Pointer ptr) {}
 
 } }

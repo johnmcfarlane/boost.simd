@@ -15,8 +15,7 @@ namespace boost { namespace simd
 {
   /*!
     @ingroup group-memory
-
-    @brief Store a value at an aligned memory location
+    Store a value at an aligned memory location
 
     Store a given value into an aligned memory location referenced by either
     a pointer or a pointer and an offset. To support SIMD idioms like data
@@ -92,13 +91,13 @@ namespace boost { namespace simd
 
   /*!
    * @overload
-   */
+   **/
   template<typename Value, typename Pointer>
   void aligned_store( Value const& val, Pointer ptr) {}
 
   /*!
    * @overload
-   */
+   **/
   template<typename Value, typename Pointer, typename Offset>
   void aligned_store( Value const& val, Pointer const& ptr
                     , Offset const& offset) {}

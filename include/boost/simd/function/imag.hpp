@@ -17,11 +17,13 @@ namespace boost { namespace simd
 
   /*!
 
-    @ingroup group-operator
+    @ingroup group-arithmetic
     This function object returns the imaginary part of the parameter.
     for real types it is always 0.
 
-     @see  real
+    @par Header <boost/simd/function/imag.hpp>
+
+    @see  real
 
     @par Example:
 

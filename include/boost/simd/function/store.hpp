@@ -15,8 +15,7 @@ namespace boost { namespace simd
 {
   /*!
     @ingroup group-memory
-
-    @brief Store a value at an arbitrary memory location
+    Store a value at an arbitrary memory location
 
     Store a given value into a random memory location referenced by either
     a pointer or a pointer and an offset. To support SIMD idioms like data
@@ -38,8 +37,7 @@ namespace boost { namespace simd
     @param mask   Optional logical mask. Only stores values for which the mask is true.
 
   **/
-  template<typename Value, typename Pointer, typename Offset> void store( Value const& val, Pointer const& ptr
-                                                                        , Offset const& offset, Mask const& mask) {}
+  template<typename Value, typename Pointer, typename Offset> void store( Value const& val, Pointer const& ptr, Offset const& offset, Mask const& mask) {}
 
   /*!
     @overload

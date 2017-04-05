@@ -22,7 +22,7 @@ namespace boost { namespace simd
 
     @par Header <boost/simd/function/acos.hpp>
 
-    @par Call
+    @par Semantic
 
     For every parameter of floating type
 

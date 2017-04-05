@@ -17,7 +17,7 @@ namespace boost { namespace simd
 
   /*!
 
-    @ingroup group-operator
+    @ingroup group-arithmetic
     This function object returns the real part of the parameter.
     On real types it coincides with identity.
 

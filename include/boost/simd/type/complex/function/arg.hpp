@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace cmplx
 
       - If no errors occur, returns the phase angle of z in the interval \f$]-\pi, \pi]\f$.
 
-      - limiting cases are properly handled using the pedantic_ decorator
+      - limit cases are properly handled using the pedantic_ decorator
 
       - The computation use @ref atan2, the pedantic version uses @ref  atan2 with pedantic_ decorator
 

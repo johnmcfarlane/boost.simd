@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace cmplx
 
      -   `asinh(-z)` is always equal to `-asinh(z)`
 
-     - limiting values
+     - limit values
 
         - If z is (+0,+0), the result is (+0,+0)
         - If z is (x,\f$\infty\f$) (for any positive finite x), the result is (\f$\infty\f$,\f$\pi/2\f$)

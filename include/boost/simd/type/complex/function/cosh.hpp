@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - `cosh(-z)` is always equal to `cosh(z)`
 
-    - limiting values
+    - limit values
 
       - If z is (+0,+0)}}, the result is (1,+0)
       - If z is (+0,\f$\infty\f$), the result is(NaN,\f$\pm0\f$) (the sign of the imaginary part is unspecified)

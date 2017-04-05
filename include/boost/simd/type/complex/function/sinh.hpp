@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - `sinh(-z)` is always equal to `-sinh(z)`
 
-    - limiting values
+    - limit values
 
       We always have
 

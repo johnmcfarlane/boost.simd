@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace cmplx
 
     @par Notes
 
-     - limiting cases are properly handled using the pedantic_ decorator
+     - limit cases are properly handled using the pedantic_ decorator
 
      - The computation use @ref hypot, the pedantic version uses @ref hypot with pedantic_ decorator
 

@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace cmplx
 
      -  `acosh(conj(z))` is always equal to `conj(acosh(z))`
 
-     - limiting values
+     - limit values
 
          - If z is (\f$\pm0\f$,+0), the result is (+0,\f$\pi/2\f$)
          - If z is (x,\f$\infty\f$) (for any finite x), the result is (\f$\infty\f$,\f$\pi/2\f$)

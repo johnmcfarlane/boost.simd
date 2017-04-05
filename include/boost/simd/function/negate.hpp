@@ -24,8 +24,7 @@ namespace boost { namespace simd
     @par Header <boost/simd/function/negate.hpp>
 
     @par Note
-    If y is @ref Zero the result is zero. This can be avoided using
-    @ref negatenz or @ref copysign.
+    If y is @ref Zero the result is zero. This can be avoided using @ref negatenz or @ref copysign.
 
     @see sign, negatenz, copysign,  Mzero,  is_positive, is_negative
 

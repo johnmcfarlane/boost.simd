@@ -25,8 +25,7 @@ namespace boost { namespace simd
 
     - saturated_ ensures that @c saturated_(dec)(x) will never be
       strictly greater than @c x,
-      avoiding the wrap around from @ref Valmin to
-      @ref Valmax with integer types
+      avoiding the wrap around from @ref Valmin to @ref Valmax with integer types
 
     @see inc, minus
 

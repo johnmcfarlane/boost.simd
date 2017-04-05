@@ -31,7 +31,7 @@ namespace boost { namespace simd
        <center>
          |                  |                 |                 |           |              |
          |:----------------:|:---------------:|:---------------:|:---------:|:------------:|
-         | @ref abs         | @ref dec        | @ref dist       | @ref inc  | @ref minus   |
+         | [abs](@ref real-abs)  | @ref dec        | @ref dist       | @ref inc  | @ref minus   |
          | @ref multiplies  | @ref plus       | @ref oneminus   | @ref sqr  | @ref toint   |
          | @ref unary_minus | @ref unary_plus | @ref touint     |           |              |
        </center>

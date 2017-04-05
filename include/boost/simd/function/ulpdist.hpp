@@ -52,8 +52,8 @@ namespace boost { namespace simd
     but a 1 in the last digit (it is not hard coded that way however).
     This means \f$2^{-23}\f$ for float and \f$2^{-52}\f$ for double.
 
-    \arg For instance if two floating numbers (of same type) have an ulpdist of
-    @ref Zero that means that their floating representation are identical or they are
+    \arg For instance if two floating numbers (of same type) have an ulpdist of @ref Zero
+    that means that their floating representation are identical or they are
     both Nans.
 
     \arg Generally equality up to 0.5 ulp is the best that one can wish beyond

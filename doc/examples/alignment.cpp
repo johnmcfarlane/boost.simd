@@ -3,6 +3,7 @@
 
 #include <boost/simd/memory/allocate.hpp>
 #include <boost/simd/memory/allocator.hpp>
+#include <boost/simd/memory/aligned_delete.hpp>
 #include <boost/simd/pack.hpp>
 
 int main(int argc, char** argv)

@@ -11,6 +11,14 @@
 #ifndef BOOST_SIMD_CONFIG_HPP_INCLUDED
 #define BOOST_SIMD_CONFIG_HPP_INCLUDED
 
+/*!
+  @ingroup group-api
+  @defgroup group-config Configuration options
+
+  Behavior of @projectname functions can be globally modified by this set of preprocessor
+  definitions.
+**/
+
 // Get version number
 #include <boost/simd/version.hpp>
 
@@ -38,7 +46,7 @@
     @brief Fast math behavior option
 
     By defining this symbol or passing @-ffast-math option to the compiler, the behavior of
-    Boost.SIMD mathematical functions will be in accordance with standard definition of
+    @projectname mathematical functions will be in accordance with standard definition of
     fast IEEE math which includes:
 
     - No handling of NaN values
@@ -61,7 +69,7 @@
     @ingroup group-config
     @brief NaN handling behavior option
 
-    By defining this symbol, Boost.SIMD mathematical functions will ignore NaN values passed as input
+    By defining this symbol, @projectname mathematical functions will ignore NaN values passed as input
     and will not try to behave correctly if NaN are generated in intermediate computations. This option
     usually provides increased performance at the cost of correct handling of NaN related corner
     cases.
@@ -79,7 +87,7 @@
     @ingroup group-config
     @brief Negative zero handling behavior option
 
-    By defining this symbol, Boost.SIMD mathematical functions will not take care of handling zero
+    By defining this symbol, @projectname mathematical functions will not take care of handling zero
     and minus zero correctly. This option usually provides increased performance at the cost of
     correct handling of negative zeros related corner cases.
 
@@ -95,7 +103,7 @@
     @ingroup group-config
     @brief Infinites handling behavior option
 
-    By defining this symbol, Boost.SIMD mathematical functions will not take care of handling
+    By defining this symbol, @projectname mathematical functions will not take care of handling
     infinites correctly. This option usually provides increased performance at the cost of
     correct handling of infinites related corner cases.
 
@@ -112,7 +120,7 @@
     @ingroup group-config
     @brief Denormals handling behavior option
 
-    By defining this symbol, Boost.SIMD mathematical functions will ignore denormals passed as input
+    By defining this symbol, @projectname mathematical functions will ignore denormals passed as input
     and won't try to behave correctly if denormals are generated in intermediate computations.
     This option usually provides increased performance at the cost of correct handling of denormals
     related corner cases.
@@ -130,7 +138,7 @@
     @ingroup group-config
     @brief Invalid values handling behavior option
 
-    By defining this symbol, Boost.SIMD mathematical functions will ignore all invalid values
+    By defining this symbol, @projectname mathematical functions will ignore all invalid values
     - namely NaNs and infinites - passed as input and won't try to behave correctly if those are
     generated in intermediate computations. This option usually provides increased performance
     at the cost of correct handling of invalid related corner cases.

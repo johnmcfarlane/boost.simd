@@ -6,16 +6,13 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ##===================================================================================================
 
-add_subdirectory(arithmetic)
-add_subdirectory(bitwise)
-add_subdirectory(boolean)
-add_subdirectory(exponential)
-add_subdirectory(eulerian)
-add_subdirectory(hyperbolic)
-add_subdirectory(ieee)
-add_subdirectory(predicates)
-add_subdirectory(memory)
-add_subdirectory(range)
-add_subdirectory(reduction)
-add_subdirectory(trigonometric)
-add_subdirectory(swar)
+SET( SOURCES
+    aligned_delete.cpp
+    aligned_object.cpp
+    allocate.cpp
+    allocator.cpp
+    is_aligned.cpp
+    mask.cpp
+  )
+
+make_unit( "doc.memory" ${SOURCES})

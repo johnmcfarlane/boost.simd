@@ -1,0 +1,3 @@
+//! [aligned_object]
+16
+//! [aligned_object]

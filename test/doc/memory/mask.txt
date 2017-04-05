@@ -1,0 +1,6 @@
+//! [mask]
+y     : (-1, 1, -1, 1)
+y < 0 : (true, false, true, false)
+Loaded value: (1, 2, 3, 4)
+Masked value: (1, 0, 3, 0)
+//! [mask]

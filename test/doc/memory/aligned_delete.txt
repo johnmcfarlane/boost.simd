@@ -1,0 +1,3 @@
+//! [aligned_delete]
+0x11e7c20
+//! [aligned_delete]

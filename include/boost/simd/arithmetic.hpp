@@ -151,7 +151,7 @@ namespace boost { namespace simd
 
      - **complex operations**
 
-       Boost.SIMD  does not provides complex number operations yet, but it will soon. So
+       @projectname does not provides complex number operations yet, but it will soon. So
        the following functors that have a meaning as a restriction to real number of complex
        functions, can be seen as a prequel:
 
@@ -195,7 +195,7 @@ namespace boost { namespace simd
       and can be useful in searching extra-accuracy in other circumstances as double-double
       computations.
 
-      @c pedantic_(fma) is never used internally by Boost.SIMD
+      @c pedantic_(fma) is never used internally by @projectname
 
      - **Standard operations**
 
@@ -210,7 +210,7 @@ namespace boost { namespace simd
          | @ref signbit  | @ref sqrt       |              |             |
        </center>
 
-       Boost.SIMD provides its own scalar and simd versions, but allows
+       @projectname provides its own scalar and simd versions, but allows
        the use of the @c std_ @ref group-decorator to call the associated system
        library function if the user needs it.
 
@@ -224,7 +224,7 @@ namespace boost { namespace simd
        </center>
 
        @ref clamp is also provided in stdlibc++ for scalar mode, but only since C++17.
-       For now, in Boost.SIMD, the pedantic_  decorated version ensures standard
+       For now, in @projectname, the pedantic_  decorated version ensures standard
        conformity for a Nan first parameter.
   **/
 } }

@@ -1,0 +1,4 @@
+//! [is_aligned]
+true
+true
+//! [is_aligned]

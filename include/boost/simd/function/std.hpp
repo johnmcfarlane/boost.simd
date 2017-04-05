@@ -45,7 +45,7 @@ namespace boost { namespace simd
 
     - std_ is only a convenience feature for people which
       sometimes have to stick to the standard or
-      test the standard behaviour against **Boost.SIMD**.
+      test the standard behaviour against @projectname.
 
   **/
   const detail::decorator<std_tag> std_ = {};

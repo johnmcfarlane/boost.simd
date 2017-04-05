@@ -2,7 +2,7 @@
 /*!
   @file
 
-  Convenience header for Boost.SIMD
+  Convenience header for @projectname
 
   @copyright 2016 NumScale SAS
 
@@ -29,26 +29,17 @@ namespace boost
   namespace simd
   {
     /*!
-      @defgroup group-api User API
+      @defgroup group-api User's Manual
 
-      The Boost.SIMD User API includes all the types, meta-functions, algorithms, functions
+      The @projectname User's manual covers all the types, meta-functions, algorithms, functions
       and callable objects allowing the design and implementation of SIMD code.
-    **/
-
-     /*!
-      @ingroup group-api
-      @defgroup group-config Configuration
-      Configuration options
-
-      Behavior of Boost.SIMD functions can be globally modified by this set of preprocessor
-      definitions.
     **/
 
     /*!
       @ingroup group-api
       @defgroup group-types Types and helpers
 
-      Boost.SIMD provides a set of types to handle SIMD operations in a portable way.
+      @projectname provides a set of types to handle SIMD operations in a portable way.
       These types include:
 
       - boost::simd::pack which encapsulates SIMD registers
@@ -59,23 +50,23 @@ namespace boost
       @ingroup group-api
       @defgroup group-functions Functions and Constants
 
-      Boost.SIMD functions and constants are designed to work seamlessly on both scalar
+      @projectname functions and constants are designed to work seamlessly on both scalar
       and SIMD parameters. Their compile-time polymorphic behavior ensures that the best
       available implementation will be selected for any given combination of types, architecture
       and options (if any).
 
-      While being documented as functions, most Boost.SIMD functions are actually Function Objects.
-      This implementation allow Boost.SIMD to use its functions directly in standard algorithms
+      While being documented as functions, most @projectname functions are actually Function Objects.
+      This implementation allow @projectname to use its functions directly in standard algorithms
       and to support functions decorators to handle variations in functions' behavior.
 
-      Boost.SIMD functions are accessible via the header files located in the
+      @projectname functions are accessible via the header files located in the
       @c boost/simd/function folder. E.g, boost::simd::abs requires the inclusion
       of boost/simd/function/abs.hpp.
 
-      Similarly, Boost.SIMD constants are accessible via the header files located in the
+      Similarly, @projectname constants are accessible via the header files located in the
       @c boost/simd/constant folder. E.g, boost::simd::True requires the inclusion
-      of boost/simd/constant/true.hpp. All Boost.SIMD functions begin with a lower-case
-      letter and all Boost.SIMD constants begin with an upper-case letter.
+      of boost/simd/constant/true.hpp. All @projectname functions begin with a lower-case
+      letter and all @projectname constants begin with an upper-case letter.
 
       Function semantics are usually similar to the pre-existing ones, if any, with the
       following caveats:

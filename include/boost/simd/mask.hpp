@@ -2,8 +2,6 @@
 /*!
   @file
 
-  Defines the mask adapter for pointer
-
   @copyright 2016 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
@@ -20,6 +18,59 @@
 
 namespace boost { namespace simd
 {
+  /*!
+    @ingroup api-memory
+    @defgroup memory-mask mask (function template)
+
+    Tag a pointer as being masked by one or more boolean variables.
+
+    @headerref{<boost/simd/mask.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename Type,typename Mask, typename U>
+        implementation-defined mask(Type* ptr, Mask const& status, U const& def)
+        @endcode
+
+    2.  @code
+        template<typename Type,typename Mask>
+        implementation-defined mask(Type* ptr, Mask const& status)
+        @endcode
+
+    1.  Wraps a pointer, a LogicalValue mask and a default value in an implementation defined object
+        that is suitable to be passed to function handling memory operation with masked pointer.
+
+    2.  Wraps a pointer and a LogicalValue mask in an implementation defined object that is suitable
+        to be passed to function handling memory operation with masked pointer.
+
+    @par Parameters
+
+    | Name               | Description                                                        |
+    |-------------------:|:-------------------------------------------------------------------|
+    | **ptr**            | the pointer to mask                                                |
+    | **status**         | Condition associated to the pointer                                |
+    | **def**            | Value to return when a value is accessed where **status** is false |
+
+    @par Return Value
+    An implementation-defined object that represents the pointer and its associated mask.
+
+    @par Requirements
+    - @c Type and @c U models Value
+    - @c Mask models LogicalValue
+
+    @par Related components
+      - @ref memory-load
+      - @ref memory-store
+
+    @par Example
+    @snippet mask.cpp mask
+
+    Possible output
+
+    @snippet mask.txt mask
+  **/
+
   namespace detail
   {
     // Hint-type for masked pointer
@@ -40,28 +91,12 @@ namespace boost { namespace simd
     };
   }
 
-  /*!
-    @ingroup group-api
-    @brief Marks a pointer as being masked
-
-    Wraps a pointer, a condition and an optional base value to be passed to masked memory
-    aware operation.
-
-    @param ptr    Value to mask
-    @param status Condition associated to the pointer
-    @param def    Optional value to use when trying to acces ptr when status is false
-
-    @return A wrapped pointer and condition
-  **/
   template<typename T, typename U, typename Mask> BOOST_FORCEINLINE
   detail::masked_pointer<T,Mask> mask(T* ptr, Mask const& status, U const& def)
   {
     return detail::masked_pointer<T,Mask>{ptr,T(def),status};
   }
 
-  /*!
-    @overload
-  */
   template<typename T, typename Mask>
   BOOST_FORCEINLINE detail::masked_pointer<T,Mask, true> mask(T* ptr, Mask const& status)
   {

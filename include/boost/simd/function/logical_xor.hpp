@@ -11,23 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_LOGICAL_XOR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOGICAL_XOR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-logical_xor logical_xor (function object)
+
     This function object returns the logical xor of the first argument
     and of the second argument.
 
-    @par Header <boost/simd/function/logical_xor.hpp>
+    @headerref{<boost/simd/function/logical_xor.hpp>}
+
+    @par Description
+
+      @code
+      as_logical_t<Value0> logical_xor(Value0 const& x, Value1 const& y);
+      @endcode
 
     @par Note
 
     - The result type is the logical type associated to the first argument.
-
-    @pre The operands must share the same @ref cardinal_of value.
-
 
     @see logical_not,  logical_and, logical_andnot,  logical_notand,  logical_or, logical_ornot,  logical_notor
 
@@ -40,9 +41,6 @@ namespace boost { namespace simd
       @snippet logical_xor.txt logical_xor
 
   **/
-  as_logical_t<Value0> logical_xor(Value0 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/logical_xor.hpp>
 #include <boost/simd/function/simd/logical_xor.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_COTD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COTD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cotd cotd (function object)
+
     This function object returns the cotangent of input in degree:
     \f$\cos(\pi x/180)/\sin(\pi x/180)\f$.
 
+    @headerref{<boost/simd/function/cotd.hpp>}
 
-    @par Header <boost/simd/function/cotd.hpp>
+    @par Description
+
+      @code
+      IEEEValue cotd(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet cotd.txt cotd
 
   **/
-  IEEEValue cotd(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cotd.hpp>
 #include <boost/simd/function/simd/cotd.hpp>

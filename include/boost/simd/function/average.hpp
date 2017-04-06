@@ -11,23 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_AVERAGE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_AVERAGE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-                  {
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-average average (function object)
+
     This function object computes the arithmetic mean of its parameters.
 
-    @par Header <boost/simd/abs.hpp>
+    @headerref{<boost/simd/abs.hpp>}
 
-    @par Notes
+    @par Description
 
-    Using `average(x, y)` for floating entries is similar to  `(x+y)/2`
-
-    for integer types, it returns a rounded value at a distance guaranteed
-    to be less than or equal to 0.5 of the average floating value, but may differ
-    by unity from the truncation given by `(x+y)/2`.
+      @code
+      Value average(Value const& x, Value const& y);
+      @endcode
 
     @par Note:
       This function does not overflow.
@@ -44,9 +40,6 @@ namespace boost { namespace simd
 
 
   **/
-  Value average(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/average.hpp>
 #include <boost/simd/function/simd/average.hpp>

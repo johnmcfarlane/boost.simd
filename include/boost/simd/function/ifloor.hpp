@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IFLOOR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IFLOOR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-ifloor ifloor (function object)
+
     This function object computes the integer conversion of the @ref floor of its parameter.
 
+    @headerref{<boost/simd/function/ifloor.hpp>}
 
-    @par Header <boost/simd/function/ifloor.hpp>
+    @par Description
+
+      @code
+      as_integer_t<Value> ifloor(Value const& x);
+      @endcode
 
     @par Note:
     This operation is properly saturated
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet ifloor.txt ifloor
 
   **/
-  as_integer_t<Value> ifloor(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ifloor.hpp>
 #include <boost/simd/function/simd/ifloor.hpp>

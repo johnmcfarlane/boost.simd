@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_INDEG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_INDEG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-indeg indeg (function object)
+
     This function object converts radian to degree.
 
+    @headerref{<boost/simd/function/indeg.hpp>}
 
-    @par Header <boost/simd/function/indeg.hpp>
+    @par Description
+
+      @code
+      IEEEValue indeg(IEEEValue const& x);
+      @endcode
 
     @par Example:
 
@@ -31,9 +34,6 @@ namespace boost { namespace simd
       @snippet indeg.txt indeg
 
   **/
-  IEEEValue indeg(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/indeg.hpp>
 #include <boost/simd/function/simd/indeg.hpp>

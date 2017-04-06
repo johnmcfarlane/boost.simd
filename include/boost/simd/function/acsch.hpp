@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ACSCH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACSCH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-acsch acsch (function object)
+
     This function object returns the hyperbolic cosecant argument
     \f$\mathop{\textrm{asinh}}(1/x)\f$
 
-    @par Header <boost/simd/function/acsch.hpp>
+    @headerref{<boost/simd/function/acsch.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue acsch(IEEEValue const & x);
+      @endcode
 
     @see cosh, sinh,  acosh, asinh, atanh, asech, acoth, atanh
 
@@ -36,9 +39,6 @@ namespace boost { namespace simd
 
 
   **/
-  IEEEValue acsch(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acsch.hpp>
 #include <boost/simd/function/simd/acsch.hpp>

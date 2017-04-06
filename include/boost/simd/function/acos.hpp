@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acos acos (function object)
+
     This function object returns the inverse cosine in radian.
 
+    @headerref{<boost/simd/function/acos.hpp>}
 
-    @par Header <boost/simd/function/acos.hpp>
+    @par Description
+
+      @code
+      IEEEValue acos(IEEEValue const & x);
+      @endcode
 
     @par Semantic
 
@@ -55,9 +58,6 @@ namespace boost { namespace simd
       @snippet acos.txt acos
 
   **/
-  IEEEValue acos(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acos.hpp>
 #include <boost/simd/function/simd/acos.hpp>

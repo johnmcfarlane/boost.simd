@@ -11,14 +11,27 @@
 #ifndef BOOST_SIMD_FUNCTION_ILOGB_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ILOGB_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-ilogb ilogb (function object)
+
     This function object Extracts the value of the unbiased exponent from
     the floating-point argument x, and returns it as a signed integer value.
+
+    @headerref{<boost/simd/function/ilogb.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> ilogb(Value const& x);
+      @endcode
+
+     @par Decorators
+
+       - std_ provides access to std::ilogb
+
+       - pedantic_ return FP_ILOGB0 and FP_ILOGBNAN for 0 and nan respectively,
+         but the return type is as in the regular call.
 
     @par Note:
 
@@ -34,15 +47,6 @@ namespace boost { namespace simd
 
       - for floating inputs nan and zero returns zero and +-inf return Valmax
 
-     @par Decorators
-
-       - std_ provides access to std::ilogb
-
-       - pedantic_ return FP_ILOGB0 and FP_ILOGBNAN for 0 and nan respectively,
-         but the return type is as in the regular call.
-
-    @par Header <boost/simd/function/ilogb.hpp>
-
     @par Example:
 
       @snippet ilogb.cpp ilogb
@@ -52,9 +56,6 @@ namespace boost { namespace simd
       @snippet ilogb.txt ilogb
 
   **/
-  as_integer_t<Value> ilogb(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ilogb.hpp>
 #include <boost/simd/function/simd/ilogb.hpp>

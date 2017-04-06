@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_MAXNUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MAXNUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-maxnum maxnum (function object)
+
     This function object returns  the largest of two floating point arguments, treating NaNs
     as missing data (between a NaN and a numeric value, the numeric value is chosen).
 
+    @headerref{<boost/simd/function/maxnum.hpp>}
 
-    @par Header <boost/simd/function/maxnum.hpp>
+    @par Description
+
+      @code
+      Value maxnum(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet maxnum.txt maxnum
 
   **/
-  Value maxnum(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/maxnum.hpp>
 #include <boost/simd/function/simd/maxnum.hpp>

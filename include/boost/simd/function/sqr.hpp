@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SQR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SQR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-sqr sqr (function object)
+
     This function computes the square of its parameter.
 
-    @par Header <boost/simd/function/sqr.hpp>
+    @headerref{<boost/simd/function/sqr.hpp>}
+
+    @par Description
+
+      @code
+      Value sqr(Value const& x);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
 
 
   **/
-  Value sqr(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sqr.hpp>
 #include <boost/simd/function/simd/sqr.hpp>

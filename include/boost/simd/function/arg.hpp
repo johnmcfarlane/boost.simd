@@ -11,20 +11,26 @@
 #ifndef BOOST_SIMD_FUNCTION_ARG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ARG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-arg arg (function object)
+
     This function computes the angular orientation of its floating parameter
     (the result is undefined for Nan entries if the @c pedantic_ decorator is not
     used)
 
+    @headerref{<boost/simd/function/arg.hpp>}
 
-    @par Header <boost/simd/function/arg.hpp>
+    @par Description
 
-    Using  `arg(x)` is equivalent to  `(is_negative(x)) ? Pi(as(x)) : Zero(as(x))`
+      @code
+      IEEEValue arg(IEEEValue const & x);
+      @endcode
+
+    @par Decorators
+
+    - `pedantic_`  returns `Nan(as(x))` for a  nan input,
+
 
     @par Notes
 
@@ -33,11 +39,6 @@ namespace boost { namespace simd
 
     - This function implement the restriction to real numbers of the
        complex arg(ument) function.
-
-    @par Decorators
-
-    - `pedantic_`  returns `Nan(as(x))` for a  nan input,
-
 
     @see is_negative, Pi, Nan
 
@@ -50,9 +51,6 @@ namespace boost { namespace simd
       @snippet arg.txt arg
 
   **/
-  IEEEValue arg(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/arg.hpp>
 #include <boost/simd/function/simd/arg.hpp>

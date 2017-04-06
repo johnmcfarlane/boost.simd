@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_FFS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FFS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-ffs ffs (function object)
+
     This function object returns  the index
     of the first bit set (beginning with the least
     significant bit) in the parameter.
 
-    @par Header <boost/simd/function/ffs.hpp>
+    @headerref{<boost/simd/function/ffs.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> ffs(Value const& x);
+      @endcode
 
     @see  firstbitset,  firstbitunset
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet ffs.txt ffs
 
   **/
-  as_integer_t<Value> ffs(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ffs.hpp>
 #include <boost/simd/function/simd/ffs.hpp>

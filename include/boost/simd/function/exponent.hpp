@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_EXPONENT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXPONENT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-exponent exponent (function object)
+
     This function object returns the exponent of the floating input.
 
+    @headerref{<boost/simd/function/exponent.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/exponent.hpp>
+      @code
+      as_integer_t<Value> exponent(Value const& x);
+      @endcode
 
     @par Note:
 
@@ -43,9 +45,6 @@ namespace boost { namespace simd
       @snippet exponent.txt exponent
 
   **/
-  as_integer_t<Value> exponent(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exponent.hpp>
 #include <boost/simd/function/simd/exponent.hpp>

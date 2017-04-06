@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SINHC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINHC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-sinhc sinhc (function object)
+
     This function object returns the hyperbolic cardinal sine: \f$\sinh(x)/x\f$.
 
-    @par Header <boost/simd/function/sinhc.hpp>
+    @headerref{<boost/simd/function/sinhc.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sinhc(IEEEValue const& x);
+      @endcode
 
     @see cosh, sinh
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
 
 
   **/
-  IEEEValue sinhc(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sinhc.hpp>
 #include <boost/simd/function/simd/sinhc.hpp>

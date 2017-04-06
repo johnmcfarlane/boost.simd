@@ -11,30 +11,28 @@
 #ifndef BOOST_SIMD_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-operator
+    @defgroup real-unary_minus unary_minus (function object)
+
     This function object returns the elementwise unary minus of the parameter
 
     Infix notation can be used with operator '-'
 
+    @headerref{<boost/simd/function/unary_minus.hpp>}
 
-    @par Header <boost/simd/function/unary_minus.hpp>
+    @par Description
+
+      @code
+      Value unary_minus(Value const& x);
+      @endcode
+
+    @par Decorators
+    - `saturated_` ensures that `saturated_(unary_minus)(Valmin<T>())` is `Valmin<T>()`
 
     @par Note:
 
     - `r = unary_minus(x)` is equivalent to  `r = -x` for SIMD types.
-
-    @warningbox{Take care that the infix notation in scalar integral mode encurs
-    a possible promotion of the type as C++ rules state.}
-
-
-    @par Decorators
-    - `saturated_` ensures that `saturated_(unary_minus)(Valmin<T>())` is `Valmin<T>()`
 
     @see  minus, unary_plus
 
@@ -47,9 +45,6 @@ namespace boost { namespace simd
       @snippet unary_minus.txt unary_minus
 
   **/
-  Value unary_minus(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/unary_minus.hpp>
 #include <boost/simd/function/simd/unary_minus.hpp>

@@ -11,21 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_RSHL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_RSHL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-rshl rshl (function object)
+
     This function object returns the first entry shifted left or right
     by the absolute value of the second entry,
     according to its sign.
 
+    @headerref{<boost/simd/function/rshl.hpp>}
+
+    @par Description
+
+      @code
+      Value rshl(Value const& x, IntegerValue const& n);
+      @endcode
+
     @see  rshr, shr, shl
 
 
-
-    @par Header <boost/simd/function/rshl.hpp>
 
     @par Example:
 
@@ -36,9 +40,6 @@ namespace boost { namespace simd
       @snippet rshl.txt rshl
 
   **/
-  Value rshl(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rshl.hpp>
 #include <boost/simd/function/simd/rshl.hpp>

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_LOG2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOG2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-log2 log2 (function object)
+
     This function object returns the base two logarithm of its argument.
 
-    @par Header <boost/simd/function/log2.hpp>
+    @headerref{<boost/simd/function/log2.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue log2(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -36,9 +40,6 @@ namespace boost { namespace simd
       @snippet log2.txt log2
 
   **/
-  IEEEValue log2(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/log2.hpp>
 #include <boost/simd/function/simd/log2.hpp>

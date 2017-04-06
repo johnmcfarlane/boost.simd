@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NEZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NEZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_nez is_nez (function object)
 
     This function object returns @ref True if x is not equal to @ref Zero else returns @ref False.
 
+    @headerref{<boost/simd/function/is_nez.hpp>}
 
-    @par Header <boost/simd/function/is_nez.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_nez(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_nez.txt is_nez
 
   **/
-  as_logical_t<Value> is_nez(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_nez.hpp>
 #include <boost/simd/function/simd/is_nez.hpp>

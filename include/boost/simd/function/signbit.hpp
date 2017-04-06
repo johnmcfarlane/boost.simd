@@ -11,21 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_SIGNBIT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIGNBIT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-signbit signbit (function object)
+
     This function object returns True or false according to the bit of sign set or not set.
 
-    @par Header <boost/simd/function/signbit.hpp>
+    @headerref{<boost/simd/function/signbit.hpp>}
 
-    This is a convenience alias of @ref is_negative (the name is used by stdlibc++).
+    @par Description
+
+      @code
+      as_logical_t<Value> signbit(Value const& x);
+      @endcode
+
   **/
-  as_logical_t<Value> signbit(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_negative.hpp>
 #include <boost/simd/function/simd/signbit.hpp>

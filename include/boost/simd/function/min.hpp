@@ -11,16 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_MIN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MIN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-min min (function object)
+
     This function object computes the smallest of its parameter.
 
+    @headerref{<boost/simd/function/min.hpp>}
 
-    @par Header <boost/simd/function/min.hpp>
+    @par Description
+
+      @code
+      Value min(Value const& x, Value const& y);
+      @endcode
+
+    @par Decorators
+
+     - pedantic_ ensures the standard behaviour.
+     - std_ call std::min.
 
     @par Notes
     For any given value @c x and @c y of type @c T:
@@ -34,11 +42,6 @@ namespace boost { namespace simd
 
     This can be corrected using the pedantic_ decorator that ensures the standard behaviour at a cost.
 
-    @par Decorators
-
-     - pedantic_ ensures the standard behaviour.
-     - std_ call std::min.
-
     @see min,  minnum, minnummag, minmag, minmod
 
     @par Example:
@@ -50,9 +53,6 @@ namespace boost { namespace simd
       @snippet min.txt min
 
   **/
-  Value min(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/min.hpp>
 #include <boost/simd/function/simd/min.hpp>

@@ -15,18 +15,21 @@
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-decorator
+    @defgroup real-restricted restricted (function object)
 
     restricts the range of validity of some functors
       (thus avoiding tests and branching), but ensures an as accurate though
       speedier version on the limited range.
 
+    @headerref{<boost/simd/function/restricted.hpp>}
 
-    @par Header <boost/simd/function/restricted.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto restricted_(T const& x) {}
+      @endcode
 
     @par Notes
 
@@ -39,10 +42,7 @@ namespace boost { namespace simd
        - the result will be @ref Nan outside the limited interval...
 
   **/
-  template<typename T> auto restricted_(T const& x) {}
 
-} }
-#endif
 namespace boost { namespace simd
 {
   struct restricted_tag : decorator_<restricted_tag>

@@ -10,19 +10,23 @@
 #ifndef BOOST_SIMD_FUNCTION_ERFCX_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ERFCX_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-euler
+    @defgroup real-erfcx erfcx (function object)
+
      This function object computes the  underflow-compensating (scaled) complementary  error function:
    \f$\displaystyle e^{x^2}\frac{2}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
 
+    @headerref{<boost/simd/function/erfcx.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue erfcx(IEEEValue const& x);
+      @endcode
+
     @see erfc, erf
 
-
-    @par Header <boost/simd/function/erfcx.hpp>
 
     @par Example:
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
 
       @snippet erfcx.txt erfcx
   **/
-  IEEEValue erfcx(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/erfcx.hpp>
 #include <boost/simd/function/simd/erfcx.hpp>

@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MINUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-operator
+    @defgroup real-minus minus (function object)
+
     This function object computes the difference of two parameters of the same type.
 
     Infix notation can be used with operator '-',
 
-    @par Header <boost/simd/function/minus.hpp>
+    @headerref{<boost/simd/function/minus.hpp>}
+
+    @par Description
+
+      @code
+      Value minus(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +42,6 @@ namespace boost { namespace simd
       @snippet minus.txt minus
 
   **/
-  Value minus(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/minus.hpp>
 #include <boost/simd/function/simd/minus.hpp>

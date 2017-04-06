@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SUCCESSOR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SUCCESSOR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-successor successor (function object)
+
     This function object returns the `n`-th least element strictly greater than the parameter
 
+    @headerref{<boost/simd/function/successor.hpp>}
 
-    @par Header <boost/simd/function/successor.hpp>
+    @par Description
+
+      @code
+      ///@{
+      @endcode
 
     @par Note
 
@@ -40,12 +43,6 @@ namespace boost { namespace simd
       @snippet successor.txt successor
 
   **/
-  ///@{
-  Value successor(Value const& x);
-  Value successor(Value const& x, IntegerValue const& n);
-  ///@}
-} }
-#endif
 
 #include <boost/simd/function/scalar/successor.hpp>
 #include <boost/simd/function/simd/successor.hpp>

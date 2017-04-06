@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_GTZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_GTZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_gtz is_gtz (function object)
+
    This function object returns @ref True or @ref False according x is greater than @ref Zero or not.
 
+    @headerref{<boost/simd/function/is_gtz.hpp>}
 
-    @par Header <boost/simd/function/is_gtz.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_gtz(Value const& x);
+      @endcode
 
     @par Note
 
@@ -35,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_gtz.txt is_gtz
 
   **/
-  as_logical_t<Value> is_gtz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_gtz.hpp>
 #include <boost/simd/function/simd/is_gtz.hpp>

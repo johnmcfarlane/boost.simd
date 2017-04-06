@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SIGNIFICANTS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIGNIFICANTS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-significants significants (function object)
+
     This function object returns the rounding to n significants digits of its argument.
 
-    @par Header <boost/simd/function/signiicants.hpp>
+    @headerref{<boost/simd/function/signiicants.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue significants(IEEEValue const& x, IntegerValue const& n);
+      @endcode
 
     @par Example:
 
@@ -30,9 +34,6 @@ namespace boost { namespace simd
       @snippet significants.txt significants
 
   **/
-  IEEEValue significants(IEEEValue const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/significants.hpp>
 #include <boost/simd/function/simd/significants.hpp>

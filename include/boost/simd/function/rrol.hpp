@@ -11,18 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_RROL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_RROL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-rrol rrol (function object)
+
     This function object returns the first entry rotated left or right
     by the absolute value of the second entry,
     according to its sign.
 
+    @headerref{<boost/simd/function/rrol.hpp>}
 
-    @par Header <boost/simd/function/rrol.hpp>
+    @par Description
+
+      @code
+      Value rrol(Value const& x, IntegerValue const& n);
+      @endcode
 
     @par Note
     This function asserts if the integral parameter is out of range
@@ -39,9 +42,6 @@ namespace boost { namespace simd
       @snippet rrol.txt rrol
 
   **/
-  Value rrol(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rrol.hpp>
 #include <boost/simd/function/simd/rrol.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ATANH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATANH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-atanh atanh (function object)
+
     This function object returns the hyperbolic tangent argument \f$\frac12\log\frac{1+x}{1-x}\f$
 
-    @par Header <boost/simd/function/atanh.hpp>
+    @headerref{<boost/simd/function/atanh.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue atanh(IEEEValue const& x);
+      @endcode
 
     @see cosh, sinh, acosh, asinh, atanh, asech, acoth, acsch
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
 
 
   **/
-  IEEEValue atanh(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atanh.hpp>
 #include <boost/simd/function/simd/atanh.hpp>

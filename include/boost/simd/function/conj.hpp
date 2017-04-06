@@ -11,25 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_CONJ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CONJ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-conj conj (function object)
+
     function object computes the complex conjugate of its parameter
 
-    @par Header <boost/simd/function/conj.hpp>
+    @headerref{<boost/simd/function/conj.hpp>}
+
+    @par Description
+
+      @code
+      Value conj(Value const& x);
+      @endcode
 
     @par Notes
 
     - for real entries it resumes to the identity
 
   **/
-  Value conj(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/conj.hpp>
 #include <boost/simd/function/simd/conj.hpp>

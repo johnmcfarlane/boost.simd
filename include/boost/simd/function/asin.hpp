@@ -11,26 +11,29 @@
 #ifndef BOOST_SIMD_FUNCTION_ASIN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASIN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-asin asin (function object)
+
     This function object returns the inverse sine.
 
+    @headerref{<boost/simd/function/asin.hpp>}
 
-    @par Header <boost/simd/function/asin.hpp>
+    @par Description
+
+      @code
+      IEEEValue asin(IEEEValue const & x);
+      @endcode
+
+    @par Decorators
+
+      - std_ for floating entries provides access to std::asin
 
     @par Note
 
       For every parameter of floating type `asin(x)`
       returns the arc @c r in the interval  \f$[-\pi/2, \pi/2]\f$ such that
       <tt>sin(r) == x</tt>.  If @c x is outside \f$[-1, 1]\f$ the result is Nan.
-
-    @par Decorators
-
-      - std_ for floating entries provides access to std::asin
 
     @see asind, asinpi, sin
 
@@ -44,9 +47,6 @@ namespace boost { namespace simd
       @snippet asin.txt asin
 
   **/
-  IEEEValue asin(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asin.hpp>
 #include <boost/simd/function/simd/asin.hpp>

@@ -11,19 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_ULP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ULP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-ulp ulp (function object)
+
     This function object returns the ulp distance to the nearest (distinct) element of the same type.
+
+    @headerref{<boost/simd/function/ulp.hpp>}
+
+    @par Description
+
+      @code
+      Value ulp(Value const& x);
+      @endcode
 
     @see ulpdist, eps, Eps
 
 
-
-    @par Header <boost/simd/function/ulp.hpp>
 
     @par Example:
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet ulp.txt ulp
 
   **/
-  Value ulp(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ulp.hpp>
 #include <boost/simd/function/simd/ulp.hpp>

@@ -11,21 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_TOFLOAT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TOFLOAT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-tofloat tofloat (function object)
+
     This function object converts its parameter to floating point value occupying the same bit size.
     This implies that this functor is only defined for (smd vectors of) 32 or 64 bit integer
     entries to provide (smd vectors of) float and or double.
 
+    @headerref{<boost/simd/function/tofloat.hpp>}
+
+    @par Description
+
+      @code
+      as_floating_t<Value> tofloat(Value const& x);
+      @endcode
+
     @see toint, touint, cast
 
-
-    @par Header <boost/simd/function/tofloat.hpp>
 
     @par Example:
 
@@ -35,9 +38,6 @@ namespace boost { namespace simd
 
       @snippet tofloat.txt tofloat
   **/
-  as_floating_t<Value> tofloat(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/tofloat.hpp>
 #include <boost/simd/function/simd/tofloat.hpp>

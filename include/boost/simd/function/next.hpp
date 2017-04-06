@@ -11,12 +11,10 @@
 #ifndef BOOST_SIMD_FUNCTION_NEXT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEXT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-next next (function object)
+
     This function object returns the smallest representable value
     strictly greater than the parameter except:
 
@@ -34,7 +32,13 @@ namespace boost { namespace simd
 
       - next(Valmax) is Valmin
 
-    @par Header <boost/simd/function/next.hpp>
+    @headerref{<boost/simd/function/next.hpp>}
+
+    @par Description
+
+      @code
+      Value next(Value const& x);
+      @endcode
 
     @see nextafter, prev, successor, predecessor
 
@@ -47,9 +51,6 @@ namespace boost { namespace simd
       @snippet next.txt next
 
   **/
-  Value next(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/next.hpp>
 #include <boost/simd/function/simd/next.hpp>

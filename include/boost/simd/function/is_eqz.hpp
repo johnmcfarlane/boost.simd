@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_EQZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_EQZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_eqz is_eqz (function object)
+
     This function object returns @ref True or @ref False according x is @ref Zero or not.
 
+    @headerref{<boost/simd/function/is_eqz.hpp>}
 
-    @par Header <boost/simd/function/is_eqz.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_eqz(Value const& x);
+      @endcode
 
     @par Note
 
@@ -38,9 +40,6 @@ namespace boost { namespace simd
       @snippet is_eqz.txt is_eqz
 
   **/
-  as_logical_t<Value> is_eqz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_eqz.hpp>
 #include <boost/simd/function/simd/is_eqz.hpp>

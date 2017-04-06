@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_NEXTPOW2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEXTPOW2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-nextpow2 nextpow2 (function object)
+
     This function object returns the smallest integer n such that
     `saturated_(abs)(x)` is less or equal to \f$2^n\f$
 
+    @headerref{<boost/simd/function/nextpow2.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/nextpow2.hpp>
+      @code
+      as_integer_t<Value> nextpow2(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -33,9 +35,6 @@ namespace boost { namespace simd
       @snippet nextpow2.txt nextpow2
 
   **/
-  as_integer_t<Value> nextpow2(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/nextpow2.hpp>
 #include <boost/simd/function/simd/nextpow2.hpp>

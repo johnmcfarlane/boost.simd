@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_GEZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_GEZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_gez is_gez (function object)
+
     This function object returns @ref True or @ref False according x
     is greater or equal to @ref Zero or not.
 
+    @headerref{<boost/simd/function/is_gez.hpp>}
 
-    @par Header <boost/simd/function/is_gez.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_gez(Value const& x);
+      @endcode
 
     @par Note
 
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet is_gez.txt is_gez
 
   **/
-  as_logical_t<Value> is_gez(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_gez.hpp>
 #include <boost/simd/function/simd/is_gez.hpp>

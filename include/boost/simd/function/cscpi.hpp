@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_CSCPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CSCPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cscpi cscpi (function object)
+
     This function object returns the cosecant of angle in
     \f$\pi\f$ multiples: \f$1/c\sin(\pi x)\f$.
 
+    @headerref{<boost/simd/function/cscpi.hpp>}
 
-    @par Header <boost/simd/function/cscpi.hpp>
+    @par Description
+
+      @code
+      IEEEValue cscpi(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet cscpi.txt cscpi
 
   **/
-  IEEEValue cscpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cscpi.hpp>
 #include <boost/simd/function/simd/cscpi.hpp>

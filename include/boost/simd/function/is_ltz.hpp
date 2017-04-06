@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_LTZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_LTZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_ltz is_ltz (function object)
 
     This function object returns @ref True or @ref False according x is less than @ref Zero or not.
 
+    @headerref{<boost/simd/function/is_ltz.hpp>}
 
-    @par Header <boost/simd/function/is_ltz.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_ltz(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_ltz.txt is_ltz
 
   **/
-  as_logical_t<Value> is_ltz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_ltz.hpp>
 #include <boost/simd/function/simd/is_ltz.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CSC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CSC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-csc csc (function object)
+
     This function object returns the cosecante of the input in radian : \f$1/\sin(x)\f$.
 
+    @headerref{<boost/simd/function/csc.hpp>}
 
-    @par Header <boost/simd/function/csc.hpp>
+    @par Description
+
+      @code
+      IEEEValue csc(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet csc.txt csc
 
   **/
-  IEEEValue csc(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/csc.hpp>
 #include <boost/simd/function/simd/csc.hpp>

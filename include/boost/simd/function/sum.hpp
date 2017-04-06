@@ -11,18 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_SUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-sum sum (function object)
+
      This function object returns the sum of the elements of the SIMD argument
+
+    @headerref{<boost/simd/function/sum.hpp>}
+
+    @par Description
+
+      @code
+      scalar_of_t<Value> sum(Value const& x);
+      @endcode
 
     @see sum
 
-
-    @par Header <boost/simd/function/sum.hpp>
 
     @par Example:
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sum.txt sum
 
   **/
-  scalar_of_t<Value> sum(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sum.hpp>
 #include <boost/simd/function/simd/sum.hpp>

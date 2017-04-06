@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_ORD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_ORD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_ord is_ord (function object)
 
     This function object returns @ref True if neither x nor y is @ref Nan.
 
+    @headerref{<boost/simd/function/is_ord.hpp>}
 
-    @par Header <boost/simd/function/is_ord.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_ord(Value const& x, Value const& y);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_ord.txt is_ord
 
   **/
-  as_logical_t<Value> is_ord(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_ord.hpp>
 #include <boost/simd/function/simd/is_ord.hpp>

@@ -14,16 +14,22 @@
 namespace boost { namespace simd
 {
 
-#if defined(DOXYGEN_ONLY)
   /*!
     @ingroup group-swar
+    @defgroup real-interleave interleave (function object)
+
     This function object performs a complete interleaving of its arguments.
 
     interleave is guaranteed to be optimized as much as possible compared to using
     boost::simd::interleave_first and boost::simd::interleave_second in succession.
 
+    @headerref{<boost/simd/function/interleave.hpp>}
 
-    @par Header <boost/simd/function/interleave.hpp>
+    @par Description
+
+      @code
+      std::array<Value, 2> interleave(Value const& x, Value const& y);
+      @endcode
 
     @par Semantic:
     For every parameters @c x and @c y of type @c T :
@@ -37,12 +43,8 @@ namespace boost { namespace simd
     std::array<T,2> r = { interleave_first(x,y), interleave_second(x,y) };
     @endcode
 
-    @param  x First argument to interleave
-    @param  y Second argument to interleave
-    @return An array of two boost::simd::pack containing the interleaved data from the arguments
   **/
-  std::array<Value, 2> interleave(Value const& x, Value const& y);
-#endif
+
 } }
 
 #include <boost/simd/function/simd/interleave.hpp>

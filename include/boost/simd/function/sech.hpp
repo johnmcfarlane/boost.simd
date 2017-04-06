@@ -11,20 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_SECH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SECH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-sech sech (function object)
+
     This function object returns the hyperbolic secant: \f$1/\cosh(x)\f$.
 
+    @headerref{<boost/simd/function/sech.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sech(IEEEValue const& x);
+      @endcode
 
     @see cosh, sinh, tanh, csch, sinhcosh
 
-
-    @par Header <boost/simd/function/sech.hpp>
 
     @par Example:
 
@@ -35,9 +37,6 @@ namespace boost { namespace simd
       @snippet sech.txt sech
 
   **/
-  IEEEValue sech(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sech.hpp>
 #include <boost/simd/function/simd/sech.hpp>

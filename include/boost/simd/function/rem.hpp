@@ -11,16 +11,30 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-oerator
+    @defgroup real-rem rem (function object)
 
     This function object computes the remainder of the two parameters of the
     same type with or without option.
 
-    @par Header <boost/simd/function/rem.hpp>
+    @headerref{<boost/simd/function/rem.hpp>}
+
+    @par Description
+
+      @code
+      Value rem(Value const& x, Value const& y);
+      @endcode
+
+    @par Decorators
+
+      - pedantic_ insure better limiting cases (see above note)
+
+      - std_ allow direct calls to some libc++ function:
+
+        - option fix        calls std::fmod
+        - option nearbyint  calls std::remainder
+        - The other options have no standard equivalent
 
     @par Notes
 
@@ -48,16 +62,6 @@ namespace boost { namespace simd
        - if y is +/-0, Nan is returned
        - if either argument is NaN, Nan is returned
 
-    @par Decorators
-
-      - pedantic_ insure better limiting cases (see above note)
-
-      - std_ allow direct calls to some libc++ function:
-
-        - option fix        calls std::fmod
-        - option nearbyint  calls std::remainder
-        - The other options have no standard equivalent
-
     @see div
 
     @par Example:
@@ -70,9 +74,6 @@ namespace boost { namespace simd
 
 
   **/
-  Value rem(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem.hpp>
 #include <boost/simd/function/simd/rem.hpp>

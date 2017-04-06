@@ -11,17 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_COMPLEMENT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COMPLEMENT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-operator
+    @defgroup real-complement complement (function object)
+
     This function object returns the return the bitwise complement of the entry
     Infix notation can be used with operator '~'
 
+    @headerref{<boost/simd/function/complement.hpp>}
 
-    @par Header <boost/simd/function/complement.hpp>
+    @par Description
+
+      @code
+      Value complement(Value const& x);
+      @endcode
+
+    @see  bitwise_and, bitwise_or, bitwise_xor, bitwise_notand,
+    bitwise_andnot, bitwise_notor, bitwise_ornot
 
     @par Example:
 
@@ -38,9 +44,6 @@ namespace boost { namespace simd
     bitwise_andnot, bitwise_notor, bitwise_ornot
 
   **/
-  Value complement(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/complement.hpp>
 #include <boost/simd/function/simd/complement.hpp>

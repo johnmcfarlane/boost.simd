@@ -11,12 +11,9 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_POSITIVE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_POSITIVE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_positive is_positive (function object)
 
     This function object returns @ref True if x is positive else @ref False.
 
@@ -25,8 +22,13 @@ namespace boost { namespace simd
     not positive and not greater than 0, It's probably @ref is_gtz that
     you want.
 
+    @headerref{<boost/simd/function/is_positive.hpp>}
 
-    @par Header <boost/simd/function/is_positive.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_positive(Value const& x);
+      @endcode
 
     @par Note
 
@@ -42,9 +44,6 @@ namespace boost { namespace simd
       @snippet is_positive.txt is_positive
 
   **/
-  as_logical_t<Value> is_positive(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_positive.hpp>
 #include <boost/simd/function/simd/is_positive.hpp>

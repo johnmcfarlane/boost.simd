@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CUMPROD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CUMPROD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-cumprod cumprod (function object)
+
     This function object computes the cumulated product of the argument elements.
 
-    @par Header <boost/simd/function/cumprod.hpp>
+    @headerref{<boost/simd/function/cumprod.hpp>}
+
+    @par Description
+
+      @code
+      Value cumprod(Value const& x);
+      @endcode
 
     @par Note
 
@@ -38,9 +42,6 @@ namespace boost { namespace simd
       @snippet cumprod.txt cumprod
 
   **/
-  Value cumprod(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cumprod.hpp>
 #include <boost/simd/function/simd/cumprod.hpp>

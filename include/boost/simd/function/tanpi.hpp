@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_TANPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TANPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-tanpi tanpi (function object)
+
     This function object returns the tangent of angle in \f$\pi\f$ multiples:
     \f$\cos(\pi x)/sin(\pi x)\f$.
 
+    @headerref{<boost/simd/function/tanpi.hpp>}
 
-    @par Header <boost/simd/function/tanpi.hpp>
+    @par Description
+
+      @code
+      IEEEValue tanpi(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet tanpi.txt tanpi
 
   **/
-  IEEEValue tanpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/tanpi.hpp>
 #include <boost/simd/function/simd/tanpi.hpp>

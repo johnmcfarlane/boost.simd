@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_NEGATE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEGATE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-negate negate (function object)
+
     This function object returns  the first element multiplied by 1,  0 or -1 depending
     on the fact its second argument is greater,  equal or lesser than zero.
 
+    @headerref{<boost/simd/function/negate.hpp>}
 
-    @par Header <boost/simd/function/negate.hpp>
+    @par Description
+
+      @code
+      Value negate(Value const& x, Value const& y);
+      @endcode
 
     @par Note
     If y is @ref Zero the result is zero. This can be avoided using @ref negatenz or @ref copysign.
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet negate.txt negate
 
   **/
-  Value negate(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/negate.hpp>
 #include <boost/simd/function/simd/negate.hpp>

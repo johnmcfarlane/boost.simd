@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOTD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOTD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acotd acotd (function object)
+
     This function object returns the inverse cotangent in degree.
 
+    @headerref{<boost/simd/function/acotd.hpp>}
 
-    @par Header <boost/simd/function/acotd.hpp>
+    @par Description
+
+      @code
+      IEEEValue acotd(IEEEValue const & x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet acotd.txt acotd
 
   **/
-  IEEEValue acotd(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acotd.hpp>
 #include <boost/simd/function/simd/acotd.hpp>

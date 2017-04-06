@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ROL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ROL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-rol rol (function object)
+
     This function object returns the first entry rotated left
     by the value of the second entry.
 
+    @headerref{<boost/simd/function/rol.hpp>}
 
-    @par Header <boost/simd/function/rol.hpp>
+    @par Description
+
+      @code
+      Value rol(Value const& x, IntegerValue const& n);
+      @endcode
 
     @par Note
     This function asserts if the integral parameter is out of range
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet rol.txt rol
 
   **/
-  Value rol(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rol.hpp>
 #include <boost/simd/function/simd/rol.hpp>

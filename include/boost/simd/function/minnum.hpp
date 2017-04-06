@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_MINNUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MINNUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-minnum minnum (function object)
+
    This function object returns  the smaller of two floating point arguments, treating NaNs
     as missing data (between a NaN and a numeric value, the numeric value is chosen).
 
+    @headerref{<boost/simd/function/minnum.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/minnum.hpp>
+      @code
+      Value minnum(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
@@ -40,9 +42,6 @@ namespace boost { namespace simd
 
 
   **/
-  Value minnum(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/minnum.hpp>
 #include <boost/simd/function/simd/minnum.hpp>

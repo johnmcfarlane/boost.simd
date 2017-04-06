@@ -11,26 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_SHIFT_LEFT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SHIFT_LEFT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-operator
+    @defgroup real-shift_left shift_left (function object)
+
     This function object returns the first parameter shifted left by the second one
 
     Infix notation can be used with operator '<<'
 
-    @par Header <boost/simd/function/shift_left.hpp>
+    @headerref{<boost/simd/function/shift_left.hpp>}
 
-      @pre the second parameter must be of integer type scalar or associated to
-      the first parameter
+    @par Description
+
+      @code
+      Value shift_left(Value const& x, IntegerValue const& n);
+      @endcode
 
     @par Note:
       - on many architectures a scalar second parameter results in a much faster call
-
-    @par alias shl
 
     @see  shift_right, shr, rshl, rshr, rol, ror
 
@@ -44,9 +42,6 @@ namespace boost { namespace simd
       @snippet shift_left.txt shift_left
 
   **/
-  Value shift_left(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/shift_left.hpp>
 #include <boost/simd/function/simd/shift_left.hpp>

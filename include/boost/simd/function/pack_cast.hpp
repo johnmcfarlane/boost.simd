@@ -11,28 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_PACK_CAST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_PACK_CAST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-bitwise
+    @defgroup real-pack_cast pack_cast (function object)
 
     This function objects converts the elements of its argument to an arbitrary type
 
-    @c Target while preserving its argument's cardinal.
+    @headerref{<boost/simd/function/pack_cast.hpp>}
 
-    @tparam Target @c Target type to cast toward
+    @par Description
 
-    @par Header <boost/simd/function/pack_cast.hpp>
+      @code
+      template<typename Target, typename Value>
+      @endcode
 
-    @param x Value to cast
-
-    @return A value of type @c Target which is cast to @c x.
   **/
-  template<typename Target, typename Value>
-  Target pack_cast(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/pack_cast.hpp>
 #include <boost/simd/function/simd/pack_cast.hpp>

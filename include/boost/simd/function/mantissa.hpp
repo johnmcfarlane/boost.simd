@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_MANTISSA_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MANTISSA_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-mantissa mantissa (function object)
+
     This function object returns the signed mantissa of the input argument.
 
+    @headerref{<boost/simd/function/mantissa.hpp>}
 
-    @par Header <boost/simd/function/mantissa.hpp>
+    @par Description
+
+      @code
+      Value mantissa(Value const& x);
+      @endcode
 
     @par Note
     The @ref exponent @c e and signed @ref mantissa @c m of a floating
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet mantissa.txt mantissa
 
   **/
-  Value mantissa(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/mantissa.hpp>
 #include <boost/simd/function/simd/mantissa.hpp>

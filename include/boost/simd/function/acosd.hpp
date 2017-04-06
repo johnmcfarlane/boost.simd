@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOSD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOSD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acosd acosd (function object)
+
     This function object returns the inverse cosine in degree.
 
+    @headerref{<boost/simd/function/acosd.hpp>}
 
-    @par Header <boost/simd/function/acosd.hpp>
+    @par Description
+
+      @code
+      IEEEValue acosd(IEEEValue const & x);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet acosd.txt acosd
 
   **/
-  IEEEValue acosd(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acosd.hpp>
 #include <boost/simd/function/simd/acosd.hpp>

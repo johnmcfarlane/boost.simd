@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_DEC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_DEC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_dec if_dec (function object)
+
     This function object conditionally returns @c x-1 (respectively @c x)
     if @c c is @ref True (respectively  @ref False)
 
+    @headerref{<boost/simd/function/if_dec.hpp>}
 
-    @par Header <boost/simd/function/if_dec.hpp>
+    @par Description
+
+      @code
+      Value1 if_dec(Value0 const& c, Value1 const& x);
+      @endcode
 
     @par Example:
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
       @snippet if_dec.txt if_dec
 
   **/
-  Value1 if_dec(Value0 const& c, Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_dec.hpp>
 #include <boost/simd/function/simd/if_dec.hpp>

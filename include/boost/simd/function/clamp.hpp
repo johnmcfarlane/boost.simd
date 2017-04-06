@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_CLAMP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CLAMP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
- /*!
-
+  /*!
     @ingroup group-arithmetic
+    @defgroup real-clamp clamp (function object)
+
     This function object clamps @c x between  @c lo and  @c hi.
     If  @c x is less than @c hi, returns the larger of @c x and @c lo, otherwise returns the smaller of @c x and @c hi.
 
+    @headerref{<boost/simd/function/clamp.hpp>}
 
-    @par Header <boost/simd/function/clamp.hpp>
+    @par Description
+
+      @code
+      Value clamp(Value const& x, Value const& lo, Value const& hi);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +40,6 @@ namespace boost { namespace simd
        @snippet clamp.txt clamp
 
   **/
-  Value clamp(Value const& x, Value const& lo, Value const& hi);
-} }
-#endif
 
 #include <boost/simd/function/scalar/clamp.hpp>
 #include <boost/simd/function/simd/clamp.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ILOG2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ILOG2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-ilog2 ilog2 (function object)
+
     This function object returns the integer part of the base 2
     logarithm of the input.
 
+    @headerref{<boost/simd/function/ilog2.hpp>}
 
-    @par Header <boost/simd/function/ilog2.hpp>
+    @par Description
+
+      @code
+      as_integer_t<Value> ilog2(Value const& x);
+      @endcode
 
     @par Note
     This function asserts for negative or null values.
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet ilog2.txt ilog2
 
   **/
-  as_integer_t<Value> ilog2(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ilog2.hpp>
 #include <boost/simd/function/simd/ilog2.hpp>

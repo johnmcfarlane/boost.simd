@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ATANPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATANPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atanpi atanpi (function object)
+
     This function object returns the inverse tangent in \f$\pi\f$ multiples.
 
+    @headerref{<boost/simd/function/atanpi.hpp>}
 
-    @par Header <boost/simd/function/atanpi.hpp>
+    @par Description
+
+      @code
+      IEEEValue atanpi(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet atanpi.txt atanpi
 
   **/
-  IEEEValue atanpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atanpi.hpp>
 #include <boost/simd/function/simd/atanpi.hpp>

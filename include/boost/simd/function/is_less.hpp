@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_LESS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_LESS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_less is_less (function object)
 
     This function object returns  @ref True or @ref False according x is less than y or not.
     Infix notation can be used with operator '<'.
 
+    @headerref{<boost/simd/function/is_less.hpp>}
 
-    @par Header <boost/simd/function/is_less.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_less(Value const& x, Value const& y);
+      @endcode
 
     @par Note
 
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet is_less.txt is_less
 
   **/
-  as_logical_t<Value> is_less(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_less.hpp>
 #include <boost/simd/function/simd/is_less.hpp>

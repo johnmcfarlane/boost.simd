@@ -11,24 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_TWO_SPLIT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TWO_SPLIT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-two_split two_split (function object)
+
     This function object computes two reals @c r0 and @c r1 (in an std::pair)
     such that:
 
-    @code
-    x == r0+r1
-    @endcode
+    @headerref{<boost/simd/function/two_split.hpp>}
 
-    and where @c r0 and @c r1 bit pattern don't overlap.
+    @par Description
 
-
-    @par Header <boost/simd/function/two_split.hpp>
+      @code
+      std::pair<Value, Value> two_split(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -39,9 +35,6 @@ namespace boost { namespace simd
       @snippet two_split.txt two_split
 
   **/
-  std::pair<Value, Value> two_split(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/two_split.hpp>
 #include <boost/simd/function/simd/two_split.hpp>

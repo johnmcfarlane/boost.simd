@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_PIO2_STRAIGHT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_PIO2_STRAIGHT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-rem_pio2_straight rem_pio2_straight (function object)
+
     This function object returns the Computes the remainder modulo \f$\pi/2\f$.
 
+    @headerref{<boost/simd/function/rem_pio2_straight.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/rem_pio2_straight.hpp>
+      @code
+      std::pair<IEEEValue, IEEEValue> rem_pio2_straight(IEEEValue const& x);
+      @endcode
 
     @par Notes
 
@@ -54,9 +56,6 @@ namespace boost { namespace simd
       @snippet rem_pio2_straight.txt rem_pio2_straight
 
   **/
-  std::pair<IEEEValue, IEEEValue> rem_pio2_straight(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem_pio2_straight.hpp>
 #include <boost/simd/function/simd/rem_pio2_straight.hpp>

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACSC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACSC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acsc acsc (function object)
+
     This function object returns the inverse cosecant in radian: \f$\arcsin(1/x)\f$.
 
-    @par Header <boost/simd/function/acsc.hpp>
+    @headerref{<boost/simd/function/acsc.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue acsc(IEEEValue const & x);
+      @endcode
 
     @see acscd, acscpi, asin, asin, sin, rec
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet acsc.txt acsc
 
   **/
-  IEEEValue acsc(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acsc.hpp>
 #include <boost/simd/function/simd/acsc.hpp>

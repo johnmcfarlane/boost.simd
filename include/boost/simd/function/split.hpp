@@ -9,26 +9,25 @@
 #ifndef BOOST_SIMD_FUNCTION_SPLIT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SPLIT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-split split (function object)
+
     Function object implementing split capabilities
 
     Split a SIMD register @c x in two SIMD registers of half the
     cardinal of @c x containing the same value than @c x but converted to
     their associated upgraded type.
 
+    @headerref{<boost/simd/function/split.hpp>}
 
-    @par Header <boost/simd/function/split.hpp>
+    @par Description
 
-    @param x Value to split
-    @return An array containing the two upgraded part of its argument.
+      @code
+      std::array<upgrade_t<Value>, 2> split(Value const& x);
+      @endcode
+
   **/
-  std::array<upgrade_t<Value>, 2> split(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/split.hpp>
 

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ASEC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASEC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-asec asec (function object)
+
     This function object returns the inverse secant in radian: \f$\arccos(1/x)\f$.
 
-    @par Header <boost/simd/function/asec.hpp>
+    @headerref{<boost/simd/function/asec.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue asec(IEEEValue const & x);
+      @endcode
 
     @see asecd, asecpi
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet asec.txt asec
 
   **/
-  IEEEValue asec(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asec.hpp>
 #include <boost/simd/function/simd/asec.hpp>

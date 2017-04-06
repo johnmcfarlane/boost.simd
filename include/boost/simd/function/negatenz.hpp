@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_NEGATENZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEGATENZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
-
     @ingroup group-ieee
+    @defgroup real-negatenz negatenz (function object)
+
     This function object returns @c x multiplied by the @ref signnz of @c y.
     The result is unspecified if @c y is @ref Nan
 
+    @headerref{<boost/simd/function/negatenz.hpp>}
 
-    @par Header <boost/simd/function/negatenz.hpp>
+    @par Description
+
+      @code
+      Value negatenz(Value const& x, Value const& y);
+      @endcode
 
     @par Note
     If @c x is  null the result is \f$\pm0\f$. Take care that @c negatenz distinguish
@@ -39,9 +42,6 @@ namespace boost { namespace simd
       @snippet negatenz.txt negatenz
 
   **/
-  Value negatenz(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/negatenz.hpp>
 #include <boost/simd/function/simd/negatenz.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CSCH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CSCH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-csch csch (function object)
+
     This function object returns the hyperbolic cosecant: \f$1/\sinh(1/x)\f$.
 
-    @par Header <boost/simd/function/csch.hpp>
+    @headerref{<boost/simd/function/csch.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue csch(IEEEValue const& x);
+      @endcode
 
     @see sinh, tanh, sech, csch, sinhcosh
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
 
       @snippet csch.txt csch
   **/
-  IEEEValue csch(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/csch.hpp>
 #include <boost/simd/function/simd/csch.hpp>

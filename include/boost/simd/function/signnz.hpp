@@ -11,16 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_SIGNNZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIGNNZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-signnz signnz (function object)
+
     This function object returns the sign of x. I.e. -1 or 1,
     depending on the fact  @c x is negative or positive.
 
-    @par Header <boost/simd/function/signnz.hpp>
+    @headerref{<boost/simd/function/signnz.hpp>}
+
+    @par Description
+
+      @code
+      Value signnz(Value const& x);
+      @endcode
+
     @par Notes:
 
     - This function never returns @ref Zero (zero is considered positive for integers).
@@ -41,9 +46,6 @@ namespace boost { namespace simd
       @snippet signnz.txt signnz
 
   **/
-  Value signnz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/signnz.hpp>
 #include <boost/simd/function/simd/signnz.hpp>

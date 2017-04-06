@@ -10,17 +10,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ERF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ERF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-euler
+    @defgroup real-erf erf (function object)
+
    This function object computes  the error function:
    \f$\displaystyle \frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
 
+    @headerref{<boost/simd/function/erf.hpp>}
 
-    @par Header <boost/simd/function/erf.hpp>
+    @par Description
+
+      @code
+      IEEEValue erf(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -36,9 +39,6 @@ namespace boost { namespace simd
 
       @snippet erf.txt erf
   **/
-  IEEEValue erf(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/erf.hpp>
 #include <boost/simd/function/simd/erf.hpp>

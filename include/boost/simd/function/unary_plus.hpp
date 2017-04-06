@@ -11,26 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_UNARY_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_UNARY_PLUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-operator
+    @defgroup real-unary_plus unary_plus (function object)
+
     This function object returns the elementwise unary plus of the parameter
 
     Infix notation can be used with operator '+'
 
+    @headerref{<boost/simd/function/unary_plus.hpp>}
 
-    @par Header <boost/simd/function/unary_plus.hpp>
+    @par Description
+
+      @code
+      Value unary_plus(Value const& x);
+      @endcode
 
     @par Note:
 
     - `r = unary_plus(x)` is equivalent to  `r = +x` for SIMD types.
-
-    @warningbox{Take care that the infix notation in scalar integral mode encurs
-    a possible promotion of the type as C++ rules state.}
 
     @see  plus, unary_minus
 
@@ -43,9 +42,6 @@ namespace boost { namespace simd
       @snippet unary_plus.txt unary_plus
 
   **/
-  Value unary_plus(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/unary_plus.hpp>
 #include <boost/simd/function/simd/unary_plus.hpp>

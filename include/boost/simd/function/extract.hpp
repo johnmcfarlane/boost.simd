@@ -11,18 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_EXTRACT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXTRACT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-extract extract (function object)
 
     Random-access extraction of a value subcomponent
 
     Extract a sub-element of a given value @c v
 
+    @headerref{<boost/simd/function/extract.hpp>}
 
-    @par Header <boost/simd/function/extract.hpp>
+    @par Description
+
+      @code
+      template<typename Value, typename Offset>
+      @endcode
 
     @par Semantic
 
@@ -46,15 +49,7 @@ namespace boost { namespace simd
       x = v[o];
       @endcode
 
-    @param v   Value to extract
-    @param o   Position to extract from (offset)
-
-    @return The extracted value
   **/
-  template<typename Value, typename Offset>
-  scalar_of_t<Value> extract(Value const& v, Offset const& o);
-} }
-#endif
 
 #include <boost/simd/function/scalar/extract.hpp>
 #include <boost/simd/function/simd/extract.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_REAL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REAL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-real real (function object)
+
     This function object returns the real part of the parameter.
     On real types it coincides with identity.
 
-    @par Header <boost/simd/function/real.hpp>
+    @headerref{<boost/simd/function/real.hpp>}
+
+    @par Description
+
+      @code
+      Value real(Value const& x);
+      @endcode
 
     @see imag
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
       @snippet real.txt real
 
   **/
-  Value real(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/real.hpp>
 #include <boost/simd/function/simd/real.hpp>

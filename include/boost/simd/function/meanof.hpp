@@ -11,24 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_MEANOF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MEANOF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-meanof meanof (function object)
+
    This function object computes the arithmetic mean of its parameters.
 
-    @par Header <boost/simd/abs.hpp>
+    @headerref{<boost/simd/abs.hpp>}
 
-    @par Notes
+    @par Description
 
-    Using `meanof(x, y)` for floating entries is similar to  `(x+y)/2`
-
-    for integer types, it returns a rounded value at a distance guaranteed
-    to be less than or equal to 0.5 of the average floating value, but may differ
-    by unity from the truncation given by `(x+y)/2`.
+      @code
+      Value meanof(Value const& x, Value const& y);
+      @endcode
 
     @par Note:
       This function does not overflow.
@@ -44,9 +39,6 @@ namespace boost { namespace simd
       @snippet average.txt average
 
   **/
-  Value meanof(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/meanof.hpp>
 #include <boost/simd/function/simd/meanof.hpp>

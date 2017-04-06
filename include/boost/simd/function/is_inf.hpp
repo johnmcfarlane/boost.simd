@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_INF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_INF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_inf is_inf (function object)
 
     This function object returns @ref True if x is inf or -inf else returns @ref False.
 
+    @headerref{<boost/simd/function/is_inf.hpp>}
 
-    @par Header <boost/simd/function/is_inf.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_inf(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_inf.txt is_inf
 
   **/
-  as_logical_t<Value> is_inf(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_inf.hpp>
 #include <boost/simd/function/simd/is_inf.hpp>

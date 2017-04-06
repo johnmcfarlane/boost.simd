@@ -11,26 +11,28 @@
 #ifndef BOOST_SIMD_FUNCTION_INEARBYINT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_INEARBYINT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-inearbyint inearbyint (function object)
+
     This function object computes the integer conversion of the @ref nearbyint of its parameter.
 
+    @headerref{<boost/simd/function/inearbyint.hpp>}
 
-    @par Header <boost/simd/function/inearbyint.hpp>
+    @par Description
 
-    @par Note:
-    This operation is NOT properly saturated.
-    To ensure proper saturation use the decorartor pedantic_
+      @code
+      as_integer_t<Value> inearbyint(Value const& x);
+      @endcode
 
     @par Decorators:
 
    - pedantic_ if you need a full range correctness
      use this decorator that computes  saturated_(toint)(nearbyint(x));
+
+    @par Note:
+    This operation is NOT properly saturated.
+    To ensure proper saturation use the decorartor pedantic_
 
     @see nearbyint, ifloor, iround, ifix, iceil
 
@@ -43,9 +45,6 @@ namespace boost { namespace simd
       @snippet inearbyint.txt inearbyint
 
   **/
-  as_integer_t<Value> inearbyint(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/inearbyint.hpp>
 #include <boost/simd/function/simd/inearbyint.hpp>

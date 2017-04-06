@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_DEC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DEC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-dec dec (function object)
+
     This function object returns  its parameter decremented by 1.
 
-    @par Header <boost/simd/function/dec.hpp>
+    @headerref{<boost/simd/function/dec.hpp>}
+
+    @par Description
+
+      @code
+      Value dec(Value const& x);
+      @endcode
 
     @par Decorators
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
 
       @snippet dec.txt dec
   **/
-  Value dec(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/dec.hpp>
 #include <boost/simd/function/simd/dec.hpp>

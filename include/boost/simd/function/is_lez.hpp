@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_LEZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_LEZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_lez is_lez (function object)
 
     This function object returns @ref True or @ref False according x is less or equal to @ref Zero or not.
 
+    @headerref{<boost/simd/function/is_lez.hpp>}
 
-    @par Header <boost/simd/function/is_lez.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_lez(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_lez.txt is_lez
 
   **/
-  as_logical_t<Value> is_lez(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_lez.hpp>
 #include <boost/simd/function/simd/is_lez.hpp>

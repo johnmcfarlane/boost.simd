@@ -11,18 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_FRAC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FRAC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-frac frac (function object)
+
     This function object returns the fractional part of the input i.e. `x-trunc(x)`.
+
+    @headerref{<boost/simd/function/frac.hpp>}
+
+    @par Description
+
+      @code
+      Value frac(Value const& x);
+      @endcode
 
     @see trunc, modf
 
-
-    @par Header <boost/simd/function/frac.hpp>
 
     @par Example:
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet frac.txt frac
 
   **/
-  Value frac(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/frac.hpp>
 #include <boost/simd/function/simd/frac.hpp>

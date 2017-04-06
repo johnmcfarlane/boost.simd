@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_NBTRUE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NBTRUE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-nbtrue nbtrue (function object)
+
      This function object returns the number of non @ref Zero elements of the
    argument.
 
+    @headerref{<boost/simd/function/nbtrue.hpp>}
 
-    @par Header <boost/simd/function/nbtrue.hpp>
+    @par Description
+
+      @code
+      std::size_t nbtrue(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +39,6 @@ namespace boost { namespace simd
       @snippet nbtrue.txt nbtrue
 
   **/
-  std::size_t nbtrue(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/nbtrue.hpp>
 #include <boost/simd/function/simd/nbtrue.hpp>

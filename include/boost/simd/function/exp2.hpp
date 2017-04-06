@@ -11,23 +11,27 @@
 #ifndef BOOST_SIMD_FUNCTION_EXP2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXP2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-exp2 exp2 (function object)
+
     This function object returns the base two exponential of its argument: \f$2^{x}\f$
 
-    @par Header <boost/simd/function/exp2.hpp>
+    @headerref{<boost/simd/function/exp2.hpp>}
 
-    @par Note:
+    @par Description
 
-    - provisions are made to obtain a flint result from a flint argument
+      @code
+      IEEEValue exp2(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
       - std_ for floating entries calls @c std::exp2
+
+    @par Note:
+
+    - provisions are made to obtain a flint result from a flint argument
 
     @see exp, exp10, pow, pow2
 
@@ -41,9 +45,6 @@ namespace boost { namespace simd
       @snippet exp2.txt exp2
 
   **/
-  IEEEValue exp2(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exp2.hpp>
 #include <boost/simd/function/simd/exp2.hpp>

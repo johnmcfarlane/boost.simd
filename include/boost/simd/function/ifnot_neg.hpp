@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IFNOT_NEG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IFNOT_NEG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-ifnot_neg ifnot_neg (function object)
 
     This function object conditionally returns -x if @c c is @ref False and x otherwise.
 
+    @headerref{<boost/simd/function/ifnot_neg.hpp>}
 
-    @par Header <boost/simd/function/ifnot_neg.hpp>
+    @par Description
+
+      @code
+      Value1 ifnot_neg(Value0 const& c, Value1 const& x);
+      @endcode
 
     @par Example:
 
@@ -32,9 +34,6 @@ namespace boost { namespace simd
       @snippet negifnot.txt negifnot
 
   **/
-  Value1 ifnot_neg(Value0 const& c, Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ifnot_neg.hpp>
 #include <boost/simd/function/simd/ifnot_neg.hpp>

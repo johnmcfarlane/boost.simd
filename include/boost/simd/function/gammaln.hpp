@@ -11,19 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_GAMMALN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_GAMMALN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-euler
+    @defgroup real-gammaln gammaln (function object)
+
     This function object computes the natural logarithm of the absolute
     value of the Gamma function:
      \f$\displaystyle \log |\Gamma(x)|\f$
 
+    @headerref{<boost/simd/function/gammaln.hpp>}
 
-    @par Header <boost/simd/function/gammaln.hpp>
+    @par Description
+
+      @code
+      IEEEValue gammaln(IEEEValue const& x);
+      @endcode
+
+    @par Decorators
+
+      - std_ fcalls @c std::lgamma
 
     @par Notes
 
@@ -45,10 +51,6 @@ namespace boost { namespace simd
 
        boost.simd also provides @ref signgam which independantly computes the sign.
 
-    @par Decorators
-
-      - std_ fcalls @c std::lgamma
-
     @see gamma, signgam
 
     @par Example:
@@ -59,9 +61,6 @@ namespace boost { namespace simd
 
       @snippet gammaln.txt gammaln
   **/
-  IEEEValue gammaln(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/gammaln.hpp>
 #include <boost/simd/function/simd/gammaln.hpp>

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CUMSUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CUMSUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-cumsum cumsum (function object)
+
     This function object returns the cumulate sum of the argument elements
 
-    @par Header <boost/simd/function/cumsum.hpp>
+    @headerref{<boost/simd/function/cumsum.hpp>}
+
+    @par Description
+
+      @code
+      Value cumsum(Value const& x);
+      @endcode
 
     @see cumprod, cummin, cummax
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet cumsum.txt cumsum
 
   **/
-  Value cumsum(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cumsum.hpp>
 #include <boost/simd/function/simd/cumsum.hpp>

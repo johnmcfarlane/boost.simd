@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_COSPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COSPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cospi cospi (function object)
+
     This function object returns the cosine of angle in
     \f$\pi\f$ multiples: \f$\cos(\pi x)\f$.
 
+    @headerref{<boost/simd/function/cospi.hpp>}
 
-    @par Header <boost/simd/function/cospi.hpp>
+    @par Description
+
+      @code
+      Value cospi(Value const& x);
+      @endcode
 
     @par Note
 
@@ -45,9 +48,6 @@ namespace boost { namespace simd
       @snippet cospi.txt cospi
 
   **/
-  Value cospi(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cospi.hpp>
 #include <boost/simd/function/simd/cospi.hpp>

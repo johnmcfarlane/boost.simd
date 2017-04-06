@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ICEIL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ICEIL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-iceil iceil (function object)
+
     This function object computes the integer conversion of the @ref ceil of its parameter.
 
+    @headerref{<boost/simd/function/iceil.hpp>}
 
-    @par Header <boost/simd/function/iceil.hpp>
+    @par Description
+
+      @code
+      as_integer_t<Value> iceil(Value const& x);
+      @endcode
 
     @par Note:
     This operation is properly saturated
@@ -38,9 +40,6 @@ namespace boost { namespace simd
 
 
   **/
-  as_integer_t<Value> iceil(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/iceil.hpp>
 #include <boost/simd/function/simd/iceil.hpp>

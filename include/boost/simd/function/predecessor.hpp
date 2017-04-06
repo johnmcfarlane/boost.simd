@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_PREDECESSOR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_PREDECESSOR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-predecessor predecessor (function object)
+
     This function object returns the `n-`th greatest element strictly less than the parameter
 
+    @headerref{<boost/simd/function/predecessor.hpp>}
 
-    @par Header <boost/simd/function/predecessor.hpp>
+    @par Description
+
+      @code
+      ///@{
+      @endcode
 
     @par Note
 
@@ -43,12 +46,6 @@ namespace boost { namespace simd
       @snippet predecessor.txt predecessor
 
   **/
-  ///@{
-  Value predecessor(Value const& x);
-  Value predecessor(Value const& x, IntegerValue const& n);
-  ///@}
-} }
-#endif
 
 #include <boost/simd/function/scalar/predecessor.hpp>
 #include <boost/simd/function/simd/predecessor.hpp>

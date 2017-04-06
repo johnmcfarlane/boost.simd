@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_FLINT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_FLINT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_flint is_flint (function object)
+
     This function object returns @ref True or @ref False according x is a flint or not.
 
+    @headerref{<boost/simd/function/is_flint.hpp>}
 
-    @par Header <boost/simd/function/is_flint.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_flint(Value const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +42,6 @@ namespace boost { namespace simd
       @snippet is_flint.txt is_flint
 
   **/
-  as_logical_t<Value> is_flint(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_flint.hpp>
 #include <boost/simd/function/simd/is_flint.hpp>

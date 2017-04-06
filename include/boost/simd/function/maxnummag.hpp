@@ -11,18 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_MAXNUMMAG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MAXNUMMAG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-maxnummag maxnummag (function object)
+
     This function object returns between two floating point arguments,
     the one  having the greatest absolute value, treating NaNs
     as missing data (between a NaN and a numeric value, the numeric value is chosen).
 
+    @headerref{<boost/simd/function/maxnummag.hpp>}
 
-    @par Header <boost/simd/function/maxnummag.hpp>
+    @par Description
+
+      @code
+      Value maxnummag(Value const& x, Value const& y);
+      @endcode
 
     @par Example:
 
@@ -33,9 +36,6 @@ namespace boost { namespace simd
       @snippet maxnummag.txt maxnummag
 
   **/
-  Value maxnummag(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/maxnummag.hpp>
 #include <boost/simd/function/simd/maxnummag.hpp>

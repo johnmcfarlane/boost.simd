@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NOT_NAN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_not_nan is_not_nan (function object)
 
     This function object returns @ref False or @ref True according x is @ref Nan or not.
 
+    @headerref{<boost/simd/function/is_not_nan.hpp>}
 
-    @par Header <boost/simd/function/is_not_nan.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_not_nan(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_not_nan.txt is_not_nan
 
   **/
-  as_logical_t<Value> is_not_nan(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_not_nan.hpp>
 #include <boost/simd/function/simd/is_not_nan.hpp>

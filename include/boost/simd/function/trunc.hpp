@@ -11,18 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_TRUNC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TRUNC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-trunc trunc (function object)
+
     This function object computes the truncation toward @ref Zero
     of its parameter.
 
+    @headerref{<boost/simd/function/trunc.hpp>}
 
-    @par Header <boost/simd/function/trunc.hpp>
+    @par Description
+
+      @code
+      Value trunc(Value const& x);
+      @endcode
+
+    @par Decorators
+
+       - std_ for floating entries call std::trunc
 
     @par Notes
       - the call to `trunc(x)` is similar to `sign(x)*floor(abs(x))`
@@ -30,19 +36,6 @@ namespace boost { namespace simd
       - For floating point number it is also one of the two ouputs of
         the @ref modf function.
         And we have:
-        @code
-          trunc(x) + frac(x) == x;
-        @endcode
-        except for nans
-
-    @par Decorators
-
-       - std_ for floating entries call std::trunc
-
-    @par Alias:
-
-       fix
-
     @see abs, frac, floor, sign, modf, itrunc
 
     @par Example:
@@ -54,9 +47,6 @@ namespace boost { namespace simd
       @snippet trunc.txt trunc
 
   **/
-  Value trunc(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/trunc.hpp>
 #include <boost/simd/function/simd/trunc.hpp>

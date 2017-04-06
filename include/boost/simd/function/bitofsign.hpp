@@ -11,19 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_BITOFSIGN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITOFSIGN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-bitofsign bitofsign (function object)
+
     This function object returns a value of the same type as
     the input with all bits set to zero
     except the sign bit which is preserved.
     This function object returns always @ref Zero for unsigned types
 
+    @headerref{<boost/simd/function/bitofsign.hpp>}
 
-    @par Header <boost/simd/function/bitofsign.hpp>
+    @par Description
+
+      @code
+      Value bitofsign(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
       @snippet bitofsign.txt bitofsign
 
   **/
-  Value bitofsign(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitofsign.hpp>
 #include <boost/simd/function/simd/bitofsign.hpp>

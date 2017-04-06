@@ -11,24 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_SHL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SHL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-operator
+    @defgroup real-shl shl (function object)
+
      This function object returns the first operand shifted left by the second one
 
     Infix notation can be used with operator '<<'
 
-    @par Header <boost/simd/function/shl.hpp>
+    @headerref{<boost/simd/function/shl.hpp>}
 
-    This is an alias of @ref shift_left
+    @par Description
+
+      @code
+      Value shl(Value const& x, IntegerValue const& n);
+      @endcode
+
   **/
-  Value shl(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/shift_left.hpp>
 #include <boost/simd/function/simd/shl.hpp>

@@ -10,15 +10,19 @@
 #ifndef BOOST_SIMD_FUNCTION_BROADCAST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BROADCAST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-broadcast broadcast (function object)
+
     Returns a boost::simd::pack filled with the value of the @c N th value of its argument.
 
+    @headerref{<boost/simd/function/broadcast.hpp>}
 
-    @par Header <boost/simd/function/broadcast.hpp>
+    @par Description
+
+      @code
+      template<std::size_t Index, typename Value> Value broadcast(Value const& v);
+      @endcode
 
     @par Scalar Semantic:
     For any value @c v of type @c T and any integral constant @c I, the following code:
@@ -50,12 +54,7 @@ namespace boost { namespace simd
     a memory read-back. See boost::simd::extract for more informations.
 
     @tparam Index index of the value to broadcast
-    @param  v register to broadcast value from
-    @return A boost::simd::pack filled with the @c Index value of @c v
   **/
-  template<std::size_t Index, typename Value> Value broadcast(Value const& v);
-} }
-#endif
 
 #include <boost/simd/function/scalar/broadcast.hpp>
 #include <boost/simd/function/simd/broadcast.hpp>

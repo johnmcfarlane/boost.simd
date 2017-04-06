@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_NEXTAFTER_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEXTAFTER_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-nextafter nextafter (function object)
+
     Returns the next representable value of @c x in the direction of @c y
 
+    @headerref{<boost/simd/function/nextafter.hpp>}
 
-    @par Header <boost/simd/function/nextafter.hpp>
+    @par Description
+
+      @code
+      Value nextafter(Value const& x, Value const& y);
+      @endcode
 
     @par Semantic:
 
@@ -38,15 +41,14 @@ namespace boost { namespace simd
 
     @see next, prev, successor, predecessor
 
-    @par Note
-    C++11 standard library also defines @c nexttoward, but as (for SIMD considerations)
-    @c x and @c y must be here of same type, the two function would coincide.
-    So @c nexttoward is not defined in boost.simd.
-
     @par Decorators
 
      - std_ calls std::nextafter
 
+
+    @par Note
+    C++11 standard library also defines @c nexttoward, but as (for SIMD considerations)
+    @see next, prev, successor, predecessor
 
     @par Example:
 
@@ -57,9 +59,6 @@ namespace boost { namespace simd
       @snippet nextafter.txt nextafter
 
   **/
-  Value nextafter(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/nextafter.hpp>
 #include <boost/simd/function/simd/nextafter.hpp>

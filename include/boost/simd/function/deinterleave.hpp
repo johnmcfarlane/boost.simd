@@ -10,18 +10,22 @@
 #ifndef BOOST_SIMD_FUNCTION_DEINTERLEAVE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DEINTERLEAVE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-deinterleave deinterleave (function object)
+
     This function object performs a complete deinterleaving of its arguments.
 
     deinterleave is guaranteed to be optimized as much as possible compared to using
     boost::simd::deinterleave_first and boost::simd::deinterleave_second in succession.
 
+    @headerref{<boost/simd/function/deinterleave.hpp>}
 
-    @par Header <boost/simd/function/deinterleave.hpp>
+    @par Description
+
+      @code
+      std::array<Value, 2> deinterleave(Value const& x, Value const& y);
+      @endcode
 
     @par Semantic:
     For every parameters @c x and @c y of type @c T :
@@ -33,13 +37,7 @@ namespace boost { namespace simd
     std::array<T,2> r = { deinterleave_first(x,y), deinterleave_second(x,y) };
     @endcode
 
-    @param  x First argument to deinterleave
-    @param  y Second argument to deinterleave
-    @return An array of two boost::simd::pack containing the deinterleaved data from the arguments
   **/
-  std::array<Value, 2> deinterleave(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/simd/deinterleave.hpp>
 

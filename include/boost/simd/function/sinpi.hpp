@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sinpi sinpi (function object)
+
     This function object returns the sine of the parameter in \f$\pi\f$ multiples:
     \f$\sin(\pi x)\f$.
 
-    @par Header <boost/simd/function/sinpi.hpp>
+    @headerref{<boost/simd/function/sinpi.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sinpi(IEEEValue const& x);
+      @endcode
 
     @see sine, sincospi, sin, sind
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sinpi.txt sinpi
 
   **/
-  IEEEValue sinpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sinpi.hpp>
 #include <boost/simd/function/simd/sinpi.hpp>

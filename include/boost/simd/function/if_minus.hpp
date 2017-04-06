@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_MINUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_minus if_minus (function object)
+
     This function object conditionally returns @c x-y (respectively @c x)  if @c c is @ref True
     (respectively  @ref False)
 
+    @headerref{<boost/simd/function/if_minus.hpp>}
 
-    @par Header <boost/simd/function/if_minus.hpp>
+    @par Description
+
+      @code
+      Value1 if_minus(Value0 const& c, Value1 const& x, Value1 const& y);
+      @endcode
 
     @par Example:
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
       @snippet if_minus.txt if_minus
 
   **/
-  Value1 if_minus(Value0 const& c, Value1 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_minus.hpp>
 #include <boost/simd/function/simd/if_minus.hpp>

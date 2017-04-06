@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_FREXP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FREXP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-frexp frexp (function object)
+
     This function object returns a mantissa and an exponent pair for the input
 
+    @headerref{<boost/simd/function/frexp.hpp>}
 
-    @par Header <boost/simd/function/frexp.hpp>
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> frexp(IEEEValue const& x);
+      @endcode
 
     @par Semantic:
 
@@ -37,6 +40,12 @@ namespace boost { namespace simd
     auto m = mantissa(x)/2;
     @endcode
 
+    @par Decorators
+
+     - pedantic_ slower, but special values as @ref Nan or @ref Inf are handled properly.
+
+     - std_ transmits the call to @c std::frexp and converts the exponent.
+
     @par Notes:
 
     - Without the pedantic_ decorator,  calling @c frexp on @c Nan or @c Inf
@@ -50,15 +59,6 @@ namespace boost { namespace simd
       mantissa \f$m\f$ and an exponent \f$e\f$ so that:  \f$x = m\times 2^e\f$,
       with absolute value of \f$m \in [0.5, 1[\f$ (except for \f$x = 0\f$)
 
-      @warningbox{Take care that these results differ from the returns
-      of the functions @ref mantissa and @ref exponent}
-
-    @par Decorators
-
-     - pedantic_ slower, but special values as @ref Nan or @ref Inf are handled properly.
-
-     - std_ transmits the call to @c std::frexp and converts the exponent.
-
     @see ifrexp, exponent, mantissa
 
 
@@ -71,9 +71,6 @@ namespace boost { namespace simd
       @snippet frexp.txt frexp
 
   **/
-  std::pair<IEEEValue, IEEEValue> frexp(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/frexp.hpp>
 #include <boost/simd/function/scalar/frexp.hpp>

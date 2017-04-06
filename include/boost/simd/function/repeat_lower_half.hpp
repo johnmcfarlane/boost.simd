@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_REPEAT_LOWER_HALF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REPEAT_LOWER_HALF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-repeat_lower_half repeat_lower_half (function object)
 
     Repeat the lower half of a vector
 
+    @headerref{<boost/simd/function/repeat_lower_half.hpp>}
 
-    @par Header <boost/simd/function/repeat_lower_half.hpp>
+    @par Description
+
+      @code
+      Value repeat_lower_half(Value const& x);
+      @endcode
 
     @par Semantic:
 
@@ -42,9 +45,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  Value repeat_lower_half(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/repeat_lower_half.hpp>
 

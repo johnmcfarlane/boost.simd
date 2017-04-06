@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IFREXP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IFREXP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-ifrexp ifrexp (function object)
+
     This function object computes a mantissa and an exponent pair for the input
 
+    @headerref{<boost/simd/function/ifrexp.hpp>}
 
-    @par Header <boost/simd/function/ifrexp.hpp>
+    @par Description
+
+      @code
+      std::pair<IEEEValue, as_integer_t<IEEEValue>> ifrexp(IEEEValue const& x);
+      @endcode
 
     @par Semantic:
 
@@ -37,6 +40,12 @@ namespace boost { namespace simd
     T m = mantissa(x)/2;
     @endcode
 
+    @par Decorators
+
+     - pedantic_ slower, but special values as @ref Nan or @ref Inf are handled properly.
+
+     - std_ transmits the call to @c std::frexp.
+
     @par Note:
 
     if you need floating type exponent (unlike the standard)  use @ref frexp
@@ -46,15 +55,6 @@ namespace boost { namespace simd
     with absolute value of \f$m \in [0.5, 1[\f$ (except for \f$x = 0\f$)
 
     Without the pedantic_ decorator  @ref Nan or @ref Inf are not handled properly.
-
-    @warningbox{Take care that these results differ from the returns of the functions @ref mantissa
-    and @ref exponent}
-
-    @par Decorators
-
-     - pedantic_ slower, but special values as @ref Nan or @ref Inf are handled properly.
-
-     - std_ transmits the call to @c std::frexp.
 
     @see exponent, mantissa, frexp
 
@@ -68,9 +68,6 @@ namespace boost { namespace simd
       @snippet ifrexp.txt ifrexp
 
   **/
-  std::pair<IEEEValue, as_integer_t<IEEEValue>> ifrexp(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ifrexp.hpp>
 #include <boost/simd/function/simd/ifrexp.hpp>

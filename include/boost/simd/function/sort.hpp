@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_SORT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SORT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-swar
+    @defgroup real-sort sort (function object)
+
     Function object implementing sort capabilities
 
     returns the sorted x vector in ascending order
 
+    @headerref{<boost/simd/function/sort.hpp>}
 
-    @par Header <boost/simd/function/sort.hpp>
+    @par Description
+
+      @code
+      Value sort(Value const& x);
+      @endcode
 
     @par Semantic:
 
@@ -34,9 +36,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  Value sort(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sort.hpp>
 #include <boost/simd/function/simd/sort.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_COTPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COTPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cotpi cotpi (function object)
+
     This function object returns the cotangent of input in
     \f$\pi\f$ multiples: \f$\cos(\pi x)/sin(\pi x)\f$.
 
+    @headerref{<boost/simd/function/cotpi.hpp>}
 
-    @par Header <boost/simd/function/cotpi.hpp>
+    @par Description
+
+      @code
+      IEEEValue cotpi(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet cotpi.txt cotpi
 
   **/
-  IEEEValue cotpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cotpi.hpp>
 #include <boost/simd/function/simd/cotpi.hpp>

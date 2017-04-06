@@ -11,20 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_FIRSTBITSET_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FIRSTBITSET_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-firstbitset firstbitset (function object)
+
     This function object returns the bit pattern in which the only bit set is
     the first bit set (beginning with the least significant bit) in the parameter.
+
+    @headerref{<boost/simd/function/firstbitset.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> firstbitset(Value const& x);
+      @endcode
 
     @see  ffs,  firstbitunset
 
 
-
-    @par Header <boost/simd/function/firstbitset.hpp>
 
     @par Example:
 
@@ -35,9 +39,6 @@ namespace boost { namespace simd
       @snippet firstbitset.txt firstbitset
 
   **/
-  as_integer_t<Value> firstbitset(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/firstbitset.hpp>
 #include <boost/simd/function/simd/firstbitset.hpp>

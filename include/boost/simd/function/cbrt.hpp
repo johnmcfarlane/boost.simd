@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CBRT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CBRT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-cbrt cbrt (function object)
+
     This function object returns the cubic root of its argument: \f$\sqrt[3]{x}\f$
 
-    @par Header <boost/simd/function/cbrt.hpp>
+    @headerref{<boost/simd/function/cbrt.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue cbrt(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet cbrt.txt cbrt
 
   **/
-  IEEEValue cbrt(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cbrt.hpp>
 #include <boost/simd/function/simd/cbrt.hpp>

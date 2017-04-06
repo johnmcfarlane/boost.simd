@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINCPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINCPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sincpi sincpi (function object)
+
     This function object returns the Computes the sinpi cardinal
     value of its parameter, i.e. \f$sin(\pi x)/(\pi x) \f$.
 
-    @par Header <boost/simd/function/sincpi.hpp>
+    @headerref{<boost/simd/function/sincpi.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sincpi(IEEEValue const& x);
+      @endcode
 
     @see sin, sinc, sinhc
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sincpi.txt sincpi
 
   **/
-  IEEEValue sincpi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sincpi.hpp>
 #include <boost/simd/function/simd/sincpi.hpp>

@@ -11,23 +11,27 @@
 #ifndef BOOST_SIMD_FUNCTION_EXPM1_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXPM1_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-expm1 expm1 (function object)
+
     This function object returns the exponential of its argument minus one:\f$e^{x}-1\f$
 
-    @par Header <boost/simd/function/expm1.hpp>
+    @headerref{<boost/simd/function/expm1.hpp>}
 
-    @par Notes
+    @par Description
 
-    - result is accurate even for @c x of small modulus
+      @code
+      IEEEValue expm1(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
      - std_ for floating entries calls @c std::expm1
+
+    @par Notes
+
+    - result is accurate even for @c x of small modulus
 
     @see exp
 
@@ -41,9 +45,6 @@ namespace boost { namespace simd
       @snippet expm1.txt expm1
 
   **/
-  IEEEValue expm1(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/expm1.hpp>
 #include <boost/simd/function/simd/expm1.hpp>

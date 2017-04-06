@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_LOGICAL_NOT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOGICAL_NOT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-logical_not logical_not (function object)
+
     This function object returns the return the logical negation of the argument.
 
     Infix notation can be used with operator '!'
 
-    @par Header <boost/simd/function/logical_not.hpp>
+    @headerref{<boost/simd/function/logical_not.hpp>}
+
+    @par Description
+
+      @code
+      as_logical_t<Value0> logical_not(Value0 const& x, Value1 const& y);
+      @endcode
 
     @see logical_notor,  logical_xor, logical_andnot,  logical_notand,  logical_ornot, logical_and,  logical_or
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet logical_not.txt logical_not
 
   **/
-  as_logical_t<Value0> logical_not(Value0 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/logical_not.hpp>
 #include <boost/simd/function/simd/logical_not.hpp>

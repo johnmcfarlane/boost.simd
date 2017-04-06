@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-rem_pio2_medium rem_pio2_medium (function object)
+
     This function object computes the remainder modulo
     \f$\pi/2\f$ with medium algorithm, and the angle quadrant between 0 and 3.
 
+    @headerref{<boost/simd/function/rem_pio2_medium.hpp>}
 
-    @par Header <boost/simd/function/rem_pio2_medium.hpp>
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> rem_pio2_medium(IEEEValue const& x);
+      @endcode
 
     @par Note:
 
@@ -50,9 +53,6 @@ namespace boost { namespace simd
       @snippet rem_pio2_medium.txt rem_pio2_medium
 
   **/
-  std::pair<IEEEValue, IEEEValue> rem_pio2_medium(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem_pio2_medium.hpp>
 #include <boost/simd/function/simd/rem_pio2_medium.hpp>

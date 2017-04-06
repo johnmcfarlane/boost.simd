@@ -11,15 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ANY_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ANY_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-reduction
+    @defgroup real-any any (function object)
+
    This function object returns @c true if at least one element of the
    argument is non zero.
 
-    @par Header <boost/simd/function/any.hpp>
+    @headerref{<boost/simd/function/any.hpp>}
+
+    @par Description
+
+      @code
+      bool any(Value const &x);
+      @endcode
 
     @see all, none, nbtrue
 
@@ -32,9 +37,6 @@ namespace boost { namespace simd
       @snippet any.txt any
 
   **/
-  bool any(Value const &x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/any.hpp>
 #include <boost/simd/function/simd/any.hpp>

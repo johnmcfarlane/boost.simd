@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_BITWISE_NOT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITWISE_NOT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-operator
+    @defgroup real-bitwise_not bitwise_not (function object)
+
     This function object returns the return the bitwise bitwise_not of the entry
     Infix notation can be used with operator '~'
     This is a convenience alias of @ref complement
 
+    @headerref{<boost/simd/function/bitwise_not.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/bitwise_not.hpp>
+      @code
+      Value bitwise_not(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -34,9 +36,6 @@ namespace boost { namespace simd
       @snippet bitwise_not.txt bitwise_not
 
   **/
-  Value bitwise_not(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/complement.hpp>
 #include <boost/simd/function/simd/bitwise_not.hpp>

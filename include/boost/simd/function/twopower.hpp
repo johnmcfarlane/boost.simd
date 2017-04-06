@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_TWOPOWER_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TWOPOWER_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-twopower twopower (function object)
+
     This function object returns \f$2^n\f$ (or 0 if n is less than zero)
 
+    @headerref{<boost/simd/function/twopower.hpp>}
 
-    @par Header <boost/simd/function/twopower.hpp>
+    @par Description
+
+      @code
+      IntegerValue twopower(IntegerValue const& x);
+      @endcode
 
     @par Note:
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet twopower.txt twopower
 
   **/
-  IntegerValue twopower(IntegerValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/twopower.hpp>
 #include <boost/simd/function/simd/twopower.hpp>

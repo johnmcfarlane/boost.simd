@@ -13,13 +13,20 @@
 
 namespace boost { namespace simd
 {
-#if defined(DOXYGEN_ONLY)
-  /*!
 
+  /*!
     @ingroup group-swar
+    @defgroup real-interleave_second interleave_second (function object)
+
     This function object computes a vector from a combination of the two inputs.
 
-    @par Header <boost/simd/function/interleave_second.hpp>
+    @headerref{<boost/simd/function/interleave_second.hpp>}
+
+    @par Description
+
+      @code
+      Value interleave_second(Value const& x, Value const& y);
+      @endcode
 
     @par Semantic:
 
@@ -38,8 +45,7 @@ namespace boost { namespace simd
     with <tt> n = cardinal_of<T>::value </tt>
 
   **/
-  Value interleave_second(Value const& x, Value const& y);
-#endif
+
 } }
 
 #include <boost/simd/function/simd/interleave_second.hpp>

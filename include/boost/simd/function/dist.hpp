@@ -11,26 +11,29 @@
 #ifndef BOOST_SIMD_FUNCTION_DIST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DIST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-dist dist (function object)
+
     This function object computes the absolute value of the difference of its parameters.
 
-    @par Header <boost/simd/function/dist.hpp>
+    @headerref{<boost/simd/function/dist.hpp>}
 
-    @par Notes
+    @par Description
 
-    The result may be negative for signed integers as @ref abs(@ref Valmin) is undefined.
-    To avoid the problem you can apply to dist the saturated_ decorator (See @ref group-decorator.)
+      @code
+      Value dist(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
      - saturated_ garanties that @c saturated_(dist)(x, y)) will
        never be strictly less than 0.
+
+    @par Notes
+
+    The result may be negative for signed integers as @ref abs(@ref Valmin) is undefined.
+    To avoid the problem you can apply to dist the saturated_ decorator (See @ref group-decorator.)
 
     @see  ulpdist, abs
 
@@ -43,9 +46,6 @@ namespace boost { namespace simd
       @snippet dist.txt dist
 
   **/
-  Value dist(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/dist.hpp>
 #include <boost/simd/function/simd/dist.hpp>

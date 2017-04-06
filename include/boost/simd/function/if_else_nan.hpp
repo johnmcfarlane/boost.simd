@@ -11,20 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_ELSE_NAN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_ELSE_NAN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_else_nan if_else_nan (function object)
+
     This function object conditionally returns @c x (respectively @ref Nan)
     if @c c is @ref True (respectively  @ref False)
 
     This is an alias of @ref if_else_allbits
 
+    @headerref{<boost/simd/function/if_else_nan.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/if_else_nan.hpp>
+      @code
+      Value1 if_else_nan(Value0 const& c, Value1 const& x);
+      @endcode
 
     @par Example:
 
@@ -35,9 +37,6 @@ namespace boost { namespace simd
       @snippet if_else_nan.txt if_else_nan
 
   **/
-  Value1 if_else_nan(Value0 const& c, Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_else_allbits.hpp>
 #include <boost/simd/function/simd/if_else_nan.hpp>

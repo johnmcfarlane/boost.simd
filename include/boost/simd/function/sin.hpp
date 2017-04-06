@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SIN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sin sin (function object)
+
     This function object returns the sine of the input in radians.
 
+    @headerref{<boost/simd/function/sin.hpp>}
 
-    @par Header <boost/simd/function/sin.hpp>
+    @par Description
+
+      @code
+      IEEEValue sin(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet sin.txt sin
 
   **/
-  IEEEValue sin(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sin.hpp>
 #include <boost/simd/function/simd/sin.hpp>

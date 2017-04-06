@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_MINMOD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MINMOD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-minmod minmod (function object)
 
     This function object computes the smallest of its parameter if they share the same sign,
     zero instead.
 
-    @par Header <boost/simd/function/minmod.hpp>
+    @headerref{<boost/simd/function/minmod.hpp>}
+
+    @par Description
+
+      @code
+      Value minmod(Value const& x, Value const& y);
+      @endcode
 
     @par Notes
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet minmod.txt minmod
 
   **/
-  Value minmod(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/minmod.hpp>
 #include <boost/simd/function/simd/minmod.hpp>

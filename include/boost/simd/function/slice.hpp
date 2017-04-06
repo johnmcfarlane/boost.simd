@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_SLICE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SLICE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-slice slice (function object)
+
     Type-preserving pack slicing
 
     This function object slices a simd::pack into two simd::packs of same type of half the size.
 
+    @headerref{<boost/simd/function/slice.hpp>}
 
-    @par Header <boost/simd/function/slice.hpp>
+    @par Description
+
+      @code
+      std::array<ValueO, 2> slice(Value1 const& x);
+      @endcode
 
     @par Semantic:
 
@@ -41,10 +45,8 @@ namespace boost { namespace simd
     evaluates to @c true.
 
     @see combine, slice_low, slice_high
+    @see combine, slice_low, slice_high
   **/
-  std::array<ValueO, 2> slice(Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/slice.hpp>
 

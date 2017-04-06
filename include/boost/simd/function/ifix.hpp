@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_IFIX_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IFIX_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-ifix ifix (function object)
+
     This function object convert to integer by saturated truncation.
 
     This is an alias of saturated_(toint) (See @ref toint)
 
+    @headerref{<boost/simd/function/ifix.hpp>}
 
-    @par Header <boost/simd/function/ifix.hpp>
+    @par Description
+
+      @code
+      Value ifix(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -35,9 +37,6 @@ namespace boost { namespace simd
 
 
   **/
-  Value ifix(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ifix.hpp>
 #include <boost/simd/function/simd/ifix.hpp>

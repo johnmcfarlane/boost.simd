@@ -11,25 +11,28 @@
 #ifndef BOOST_SIMD_FUNCTION_FLOOR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FLOOR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-floor floor (function object)
+
     This function object computes the greatest integral representable value of
     its parameter type which is less or equal to it.
 
-    @par Header <boost/simd/function/floor.hpp>
+    @headerref{<boost/simd/function/floor.hpp>}
 
-    @par Notes
+    @par Description
 
-     - @c floor is also used as parameter to pass to @ref div or @ref rem
+      @code
+      Value floor(Value const& x);
+      @endcode
 
     @par Decorators
 
     - std_ for floating entries call std::floor
+
+    @par Notes
+
+     - @c floor is also used as parameter to pass to @ref div or @ref rem
 
     @see  ceil, round, nearbyint, trunc, ifloor
 
@@ -42,9 +45,6 @@ namespace boost { namespace simd
       @snippet floor.txt floor
 
   **/
-  Value floor(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/floor.hpp>
 #include <boost/simd/function/simd/floor.hpp>

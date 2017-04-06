@@ -14,18 +14,22 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
   /*!
     @ingroup group-decorator
+    @defgroup real-plain plain (function object)
 
     calls the plain version of the functor
     This decorator is used internally as a tag to choose the boost simd
     kernel among other
 
+    @headerref{<boost/simd/function/plain.hpp>}
 
-    @par Header <boost/simd/function/plain.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto plain_(T const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -34,10 +38,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  template<typename T> auto plain_(T const& x) {}
-
-} }
-#endif
 
 namespace boost { namespace simd
 {

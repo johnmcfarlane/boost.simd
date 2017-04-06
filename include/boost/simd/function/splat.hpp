@@ -11,16 +11,17 @@
 #ifndef BOOST_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
+    @defgroup real-splat splat (function object)
 
-    Splat
 
-    Fills an entire SIMD vector with its argument.
+    @headerref{<boost/simd/function/splat.hpp>}
 
-    @par Header <boost/simd/function/splat.hpp>
+    @par Description
+
+      @code
+      as_simd_t<Value> splat(Value const& x);
+      @endcode
 
     @par Semantic
 
@@ -37,9 +38,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  as_simd_t<Value> splat(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/splat.hpp>
 #include <boost/simd/function/simd/splat.hpp>

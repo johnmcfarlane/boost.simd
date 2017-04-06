@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_REPEAT_UPPER_HALF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REPEAT_UPPER_HALF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-repeat_upper_half repeat_upper_half (function object)
+
     Function object implementing repeat_upper_half capabilities
 
         Repeat upper half of a vector
 
+    @headerref{<boost/simd/function/repeat_upper_half.hpp>}
 
-    @par Header <boost/simd/function/repeat_upper_half.hpp>
+    @par Description
+
+      @code
+      Value repeat_upper_half(Value const& x);
+      @endcode
 
     @par Semantic:
 
@@ -44,9 +48,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  Value repeat_upper_half(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/repeat_upper_half.hpp>
 

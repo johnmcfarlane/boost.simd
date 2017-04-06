@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOTPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOTPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acotpi acotpi (function object)
+
     This function object returns the inverse cotangent in pi multiples.
 
+    @headerref{<boost/simd/function/acotpi.hpp>}
 
-    @par Header <boost/simd/function/acotpi.hpp>
+    @par Description
+
+      @code
+      IEEEValue acotpi(IEEEValue const & x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet acotpi.txt acotpi
 
   **/
-  IEEEValue acotpi(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acotpi.hpp>
 #include <boost/simd/function/simd/acotpi.hpp>

@@ -11,20 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_ASECPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASECPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-asecpi asecpi (function object)
+
     This function object returns the inverse secant in \f$\pi\f$ multiples:
     \f$(1/\pi) \arccos(1/x)\f$.
+
+    @headerref{<boost/simd/function/asecpi.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue asecpi(IEEEValue const & x);
+      @endcode
 
     @see asec, asecd, cospi, acospi
 
 
-
-    @par Header <boost/simd/function/asecpi.hpp>
 
     @par Example:
 
@@ -35,9 +39,6 @@ namespace boost { namespace simd
       @snippet asecpi.txt asecpi
 
   **/
-  IEEEValue asecpi(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asecpi.hpp>
 #include <boost/simd/function/simd/asecpi.hpp>

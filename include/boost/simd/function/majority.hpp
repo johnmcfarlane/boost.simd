@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_MAJORITY_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MAJORITY_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-majority majority (function object)
+
     This function object returns @ref True if at least two inputs
     are not @ref Zero else @ref False.
 
+    @headerref{<boost/simd/function/majority.hpp>}
 
-    @par Header <boost/simd/function/majority.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> majority(Value const& x, Value const& y, Value const& z);
+      @endcode
 
     @par Note
 
@@ -36,9 +39,6 @@ namespace boost { namespace simd
       @snippet majority.txt majority
 
   **/
-  as_logical_t<Value> majority(Value const& x, Value const& y, Value const& z);
-} }
-#endif
 
 #include <boost/simd/function/scalar/majority.hpp>
 #include <boost/simd/function/simd/majority.hpp>

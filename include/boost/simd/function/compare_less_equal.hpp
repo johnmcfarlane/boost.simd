@@ -11,19 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_COMPARE_LESS_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COMPARE_LESS_EQUAL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-compare_less_equal compare_less_equal (function object)
+
     This function object returns a @c bool that is the result of the
     lexicographic test for <= on all elements of the entries
 
     It is probably not what you wish. Have a look to @ref is_less_equal
 
+    @headerref{<boost/simd/function/compare_less_equal.hpp>}
 
-    @par Header <boost/simd/function/compare_less_equal.hpp>
+    @par Description
+
+      @code
+      bool compare_less_equal(Value const& x, Value const& y);
+      @endcode
 
     @par Example:
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
       @snippet compare_less_equal.txt compare_less_equal
 
   **/
-  bool compare_less_equal(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/compare_less_equal.hpp>
 #include <boost/simd/function/simd/compare_less_equal.hpp>

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_NONE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NONE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-reduction
+    @defgroup real-none none (function object)
+
      This function object returns @c true if all elements of the argument are zero.
 
+    @headerref{<boost/simd/function/none.hpp>}
 
-    @par Header <boost/simd/function/none.hpp>
+    @par Description
+
+      @code
+      bool none(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -30,9 +34,6 @@ namespace boost { namespace simd
       @snippet none.txt none
 
   **/
-  bool none(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/none.hpp>
 #include <boost/simd/function/simd/none.hpp>

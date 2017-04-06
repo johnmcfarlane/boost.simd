@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_INVALID_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_INVALID_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicatesq
+    @defgroup real-is_invalid is_invalid (function object)
 
     This function object returns @ref True if x is inf, -inf or nan, else returns @ref False
 
+    @headerref{<boost/simd/function/is_invalid.hpp>}
 
-    @par Header <boost/simd/function/is_invalid.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_invalid(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_invalid.txt is_invalid
 
   **/
-  as_logical_t<Value> is_invalid(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_invalid.hpp>
 #include <boost/simd/function/simd/is_invalid.hpp>

@@ -11,12 +11,10 @@
 #ifndef BOOST_SIMD_FUNCTION_ULPDIST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ULPDIST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-ulpdist ulpdist (function object)
+
     This function object returns ulp distance between its arguments.
 
     It is often difficult to answer to the following question: "are
@@ -25,8 +23,13 @@ namespace boost { namespace simd
     estimations and peculiarly adapted to cope with the limited bits
     accuracy of floating point representations.
 
+    @headerref{<boost/simd/function/ulpdist.hpp>}
 
-    @par Header <boost/simd/function/ulpdist.hpp>
+    @par Description
+
+      @code
+      IEEEValue ulpdist(IEEEValue const& x, IEEEValue const& y);
+      @endcode
 
     @par Notes
 
@@ -80,9 +83,6 @@ namespace boost { namespace simd
       @snippet ulpdist.txt ulpdist
 
   **/
-  IEEEValue ulpdist(IEEEValue const& x, IEEEValue const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ulpdist.hpp>
 #include <boost/simd/function/simd/ulpdist.hpp>

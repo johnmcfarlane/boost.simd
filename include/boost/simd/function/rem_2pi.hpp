@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_2PI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_2PI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-rem_2pi rem_2pi (function object)
+
     This function object returns the compute the remainder modulo \f$2\pi\f$.
 
+    @headerref{<boost/simd/function/rem_2pi.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/rem_2pi.hpp>
+      @code
+      IEEEValue rem_2pi(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -39,9 +41,6 @@ namespace boost { namespace simd
       @snippet rem_2pi.txt rem_2pi
 
   **/
-  IEEEValue rem_2pi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem_2pi.hpp>
 #include <boost/simd/function/simd/rem_2pi.hpp>

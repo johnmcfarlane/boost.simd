@@ -11,12 +11,9 @@
 #ifndef BOOST_SIMD_FUNCTION_REMQUO_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REMQUO_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-remquo remquo (function object)
 
     This function object  computes the remainder (rem) and a part of the quotient (quo) upon
     division of @c x by @c y. By design, the value of the remainder is the same as that
@@ -24,18 +21,13 @@ namespace boost { namespace simd
     the sign of @c x/y and agrees with the actual quotient in at least the low
     order 3 bits.
 
+    @headerref{<boost/simd/function/remquo.hpp>}
 
-    @par Header <boost/simd/function/remquo.hpp>
+    @par Description
 
-    @par semantic:
-
-    If T is the common type to @c x and @c y
-
-    @code
-      std::pair< T, as_integer_t<T> > p = remquo(x, y);
-    @endcode
-
-    computes the two values.
+      @code
+      std::pair<IEEEValue, as_integer_t<IEEEValue>> remquo(IEEEValue const& x, IEEEValue const& y);
+      @endcode
 
     @par Note
 
@@ -59,9 +51,6 @@ namespace boost { namespace simd
       @snippet remquo.txt remquo
 
   **/
-  std::pair<IEEEValue, as_integer_t<IEEEValue>> remquo(IEEEValue const& x, IEEEValue const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/remquo.hpp>
 #include <boost/simd/function/simd/remquo.hpp>

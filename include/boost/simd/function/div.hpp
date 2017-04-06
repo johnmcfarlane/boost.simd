@@ -11,15 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_DIV_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DIV_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-oerator
+    @defgroup real-div div (function object)
+
     This function object computes the quotient of the two parameters of the
     same type with or without option.
 
-    @par Header <boost/simd/function/div.hpp>
+    @headerref{<boost/simd/function/div.hpp>}
+
+    @par Description
+
+      @code
+
+      @endcode
 
     @par Notes
 
@@ -43,14 +48,6 @@ namespace boost { namespace simd
       @snippet div.txt div
 
   **/
-
-  //@{
-  Value div(Option const&, Value const& x, Value const& y);
-  Value div(Value const& x, Value const& y);
-  //@}
-
-} }
-#endif
 
 #include <boost/simd/function/scalar/div.hpp>
 #include <boost/simd/function/simd/div.hpp>

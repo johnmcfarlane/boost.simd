@@ -11,17 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_FPCLASSIFY_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FPCLASSIFY_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-fpclassify fpclassify (function object)
+
     This function object categorizes floating point value into the following categories:
     zero, subnormal, normal, infinite, nan, or implementation-defined.
 
+    @headerref{<boost/simd/function/fpclassify.hpp>}
 
-    @par Header <boost/simd/function/fpclassify.hpp>
+    @par Description
+
+      @code
+      as_integer_t<IEEEValue> fpclassify(IEEEValue const& x);
+      @endcode
+
+    @par Decorators
+
+      - std_ for floating entries call std::fpclassify and returns @c int
 
     @par Notes
 
@@ -43,10 +50,6 @@ namespace boost { namespace simd
        associated to the floating entry type.
 
 
-    @par Decorators
-
-      - std_ for floating entries call std::fpclassify and returns @c int
-
     @see is_eqz, is_denormal, is_normal, is_inf, is_nan
 
 
@@ -59,9 +62,6 @@ namespace boost { namespace simd
       @snippet fpclassify.txt fpclassify
 
   **/
-  as_integer_t<IEEEValue> fpclassify(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/fpclassify.hpp>
 #include <boost/simd/function/simd/fpclassify.hpp>

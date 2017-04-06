@@ -11,26 +11,29 @@
 #ifndef BOOST_SIMD_FUNCTION_ATAN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATAN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atan atan (function object)
+
     This function object returns the inverse tangent.
 
+    @headerref{<boost/simd/function/atan.hpp>}
 
-    @par Header <boost/simd/function/atan.hpp>
+    @par Description
+
+      @code
+      IEEEValue atan(IEEEValue const& x);
+      @endcode
+
+    @par Decorators
+
+     - std_ for floating entries  provides access to std::atan
 
     @par Note
 
       For every parameter of floating type `atan(x)`
       returns the arc @c r in the interval  \f$[-\pi/2, \pi/2[\f$
       such that <tt>tan(r) == x</tt>.
-
-    @par Decorators
-
-     - std_ for floating entries  provides access to std::atan
 
     @see atan2, atand, atanpi, tan
 
@@ -44,9 +47,6 @@ namespace boost { namespace simd
       @snippet atan.txt atan
 
   **/
-  IEEEValue atan(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atan.hpp>
 #include <boost/simd/function/simd/atan.hpp>

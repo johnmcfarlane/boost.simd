@@ -11,17 +11,30 @@
 #ifndef BOOST_SIMD_FUNCTION_ABS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ABS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-abs abs (function object)
+
     The function object @c abs computes the absolute value of its parameter.
     If the result cannot be represented by the return type the return is equal to the input.
 
+    @headerref{<boost/simd/function/abs.hpp>}
 
-    @par Header <boost/simd/function/abs.hpp>
+    @par Description
+
+      @code
+      Value abs(Value const& x);
+      @endcode
+
+    @par Decorators
+
+     - `std_`  (See @ref group-decorator) for floating entries results in a call to std::abs,
+       in this case the behavior is also undefined if the result cannot be represented by the
+       return type.
+     - `saturated_` (See @ref group-decorator) garanties that saturated_(abs)(x) will never
+       be strictly less than 0. In fact the only change if that for any signed type T
+       saturated_(abs)(Valmin<T>()) will be Valmax<T>()) which is already true for
+       boost::simd::abs with floating types but not for integral signed types.
 
     @par Notes
 
@@ -34,16 +47,6 @@ namespace boost { namespace simd
     a C macro version which may be called instead of the boost simd version.
     To avoid this you may prefix abs using boost::simd::abs notation.
 
-    @par Decorators
-
-     - `std_`  (See @ref group-decorator) for floating entries results in a call to std::abs,
-       in this case the behavior is also undefined if the result cannot be represented by the
-       return type.
-     - `saturated_` (See @ref group-decorator) garanties that saturated_(abs)(x) will never
-       be strictly less than 0. In fact the only change if that for any signed type T
-       saturated_(abs)(Valmin<T>()) will be Valmax<T>()) which is already true for
-       boost::simd::abs with floating types but not for integral signed types.
-
     @see sqr_abs, sqr
 
     @par Example:
@@ -55,9 +58,6 @@ namespace boost { namespace simd
       @snippet abs.txt abs
 
   **/
-  Value abs(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/abs.hpp>
 #include <boost/simd/function/simd/abs.hpp>

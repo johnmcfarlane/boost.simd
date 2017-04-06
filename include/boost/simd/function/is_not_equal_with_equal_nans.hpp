@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NOT_EQUAL_WITH_EQUAL_NANS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NOT_EQUAL_WITH_EQUAL_NANS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_not_equal_with_equal_nans is_not_equal_with_equal_nans (function object)
 
     This function object returns @ref True if x and y are not equal else @ref False,
     nans being considered equal
 
+    @headerref{<boost/simd/function/is_not_equal_with_equal_nans.hpp>}
 
-    @par Header <boost/simd/function/is_not_equal_with_equal_nans.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_not_equal_with_equal_nans(Value const& x, Value const& y);
+      @endcode
 
     @par Note
 
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet is_not_equal_with_equal_nans.txt is_not_equal_with_equal_nans
 
   **/
-  as_logical_t<Value> is_not_equal_with_equal_nans(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_not_equal_with_equal_nans.hpp>
 #include <boost/simd/function/simd/is_not_equal_with_equal_nans.hpp>

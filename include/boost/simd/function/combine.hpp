@@ -10,16 +10,20 @@
 #ifndef BOOST_SIMD_FUNCTION_COMBINE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COMBINE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-combine combine (function object)
+
     This function object concatenates two values of the same type to build a boost::simd::pack
     but with a cardinal twice as large.
 
+    @headerref{<boost/simd/function/combine.hpp>}
 
-    @par Header <boost/simd/function/combine.hpp>
+    @par Description
+
+      @code
+      Value combine(Value const& x, Value const& y);
+      @endcode
 
     @par Scalar Semantic:
     For any scalar value @c x and @c y of type @c T , the following code:
@@ -42,14 +46,7 @@ namespace boost { namespace simd
     @endcode
     where @c N is equal to the cardinal of both @c x and @c y.
 
-    @param x First  value to combine
-    @param y Second value to combine
-
-    @return The concatenation of both inputs
   **/
-  Value combine(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/simd/combine.hpp>
 

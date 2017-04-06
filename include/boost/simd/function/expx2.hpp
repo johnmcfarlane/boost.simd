@@ -11,18 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_EXPX2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXPX2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-expx2 expx2 (function object)
+
     This function object returns the exponential of the square of its
     argument or its inverse: \f$e^{x^2}\f$ or \f$e^{-x^2}\f$.
     The sign chosen is -1 if and only if the sign bit of the second argument is not zero.
 
+    @headerref{<boost/simd/function/expx2.hpp>}
 
-    @par Header <boost/simd/function/expx2.hpp>
+    @par Description
+
+      @code
+      IEEEValue expx2(IEEEValue const& x, IEEEValue const& s = 1);
+      @endcode
 
     @par Note:
     provisions are made for obtaining more accurate results for large @c x.
@@ -40,10 +43,6 @@ namespace boost { namespace simd
       @snippet expx2.txt expx2
 
   **/
-   IEEEValue expx2(IEEEValue const& x, IEEEValue const& s = 1);
-
-} }
-#endif
 
 #include <boost/simd/function/scalar/expx2.hpp>
 #include <boost/simd/function/simd/expx2.hpp>

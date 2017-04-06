@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_EXP10_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXP10_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-exp10 exp10 (function object)
+
     This function object returns the base ten exponential of its argument: \f$10^{x}\f$
 
-    @par Header <boost/simd/function/exp10.hpp>
+    @headerref{<boost/simd/function/exp10.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue exp10(IEEEValue const& x);
+      @endcode
 
     @par Note:
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet exp10.txt exp10
 
   **/
-  IEEEValue exp10(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exp10.hpp>
 #include <boost/simd/function/simd/exp10.hpp>

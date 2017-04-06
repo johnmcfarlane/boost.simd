@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NORMAL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NORMAL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_normal is_normal (function object)
 
     This function object returns @ref True or @ref False according x is normal or not.
 
+    @headerref{<boost/simd/function/is_normal.hpp>}
 
-    @par Header <boost/simd/function/is_normal.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_normal(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_normal.txt is_normal
 
   **/
-  as_logical_t<Value> is_normal(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_normal.hpp>
 #include <boost/simd/function/scalar/is_normal.hpp>

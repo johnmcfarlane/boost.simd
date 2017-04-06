@@ -11,19 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_COSH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COSH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-cosh cosh (function object)
+
     This function object returns the hyperbolic cosine: \f$(e^{x}+e^{-x})/2\f$.
+
+    @headerref{<boost/simd/function/cosh.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue cosh(IEEEValue const& x);
+      @endcode
 
     @see sinh, tanh, sech, csch, sinhcosh
 
-
-    @par Header <boost/simd/function/cosh.hpp>
 
     @par Example:
 
@@ -33,9 +36,6 @@ namespace boost { namespace simd
 
       @snippet cosh.txt cosh
   **/
-  IEEEValue cosh(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cosh.hpp>
 #include <boost/simd/function/simd/cosh.hpp>

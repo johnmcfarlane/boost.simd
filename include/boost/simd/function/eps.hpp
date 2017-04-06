@@ -11,19 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_EPS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EPS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-ieee
+    @defgroup real-eps eps (function object)
+
     This object function computes the distance between its argument and the next
     representable value of its argument type.
 
+    @headerref{<boost/simd/function/eps.hpp>}
+
+    @par Description
+
+      @code
+      Value eps(Value const& x);
+      @endcode
 
     @see ulp, ulpdist, Eps
 
-
-    @par Header <boost/simd/function/eps.hpp>
 
     @par Example:
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet eps.txt eps
 
   **/
-  Value eps(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/eps.hpp>
 #include <boost/simd/function/simd/eps.hpp>

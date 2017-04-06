@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_NEARBYINT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_NEARBYINT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-nearbyint nearbyint (function object)
+
     This function object computes the rounded to even value of its parameter.
 
-    @par Header <boost/simd/function/nearbyint.hpp>
+    @headerref{<boost/simd/function/nearbyint.hpp>}
+
+    @par Description
+
+      @code
+      Value nearbyint(Value const& x);
+      @endcode
 
     @par Notes:
     - If x is \f$\pm\infty\f$, it is returned, unmodified
@@ -35,9 +38,6 @@ namespace boost { namespace simd
 
     @see round, ceil, floor, trunc
   **/
-  Value nearbyint(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/nearbyint.hpp>
 #include <boost/simd/function/simd/nearbyint.hpp>

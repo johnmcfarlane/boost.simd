@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_ELSE_ALLBITS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_ELSE_ALLBITS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_else_allbits if_else_allbits (function object)
+
     This function object conditionally returns @c x (respectively @ref Allbits) if @c c is @ref True
     (respectively  @ref False)
 
+    @headerref{<boost/simd/function/if_else_allbits.hpp>}
 
-    @par Header <boost/simd/function/if_else_allbits.hpp>
+    @par Description
+
+      @code
+      Value1 if_else_allbits(Value0 const& c, Value1 const& x);
+      @endcode
 
     @par Example:
 
@@ -35,9 +38,6 @@ namespace boost { namespace simd
      if_else_nan
 
   **/
-  Value1 if_else_allbits(Value0 const& c, Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_else_allbits.hpp>
 #include <boost/simd/function/simd/if_else_allbits.hpp>

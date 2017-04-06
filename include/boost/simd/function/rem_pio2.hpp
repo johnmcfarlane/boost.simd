@@ -11,20 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_PIO2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_PIO2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-rem_pio2 rem_pio2 (function object)
 
     This function object computes the remainder modulo \f$\pi/2\f$,
      and the angle quadrant between 0 and 3.
 
      This is a rather slow version,  but accurate in the full floating range.
 
+    @headerref{<boost/simd/function/rem_pio2.hpp>}
 
-    @par Header <boost/simd/function/rem_pio2.hpp>
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> rem_pio2(IEEEValue const & x);
+      @endcode
 
     @par Notes
 
@@ -48,9 +50,6 @@ namespace boost { namespace simd
       @snippet rem_pio2.txt rem_pio2
 
   **/
-  std::pair<IEEEValue, IEEEValue> rem_pio2(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem_pio2.hpp>
 #include <boost/simd/function/simd/rem_pio2.hpp>

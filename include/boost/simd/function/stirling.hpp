@@ -11,20 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_STIRLING_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_STIRLING_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-euler
+    @defgroup real-stirling stirling (function object)
+
     This function object computes an approwimation of the gamma function
     using the Stirling formula:
   \f$\sqrt{2 \pi} x^{x-\frac12} e^{-x} ( 1 + \frac1{x} P(\frac1{x}))\f$,
     where \f$P\f$ is a polynomial.
 
+    @headerref{<boost/simd/function/stirling.hpp>}
+
+    @par Description
+
+      @code
+      Value stirling(Value const& x);
+      @endcode
+
     @see gamma, gammaln
 
-
-    @par Header <boost/simd/function/stirling.hpp>
 
     @par Example:
 
@@ -35,9 +40,6 @@ namespace boost { namespace simd
       @snippet stirling.txt stirling
 
   **/
-  Value stirling(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/stirling.hpp>
 #include <boost/simd/function/simd/stirling.hpp>

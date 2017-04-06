@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_BITWISE_ANDNOT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITWISE_ANDNOT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-bitwise_andnot bitwise_andnot (function object)
+
     This function object computes the bitwise and not of its parameters.
 
     The result type is the one of the first operand.
 
-    @par Header <boost/simd/function/bitwise_andnot.hpp>
+    @headerref{<boost/simd/function/bitwise_andnot.hpp>}
 
-    @pre  The operands must share the same bit size.
+    @par Description
+
+      @code
+      Value0 bitwise_andnot(Value0 const& x, Value1 const& y);
+      @endcode
 
     @par Example:
 
@@ -34,9 +36,6 @@ namespace boost { namespace simd
       @snippet bitwise_andnot.txt bitwise_andnot
 
   **/
-  Value0 bitwise_andnot(Value0 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitwise_andnot.hpp>
 #include <boost/simd/function/simd/bitwise_andnot.hpp>

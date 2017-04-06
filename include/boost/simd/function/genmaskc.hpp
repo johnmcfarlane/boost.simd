@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_GENMASKC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_GENMASKC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-genmaskc genmaskc (function object)
+
     This function object returns a mask of bits. This mask is full of ones if the
     input element is @ref Zero else full of zeros.
 
-    @par Header <boost/simd/function/genmaskc.hpp>
+    @headerref{<boost/simd/function/genmaskc.hpp>}
+
+    @par Description
+
+      @code
+      Value genmaskc(Value const& x);
+      @endcode
 
     @see genmask
 
@@ -38,9 +42,6 @@ namespace boost { namespace simd
     @see if_else_allbits
 
   **/
-  Value genmaskc(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/genmaskc.hpp>
 #include <boost/simd/function/simd/genmaskc.hpp>

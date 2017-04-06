@@ -11,35 +11,26 @@
 #ifndef BOOST_SIMD_FUNCTION_TOUINT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TOUINT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-touint touint (function object)
+
     This function object converts its parameter to unsigned integer by truncation.
 
+    @headerref{<boost/simd/function/touint.hpp>}
 
-    @par Header <boost/simd/function/touint.hpp>
+    @par Description
 
-    @par Notes
-
-    @c touint cast a floating value to the unsigned signed integer value of the same bit size.
-
-    This is done by C casting for scalars and corresponding intrinsic in simd (if available).
-
-    Peculiarly,  that implies that the behaviour of this function on invalid or negative
-    entries is not defined and possibly unpredictable.
-
-    If you intend to use @ref Nan, @ref Inf or negative entries, consider using
-    saturated_(touint) instead.
-
+      @code
+      as_integer_t<Value, unsigned> touint(Value const& x);
+      @endcode
 
     @par Decorators
 
     - saturated_ (See @ref group-decorator) as stated above ensures good behaviour on
       limiting values.
+
+    @par Notes
 
     @see toint, tofloat
 
@@ -53,9 +44,6 @@ namespace boost { namespace simd
 
 
   **/
-  as_integer_t<Value, unsigned> touint(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/touint.hpp>
 #include <boost/simd/function/simd/touint.hpp>

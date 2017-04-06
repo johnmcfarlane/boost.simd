@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_BITWISE_SELECT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITWISE_SELECT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-bitwise_select bitwise_select (function object)
+
     This function object returns the bitwise selection of bits from the second
     or third operand according to the setting of the bits
     of the first operand
 
-    @par Header <boost/simd/function/bitwise_select.hpp>
+    @headerref{<boost/simd/function/bitwise_select.hpp>}
 
-    @pre  The operands must share the same bit size and number of elements.
+    @par Description
+
+      @code
+      Value1 bitwise_select(Value0 const& sel, Value1 const& x, Value2 const& y);
+      @endcode
 
     @par Example:
 
@@ -34,9 +36,6 @@ namespace boost { namespace simd
       @snippet bitwise_select.txt bitwise_select
 
   **/
-  Value1 bitwise_select(Value0 const& sel, Value1 const& x, Value2 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitwise_select.hpp>
 #include <boost/simd/function/simd/bitwise_select.hpp>

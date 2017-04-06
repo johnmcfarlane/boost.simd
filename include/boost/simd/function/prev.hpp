@@ -11,12 +11,10 @@
 #ifndef BOOST_SIMD_FUNCTION_PREV_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_PREV_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-prev prev (function object)
+
     This function object returns the greatest representable
     value  strictly less than the parameter except:
 
@@ -34,7 +32,13 @@ namespace boost { namespace simd
 
       - prev(Valmin) is Valmax
 
-    @par Header <boost/simd/function/prev.hpp>
+    @headerref{<boost/simd/function/prev.hpp>}
+
+    @par Description
+
+      @code
+      Value prev(Value const& x);
+      @endcode
 
     @see prev, nextafter, successor, predecessor
 
@@ -47,9 +51,6 @@ namespace boost { namespace simd
       @snippet prev.txt prev
 
   **/
-  Value prev(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/prev.hpp>
 #include <boost/simd/function/simd/prev.hpp>

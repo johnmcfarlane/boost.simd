@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_POW_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_POW_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-pow pow (function object)
+
     This function object computes \f$x^y\f$
 
-    @par Header <boost/simd/function/pow.hpp>
+    @headerref{<boost/simd/function/pow.hpp>}
+
+    @par Description
+
+      @code
+      ///@{
+      @endcode
 
     @par Decorators
       - std_ decorator calls @c std:pow
@@ -37,12 +41,6 @@ namespace boost { namespace simd
       @snippet pow.txt pow
 
   **/
-  ///@{
-  IEEEValue pow(IEEEValue const& x, Value const& y);
-  IntegerValue pow(IntegerValue const& x, IntegerValue const& y);
-  ///@}
-} }
-#endif
 
 #include <boost/simd/function/scalar/pow.hpp>
 #include <boost/simd/function/simd/pow.hpp>

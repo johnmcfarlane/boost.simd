@@ -11,20 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOTH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOTH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-acoth acoth (function object)
+
     This function object returns the hyperbolic cotangent argument \f$\frac12\log\frac{x+1}{x-1}\f$
 
+    @headerref{<boost/simd/function/acoth.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue acoth(IEEEValue const & x);
+      @endcode
 
     @see cosh, sinh, acosh, asinh, atanh, asech, acosh, acsch
 
-
-    @par Header <boost/simd/function/acoth.hpp>
 
     @par Example:
 
@@ -35,9 +37,6 @@ namespace boost { namespace simd
       @snippet acoth.txt acoth
 
   **/
-  IEEEValue acoth(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acoth.hpp>
 #include <boost/simd/function/simd/acoth.hpp>

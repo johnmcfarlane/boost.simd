@@ -11,18 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_RSQRT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_RSQRT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-rsqrt rsqrt (function object)
+
     This function object returns the inverse of the square root of the input.
 
-    @par Header <boost/simd/function/rsqrt.hpp>
+    @headerref{<boost/simd/function/rsqrt.hpp>}
 
-    Using `rsqrt(x)` is similar to `One(as(x))/sqrt(x)`
+    @par Description
+
+      @code
+      IEEEValue rsqrt(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -41,9 +42,6 @@ namespace boost { namespace simd
 
 
   **/
-  IEEEValue rsqrt(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rsqrt.hpp>
 #include <boost/simd/function/scalar/rsqrt.hpp>

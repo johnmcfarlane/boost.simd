@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-reduction
+    @defgroup real-hmsb hmsb (function object)
 
     Returns a bs::bitset build from the most significant bit of each value its
     argument.
 
-    @par Header <boost/simd/function/hmsb.hpp>
+    @headerref{<boost/simd/function/hmsb.hpp>}
+
+    @par Description
+
+      @code
+      bitset<cardinal_of<Value>::value> hmsb(Value const &v);
+      @endcode
 
     @par Example:
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
     @return A bitset-like structure of the size of cardinal(v) containing the most significant
             bits of each elements of v.
   **/
-  bitset<cardinal_of<Value>::value> hmsb(Value const &v);
-} }
-#endif
 
 #include <boost/simd/function/scalar/hmsb.hpp>
 #include <boost/simd/function/simd/hmsb.hpp>

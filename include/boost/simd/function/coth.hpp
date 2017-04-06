@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_COTH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COTH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-hyperbolic
+    @defgroup real-coth coth (function object)
 
     This unction object returns the hyperbolic cotangent:
     \f$(e^{x}+e^{-x})/(e^{x}-e^{-x})\f$
 
-    @par Header <boost/simd/function/coth.hpp>
+    @headerref{<boost/simd/function/coth.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue coth(IEEEValue const& x);
+      @endcode
 
     @see sinh, cosh, sinhcosh
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
       @snippet coth.txt coth
 
   **/
-  IEEEValue coth(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/coth.hpp>
 #include <boost/simd/function/simd/coth.hpp>

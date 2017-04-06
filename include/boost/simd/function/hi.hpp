@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_HI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_HI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-hi hi (function object)
+
     This function object returns the high part of the entry
     as an unsigned integer of the size of
     the input.
 
-    @par Header <boost/simd/function/hi.hpp>
+    @headerref{<boost/simd/function/hi.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value, unsigned> hi(Value const& x);
+      @endcode
 
     @see  lo
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet hi.txt hi
 
   **/
-  as_integer_t<Value, unsigned> hi(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/hi.hpp>
 #include <boost/simd/function/simd/hi.hpp>

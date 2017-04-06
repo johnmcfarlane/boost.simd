@@ -11,25 +11,27 @@
 #ifndef BOOST_SIMD_FUNCTION_ONEMINUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ONEMINUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-oneminus oneminus (function object)
+
     This function object returns  one minus the entry.
 
+    @headerref{<boost/simd/function/oneminus.hpp>}
 
-    @par Header <boost/simd/function/oneminus.hpp>
+    @par Description
 
-    @par Notes
-    Using `oneminus(x)` is similar to `1-x`
+      @code
+      Value oneminus(Value const& x);
+      @endcode
 
     @par Decorator
 
     _saturated_ is available,  but for unsigned integral types the saturated_
     function is merely  equivalent to `x == 0 ? 1 : 0`
+
+    @par Notes
+    Using `oneminus(x)` is similar to `1-x`
 
     @par Example:
 
@@ -40,9 +42,6 @@ namespace boost { namespace simd
       @snippet oneminus.txt oneminus
 
   **/
-  Value oneminus(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/oneminus.hpp>
 #include <boost/simd/function/simd/oneminus.hpp>

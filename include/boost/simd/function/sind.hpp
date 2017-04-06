@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SIND_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIND_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sind sind (function object)
+
     This function object returns the sine of the angle in degree:
     \f$\sin(\pi x/180)\f$.
 
-    @par Header <boost/simd/function/sind.hpp>
+    @headerref{<boost/simd/function/sind.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sind(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -39,9 +43,6 @@ namespace boost { namespace simd
       @snippet sind.txt sind
 
   **/
-  IEEEValue sind(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sind.hpp>
 #include <boost/simd/function/simd/sind.hpp>

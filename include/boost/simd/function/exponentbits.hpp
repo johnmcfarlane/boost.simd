@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_EXPONENTBITS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXPONENTBITS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-exponentbits exponentbits (function object)
+
     This function object returns the exponent bits of its arguments as an integer value,
     the other bits (sign and mantissa) being just masked.
 
+    @headerref{<boost/simd/function/exponentbits.hpp>}
 
-    @par Header <boost/simd/function/exponentbits.hpp>
+    @par Description
+
+      @code
+      as_integer_t<IEEEValue> exponentbits(IEEEValue const& x);
+      @endcode
 
     @par Example:
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
       @snippet exponentbits.txt exponentbits
 
   **/
-  as_integer_t<IEEEValue> exponentbits(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exponentbits.hpp>
 #include <boost/simd/function/simd/exponentbits.hpp>

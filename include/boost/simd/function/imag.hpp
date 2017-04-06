@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IMAG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IMAG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-imag imag (function object)
+
     This function object returns the imaginary part of the parameter.
     for real types it is always 0.
 
-    @par Header <boost/simd/function/imag.hpp>
+    @headerref{<boost/simd/function/imag.hpp>}
+
+    @par Description
+
+      @code
+      Value imag(Value const& x);
+      @endcode
 
     @see  real
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
       @snippet imag.txt imag
 
   **/
-  Value imag(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/imag.hpp>
 #include <boost/simd/function/simd/imag.hpp>

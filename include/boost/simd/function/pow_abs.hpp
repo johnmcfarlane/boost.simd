@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_POW_ABS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_POW_ABS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-pow_abs pow_abs (function object)
+
     This function object computes \f$|x|^y\f$.
 
-    @par Header <boost/simd/function/pow_abs.hpp>
+    @headerref{<boost/simd/function/pow_abs.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue pow_abs(IEEEValue const& x, IEEEValue const& y);
+      @endcode
 
     @par Decorators
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet pow_abs.txt pow_abs
 
   **/
-  IEEEValue pow_abs(IEEEValue const& x, IEEEValue const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/pow_abs.hpp>
 #include <boost/simd/function/simd/pow_abs.hpp>

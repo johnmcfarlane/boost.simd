@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_UNORD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_UNORD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_unord is_unord (function object)
 
     This function object returns @ref True if x or y is nan.
 
+    @headerref{<boost/simd/function/is_unord.hpp>}
 
-    @par Header <boost/simd/function/is_unord.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_unord(Value const& x, Value const& y);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_unord.txt is_unord
 
   **/
-  as_logical_t<Value> is_unord(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_unord.hpp>
 #include <boost/simd/function/simd/is_unord.hpp>

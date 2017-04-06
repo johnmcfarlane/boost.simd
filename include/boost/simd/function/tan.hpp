@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_TAN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TAN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-tan tan (function object)
+
     This function object returns the tangent of the input in radians:
     \f$\sin(x)/\cos(x)\f$.
 
+    @headerref{<boost/simd/function/tan.hpp>}
 
-    @par Header <boost/simd/function/tan.hpp>
+    @par Description
+
+      @code
+      IEEEValue tan(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet tan.txt tan
 
   **/
-  IEEEValue tan(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/tan.hpp>
 #include <boost/simd/function/simd/tan.hpp>

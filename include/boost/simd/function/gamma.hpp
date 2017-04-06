@@ -10,17 +10,20 @@
 #ifndef BOOST_SIMD_FUNCTION_GAMMA_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_GAMMA_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-euler
+    @defgroup real-gamma gamma (function object)
+
     This function object computes the gamma function:
    \f$\displaystyle \int_0^{\infty} t^{x-1}e^{-t}\mbox{d}t\f$
 
+    @headerref{<boost/simd/function/gamma.hpp>}
 
-    @par Header <boost/simd/function/gamma.hpp>
+    @par Description
+
+      @code
+      IEEEValue gamma(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -36,9 +39,6 @@ namespace boost { namespace simd
 
       @snippet gamma.txt gamma
   **/
-  IEEEValue gamma(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/gamma.hpp>
 #include <boost/simd/function/simd/gamma.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SATURATE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SATURATE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-saturate saturate (function object)
+
     This function object returns the saturated value of the first input in the template
     parameter type, but in the same type as the  argument.
 
+    @headerref{<boost/simd/function/saturate.hpp>}
 
-    @par Header <boost/simd/function/saturate.hpp>
+    @par Description
+
+      @code
+      template <typename Target> Value saturate(Value const & x);
+      @endcode
 
     @par Semantic:
 
@@ -48,6 +51,8 @@ namespace boost { namespace simd
     are identical if Target is  an integer type.
 
 
+    @see Minf, Inf, Valmax, Valmin
+
     @par Example:
 
       @snippet saturate.cpp saturate
@@ -57,9 +62,6 @@ namespace boost { namespace simd
       @snippet saturate.txt saturate
 
   **/
-  template <typename Target> Value saturate(Value const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/saturate.hpp>
 #include <boost/simd/function/simd/saturate.hpp>

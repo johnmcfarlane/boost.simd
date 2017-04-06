@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_BITS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-bits bits (function object)
+
     This function object returns an unsigned integer value which has the same bits as the input
 
+    @headerref{<boost/simd/function/bits.hpp>}
 
-    @par Header <boost/simd/function/bits.hpp>
+    @par Description
+
+      @code
+      as_integer_t<Value, unsigned> bits(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -31,9 +34,6 @@ namespace boost { namespace simd
       @snippet bits.txt bits
 
   **/
-  as_integer_t<Value, unsigned> bits(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bits.hpp>
 #include <boost/simd/function/simd/bits.hpp>

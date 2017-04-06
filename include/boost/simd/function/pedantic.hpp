@@ -14,11 +14,10 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
   /*!
     @ingroup group-decorator
+    @defgroup real-pedantic pedantic (function object)
 
     calls a version of the functor
       that can do some agressive optimization at the cost of certain
@@ -26,8 +25,13 @@ namespace boost { namespace simd
 
       These losses are of the `pedantic_math` kind.
 
+    @headerref{<boost/simd/function/pedantic.hpp>}
 
-    @par Header <boost/simd/function/pedantic.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto pedantic_(T const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -36,9 +40,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  template<typename T> auto pedantic_(T const& x) {}
-} }
-#endif
 
 namespace boost { namespace simd
 {

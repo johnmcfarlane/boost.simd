@@ -11,33 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_TENPOWER_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TENPOWER_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-tenpower tenpower (function object)
+
     Function object implementing tenpower capabilities
 
     Returns \f$10^n\f$ in the floating type associated to
     the integral type of parameter n
 
+    @headerref{<boost/simd/function/tenpower.hpp>}
 
-    @par Header <boost/simd/function/tenpower.hpp>
+    @par Description
 
-    @par semantic:
-    For any given value n  of integral type @c I
-
-    @code
-    as_floating_t<I> r = tenpower(n);
-    @endcode
-
-    code is similar to:
-
-    @code
-    auto r = exp10(as_floating_t<I>(n));
-    @endcode
+      @code
+      Value tenpower(IntegerValue const& n);
+      @endcode
 
     @par Note:
 
@@ -54,9 +43,6 @@ namespace boost { namespace simd
 
       @snippet tenpower.txt tenpower
   **/
-  Value tenpower(IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/tenpower.hpp>
 #include <boost/simd/function/simd/tenpower.hpp>

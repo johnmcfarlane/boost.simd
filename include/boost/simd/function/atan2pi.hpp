@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ATAN2PI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATAN2PI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atan2pi atan2pi (function object)
+
     This function object returns the atan2pi function : atan2 in pi multiples.
 
+    @headerref{<boost/simd/function/atan2pi.hpp>}
 
-    @par Header <boost/simd/function/atan2pi.hpp>
+    @par Description
+
+      @code
+      IEEEValue atan2pi(IEEEValue const& y, const IEEEValue& x);
+      @endcode
 
     @par Note
 
@@ -39,9 +42,6 @@ namespace boost { namespace simd
       @snippet atan2pi.txt atan2pi
 
   **/
-  IEEEValue atan2pi(IEEEValue const& y, const IEEEValue& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atan2pi.hpp>
 #include <boost/simd/function/simd/atan2pi.hpp>

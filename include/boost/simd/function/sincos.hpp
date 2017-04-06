@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINCOS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINCOS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sincos sincos (function object)
+
     This function object computes simultaneouly
     and at lower cost the sine and cosine of the input
 
-    @par Header <boost/simd/function/sincos.hpp>
+    @headerref{<boost/simd/function/sincos.hpp>}
+
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> sincos(IEEEValue const& x);
+      @endcode
 
     @see sincosd,  sincospi
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sincos.txt sincos
 
   **/
-  std::pair<IEEEValue, IEEEValue> sincos(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sincos.hpp>
 #include <boost/simd/function/simd/sincos.hpp>

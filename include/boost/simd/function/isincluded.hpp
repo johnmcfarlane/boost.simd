@@ -11,18 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_ISINCLUDED_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ISINCLUDED_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-reduction
+    @defgroup real-isincluded isincluded (function object)
+
     This function object returns @c true is only if all bits set in @c x are
   also set in @c y
 
     The two arguments must share the same bit size.
 
+    @headerref{<boost/simd/function/isincluded.hpp>}
 
-    @par Header <boost/simd/function/isincluded.hpp>
+    @par Description
+
+      @code
+      bool isincluded(Value const& x, Value const& y);
+      @endcode
 
     @par Example:
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet isincluded.txt isincluded
 
   **/
-  bool isincluded(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/isincluded.hpp>
 #include <boost/simd/function/simd/isincluded.hpp>

@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ACSCD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACSCD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acscd acscd (function object)
+
     This function object returns the inverse cosecant in degree:
     \f$(180/\pi) \arcsin(1/x)\f$.
 
-    @par Header <boost/simd/function/acscd.hpp>
+    @headerref{<boost/simd/function/acscd.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue acscd(IEEEValue const & x);
+      @endcode
 
     @see acsc, accscpi
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet acscd.txt acscd
 
   **/
-  IEEEValue acscd(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acscd.hpp>
 #include <boost/simd/function/simd/acscd.hpp>

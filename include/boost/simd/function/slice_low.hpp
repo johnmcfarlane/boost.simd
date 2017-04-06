@@ -11,18 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_SLICE_LOW_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SLICE_LOW_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-slice_low slice_low (function object)
+
     Type-preserving pack lower slicing
 
     This function object returns the lower slice of a simd::pack, i.e a simd::pack of same type
     containing the lower half of ts argument.
 
+    @headerref{<boost/simd/function/slice_low.hpp>}
 
-    @par Header <boost/simd/function/slice_low.hpp>
+    @par Description
+
+      @code
+      ValueO slice_low(Value1 const& x);
+      @endcode
 
     @par Semantic:
 
@@ -39,10 +43,8 @@ namespace boost { namespace simd
     @endcode
 
     @see slice, slice_high, combine
+    @see slice, slice_high, combine
   **/
-  ValueO slice_low(Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/slice_low.hpp>
 

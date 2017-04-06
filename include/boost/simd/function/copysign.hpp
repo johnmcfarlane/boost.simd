@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_COPYSIGN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COPYSIGN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-copysign copysign (function object)
+
     This function object returns @c x with the sign of @c y.
 
-    @par Header <boost/simd/function/copysign.hpp>
+    @headerref{<boost/simd/function/copysign.hpp>}
+
+    @par Description
+
+      @code
+      Value copysign(Value const& x, Value const& y);
+      @endcode
 
     @see sign, signnz, is_positive
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet copysign.txt copysign
 
   **/
-  Value copysign(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/copysign.hpp>
 #include <boost/simd/function/simd/copysign.hpp>

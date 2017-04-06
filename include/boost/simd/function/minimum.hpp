@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_MINIMUM_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MINIMUM_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-minimum minimum (function object)
+
    This function object returns the smallest element of the argument
 
-    @par Header <boost/simd/function/minimum.hpp>
+    @headerref{<boost/simd/function/minimum.hpp>}
+
+    @par Description
+
+      @code
+      scalar_of_t<Value> minimum(Value const& x);
+      @endcode
 
     @see maximum
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet minimum.txt minimum
 
   **/
-  scalar_of_t<Value> minimum(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/minimum.hpp>
 #include <boost/simd/function/simd/minimum.hpp>

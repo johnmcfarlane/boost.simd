@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_BITFLOATING_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITFLOATING_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-bitfloating bitfloating (function object)
+
     This function object  transforms an integer value to a floating point one
     with a preserving order formula. This function is the converse of @ref bitinteger.
 
+    @headerref{<boost/simd/function/bitfloating.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/bitfloating.hpp>
+      @code
+      as_floating_t<Value> bitfloating(Value const& x);
+      @endcode
 
     @par Note:
     This  function is  related to the computation of
@@ -42,9 +44,6 @@ namespace boost { namespace simd
       @snippet bitfloating.txt bitfloating
 
   **/
-  as_floating_t<Value> bitfloating(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitfloating.hpp>
 #include <boost/simd/function/simd/bitfloating.hpp>

@@ -13,16 +13,19 @@
 
 #include <boost/simd/detail/decorator.hpp>
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-decorator
+    @defgroup real-std std (function object)
 
     provides an easy way to use the original  stdlibc++ function that is mimicked by one of our functors.
 
+    @headerref{<boost/simd/function/std.hpp>}
 
-    @par Header <boost/simd/function/std.hpp>
+    @par Description
+
+      @code
+      const detail::decorator<std_tag> std_ = {};
+      @endcode
 
     @par Semantic
 
@@ -48,9 +51,6 @@ namespace boost { namespace simd
       test the standard behaviour against **Boost.SIMD**.
 
   **/
-  const detail::decorator<std_tag> std_ = {};
-} }
-#endif
 
 namespace boost { namespace simd
 {

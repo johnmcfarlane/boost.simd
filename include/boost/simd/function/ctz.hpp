@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CTZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CTZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-ctz ctz (function object)
+
     This function object returns the bit count of trailing zeroes.
 
-   @par Header <boost/simd/function/ctz.hpp>
+    @headerref{<boost/simd/function/ctz.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> ctz(Value const& x);
+      @endcode
 
    @par Notes
 
@@ -32,8 +36,6 @@ namespace boost { namespace simd
 
 
 
-    @par Header <boost/simd/function/ctz.hpp>
-
     @par Example:
 
       @snippet ctz.cpp ctz
@@ -43,9 +45,6 @@ namespace boost { namespace simd
       @snippet ctz.txt ctz
 
   **/
-  as_integer_t<Value> ctz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ctz.hpp>
 #include <boost/simd/function/simd/ctz.hpp>

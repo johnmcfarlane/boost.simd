@@ -16,18 +16,21 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-horn1 horn1 (function object)
 
     Computes the value of a polynomial by Horner algorithm
     which leading 1 coeficient.
     This is a static polynomial evaluation.
 
+    @headerref{<boost/simd/function/horn1.hpp>}
 
-    @par Header <boost/simd/function/horn1.hpp>
+    @par Description
+
+      @code
+      template <typename Value, uintmax_t... Coef> Value horn1(Value const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -56,9 +59,6 @@ namespace boost { namespace simd
     coefficient is one, saving one multiplication.
 
   **/
-  template <typename Value, uintmax_t... Coef> Value horn1(Value const& x) {}
-} }
-#endif
 
 namespace boost { namespace simd
 {

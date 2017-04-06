@@ -11,17 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_MAX_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MAX_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-max max (function object)
+
     This function object computes the largest of its parameter.
 
+    @headerref{<boost/simd/function/max.hpp>}
 
-    @par Header <boost/simd/function/max.hpp>
+    @par Description
+
+      @code
+      Value max(Value const& x, Value const& y);
+      @endcode
+
+    @par Decorators
+
+     - pedantic_ ensures the standard behaviour.
+     - std_ call std::max.
 
     @par Notes
     For any given value @c x and @c y of type @c T:
@@ -35,11 +42,6 @@ namespace boost { namespace simd
 
     This can be corrected using the pedantic_ decorator that ensures the standard behaviour at a cost.
 
-    @par Decorators
-
-     - pedantic_ ensures the standard behaviour.
-     - std_ call std::max.
-
     @see min,  maxnum, maxnummag, maxmag
 
     @par Example:
@@ -51,9 +53,6 @@ namespace boost { namespace simd
       @snippet max.txt max
 
   **/
-  Value max(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/max.hpp>
 #include <boost/simd/function/simd/max.hpp>

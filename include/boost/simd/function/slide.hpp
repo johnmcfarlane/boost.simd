@@ -11,15 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SLIDE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SLIDE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-slide slide (function object)
+
     This function object returns a vector extracted from the concatanation
     of `x` and `y` (resp. `x` and itself when only one argument is given).
 
-    @par Header <boost/simd/function/slide.hpp>
+    @headerref{<boost/simd/function/slide.hpp>}
+
+    @par Description
+
+      @code
+      ///@{
+      @endcode
 
     @par Semantic:
 
@@ -42,12 +47,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  ///@{
-  template<std::size_t N> Value slide(Value const& x, Value const& y);
-  template<std::size_t N> Value slide(Value const& x);
-  ///@}
-} }
-#endif
 
 #include <boost/simd/function/scalar/slide.hpp>
 #include <boost/simd/function/simd/slide.hpp>

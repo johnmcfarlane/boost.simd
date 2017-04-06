@@ -11,19 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_LOOKUP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOOKUP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-swar
+    @defgroup real-lookup lookup (function object)
+
     Function object implementing lookup capabilities
 
     shuffles the elements of x using indices in n
 
+    @headerref{<boost/simd/function/lookup.hpp>}
 
-    @par Header <boost/simd/function/lookup.hpp>
+    @par Description
+
+      @code
+      Value lookup(Value const& x, IntegerValue const& n);
+      @endcode
 
     @par Semantic:
 
@@ -50,9 +52,6 @@ namespace boost { namespace simd
       @snippet lookup.txt lookup
 
   **/
-  Value lookup(Value const& x, IntegerValue const& n);
-} }
-#endif
 
 #include <boost/simd/function/scalar/lookup.hpp>
 #include <boost/simd/function/simd/lookup.hpp>

@@ -11,18 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_FNMS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FNMS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-fnms fnms (function object)
+
     This function object computes the negated (fused) multiply substract of
     its three parameters.
 
+    @headerref{<boost/simd/function/fnms.hpp>}
 
-    @par Header <boost/simd/function/fnms.hpp>
+    @par Description
+
+      @code
+      Value fnms(Value const& x, Value const& y, Value const& z);
+      @endcode
+
+    @par Decorators
+    - pedantic_ ensures the fnms properties and allows SIMD acceleration if available.
 
     @par Notes
     The call `fnms(x, y, z)` is similar to `-x*y+z`
@@ -40,9 +45,6 @@ namespace boost { namespace simd
     If you need pedantic fnms capabilities in all circumstances in your own
     code you can use the pedantic_ decorator (can be very expensive).
 
-    @par Decorators
-    - pedantic_ ensures the fnms properties and allows SIMD acceleration if available.
-
     @see fms, fma, fnma
 
     @par Example:
@@ -54,9 +56,6 @@ namespace boost { namespace simd
       @snippet fnms.txt fnms
 
   **/
-  Value fnms(Value const& x, Value const& y, Value const& z);
-} }
-#endif
 
 #include <boost/simd/function/scalar/fnms.hpp>
 #include <boost/simd/function/simd/fnms.hpp>

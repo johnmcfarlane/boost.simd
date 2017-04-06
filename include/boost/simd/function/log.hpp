@@ -11,27 +11,31 @@
 #ifndef BOOST_SIMD_FUNCTION_LOG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-log log (function object)
+
     This function object returns the natural logarithm of its argument.
 
-    @par Header <boost/simd/function/log.hpp>
+    @headerref{<boost/simd/function/log.hpp>}
 
-    @see log10, log2, log1p
+    @par Description
+
+      @code
+      IEEEValue log(IEEEValue const& x);
+      @endcode
+
+    @par Decorators
+
+      - std_ for floating entries calls @c std::log
+
 
     @par Note:
 
     - log(x) return Nan for negative entries (peculiarly Mzero
     for floating numbers).
 
-    @par Decorators
-
-      - std_ for floating entries calls @c std::log
-
+    @see log10, log2, log1p
 
     @par Example:
 
@@ -42,9 +46,6 @@ namespace boost { namespace simd
       @snippet log.txt log
 
   **/
-  IEEEValue log(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/log.hpp>
 #include <boost/simd/function/simd/log.hpp>

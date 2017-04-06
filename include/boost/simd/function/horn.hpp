@@ -16,17 +16,20 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-horn horn (function object)
 
     Computes the value of a polynomial by Horner algorithm.
     This is a static polynomial evaluation.
 
+    @headerref{<boost/simd/function/horn.hpp>}
 
-    @par Header <boost/simd/function/horn.hpp>
+    @par Description
+
+      @code
+      template <typename Value, uintmax_t... Coef> Value horn(Value const& x);
+      @endcode
 
     @par Semantic
 
@@ -52,9 +55,6 @@ namespace boost { namespace simd
       \f$\sum_0^n C(i)x^i\f$
 
   **/
-  template <typename Value, uintmax_t... Coef> Value horn(Value const& x);
-} }
-#endif
 
 namespace boost { namespace simd
 {

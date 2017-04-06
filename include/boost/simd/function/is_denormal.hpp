@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_DENORMAL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_DENORMAL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_denormal is_denormal (function object)
+
     This function object returns @ref True or @ref False according x is denormal or not.
 
+    @headerref{<boost/simd/function/is_denormal.hpp>}
 
-    @par Header <boost/simd/function/is_denormal.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_denormal(Value const& x);
+      @endcode
 
     @par Note
 
@@ -39,9 +41,6 @@ namespace boost { namespace simd
 
 
   **/
-  as_logical_t<Value> is_denormal(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_denormal.hpp>
 #include <boost/simd/function/simd/is_denormal.hpp>

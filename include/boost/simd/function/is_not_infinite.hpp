@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_not_infinite is_not_infinite (function object)
 
     This function object returns @ref True if x is finite or @ref Nan
 
+    @headerref{<boost/simd/function/is_not_infinite.hpp>}
 
-    @par Header <boost/simd/function/is_not_infinite.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_not_infinite(Value const& x);
+      @endcode
 
     @par Note
 
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet is_not_infinite.txt is_not_infinite
 
   **/
-  as_logical_t<Value> is_not_infinite(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_not_infinite.hpp>
 #include <boost/simd/function/simd/is_not_infinite.hpp>

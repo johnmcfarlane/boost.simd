@@ -11,25 +11,27 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_lessgreater is_lessgreater (function object)
 
     This function object returns @ref True if neither x nor y is @ref Nan and x is not equal to y.
 
+    @headerref{<boost/simd/function/is_lessgreater.hpp>}
 
-    @par Header <boost/simd/function/is_lessgreater.hpp>
+    @par Description
 
-    @par Note
-
-     Using `is_lessgreater(x,y)` is similar to: `(x == x) && (y == y) && (x!= y)`
+      @code
+      as_logical_t<Value> is_lessgreater(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
      - std_ can be used to call std::islessgreater
+
+    @par Note
+
+     Using `is_lessgreater(x,y)` is similar to: `(x == x) && (y == y) && (x!= y)`
 
     @par Example:
 
@@ -40,9 +42,6 @@ namespace boost { namespace simd
       @snippet is_lessgreater.txt is_lessgreater
 
   **/
-  as_logical_t<Value> is_lessgreater(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_lessgreater.hpp>
 #include <boost/simd/function/simd/is_lessgreater.hpp>

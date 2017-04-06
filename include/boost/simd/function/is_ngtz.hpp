@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NGTZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NGTZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_ngtz is_ngtz (function object)
 
     This function object returns @ref True if x is not greater than @ref Zero else returns @ref False.
 
+    @headerref{<boost/simd/function/is_ngtz.hpp>}
 
-    @par Header <boost/simd/function/is_ngtz.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_ngtz(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_ngtz.txt is_ngtz
 
   **/
-  as_logical_t<Value> is_ngtz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_ngtz.hpp>
 #include <boost/simd/function/simd/is_ngtz.hpp>

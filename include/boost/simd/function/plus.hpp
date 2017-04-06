@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-operator
+    @defgroup real-plus plus (function object)
+
     This function object computes the sum of two parameters of the same type.
 
     Infix notation can be used with operator '+',
 
-    @par Header <boost/simd/function/plus.hpp>
+    @headerref{<boost/simd/function/plus.hpp>}
+
+    @par Description
+
+      @code
+      Value plus(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +42,6 @@ namespace boost { namespace simd
       @snippet plus.txt plus
 
   **/
-  Value plus(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/plus.hpp>
 #include <boost/simd/function/simd/plus.hpp>

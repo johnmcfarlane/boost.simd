@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NLTZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NLTZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_nltz is_nltz (function object)
 
     This function object returns @ref True if x is not less than @ref Zero else returns @ref False.
 
+    @headerref{<boost/simd/function/is_nltz.hpp>}
 
-    @par Header <boost/simd/function/is_nltz.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_nltz(Value const& x);
+      @endcode
 
     @par Note
 
@@ -36,9 +38,6 @@ namespace boost { namespace simd
       @snippet is_nltz.txt is_nltz
 
   **/
-  as_logical_t<Value> is_nltz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_nltz.hpp>
 #include <boost/simd/function/simd/is_nltz.hpp>

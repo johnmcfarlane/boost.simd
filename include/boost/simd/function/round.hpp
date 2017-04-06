@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ROUND_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ROUND_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-round round (function object)
+
     This function object computes the rounding away from zero of its parameter.
 
+    @headerref{<boost/simd/function/round.hpp>}
 
-    @par Header <boost/simd/function/round.hpp>
+    @par Description
+
+      @code
+      IEEEValue round(IEEEValue const& x, IntegerValue const& n = 0);
+      @endcode
 
     @par Notes:
 
@@ -49,9 +51,6 @@ namespace boost { namespace simd
 
       @snippet round.txt round
   **/
-  IEEEValue round(IEEEValue const& x, IntegerValue const& n = 0);
-} }
-#endif
 
 #include <boost/simd/function/scalar/round.hpp>
 #include <boost/simd/function/simd/round.hpp>

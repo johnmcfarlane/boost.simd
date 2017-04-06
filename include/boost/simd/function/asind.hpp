@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ASIND_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASIND_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-asind asind (function object)
+
     This function object returns the inverse sine in degree.
 
+    @headerref{<boost/simd/function/asind.hpp>}
 
-    @par Header <boost/simd/function/asind.hpp>
+    @par Description
+
+      @code
+      IEEEValue asind(IEEEValue const & x);
+      @endcode
 
     @par Note
 
@@ -39,9 +42,6 @@ namespace boost { namespace simd
       @snippet asind.txt asind
 
   **/
-  IEEEValue asind(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asind.hpp>
 #include <boost/simd/function/simd/asind.hpp>

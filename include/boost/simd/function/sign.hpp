@@ -11,12 +11,10 @@
 #ifndef BOOST_SIMD_FUNCTION_SIGN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SIGN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-sign sign (function object)
+
     This function object returns the sign of @c x. i.e. -1, 0 or 1,
     depending on the fact  @c x is less than @ref Zero, @ref Zero or
     greater than @ref Zero.
@@ -24,11 +22,17 @@ namespace boost { namespace simd
     For floating,  the sign of @ref Nan is @ref Nan,
     the sign of @ref Mzero is also @ref Zero.
 
+    @headerref{<boost/simd/function/sign.hpp>}
+
+    @par Description
+
+      @code
+      Value sign(Value const& x);
+      @endcode
+
     @see signnz, is_negative, is_positive,  bitofsign
 
 
-
-    @par Header <boost/simd/function/sign.hpp>
 
     @par Example:
 
@@ -39,9 +43,6 @@ namespace boost { namespace simd
       @snippet sign.txt sign
 
   **/
-  Value sign(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sign.hpp>
 #include <boost/simd/function/simd/sign.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ATAND_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATAND_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atand atand (function object)
+
     This function object returns the inverse tangent in degree.
 
+    @headerref{<boost/simd/function/atand.hpp>}
 
-    @par Header <boost/simd/function/atand.hpp>
+    @par Description
+
+      @code
+      IEEEValue atand(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet atand.txt atand
 
   **/
-  IEEEValue atand(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atand.hpp>
 #include <boost/simd/function/simd/atand.hpp>

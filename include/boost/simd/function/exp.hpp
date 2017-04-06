@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_EXP_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXP_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-exp exp (function object)
+
     This function object returns the exponential of its argument: \f$e^{x}\f$
 
-    @par Header <boost/simd/function/exp.hpp>
+    @headerref{<boost/simd/function/exp.hpp>}
 
+    @par Description
+
+      @code
+      IEEEValue exp(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
        @snippet exp.txt exp
 
   **/
-  IEEEValue exp(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exp.hpp>
 #include <boost/simd/function/simd/exp.hpp>

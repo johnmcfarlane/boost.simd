@@ -11,15 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ALL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ALL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-reduction
+    @defgroup real-all all (function object)
+
    This function object returns @c true if all elements of the argument are
    non zero.
 
-    @par Header <boost/simd/function/all.hpp>
+    @headerref{<boost/simd/function/all.hpp>}
+
+    @par Description
+
+      @code
+      bool all(Value const &x);
+      @endcode
 
     @see ant, none, nbtrue
 
@@ -32,9 +37,6 @@ namespace boost { namespace simd
       @snippet all.txt all
 
   **/
-  bool all(Value const &x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/all.hpp>
 #include <boost/simd/function/simd/all.hpp>

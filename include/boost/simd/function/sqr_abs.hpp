@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SQR_ABS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SQR_ABS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-sqr_abs sqr_abs (function object)
+
     This function computes the square of the absolute value of its parameter.
     For real entries it coincides with @ref sqr.
 
-    @par Header <boost/simd/function/sqr.hpp>
+    @headerref{<boost/simd/function/sqr.hpp>}
+
+    @par Description
+
+      @code
+      Value sqr_abs(Value const& x);
+      @endcode
 
     @par Decorators
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet sqr_abs.txt sqr_abs
 
   **/
-  Value sqr_abs(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sqr_abs.hpp>
 #include <boost/simd/function/simd/sqr_abs.hpp>

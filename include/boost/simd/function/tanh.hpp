@@ -11,19 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_TANH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_TANH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-tanh tanh (function object)
+
     This function object returns the hyperbolic tangent: \f$\sinh(x)/\cosh(x)\f$.
+
+    @headerref{<boost/simd/function/tanh.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue tanh(IEEEValue const& x);
+      @endcode
 
     @see sinh, cosh, sech, csch, sinhcosh
 
-
-    @par Header <boost/simd/function/tanh.hpp>
 
     @par Example:
 
@@ -33,9 +36,6 @@ namespace boost { namespace simd
 
       @snippet tanh.txt tanh
   **/
-  IEEEValue tanh(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/tanh.hpp>
 #include <boost/simd/function/simd/tanh.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_INSERT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_INSERT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-insert insert (function object)
 
    Modify the value of the nth element of a mutable data.
 
+    @headerref{<boost/simd/function/insert.hpp>}
 
-    @par Header <boost/simd/function/insert.hpp>
+    @par Description
+
+      @code
+      template<typename Value, typename Offset>
+      @endcode
 
     @par Semantic
 
@@ -46,16 +49,7 @@ namespace boost { namespace simd
       d[o] = v;
       @endcode
 
-    @param v   Value to insert
-    @param o   Position where to insert
-    @param d   Data to insert into
-
-    @return void
   **/
-  template<typename Value, typename Offset>
-  void insert(Data& d, Offset const& o, Value const& v);
-} }
-#endif
 
 #include <boost/simd/function/scalar/insert.hpp>
 #include <boost/simd/function/simd/insert.hpp>

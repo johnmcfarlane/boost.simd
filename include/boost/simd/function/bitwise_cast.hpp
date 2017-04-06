@@ -11,20 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_BITWISE_CAST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITWISE_CAST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-bitwise
+    @defgroup real-bitwise_cast bitwise_cast (function object)
 
     This function object function implementing bitwise_cast capabilities
 
     Performs a bit-preserving cast of its parameters into an arbitrary
     type @c Target.
 
-    @pre `sizeof(Value) == sizeof(Target)`
+    @headerref{<boost/simd/function/bitwise_cast.hpp>}
 
-    @par Header <boost/simd/function/bitwise_cast.hpp>
+    @par Description
+
+      @code
+      template <typename Target>
+      @endcode
 
     @par Example:
 
@@ -38,10 +40,6 @@ namespace boost { namespace simd
 
     @return A value of type @c Target which is bit-equivalent to @c x.
   **/
-  template <typename Target>
-  Target bitwise_cast(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitwise_cast.hpp>
 #include <boost/simd/function/simd/bitwise_cast.hpp>

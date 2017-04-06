@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sinc sinc (function object)
+
     This function object returns the Computes the sinus cardinal value of its parameter,
     i.e. \f$\sin(x)/x\f$.
 
-    @par Header <boost/simd/function/sinc.hpp>
+    @headerref{<boost/simd/function/sinc.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sinc(IEEEValue const& x);
+      @endcode
 
     @see sin, sincpi, sinhc
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sinc.txt sinc
 
   **/
-  IEEEValue sinc(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sinc.hpp>
 #include <boost/simd/function/simd/sinc.hpp>

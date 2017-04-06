@@ -11,12 +11,9 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_NEGATIVE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-predicates
+    @defgroup real-is_negative is_negative (function object)
 
     This function object returns @ref True if x is negative else @ref False.
 
@@ -25,8 +22,13 @@ namespace boost { namespace simd
     not positive and not greater than zero, It's probably @ref is_ltz that
     you want.
 
+    @headerref{<boost/simd/function/is_negative.hpp>}
 
-    @par Header <boost/simd/function/is_negative.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> is_negative(Value const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +43,6 @@ namespace boost { namespace simd
       @snippet is_negative.txt is_negative
 
   **/
-  as_logical_t<Value> is_negative(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_negative.hpp>
 #include <boost/simd/function/simd/is_negative.hpp>

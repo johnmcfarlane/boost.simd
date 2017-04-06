@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ATAN2D_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATAN2D_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atan2d atan2d (function object)
+
     This function object returns the atan2d function : atan2 in degrees.
 
+    @headerref{<boost/simd/function/atan2d.hpp>}
 
-    @par Header <boost/simd/function/atan2d.hpp>
+    @par Description
+
+      @code
+      IEEEValue atan2d(IEEEValue const& y, IEEEValue const& x );
+      @endcode
 
     @par Note
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet atan2d.txt atan2d
 
   **/
-  IEEEValue atan2d(IEEEValue const& y, IEEEValue const& x );
-} }
-#endif
 
 #include <boost/simd/function/scalar/atan2d.hpp>
 #include <boost/simd/function/simd/atan2d.hpp>

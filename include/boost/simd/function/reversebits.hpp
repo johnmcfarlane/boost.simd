@@ -11,18 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_REVERSEBITS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REVERSEBITS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-reversebits reversebits (function object)
+
     This function object returns the bits in reverse order for each scalar entry.
+
+    @headerref{<boost/simd/function/reversebits.hpp>}
+
+    @par Description
+
+      @code
+      IntegerValue reversebits(IntegerValue const& x);
+      @endcode
 
     @see reverse,  swapbytes
 
-
-    @par Header <boost/simd/function/reversebits.hpp>
 
     @par Example:
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet reversebits.txt reversebits
 
   **/
-  IntegerValue reversebits(IntegerValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/reversebits.hpp>
 #include <boost/simd/function/simd/reversebits.hpp>

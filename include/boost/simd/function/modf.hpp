@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_MODF_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MODF_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-ieee
+    @defgroup real-modf modf (function object)
+
     This function object returns the integral and fractional parts of the input.
 
+    @headerref{<boost/simd/function/modf.hpp>}
 
-    @par Header <boost/simd/function/modf.hpp>
+    @par Description
+
+      @code
+
+      @endcode
 
     @par Decorators
 
@@ -35,13 +38,6 @@ namespace boost { namespace simd
       @snippet modf.txt modf
 
   **/
-
-  ///@{
-  Value modf(Value const& x, Value const& y);
-  std::pair<Value, Value> modf(Value const & x);
-  ///@}
-} }
-#endif
 
 #include <boost/simd/function/scalar/modf.hpp>
 #include <boost/simd/function/simd/modf.hpp>

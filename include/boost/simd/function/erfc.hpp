@@ -10,18 +10,20 @@
 #ifndef BOOST_SIMD_FUNCTION_ERFC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ERFC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-euler
+    @defgroup real-erfc erfc (function object)
+
    This fFunction object computes the complementary error function
    \f$\displaystyle \frac{2}{\sqrt\pi}\int_{x}^{\infty} e^{-t^2}\mbox{d}t\f$
 
+    @headerref{<boost/simd/function/erfc.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/erfc.hpp>
+      @code
+      IEEEValue erfc(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +40,6 @@ namespace boost { namespace simd
 
       @snippet erfc.txt erfc
   **/
-  IEEEValue erfc(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/erfc.hpp>
 #include <boost/simd/function/simd/erfc.hpp>

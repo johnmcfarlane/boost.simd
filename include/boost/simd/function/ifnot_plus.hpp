@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IFNOT_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IFNOT_PLUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-ifnot_plus ifnot_plus (function object)
+
     This function object conditionally returns  @c x (respectively @c x+y)
     if @c c is @ref True (respectively  @ref False)
 
+    @headerref{<boost/simd/function/ifnot_plus.hpp>}
 
-    @par Header <boost/simd/function/ifnot_plus.hpp>
+    @par Description
+
+      @code
+      Value1 ifnot_plus(Value0 const& c, Value1 const& x, Value1 const& y);
+      @endcode
 
     @par Example:
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
       @snippet ifnot_plus.txt ifnot_plus
 
   **/
-  Value1 ifnot_plus(Value0 const& c, Value1 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ifnot_plus.hpp>
 #include <boost/simd/function/simd/ifnot_plus.hpp>

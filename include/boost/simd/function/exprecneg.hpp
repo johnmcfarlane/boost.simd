@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_EXPRECNEG_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_EXPRECNEG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-exprecneg exprecneg (function object)
+
     This function object computes: \f$e^{-\frac1x}\f$
 
-    @par Header <boost/simd/function/exprecneg.hpp>
+    @headerref{<boost/simd/function/exprecneg.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue exprecneg(IEEEValue const& x);
+      @endcode
 
     @par Example:
 
@@ -30,9 +34,6 @@ namespace boost { namespace simd
       @snippet exprecneg.txt exprecneg
 
   **/
-  IEEEValue exprecneg(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/exprecneg.hpp>
 #include <boost/simd/function/simd/exprecneg.hpp>

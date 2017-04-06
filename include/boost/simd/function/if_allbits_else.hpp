@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_ALLBITS_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_ALLBITS_ELSE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_allbits_else if_allbits_else (function object)
+
     This function object  returns @ref Allbits if  @c c is @ref True else returns @c f
 
+    @headerref{<boost/simd/function/if_allbits_else.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/if_allbits_else.hpp>
+      @code
+      Value1 if_allbits_else(Value0 const& c, Value1 const& f);
+      @endcode
+
+    @see genmask, Allbits, Nan
 
     @par Example:
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
     @see genmask, Allbits, Nan
 
   **/
-  Value1 if_allbits_else(Value0 const& c, Value1 const& f);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_allbits_else.hpp>
 #include <boost/simd/function/simd/if_allbits_else.hpp>

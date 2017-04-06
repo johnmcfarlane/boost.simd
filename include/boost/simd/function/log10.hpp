@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_LOG10_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOG10_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-log10 log10 (function object)
+
     This function object returns the base ten logarithm of its argument.
 
     For integer input types @c log10 return the truncation of the real result.
 
-    @par Header <boost/simd/function/log10.hpp>
+    @headerref{<boost/simd/function/log10.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue log10(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -39,9 +43,6 @@ namespace boost { namespace simd
       @snippet log10.txt log10
 
   **/
-  IEEEValue log10(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/log10.hpp>
 #include <boost/simd/function/simd/log10.hpp>

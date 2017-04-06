@@ -11,20 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_MASK2LOGICAL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MASK2LOGICAL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-mask2logical mask2logical (function object)
+
     This function object converts
     an arithmetic mask where each element is
     Zero or Allbits to a logical value.
 
     If it is not the case this function asserts.
 
+    @headerref{<boost/simd/function/mask2logical.hpp>}
 
-    @par Header <boost/simd/function/mask2logical.hpp>
+    @par Description
+
+      @code
+      as_logical_t<Value> mask2logical(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -35,9 +38,6 @@ namespace boost { namespace simd
       @snippet mask2logical.txt mask2logical
 
   **/
-  as_logical_t<Value> mask2logical(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/mask2logical.hpp>
 #include <boost/simd/function/simd/mask2logical.hpp>

@@ -11,17 +11,21 @@
 #ifndef BOOST_SIMD_FUNCTION_MULTIPLIES_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_MULTIPLIES_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-operator
+    @defgroup real-multiplies multiplies (function object)
+
     This function object computes the product of two parameters of the same type.
 
     Infix notation can be used with operator '*',
 
-    @par Header <boost/simd/function/multiplies.hpp>
+    @headerref{<boost/simd/function/multiplies.hpp>}
+
+    @par Description
+
+      @code
+      Value multiplies(Value const& x, Value const& y);
+      @endcode
 
     @par Decorators
 
@@ -42,9 +46,6 @@ namespace boost { namespace simd
     @see fma, fms, fnma, fnms
 
   **/
-  Value multiplies(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/multiplies.hpp>
 #include <boost/simd/function/simd/multiplies.hpp>

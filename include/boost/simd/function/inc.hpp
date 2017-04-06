@@ -11,22 +11,24 @@
 #ifndef BOOST_SIMD_FUNCTION_INC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_INC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-inc inc (function object)
+
     This function object returns  its parameter incremented by 1.
 
-    @par Header <boost/simd/function/inc.hpp>
+    @headerref{<boost/simd/function/inc.hpp>}
+
+    @par Description
+
+      @code
+      Value inc(Value const& x);
+      @endcode
 
     @par Decorators
 
      - saturated_ ensures that @c saturated_(inc)(x) will never be strictly
      less than @c x, avoiding the wrap around from @ref Valmax to
-     @ref Valmin with integer types.
-
     @see plus, dec, minus
 
     @par Example:
@@ -37,9 +39,6 @@ namespace boost { namespace simd
 
       @snippet inc.txt inc
   **/
-  Value inc(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/inc.hpp>
 #include <boost/simd/function/simd/inc.hpp>

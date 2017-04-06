@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CLZ_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CLZ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-clz clz (function object)
+
     This function object returns  the bit count of leading zeros.
 
-    @par Header <boost/simd/function/clz.hpp>
+    @headerref{<boost/simd/function/clz.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> clz(Value const& x);
+      @endcode
 
     @see  ctz, popcnt
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet clz.txt clz
 
   **/
-  as_integer_t<Value> clz(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/clz.hpp>
 #include <boost/simd/function/simd/clz.hpp>

@@ -11,15 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ASINPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASINPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-asinpi asinpi (function object)
+
     This function object returns the inverse sine in \f$\pi\f$ multiples.
 
-    @par Header <boost/simd/function/asinpi.hpp>
+    @headerref{<boost/simd/function/asinpi.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue asinpi(IEEEValue const & x);
+      @endcode
 
     @see asin, asind, sinpi
 
@@ -32,9 +36,6 @@ namespace boost { namespace simd
       @snippet asinpi.txt asinpi
 
   **/
-  IEEEValue asinpi(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asinpi.hpp>
 #include <boost/simd/function/simd/asinpi.hpp>

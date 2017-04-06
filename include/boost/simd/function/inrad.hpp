@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_INRAD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_INRAD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-inrad inrad (function object)
+
     This function object converts degree to radian.
 
+    @headerref{<boost/simd/function/inrad.hpp>}
 
-    @par Header <boost/simd/function/inrad.hpp>
+    @par Description
+
+      @code
+      IEEEValue inrad(IEEEValue const& x);
+      @endcode
 
     @par Example:
 
@@ -31,9 +34,6 @@ namespace boost { namespace simd
       @snippet inrad.txt inrad
 
   **/
-  IEEEValue inrad(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/inrad.hpp>
 #include <boost/simd/function/simd/inrad.hpp>

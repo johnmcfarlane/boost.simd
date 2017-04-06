@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINCOSPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINCOSPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sincospi sincospi (function object)
+
     This function object computes simultaneously and
     at lower cost the sine and cosine of the input in \f$\pi\f$ multiples.
 
-    @par Header <boost/simd/function/sincospi.hpp>
+    @headerref{<boost/simd/function/sincospi.hpp>}
+
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> sincospi(IEEEValue const& x);
+      @endcode
 
     @see sincosd, sincos
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sincospi.txt sincospi
 
   **/
-  std::pair<IEEEValue, IEEEValue> sincospi(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sincospi.hpp>
 #include <boost/simd/function/simd/sincospi.hpp>

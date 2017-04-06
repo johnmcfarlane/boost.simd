@@ -10,16 +10,20 @@
 #ifndef BOOST_SIMD_FUNCTION_DEINTERLEAVE_FIRST_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DEINTERLEAVE_FIRST_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-/*!
+  /*!
     @ingroup group-swar
+    @defgroup real-deinterleave_first deinterleave_first (function object)
+
     This function object performs the extraction of the first part of a boost::simd::pack
     containing two channels of data.
 
+    @headerref{<boost/simd/function/deinterleave_first.hpp>}
 
-    @par Header <boost/simd/function/deinterleave_first.hpp>
+    @par Description
+
+      @code
+      Value deinterleave_first(Value const& x, Value const& y);
+      @endcode
 
     @par Semantic:
     For any type @c T and any integral constant @c N greater than 1, let's consider two values @c x
@@ -32,13 +36,7 @@ namespace boost { namespace simd
     boost::simd::pack<T,N> r{x[0], x[2], ..., x[N/2], y[0], y[2], ...,y[N/2]};
     @endcode
 
-    @param  x  First part of the data to deinterleave
-    @param  y  Second part of the data to deinterleave
-    @return A boost::simd::pack containing the deinterleaved value of the first data channel.
   **/
-  Value deinterleave_first(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/simd/deinterleave_first.hpp>
 

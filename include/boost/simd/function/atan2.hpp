@@ -11,17 +11,25 @@
 #ifndef BOOST_SIMD_FUNCTION_ATAN2_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ATAN2_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-atan2 atan2 (function object)
+
     This function object returns the quadrant aware `atan2` function.
 
+    @headerref{<boost/simd/function/atan2.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/atan2.hpp>
+      @code
+      IEEEValue atan2(IEEEValue const& y, IEEEValue const& x);
+      @endcode
+
+    @par Decorators
+
+    - std_  provides access to std::atan2
+
+    - pedantic_ ensures the respect of all IEEE limits
 
     @par Notes
 
@@ -52,12 +60,6 @@ namespace boost { namespace simd
      result which in fact is not more absurd than the IEEE choices.
      It will be conforming in all other cases.
 
-    @par Decorators
-
-    - std_  provides access to std::atan2
-
-    - pedantic_ ensures the respect of all IEEE limits
-
     @see atan, atand, atanpi
 
 
@@ -70,9 +72,6 @@ namespace boost { namespace simd
       @snippet atan2.txt atan2
 
   **/
-  IEEEValue atan2(IEEEValue const& y, IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/atan2.hpp>
 #include <boost/simd/function/simd/atan2.hpp>

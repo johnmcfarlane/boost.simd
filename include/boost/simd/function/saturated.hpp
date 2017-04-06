@@ -15,11 +15,9 @@
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-decorator
+    @defgroup real-saturated saturated (function object)
 
    provides a saturated version of some functors which produce integral typed values on return.
 
@@ -27,8 +25,13 @@ namespace boost { namespace simd
    integers are not promoted  during current arithmetic operations and this increases the
    overflow risks.
 
+    @headerref{<boost/simd/function/saturated.hpp>}
 
-    @par Header <boost/simd/function/saturated.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto saturated_(T const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -36,10 +39,6 @@ namespace boost { namespace simd
     T r = saturated_(func)(< func parameters >);
     @endcode
   **/
-  template<typename T> auto saturated_(T const& x) {}
-
-} }
-#endif
 
 namespace boost { namespace simd
 {

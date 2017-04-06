@@ -11,18 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_EVEN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_EVEN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_even is_even (function object)
+
     This function object returns @ref True or @ref False according x is even or not.
 
+    @headerref{<boost/simd/function/is_even.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/is_even.hpp>
+      @code
+      as_logical_t<Value> is_even(Value const& x);
+      @endcode
 
     @par Note:
 
@@ -47,9 +48,6 @@ namespace boost { namespace simd
       @snippet is_even.txt is_even
 
   **/
-  as_logical_t<Value> is_even(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_even.hpp>
 #include <boost/simd/function/simd/is_even.hpp>

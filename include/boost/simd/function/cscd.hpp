@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CSCD_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CSCD_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cscd cscd (function object)
+
     This function object returns the cosecant in degree: \f$1/\sin(180/(\pi x))\f$.
 
+    @headerref{<boost/simd/function/cscd.hpp>}
 
-    @par Header <boost/simd/function/cscd.hpp>
+    @par Description
+
+      @code
+      IEEEValue cscd(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet cscd.txt cscd
 
   **/
-  IEEEValue cscd(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cscd.hpp>
 #include <boost/simd/function/simd/cscd.hpp>

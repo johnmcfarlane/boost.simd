@@ -11,19 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_POPCNT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_POPCNT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-popcnt popcnt (function object)
+
     This function object returns the number of set bits in the input.
+
+    @headerref{<boost/simd/function/popcnt.hpp>}
+
+    @par Description
+
+      @code
+      as_integer_t<Value> popcnt(Value const& x);
+      @endcode
 
     @see  clz, ctz
 
 
-
-    @par Header <boost/simd/function/popcnt.hpp>
 
     @par Example:
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet popcnt.txt popcnt
 
   **/
-  as_integer_t<Value> popcnt(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/popcnt.hpp>
 #include <boost/simd/function/simd/popcnt.hpp>

@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_CUMMAX_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CUMMAX_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-cummax cummax (function object)
+
     This function object computes the cumulate maximum of the argument elements
 
+    @headerref{<boost/simd/function/cummax.hpp>}
 
-    @par Header <boost/simd/function/cummax.hpp>
+    @par Description
+
+      @code
+      Value cummax(Value const& x);
+      @endcode
 
     @par Example:
 
@@ -31,9 +34,6 @@ namespace boost { namespace simd
       @snippet cummax.txt cummax
 
   **/
-  Value cummax(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cummax.hpp>
 #include <boost/simd/function/simd/cummax.hpp>

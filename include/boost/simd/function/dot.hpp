@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_DOT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DOT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-reduction
+    @defgroup real-dot dot (function object)
+
     This function object returns the returns the dot product of the two arguments
 
+    @headerref{<boost/simd/function/dot.hpp>}
 
-    @par Header <boost/simd/function/dot.hpp>
+    @par Description
+
+      @code
+      scalar_of_t<Value> dot(Value const& x, Value const& y);
+      @endcode
 
     @par Example:
 
@@ -31,9 +34,6 @@ namespace boost { namespace simd
       @snippet edot.txt dot
 
   **/
-  scalar_of_t<Value> dot(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/dot.hpp>
 #include <boost/simd/function/simd/dot.hpp>

@@ -11,19 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_SEC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SEC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-sec sec (function object)
+
     This function object returns the secant of the angle in radian: \f$1/\cos(x)\f$.
+
+    @headerref{<boost/simd/function/sec.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sec(IEEEValue const& x);
+      @endcode
 
     @see cos, secd, secpi
 
 
-
-    @par Header <boost/simd/function/sec.hpp>
 
     @par Example:
 
@@ -34,9 +38,6 @@ namespace boost { namespace simd
       @snippet sec.txt sec
 
   **/
-  IEEEValue sec(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sec.hpp>
 #include <boost/simd/function/simd/sec.hpp>

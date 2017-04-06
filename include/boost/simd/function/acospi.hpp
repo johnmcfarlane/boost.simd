@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ACOSPI_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ACOSPI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-acospi acospi (function object)
+
     This function object returns the inverse cosine in \f$\pi\f$ multiples.
 
+    @headerref{<boost/simd/function/acospi.hpp>}
 
-    @par Header <boost/simd/function/acospi.hpp>
+    @par Description
+
+      @code
+      IEEEValue acospi(IEEEValue const & x);
+      @endcode
 
     @par Decorators
 
@@ -38,9 +41,6 @@ namespace boost { namespace simd
       @snippet acospi.txt acospi
 
   **/
-  IEEEValue acospi(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/acospi.hpp>
 #include <boost/simd/function/simd/acospi.hpp>

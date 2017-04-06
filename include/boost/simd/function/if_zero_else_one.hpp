@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_ZERO_ELSE_ONE_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_ZERO_ELSE_ONE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_zero_else_one if_zero_else_one (function object)
+
     This function object conditionally returns  @c 0 (respectively @c 1)
     if @c c is @ref True (respectively  @ref False)
 
+    @headerref{<boost/simd/function/if_zero_else_one.hpp>}
 
-    @par Header <boost/simd/function/if_zero_else_one.hpp>
+    @par Description
+
+      @code
+      Value if_zero_else_one(Value const& c);
+      @endcode
 
     @par Example:
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
       @snippet if_zero_else_one.txt if_zero_else_one
 
   **/
-  Value if_zero_else_one(Value const& c);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_zero_else_one.hpp>
 #include <boost/simd/function/simd/if_zero_else_one.hpp>

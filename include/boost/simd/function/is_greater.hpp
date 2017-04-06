@@ -11,21 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-predicates
+    @defgroup real-is_greater is_greater (function object)
+
     This function object returns @ref True or @ref False according
     x is greater than y or not.
 
     Infix notation can be used with operator '>'.
 
+    @headerref{<boost/simd/function/is_greater.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/is_greater.hpp>
+      @code
+      as_logical_t<Value> is_greater(Value const& x, Value const& y);
+      @endcode
 
     @par Note
 
@@ -42,9 +43,6 @@ namespace boost { namespace simd
       @snippet is_greater.txt is_greater
 
   **/
-  as_logical_t<Value> is_greater(Value const& x, Value const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/is_greater.hpp>
 #include <boost/simd/function/simd/is_greater.hpp>

@@ -11,17 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SQRT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SQRT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-sqrt sqrt (function object)
+
     This function object computes the square root of its parameter.
     For integers it is the truncation of the real square root.
 
-    @par Header <boost/simd/function/sqrt.hpp>
+    @headerref{<boost/simd/function/sqrt.hpp>}
+
+    @par Description
+
+      @code
+      Value sqrt(Value const& x);
+      @endcode
 
     @par Decorators
 
@@ -41,9 +44,6 @@ namespace boost { namespace simd
       @snippet sqrt.txt sqrt
 
   **/
-  Value sqrt(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sqrt.hpp>
 #include <boost/simd/function/simd/sqrt.hpp>

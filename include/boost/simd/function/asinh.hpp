@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_ASINH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_ASINH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-asinh asinh (function object)
+
     This function object returns the hyperbolic sine argument: \f$\log(x+\sqrt{x^2+1})\f$.
 
-    @par Header <boost/simd/function/asinh.hpp>
+    @headerref{<boost/simd/function/asinh.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue asinh(IEEEValue const & x);
+      @endcode
 
     @see log, sqrt, sinh, inc
 
@@ -33,9 +36,6 @@ namespace boost { namespace simd
       @snippet asinh.txt asinh
 
   **/
-  IEEEValue asinh(IEEEValue const & x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/asinh.hpp>
 #include <boost/simd/function/simd/asinh.hpp>

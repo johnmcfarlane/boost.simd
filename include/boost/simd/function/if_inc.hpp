@@ -11,18 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_IF_INC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IF_INC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-boolean
+    @defgroup real-if_inc if_inc (function object)
+
     This function object conditionally returns @c x+1 (respectively @c x)
     if @c c is @ref True (respectively  @ref False)
 
+    @headerref{<boost/simd/function/if_inc.hpp>}
 
+    @par Description
 
-    @par Header <boost/simd/function/if_inc.hpp>
+      @code
+      Value1 if_inc(Value0 const& c, Value1 const& x);
+      @endcode
 
     @par Example:
 
@@ -33,9 +35,6 @@ namespace boost { namespace simd
       @snippet if_inc.txt if_inc
 
   **/
-  Value1 if_inc(Value0 const& c, Value1 const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/if_inc.hpp>
 #include <boost/simd/function/simd/if_inc.hpp>

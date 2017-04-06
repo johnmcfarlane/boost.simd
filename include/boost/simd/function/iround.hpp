@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_IROUND_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_IROUND_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-iround iround (function object)
+
     This function object computes the integer conversion of the @ref round of its parameter.
 
+    @headerref{<boost/simd/function/iround.hpp>}
 
-    @par Header <boost/simd/function/iround.hpp>
+    @par Description
+
+      @code
+      as_integer_t<Value> iround(Value const& x);
+      @endcode
 
     @par Note:
     This operation is properly saturated
@@ -37,9 +39,6 @@ namespace boost { namespace simd
       @snippet iround.txt iround
 
   **/
-  as_integer_t<Value> iround(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/iround.hpp>
 #include <boost/simd/function/simd/iround.hpp>

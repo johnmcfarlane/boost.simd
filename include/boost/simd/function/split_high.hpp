@@ -9,24 +9,24 @@
 #ifndef BOOST_SIMD_FUNCTION_SPLIT_HIGH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SPLIT_HIGH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-swar
+    @defgroup real-split_high split_high (function object)
+
     Function object implementing split_high capabilities
 
     SIMD register type-based split_high
 
-    @par Header <boost/simd/function/split_high.hpp>
+    @headerref{<boost/simd/function/split_high.hpp>}
 
-    @c split_high extract the higher half of a SIMD register and convert it
-    to the appropriate SIMD register type of corresponding cardinal.
+    @par Description
+
+      @code
+      upgrade_t<Value> split_high(Value const& x);
+      @endcode
+
     @see split_low, split, slice
   **/
-  upgrade_t<Value> split_high(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/simd/split_high.hpp>
 

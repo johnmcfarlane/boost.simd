@@ -11,19 +11,22 @@
 #ifndef BOOST_SIMD_FUNCTION_REM_PIO2_CEPHES_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REM_PIO2_CEPHES_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-rem_pio2_cephes rem_pio2_cephes (function object)
+
     This function object returns the Computes the remainder modulo \f$\pi/2\f$ with cephes algorithm,
      and the angle quadrant between 0 and 3.
 
      This is a quick version accurate if the input is in \f$[-20\pi,20\pi]\f$.
 
+    @headerref{<boost/simd/function/rem_pio2_cephes.hpp>}
 
-    @par Header <boost/simd/function/rem_pio2_cephes.hpp>
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> rem_pio2_cephes(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet rem_pio2_cephes.txt rem_pio2_cephes
 
   **/
-  std::pair<IEEEValue, IEEEValue> rem_pio2_cephes(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rem_pio2_cephes.hpp>
 #include <boost/simd/function/simd/rem_pio2_cephes.hpp>

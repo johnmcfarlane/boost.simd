@@ -11,24 +11,28 @@
 #ifndef BOOST_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-arithmetic
+    @defgroup real-ceil ceil (function object)
+
     This function object computes the smallest integral representable value of
     its parameter type which is greater or equal to it.
 
-    @par Header <boost/simd/function/ceil.hpp>
+    @headerref{<boost/simd/function/ceil.hpp>}
 
-    @par Notes
+    @par Description
 
-     - @c ceil is also used as parameter to pass to @ref div or @ref rem
+      @code
+      Value ceil(Value const& x);
+      @endcode
 
     @par Decorators
 
     - std_ for floating entries call std::ceil
+
+    @par Notes
+
+     - @c ceil is also used as parameter to pass to @ref div or @ref rem
 
     @see  floor, round, nearbyint, trunc, iceil
 
@@ -41,9 +45,6 @@ namespace boost { namespace simd
       @snippet ceil.txt ceil
 
   **/
-  Value ceil(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/ceil.hpp>
 #include <boost/simd/function/simd/ceil.hpp>

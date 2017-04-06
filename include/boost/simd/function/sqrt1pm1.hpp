@@ -11,20 +11,23 @@
 #ifndef BOOST_SIMD_FUNCTION_SQRT1PM1_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SQRT1PM1_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-sqrt1pm1 sqrt1pm1 (function object)
+
     This function object returns \f$\sqrt{1+x}-1\f$ and the
     result is accurate even for x  with small modulus
 
+    @headerref{<boost/simd/function/sqrt1pm1.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sqrt1pm1(IEEEValue const& x);
+      @endcode
+
     @see log1p, expm1.
 
-
-    @par Header <boost/simd/function/sqrt1pm1.hpp>
 
     @par Example:
 
@@ -34,9 +37,6 @@ namespace boost { namespace simd
 
       @snippet sqrt1pm1.txt sqrt1pm1
   **/
-  IEEEValue sqrt1pm1(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sqrt1pm1.hpp>
 #include <boost/simd/function/simd/sqrt1pm1.hpp>

@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_LOG1P_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_LOG1P_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-exponential
+    @defgroup real-log1p log1p (function object)
+
     This function object computes \f$\log(1+x)\f$ with good accuracy even for small
     \f$x\f$ values.
 
-    @par Header <boost/simd/function/log1p.hpp>
+    @headerref{<boost/simd/function/log1p.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue log1p(IEEEValue const& x);
+      @endcode
 
     @par Decorators
 
@@ -37,9 +41,6 @@ namespace boost { namespace simd
       @snippet log1p.txt log1p
 
   **/
-  IEEEValue log1p(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/log1p.hpp>
 #include <boost/simd/function/simd/log1p.hpp>

@@ -14,17 +14,21 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
   /*!
     @ingroup group-decorator
+    @defgroup real-musl musl (function object)
 
     calls a version of the functor for which the algorithm is inspired by the musl
     library code.
 
+    @headerref{<boost/simd/function/musl.hpp>}
 
-    @par Header <boost/simd/function/musl.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto musl_(T const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -33,10 +37,6 @@ namespace boost { namespace simd
     @endcode
 
   **/
-  template<typename T> auto musl_(T const& x) {}
-
-} }
-#endif
 
 namespace boost { namespace simd
 {

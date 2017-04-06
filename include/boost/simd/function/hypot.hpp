@@ -11,17 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_HYPOT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_HYPOT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-hypot hypot (function object)
+
     This function object computes the hypothenuse length: \f$(x^2 + y^2)^{1/2}\f$
 
+    @headerref{<boost/simd/function/hypot.hpp>}
 
-    @par Header <boost/simd/function/hypot.hpp>
+    @par Description
+
+      @code
+      IEEEValue hypot(IEEEValue const& x, IEEEValue const& y);
+      @endcode
 
     @par Decorators
 
@@ -42,9 +44,6 @@ namespace boost { namespace simd
 
 
   **/
-  IEEEValue hypot(IEEEValue const& x, IEEEValue const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/hypot.hpp>
 #include <boost/simd/function/scalar/hypot.hpp>

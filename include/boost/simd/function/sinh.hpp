@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_SINH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-hyperbolic
+    @defgroup real-sinh sinh (function object)
+
     This function object returns the hyperbolic sine: \f$(e^{x}-e^{-x})/2\f$.
 
-    @par Header <boost/simd/function/sinh.hpp>
+    @headerref{<boost/simd/function/sinh.hpp>}
+
+    @par Description
+
+      @code
+      IEEEValue sinh(IEEEValue const& x);
+      @endcode
 
     @see tanh, cosh, sech, csch, sinhcosh
 
@@ -32,9 +35,6 @@ namespace boost { namespace simd
 
       @snippet sinh.txt sinh
   **/
-  IEEEValue sinh(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sinh.hpp>
 #include <boost/simd/function/simd/sinh.hpp>

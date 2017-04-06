@@ -11,16 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_SINHCOSH_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_SINHCOSH_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-hyperbolic
+    @defgroup real-sinhcosh sinhcosh (function object)
+
     This function object computes simultaneously  and at lower cost
     the @c sinh and @c cosh of the input
 
-    @par Header <boost/simd/function/sinhcosh.hpp>
+    @headerref{<boost/simd/function/sinhcosh.hpp>}
+
+    @par Description
+
+      @code
+      std::pair<IEEEValue, IEEEValue> sinhcosh(IEEEValue const& x);
+      @endcode
 
     @see  sinh, cosh
 
@@ -33,9 +37,6 @@ namespace boost { namespace simd
       @snippet sinhcosh.txt sinhcosh
 
   **/
-  std::pair<IEEEValue, IEEEValue> sinhcosh(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/sinhcosh.hpp>
 #include <boost/simd/function/simd/sinhcosh.hpp>

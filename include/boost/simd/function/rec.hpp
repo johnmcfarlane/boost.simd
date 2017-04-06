@@ -11,27 +11,31 @@
 #ifndef BOOST_SIMD_FUNCTION_REC_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_REC_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
   /*!
     @ingroup group-arithmetic
+    @defgroup real-rec rec (function object)
+
     This function object returns the inverse (reciprocal) of the entry.
 
+    @headerref{<boost/simd/function/rec.hpp>}
 
-    @par Header <boost/simd/function/rec.hpp>
+    @par Description
 
-    @par Notes
-
-    The call to `rec(x)` is similar to  `One(as(x))/x`
-
-    For integral typed entries the result is always in the set \f$\{0,  \pm1, Valmax \}\f$
+      @code
+      Value rec(Value const& x);
+      @endcode
 
     @par Decorators
 
      - raw_ Many simd architectures provide an intrinsic that computes some bits of the inverse (at least 12)
             and don't care of denormals or limiting values. If it exists this is obtained by the raw_ decorator.
             If the intrinsic doesn't exist the regular @c rec is called.
+
+    @par Notes
+
+    The call to `rec(x)` is similar to  `One(as(x))/x`
+
+    For integral typed entries the result is always in the set \f$\{0,  \pm1, Valmax \}\f$
 
     @par Example:
 
@@ -41,9 +45,6 @@ namespace boost { namespace simd
 
       @snippet rec.txt rec
   **/
-  Value rec(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/rec.hpp>
 #include <boost/simd/function/simd/rec.hpp>

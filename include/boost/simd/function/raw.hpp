@@ -14,17 +14,21 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/decorator.hpp>
 #include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
   /*!
     @ingroup group-decorator
+    @defgroup real-raw raw (function object)
 
      grant access to low-level, low-accuracy intrinsics
      provided by some SIMD architectures.
 
+    @headerref{<boost/simd/function/raw.hpp>}
 
-    @par Header <boost/simd/function/raw.hpp>
+    @par Description
+
+      @code
+      template<typename T> auto raw_(T const& x) {}
+      @endcode
 
     @par Semantic
 
@@ -32,10 +36,7 @@ namespace boost { namespace simd
     T r = raw_(func)(< func parameters >);
     @endcode
   **/
-  template<typename T> auto raw_(T const& x) {}
 
-} }
-#endif
 namespace boost { namespace simd
 {
   struct raw_tag : decorator_<raw_tag>

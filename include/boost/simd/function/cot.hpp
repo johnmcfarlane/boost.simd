@@ -11,16 +11,19 @@
 #ifndef BOOST_SIMD_FUNCTION_COT_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_COT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-trigonometric
+    @defgroup real-cot cot (function object)
+
     This function object returns the cotangent of the input in radian: \f$\cos(x)/\sin(x)\f$.
 
+    @headerref{<boost/simd/function/cot.hpp>}
 
-    @par Header <boost/simd/function/cot.hpp>
+    @par Description
+
+      @code
+      IEEEValue cot(IEEEValue const& x);
+      @endcode
 
     @par Note
 
@@ -40,9 +43,6 @@ namespace boost { namespace simd
       @snippet cot.txt cot
 
   **/
-  IEEEValue cot(IEEEValue const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/cot.hpp>
 #include <boost/simd/function/simd/cot.hpp>

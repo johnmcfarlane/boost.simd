@@ -11,12 +11,10 @@
 #ifndef BOOST_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-bitwise
+    @defgroup real-bitwise_or bitwise_or (function object)
+
     This function object returns the return the bitwise or of the two parameters
 
     The result type is the one of the first operand.
@@ -25,9 +23,13 @@ namespace boost { namespace simd
     but this will not work in scalar mode if any
     operand is floating point because of C++ limitations.
 
-    @par Header <boost/simd/function/bitwise_or.hpp>
+    @headerref{<boost/simd/function/bitwise_or.hpp>}
 
-    @pre  The operands must share the same bit size.
+    @par Description
+
+      @code
+      Value0 bitwise_or(Value0 const& x, Value1 const& y);
+      @endcode
 
     @par Example:
 
@@ -38,9 +40,6 @@ namespace boost { namespace simd
       @snippet bitwise_or.txt bitwise_or
 
   **/
-  Value0 bitwise_or(Value0 const& x, Value1 const& y);
-} }
-#endif
 
 #include <boost/simd/function/scalar/bitwise_or.hpp>
 #include <boost/simd/arch/common/scalar/function/bitwise_or.hpp>

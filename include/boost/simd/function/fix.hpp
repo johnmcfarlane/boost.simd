@@ -11,19 +11,20 @@
 #ifndef BOOST_SIMD_FUNCTION_FIX_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_FIX_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
-
     @ingroup group-arithmetic
+    @defgroup real-fix fix (function object)
+
     This function object computes the truncation toward @ref Zero
     of its parameter.
 
-    @par Header <boost/simd/function/fix.hpp>
+    @headerref{<boost/simd/function/fix.hpp>}
 
-    It is an alias of @ref trunc
+    @par Description
+
+      @code
+      Value fix(Value const& x);
+      @endcode
 
     @see ceil, floor, round,  nearbyint, trunc, ifix, itrunc
 
@@ -36,9 +37,6 @@ namespace boost { namespace simd
       @snippet fix.txt fix
 
   **/
-  Value fix(Value const& x);
-} }
-#endif
 
 #include <boost/simd/function/scalar/trunc.hpp>
 #include <boost/simd/function/simd/fix.hpp>

@@ -22,13 +22,13 @@ namespace boost { namespace simd
     and logarithms.
 
       <center>
-        |                      |                  |                  |                 |
-        |:--------------------:|:----------------:|:----------------:|:---------------:|
-        | @ref cbrt            | @ref exp10       | @ref exp2        | @ref exp        |
-        | @ref expm1           | @ref exprecneg   | @ref exprecnegc  | @ref expx2      |
-        | @ref log10           | @ref log2        | @ref log         | @ref log1p      |
-        | @ref nthroot         | @ref pow2        | @ref pow_abs     | @ref pow        |
-        | @ref significants    |                  |                  |                 |
+        |                                         |                                   |                                     |                           |
+        |:---------------------------------------:|:---------------------------------:|:-----------------------------------:|:-------------------------:|
+        |  [cbrt](@ref real-cbrt)                 |  [exp10](@ref real-exp10)         |  [exp2](@ref real-exp2)             |  [exp](@ref real-exp)     |
+        |  [expm1](@ref real-expm1)               |  [exprecneg](@ref real-exprecneg) |  [exprecnegc](@ref real-exprecnegc) |  [expx2](@ref real-expx2) |
+        |  [log10](@ref real-log10)               |  [log2](@ref real-log2)           |  [log](@ref real-log)               |  [log1p](@ref real-log1p) |
+        |  [nthroot](@ref real-nthroot)           |  [pow2](@ref real-pow2)           |  [pow_abs](@ref real-pow_abs)       |  [pow](@ref real-pow)     |
+        |  [significants](@ref real-significants) |                                   |                                     |                           |
        </center>
   **/
 

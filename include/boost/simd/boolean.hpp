@@ -29,15 +29,15 @@ namespace boost { namespace simd
         and act in an elementwise way on SIMD vectors.
 
        <center>
-         |                     |                     |                   |
-         |:-------------------:|:-------------------:|:-----------------:|
-         | @ref logical_and    | @ref logical_andnot | @ref logical_not  |
-         | @ref logical_notand | @ref logical_notor  | @ref logical_or   |
-         | @ref logical_ornot  | @ref logical_xor    | @ref mask2logical |
+         |                                            |                                            |                                       |
+         |:------------------------------------------:|:------------------------------------------:|:-------------------------------------:|
+         | [logical_and](@ref real-logical_and)       | [logical_andnot](@ref real-logical_andnot) | [logical_not](@ref real-logical_not)  |
+         | [logical_notand](@ref real-logical_notand) | [logical_notor](@ref real-logical_notor)   | [logical_or](@ref real-logical_or)    |
+         | [logical_ornot](@ref real-logical_ornot)   | [logical_xor](@ref real-logical_xor)       | [mask2logical](@ref real-mask2logical)|
         </center>
 
         Masks are pattern of bits all zeros or all ones that can allow masking
-        using bitwise operations. @ref mask2logical provides a way to transform a mask vector
+        using bitwise operations.  [mask2logical](@ref real-mask2logical) provides a way to transform a mask vector
         into a logical vector.
 
         Logical types are architecture dependant,  for instance on intel sse or avx
@@ -69,14 +69,14 @@ namespace boost { namespace simd
         the simd vector is greater than 2.
 
        <center>
-         |                             |                           |                          |                       |
-         |:---------------------------:|:-------------------------:|:------------------------:| :--------------------:|
-         | @ref if_allbits_else        | @ref if_allbits_else_zero | @ref if_dec              | @ref if_else_allbits  |
-         | @ref if_else                | @ref if_else_nan          | @ref if_else_zero        | @ref if_inc           |
-         | @ref if_minus               | @ref if_nan_else          | @ref if_neg              | @ref if_one_else_zero |
-         | @ref if_plus                | @ref if_zero_else_allbits | @ref if_zero_else        | @ref if_zero_else_one |
-         | @ref ifnot_dec              | @ref ifnot_inc            | @ref ifnot_minus         | @ref ifnot_neg        |
-         | @ref ifnot_plus             |                           |                          |                       |
+         |                                                 |                                                         |                                          |                                                   |
+         |:-----------------------------------------------:|:-------------------------------------------------------:|:----------------------------------------:| :------------------------------------------------:|
+         |  [if_allbits_else](@ref real-if_allbits_else)   |  [if_allbits_else_zero](@ref real-if_allbits_else_zero) |  [if_dec](@ref real-if_dec)              |  [if_else_allbits](@ref real-if_else_allbits)     |
+         |  [if_else](@ref real-if_else)                   |  [if_else_nan](@ref real-if_else_nan)                   |  [if_else_zero](@ref real-if_else_zero)  |  [if_inc](@ref real-if_inc)                       |
+         |  [if_minus](@ref real-if_minus)                 |  [if_nan_else](@ref real-if_nan_else)                   |  [if_neg](@ref real-if_neg)              |  [if_one_else_zero](@ref real-if_one_else_zero)   |
+         |  [if_plus](@ref real-if_plus)                   |  [if_zero_else_allbits](@ref real-if_zero_else_allbits) |  [if_zero_else](@ref real-if_zero_else)  |  [if_zero_else_one](@ref real-if_zero_else_one)   |
+         |  [ifnot_dec](@ref real-ifnot_dec)               |  [ifnot_inc](@ref real-ifnot_inc)                       |  [ifnot_minus](@ref real-ifnot_minus)    |  [ifnot_neg](@ref real-ifnot_neg)                 |
+         |  [ifnot_plus](@ref real-ifnot_plus)             |                                                         |                                          |                                                   |
        </center>
 
   **/

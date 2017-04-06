@@ -21,17 +21,17 @@ namespace simd {
   These functions provide algorithms for in-register reduction and prefix-scan operations.
 
   They are usually only defined for **SIMD** types but may, in some
-  cases such as @ref sum or  @ref prod, have a valid scalar semantic.
+  cases such as  [sum](@ref real-sum) or   [prod](@ref real-prod), have a valid scalar semantic.
 
     <center>
-|                      |                         |                    |                            |
-|:--------------------:|:-----------------------:|:------------------:|:--------------------------:|
-| @ref all             | @ref any                | @ref compare_equal | @ref compare_greater_equal |
-| @ref compare_greater | @ref compare_less_equal | @ref compare_less  | @ref compare_not_equal     |
-| @ref cummax          | @ref cummin             | @ref cumprod       | @ref cumsum                |
-| @ref dot             | @ref hmsb               | @ref isincluded    | @ref isincluded_c          |
-| @ref maximum         | @ref minimum            | @ref nbtrue        | @ref none                  |
-| @ref prod            | @ref sum                |                    |                            |
+|                                               |                                                     |                                           |                                                           |
+|:---------------------------------------------:|:------------------------------------------------ --:|:-----------------------------------------:|:---------------------------------------------------------:|
+|  [all](@ref real-all)                         |  [any](@ref real-any)                               |  [compare_equal](@ref real-compare_equal) |  [compare_greater_equal](@ref real-compare_greater_equal) |
+|  [compare_greater](@ref real-compare_greater) |  [compare_less_equal](@ref real-compare_less_equal) |  [compare_less](@ref real-compare_less)   |  [compare_not_equal](@ref real-compare_not_equal)         |
+|  [cummax](@ref real-cummax)                   |  [cummin](@ref real-cummin)                         |  [cumprod](@ref real-cumprod)             |  [cumsum](@ref real-cumsum)                               |
+|  [dot](@ref real-dot)                         |  [hmsb](@ref real-hmsb)                             |  [isincluded](@ref real-isincluded)       |  [isincluded_c](@ref real-isincluded_c)                   |
+|  [maximum](@ref real-maximum)                 |  [minimum](@ref real-minimum)                       |  [nbtrue](@ref real-nbtrue)               |  [none](@ref real-none)                                   |
+|  [prod](@ref real-prod)                       |  [sum](@ref real-sum)                               |                                           |                                                           |
      </center>
 **/
 }

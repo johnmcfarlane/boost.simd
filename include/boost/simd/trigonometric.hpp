@@ -30,23 +30,23 @@ namespace boost { namespace simd
     - **Direct trigonometric functors**
 
        <center>
-         | name          | name         | name           | name         | name         | name         |
+         |               |              |                |              |              |              |
          |:-------------:|:------------:|:--------------:|:------------:|:------------:|:------------:|
-         | @ref cos      | @ref cosd    | @ref cospi     | @ref cotd    | @ref cot     | @ref cotpi   |
-         | @ref cscd     | @ref csc     | @ref cscpi     | @ref secd    | @ref sec     | @ref secpi   |
-         | @ref sin      | @ref sinc    | @ref sincos    | @ref sincosd | @ref sincospi| @ref sincpi  |
-         | @ref sind     | @ref sinpi   | @ref tan       | @ref tand    | @ref tan     | @ref tanpi   |
+         |  [cos](@ref real-cos)      |  [cosd](@ref real-cosd)    |  [cospi](@ref real-cospi)     |  [cotd](@ref real-cotd)    |  [cot](@ref real-cot)     |  [cotpi](@ref real-cotpi)   |
+         |  [cscd](@ref real-cscd)     |  [csc](@ref real-csc)     |  [cscpi](@ref real-cscpi)     |  [secd](@ref real-secd)    |  [sec](@ref real-sec)     |  [secpi](@ref real-secpi)   |
+         |  [sin](@ref real-sin)      |  [sinc](@ref real-sinc)    |  [sincos](@ref real-sincos)    |  [sincosd](@ref real-sincosd) |  [sincospi](@ref real-sincospi)|  [sincpi](@ref real-sincpi)  |
+         |  [sind](@ref real-sind)     |  [sinpi](@ref real-sinpi)   |  [tan](@ref real-tan)       |  [tand](@ref real-tand)    |  [tan](@ref real-tan)     |  [tanpi](@ref real-tanpi)   |
        </center>
 
           'pi' (resp. 'd') suffix indicates that the input is to be done in \f$\pi\f$ multiples (resp. degrees).
 
-          @ref sinc and @ref sincpi are 2 versions of the sinus cardinal function
+           [sinc](@ref real-sinc) and  [sincpi](@ref real-sincpi) are 2 versions of the sinus cardinal function
           (resp. \f$\frac{\sin x}{x}\f$ and \f$\frac{\sin \pi x}{\pi x}\f$).
 
-          @ref sincos,  @ref sincosd and  @ref sincospi allow the simultaneous
+           [sincos](@ref real-sincos),   [sincosd](@ref real-sincosd) and   [sincospi](@ref real-sincospi) allow the simultaneous
           computation of sine and cosine at lower cost.
 
-          @ref sec and @ref csc are the secant (inverse of the cosine) and cosecant
+           [sec](@ref real-sec) and  [csc](@ref real-csc) are the secant (inverse of the cosine) and cosecant
           (inverse of the sine)
 
            @par Example:
@@ -66,7 +66,7 @@ namespace boost { namespace simd
 
              - Pi<double>() is only an approximation of \f$\pi\f$ to 0.5 ulp and the reduction of the angle Pi<double>()
              between  \f$-\pi/4\f$ and  \f$\pi/4\f$  will lead to a
-             non zero value and @ref sin will return this small value  (namely 1.22464679914735e-16)
+             non zero value and  [sin](@ref real-sin) will return this small value  (namely 1.22464679914735e-16)
              as \f$\sin x \sim x\f$ for small values.
 
              - 1.0 is an exact double value and the reduction of the angle 1.0 between  \f$-0.25\f$ and  \f$0.25\f$
@@ -81,11 +81,11 @@ namespace boost { namespace simd
     - **Inverse trigonometric functors**
 
        <center>
-         | name        | name         | name        | name         | name         | name         |
-         |:-----------:|:------------:|:-----------:|:------------:|:------------:|:------------:|
-         | @ref acos   | @ref acosd   | @ref acospi | @ref acot    | @ref acotd   | @ref acsc    |
-         | @ref acscd  | @ref acscpi  | @ref asec   | @ref asecd   | @ref asecpi  | @ref asin    |
-         | @ref asind  | @ref asinpi  | @ref atan2d | @ref atan2   | @ref atan2d  | @ref atan2pi |
+         |                            |                              |                             |                             |                             |                              |
+         |:--------------------------:|:----------------------------:|:---------------------------:|:---------------------------:|:---------------------------:|:----------------------------:|
+         |  [acos](@ref real-acos)    |  [acosd](@ref real-acosd)    |  [acospi](@ref real-acospi) |  [acot](@ref real-acot)     |  [acotd](@ref real-acotd)   |  [acsc](@ref real-acsc)      |
+         |  [acscd](@ref real-acscd)  |  [acscpi](@ref real-acscpi)  |  [asec](@ref real-asec)     |  [asecd](@ref real-asecd)   |  [asecpi](@ref real-asecpi) |  [asin](@ref real-asin)      |
+         |  [asind](@ref real-asind)  |  [asinpi](@ref real-asinpi)  |  [atan2d](@ref real-atan2d) |  [atan2](@ref real-atan2)   |  [atan2d](@ref real-atan2d) |  [atan2pi](@ref real-atan2pi)|
        </center>
 
           'pi' (resp. 'd') suffix indicates that the return value  is in \f$\pi\f$ multiples (resp. degrees).
@@ -100,9 +100,9 @@ namespace boost { namespace simd
 
     - Conversion utilities
 
-       @ref indeg converts radian in degree
+        [indeg](@ref real-indeg) converts radian in degree
 
-       @ref inrad converts degree in radian
+        [inrad](@ref real-inrad) converts degree in radian
 
 
     - Reduction utilities
@@ -125,13 +125,13 @@ namespace boost { namespace simd
       \f$2^{18}\pi\f$  for double)
 
         - if (\f$|x|\f$ is in \f$[0, \pi/4]\f$) do nothing
-        - else if (\f$|x|\f$ is in \f$[0, \pi/2]\f$) use @ref rem_pio2_straight
-        - else if (\f$|x|\f$ is in \f$[0, 20\pi]\f$) use @ref rem_pio2_cephes
-        - else if (\f$|x|\f$ is in \f$[0, M\pi]\f$)  use @ref rem_pio2_medium
-        - else use @ref rem_pio2
+        - else if (\f$|x|\f$ is in \f$[0, \pi/2]\f$) use  [rem_pio2_straight](@ref real-rem_pio2_straight)
+        - else if (\f$|x|\f$ is in \f$[0, 20\pi]\f$) use  [rem_pio2_cephes](@ref real-rem_pio2_cephes)
+        - else if (\f$|x|\f$ is in \f$[0, M\pi]\f$)  use  [rem_pio2_medium](@ref real-rem_pio2_medium)
+        - else use  [rem_pio2](@ref real-rem_pio2)
 
 
-       There also exists @ref rem_2pi that only computes the reduction of the radian angle
+       There also exists  [rem_2pi](@ref real-rem_2pi) that only computes the reduction of the radian angle
        between \f$[-\pi, \pi]\f$
 
 

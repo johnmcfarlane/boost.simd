@@ -26,19 +26,19 @@ namespace boost { namespace simd
     - Direct hyperbolic functors
 
        <center>
-         |               |              |                |              |
-         |:-------------:|:------------:|:--------------:|:------------:|
-         | @ref cosh     | @ref coth    | @ref csch      | @ref sech    |
-         | @ref sinh     | @ref sinhc   | @ref sinhcosh  | @ref tanh    |
+         |                           |                            |                                |                            |
+         |:-------------------------:|:--------------------------:|:------------------------------:|:--------------------------:|
+         |  [cosh](@ref real-cosh)   |  [coth](@ref real-coth)    |  [csch](@ref real-csch)        |  [sech](@ref real-sech)    |
+         |  [sinh](@ref real-sinh)   |  [sinhc](@ref real-sinhc)  |  [sinhcosh](@ref real-sinhcosh)|  [tanh](@ref real-tanh)    |
        </center>
 
-          @ref sinhc is the hyperbolic sinus cardinal function
+           [sinhc](@ref real-sinhc) is the hyperbolic sinus cardinal function
           (\f$\sinh x/x\f$).
 
-          @ref sinhcosh  allows the simultaneous
+           [sinhcosh](@ref real-sinhcosh)  allows the simultaneous
           computation of hyperbolic sine and cosine at lower cost.
 
-          @ref sech and @ref csch are the hyperbolic secant (inverse of
+           [sech](@ref real-sech) and  [csch](@ref real-csch) are the hyperbolic secant (inverse of
           the hyperbolic cosine) and cosecant (inverse of the hyperbolic sine)
 
            @par Example:
@@ -52,10 +52,10 @@ namespace boost { namespace simd
     - Inverse hyperbolic functors
 
        <center>
-         |             |              |             |
-         |:-----------:|:------------:|:-----------:|
-         | @ref acosh  | @ref acoth   | @ref acsch  |
-         | @ref asech  | @ref asinh   | @ref atanh  |
+         |                            |                            |                            |
+         |:--------------------------:|:--------------------------:|:--------------------------:|
+         |  [acosh](@ref real-acosh)  |  [acoth](@ref real-acoth)  |  [acsch](@ref real-acsch)  |
+         |  [asech](@ref real-asech)  |  [asinh](@ref real-asinh)  |  [atanh](@ref real-atanh)  |
        </center>
 
          @par Example:

@@ -23,10 +23,10 @@ namespace boost { namespace simd
     stdlibc++ 11.
 
       <center>
-        |                |                |               |                |
-        |:--------------:|:--------------:|:-------------:|:--------------:|
-        | @ref erf       |  @ref erfc     | @ref erfcx    |   @ref gamma   |
-        | @ref gammaln   |  @ref signgam  | @ref stirling |                |
+        |                                |                                |                                  |                          |
+        |:------------------------------:|:------------------------------:|:--------------------------------:|:------------------------:|
+        |  [erf](@ref real-erf)          |   [erfc](@ref real-erfc)       |  [erfcx](@ref real-erfcx)        | [gamma](@ref real-gamma) |
+        |  [gammaln](@ref real-gammaln)  |   [signgam](@ref real-signgam) |  [stirling](@ref real-stirling)  |                          |
       </center>
 
   **/

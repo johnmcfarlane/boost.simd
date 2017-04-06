@@ -31,10 +31,10 @@ namespace boost { namespace simd
       - Bitwise operators
 
        <center>
-         |                    |                      |                      |                     |                     |
-         |:------------------:|:--------------------:|:--------------------:|:-------------------:|:-------------------:|
-         |@ref bitwise_and    | @ref bitwise_andnot  | @ref bitwise_cast    | @ref bitwise_notand | @ref bitwise_notor  |
-         |@ref bitwise_or     | @ref bitwise_ornot   | @ref bitwise_select  | @ref bitwise_xor    | @ref complement     |
+         |                                       |                                            |                                            |                                            |                                          |
+         |:-------------------------------------:|:------------------------------------------:|:------------------------------------------:|:------------------------------------------:|:----------------------------------------:|
+         | [bitwise_and](@ref real-bitwise_and)  | [bitwise_andnot](@ref real-bitwise_andnot) |  [bitwise_cast](@ref real-bitwise_cast)    |  [bitwise_notand](@ref real-bitwise_notand)|  [bitwise_notor](@ref real-bitwise_notor)|
+         | [bitwise_or](@ref real-bitwise_or)    | [bitwise_ornot](@ref real-bitwise_ornot)   |  [bitwise_select](@ref real-bitwise_select)|  [bitwise_xor](@ref real-bitwise_xor)      |  [complement](@ref real-complement)      |
        </center>
 
 
@@ -44,21 +44,21 @@ namespace boost { namespace simd
 
       - Bit manipulation, counts and locations
 
-       <center>
-         |                  |                  |                 |                  |                  |                     |
-         |:----------------:|:----------------:|:---------------:|:----------------:|:----------------:|:-------------------:|
-         | @ref bits        |  @ref clz        |   @ref ctz      |   @ref ffs       | @ref firstbitset |  @ref firstbitunset |
-         | @ref genmask     |  @ref genmaskc   |   @ref hi       |   @ref ilog2     | @ref lo          |  @ref popcnt        |
-         | @ref reversebits |  @ref swapbytes  | @ref twopower   |                  |                  |                     |
+        <center>
+         |                                       |                  |                 |                                |                           |                                      |
+         |:-------------------------------------:|:----------------------------------:|:------------------------------:|:-------------------------:|:------------------------------------:|:------------------------------------------:|
+         |  [bits](@ref real-bits)               |   [clz](@ref real-clz)             |  [ctz](@ref real-ctz)          | [ffs](@ref real-ffs)      | [firstbitset](@ref real-firstbitset) |   [firstbitunset](@ref real-firstbitunset) |
+         |  [genmask](@ref real-genmask)         |   [genmaskc](@ref real-genmaskc)   |  [hi](@ref real-hi)            | [ilog2](@ref real-ilog2)  | [lo](@ref real-lo)                   |   [popcnt](@ref real-popcnt)               |
+         |  [reversebits](@ref real-reversebits) |   [swapbytes](@ref real-swapbytes) |  [twopower](@ref real-twopower)|                           |                                      |                                            |
        </center>
 
       - Shifts and rotations
 
        <center>
-         |           |                 |                  |                  |           |
-         |:---------:|:---------------:|:----------------:|:----------------:|:---------:|
-         | @ref rol  | @ref ror        | @ref rrol        | @ref rror        | @ref rshl |
-         | @ref rshr | @ref shift_left | @ref shift_right | @ref shl         | @ref shr  |
+         |                        |                                      |                                     |                            |                         |
+         |:----------------------:|:------------------------------------:|:-----------------------------------:|:--------------------------:|:-----------------------:|
+         | [rol](@ref real-rol)   |  [ror](@ref real-ror)                | [rrol](@ref real-rrol)              |  [rror](@ref real-rror)    |  [rshl](@ref real-rshl) |
+         | [rshr](@ref real-rshr) |  [shift_left](@ref real-shift_left)  | [shift_right](@ref real-shift_right)|  [shl](@ref real-shl)      |  [shr](@ref real-shr)   |
        </center>
 
        shift_left and shift_right are logical shift, shl and shr arithmetic ones

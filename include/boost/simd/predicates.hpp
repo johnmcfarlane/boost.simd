@@ -19,22 +19,22 @@ namespace boost { namespace simd
     @defgroup group-predicates Predicates functions
 
       These functions provide scalar and SIMD algorithms for testing properties of values.
-      Tests such as checks for validity, infinity, sign and others are provided. As for @ref
+      Tests such as checks for validity, infinity, sign and others are provided. As for  [](@ref real-)
       group-boolean, these functions handle and return typed logical types.
 
     All these functions can be included individually or all of them just by including <boost/simd/predicates.hpp>
 
       - These predicates can be used through an operator
       <center>
-        |  name              |  operator  |  name        |   operator  |
-        |:---------------------:|:----:|:------------------:|:-----:|
-        | @ref is_equal         | ==   | @ref is_less_equal |  <=   |
-        | @ref is_greater_equal | >=   | @ref is_less       |  <    |
-        | @ref is_greater       | >    | @ref is_not_equal  |  !=   |
+        |  name                                            |  operator  |  name                                     |   operator  |
+        |:------------------------------------------------:|:----------:|:-----------------------------------------:|:-----------:|
+        |  [is_equal](@ref real-is_equal)                  | ==         |  [is_less_equal](@ref real-is_less_equal) |  <=         |
+        |  [is_greater_equal](@ref real-is_greater_equal)  | >=         |  [is_less](@ref real-is_less)             |  <          |
+        |  [is_greater](@ref real-is_greater)              | >          |  [is_not_equal](@ref real-is_not_equal)   |  !=         |
       </center>
 
          for floating entries negation as predicates as  is_not_greater(a, b) are not equivalent to
-         !is_greater(a, b) due to possible @ref Nan values;
+         !is_greater(a, b) due to possible  [](@ref real-)Nan values;
 
            @par Example:
 
@@ -50,18 +50,18 @@ namespace boost { namespace simd
         Their use often provides speed gain in SIMD mode.
 
        <center>
-        |                         |                                   |                       |                           |
-        |:-----------------------:|:---------------------------------:|:---------------------:|:-------------------------:|
-        | @ref is_denormal        | @ref is_equal_with_equal_nans     | @ref is_eqz           | @ref is_even              |
-        | @ref is_finite          | @ref is_flint                     | @ref is_gez           | @ref is_gtz               |
-        | @ref is_imag            | @ref isincluded_c                 | @ref isincluded       | @ref is_inf               |
-        | @ref is_invalid         | @ref is_lessgreater               | @ref is_lez           | @ref is_ltz               |
-        | @ref is_nan             | @ref is_negative                  | @ref is_nez           | @ref is_ngez              |
-        | @ref is_ngtz            | @ref is_nlez                      | @ref is_nltz          | @ref is_normal            |
-        | @ref is_not_denormal    | @ref is_not_equal_with_equal_nans | @ref is_not_greater   | @ref is_not_greater_equal |
-        | @ref is_not_imag        | @ref is_not_infinite              | @ref is_not_less_equal| @ref is_not_less          |
-        | @ref is_not_nan         | @ref is_not_real                  | @ref is_odd           | @ref is_ord               |
-        | @ref is_positive        | @ref is_real                      | @ref is_simd_logical  | @ref is_unord             |
+        |                                              |                                                                        |                                                  |                                                         |
+        |:--------------------------------------------:|:----------------------------------------------------------------------:|:------------------------------------------------:|:-------------------------------------------------------:|
+        |  [is_denormal](@ref real-is_denormal)        |  [is_equal_with_equal_nans](@ref real-is_equal_with_equal_nans)        |  [is_eqz](@ref real-is_eqz)                      |  [is_even](@ref real-is_even)                           |
+        |  [is_finite](@ref real-is_finite)            |  [is_flint](@ref real-is_flint)                                        |  [is_gez](@ref real-is_gez)                      |  [is_gtz](@ref real-is_gtz)                             |
+        |  [is_imag](@ref real-is_imag)                |  [isincluded_c](@ref real-isincluded_c)                                |  [isincluded](@ref real-isincluded)              |  [is_inf](@ref real-is_inf)                             |
+        |  [is_invalid](@ref real-is_invalid)          |  [is_lessgreater](@ref real-is_lessgreater)                            |  [is_lez](@ref real-is_lez)                      |  [is_ltz](@ref real-is_ltz)                             |
+        |  [is_nan](@ref real-is_nan)                  |  [is_negative](@ref real-is_negative)                                  |  [is_nez](@ref real-is_nez)                      |  [is_ngez](@ref real-is_ngez)                           |
+        |  [is_ngtz](@ref real-is_ngtz)                |  [is_nlez](@ref real-is_nlez)                                          |  [is_nltz](@ref real-is_nltz)                    |  [is_normal](@ref real-is_normal)                       |
+        |  [is_not_denormal](@ref real-is_not_denormal)|  [is_not_equal_with_equal_nans](@ref real-is_not_equal_with_equal_nans)|  [is_not_greater](@ref real-is_not_greater)      |  [is_not_greater_equal](@ref real-is_not_greater_equal) |
+        |  [is_not_imag](@ref real-is_not_imag)        |  [is_not_infinite](@ref real-is_not_infinite)                          |  [is_not_less_equal](@ref real-is_not_less_equal)|  [is_not_less](@ref real-is_not_less)                   |
+        |  [is_not_nan](@ref real-is_not_nan)          |  [is_not_real](@ref real-is_not_real)                                  |  [is_odd](@ref real-is_odd)                      |  [is_ord](@ref real-is_ord)                             |
+        |  [is_positive](@ref real-is_positive)        |  [is_real](@ref real-is_real)                                          |  [is_simd_logical](@ref real-is_simd_logical)    |  [is_unord](@ref real-is_unord)                         |
        </center>
 
          @par Example:

@@ -26,16 +26,16 @@ namespace boost { namespace simd
    magnitude comparison are provided.
 
 <center>
- |                      |                  |                  |                 |                 |
- |:--------------------:|:----------------:|:----------------:|:---------------:|:---------------:|
- | @ref bitfloating     | @ref bitinteger  | @ref bitofsign   | @ref copysign   | @ref eps        |
- | @ref exponentbits    | @ref exponent    | @ref fpclassify  | @ref frac       | @ref frexp      |
- | @ref ifrexp          | @ref ilogb       | @ref ldexp       | @ref mantissa   | @ref maxmag     |
- | @ref maxnum          | @ref maxnummag   | @ref minmag      | @ref minnum     | @ref minnummag  |
- | @ref modf            | @ref negate      | @ref negatenz    | @ref nextafter  | @ref next       |
- | @ref nextpow2        | @ref predecessor | @ref prev        | @ref safe_max   | @ref safe_min   |
- | @ref saturate        | @ref sign        | @ref signnz      | @ref successor  | @ref ulpdist    |
- | @ref ulp             |                  |                  |                 |                 |
+ |                                           |                                      |                                     |                                  |                                  |
+ |:-----------------------------------------:|:------------------------------------:|:-----------------------------------:|:--------------------------------:|:--------------------------------:|
+ |  [bitfloating](@ref real-bitfloating)     |  [bitinteger](@ref real-bitinteger)  |  [bitofsign](@ref real-bitofsign)   |  [copysign](@ref real-copysign)  |  [eps](@ref real-eps)            |
+ |  [exponentbits](@ref real-exponentbits)   |  [exponent](@ref real-exponent)      |  [fpclassify](@ref real-fpclassify) |  [frac](@ref real-frac)          |  [frexp](@ref real-frexp)        |
+ |  [ifrexp](@ref real-ifrexp)               |  [ilogb](@ref real-ilogb)            |  [ldexp](@ref real-ldexp)           |  [mantissa](@ref real-mantissa)  |  [maxmag](@ref real-maxmag)      |
+ |  [maxnum](@ref real-maxnum)               |  [maxnummag](@ref real-maxnummag)    |  [minmag](@ref real-minmag)         |  [minnum](@ref real-minnum)      |  [minnummag](@ref real-minnummag)|
+ |  [modf](@ref real-modf)                   |  [negate](@ref real-negate)          |  [negatenz](@ref real-negatenz)     |  [nextafter](@ref real-nextafter)|  [next](@ref real-next)          |
+ |  [nextpow2](@ref real-nextpow2)           |  [predecessor](@ref real-predecessor)|  [prev](@ref real-prev)             |  [safe_max](@ref real-safe_max)  |  [safe_min](@ref real-safe_min)  |
+ |  [saturate](@ref real-saturate)           |  [sign](@ref real-sign)              |  [signnz](@ref real-signnz)         |  [successor](@ref real-successor)|  [ulpdist](@ref real-ulpdist)    |
+ |  [ulp](@ref real-ulp)                     |                                      |                                     |                                  |                                  |
 </center>
   **/
 

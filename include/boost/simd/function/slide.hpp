@@ -22,9 +22,13 @@
 
     @par Description
 
-      @code
-      ///@{
-      @endcode
+      1. @code
+         template<std::size_t N> Value slide(Value const& x, Value const& y);
+         @endcode
+
+      2. @code
+         template<std::size_t N> Value slide(Value const& x);
+         @endcode
 
     @par Semantic:
 

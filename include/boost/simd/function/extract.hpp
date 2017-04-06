@@ -25,6 +25,7 @@
 
       @code
       template<typename Value, typename Offset>
+      scalar_of_t<Value> extract(Value const& v, Offset const& o);
       @endcode
 
     @par Semantic

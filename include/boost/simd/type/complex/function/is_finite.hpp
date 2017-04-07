@@ -29,7 +29,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) is_finite
+    @see ( %real ) [is_finite](@ref  real-is_finite)
 
     @par Example:
 

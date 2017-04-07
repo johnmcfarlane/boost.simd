@@ -70,7 +70,7 @@ namespace boost { namespace simd { namespace cmplx
       - If z is (\f$\infty\f$,NaN), the result is(\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (NaN,+0), the result is(NaN,+0)
 
-    @see ( %real ) sinh
+    @see ( %real ) [sinh](@ref  real-sinh)
 
     @par Example:
 

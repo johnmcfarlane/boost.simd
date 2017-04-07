@@ -41,7 +41,7 @@ namespace boost { namespace simd
 
     - by choice pow(0, 0) return 1.
 
-    @see ( %real ) pow
+    @see ( %real ) [pow](@ref  real-pow)
 
      @par Example:
 

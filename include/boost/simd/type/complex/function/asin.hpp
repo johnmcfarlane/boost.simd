@@ -48,7 +48,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - The mathematical definition of the principal value of arc sine is \f$-i \log(iz+\sqrt{1-z^2})\f$
 
-    @see ( %real ) asin
+    @see ( %real ) [asin](@ref  real-asin)
 
     @par Example:
 

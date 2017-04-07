@@ -30,7 +30,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) exp_i
+    @see ( %real ) [exp_i](@ref  real-exp_i)
 
     @par Example:
 

@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) minus
+    @see ( %real ) [minus](@ref  real-minus)
 
     @par Example:
 

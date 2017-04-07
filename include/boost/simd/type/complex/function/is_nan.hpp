@@ -29,7 +29,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) is_nan
+    @see ( %real ) [is_nan](@ref  real-is_nan)
 
     @par Example:
 

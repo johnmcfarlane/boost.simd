@@ -52,7 +52,7 @@ namespace boost { namespace simd { namespace cmplx
 
      - The mathematical definition of the principal value of the inverse hyperbolic sine is  \f$\log(z + \sqrt{1+z^2}\f$
 
-    @see ( %real ) asinh
+    @see ( %real ) [asinh](@ref  real-asinh)
 
     @par Example:
 

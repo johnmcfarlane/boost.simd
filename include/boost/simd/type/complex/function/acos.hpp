@@ -67,7 +67,7 @@ namespace boost { namespace simd
         - If z is (NaN,\f$\infty\f$), the result is (NaN,\f$-\infty\f$)
         - If z is (NaN,NaN), the result is (NaN,NaN))
 
-    @see ( %real ) acos, ( %complex ) [acosh](@ref complex-acosh),  [asin](@ref complex-asin), [atan](@ref complex-atan)
+    @see ( %real ) [acos](@ref  real-acos),  ( %complex ) [acosh](@ref complex-acosh),  [asin](@ref complex-asin), [atan](@ref complex-atan)
 
     @par Example:
 

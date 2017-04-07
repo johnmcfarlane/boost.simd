@@ -47,7 +47,7 @@ namespace boost { namespace simd
     @see pow, log, log10
 
 
-    @see ( %real ) exp
+    @see ( %real ) [exp](@ref  real-exp)
 
     @par Example:
 

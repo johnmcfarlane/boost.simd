@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) mul_mi
+    @see ( %real ) [mul_mi](@ref  real-mul_mi)
 
     @par Example:
 

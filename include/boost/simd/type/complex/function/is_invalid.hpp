@@ -28,7 +28,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) is_invalid
+    @see ( %real ) [is_invalid](@ref  real-is_invalid)
 
     @par Example:
 

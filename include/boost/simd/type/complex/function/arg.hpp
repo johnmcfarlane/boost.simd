@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace cmplx
 
       - The computation use @ref atan2, the pedantic version uses @ref  atan2 with pedantic_ decorator
 
-    @see ( %real ) arg
+    @see ( %real ) [arg](@ref  real-arg)
 
     @par Example:
 

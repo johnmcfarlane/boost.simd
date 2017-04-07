@@ -42,7 +42,7 @@ namespace boost { namespace simd { namespace cmplx
 
     - The mathematical definition of the principal value of inverse tangent is \f$ \frac12 i (\log(1-iz)-\log(1+iz)))\f$
 
-    @see ( %real ) atan
+    @see ( %real ) [atan](@ref  real-atan)
 
     @par Example:
 

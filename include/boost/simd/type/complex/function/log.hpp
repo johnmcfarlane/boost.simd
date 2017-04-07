@@ -65,7 +65,7 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
         - If z is (NaN,\f$\infty\f$), the result is (\f$\infty\f$,NaN)
 
-    @see ( %real ) log
+    @see ( %real ) [log](@ref  real-log)
 
     @par Example:
 

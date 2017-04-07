@@ -34,7 +34,7 @@ namespace boost { namespace simd
 
       - Mathematical definition of the tangent is \f$ i\frac{e^{-iz}-e^{iz}}{e^{-i}z+e^{iz}}\f$
 
-    @see ( %real ) tan
+    @see ( %real ) [tan](@ref  real-tan)
 
     @par Example:
 

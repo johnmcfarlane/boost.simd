@@ -28,7 +28,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) conj
+    @see ( %real ) [conj](@ref  real-conj)
 
     @par Example:
 

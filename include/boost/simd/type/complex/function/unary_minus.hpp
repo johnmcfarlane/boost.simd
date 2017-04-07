@@ -29,7 +29,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) unary_minus
+    @see ( %real ) [unary_minus](@ref  real-unary_minus)
 
     @par Example:
 

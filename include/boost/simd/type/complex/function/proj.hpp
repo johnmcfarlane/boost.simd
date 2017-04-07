@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) proj
+    @see ( %real ) [proj](@ref  real-proj)
 
     @par Example:
 

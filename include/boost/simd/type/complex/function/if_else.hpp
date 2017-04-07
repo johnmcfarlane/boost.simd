@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace cmplx
 
     @pre If both second and third parameters are pack, they must have same cardinal.
 
-    @see ( %real ) if_else
+    @see ( %real ) [if_else](@ref  real-if_else)
 
     @par Example:
 

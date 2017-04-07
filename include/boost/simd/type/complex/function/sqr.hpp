@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) sqr
+    @see ( %real ) [sqr](@ref  real-sqr)
 
     @par Example:
 

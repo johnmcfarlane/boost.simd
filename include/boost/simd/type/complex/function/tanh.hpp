@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace cmplx
 
      - Mathematical definition of hyperbolic tangent is  \f$\frac{e^{-z}-e^{z}}{e^{-z}+e^{z}}\f$
 
-    @see ( %real ) tanh
+    @see ( %real ) [tanh](@ref  real-tanh)
 
     @par Example:
 

@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace cmplx
      - The computation use @ref hypot, the pedantic version uses @ref hypot with pedantic_ decorator
 
 
-    @see ( %real ) abs, sqr_abs,  ( %complex ) [sqr_abs](@ref complex-sqr_abs)
+    @see ( %real ) [abs](@ref  real-abs), [sqr_abs](@ref  real-sqr_abs),  ( %complex ) [sqr_abs](@ref complex-sqr_abs)
 
     @par Example:
 

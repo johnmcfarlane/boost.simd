@@ -31,7 +31,7 @@ namespace boost { namespace simd
       - This function is a lot faster than complex [abs](@ref complex-abs) and is well
         suited for comparisons if overflow has no risk to occur.
 
-    @see ( %real ) abs, sqr_abs,  ( %complex ) [abs](@ref complex-abs)
+    @see ( %real ) [abs](@ref  real-abs), [sqr_abs](@ref  real-sqr_abs),  ( %complex ) [abs](@ref complex-abs)
 
     @par Example:
 

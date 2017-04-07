@@ -57,7 +57,7 @@ namespace boost { namespace simd { namespace cmplx
          - If z is (Nan, y),  the result is (NaN,NaN)
          - If z is (x, \f$\infty\f$), the result is (\f$\infty, \infty\f$)
 
-    @see ( %real ) sqrt
+    @see ( %real ) [sqrt](@ref  real-sqrt)
 
     @par Example:
 

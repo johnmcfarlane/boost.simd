@@ -68,7 +68,7 @@ namespace boost { namespace simd { namespace cmplx
     @see pow, exp, log
 
 
-    @see ( %real ) log10
+    @see ( %real ) [log10](@ref  real-log10)
 
     @par Example:
 

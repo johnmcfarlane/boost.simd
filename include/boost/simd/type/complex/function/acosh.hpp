@@ -51,7 +51,7 @@ namespace boost { namespace simd { namespace cmplx
 
      - The mathematical definition of the principal value of the inverse hyperbolic cosine is \f$\log(z + \sqrt{z+1} \sqrt{z-1})\f$
 
-    @see ( %real ) acosh
+    @see ( %real ) [acosh](@ref  real-acosh)
 
     @par Example:
 

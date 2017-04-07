@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace cmplx
 
 
 
-    @see ( %real ) multiplies
+    @see ( %real ) [multiplies](@ref  real-multiplies)
 
     @par Example:
 

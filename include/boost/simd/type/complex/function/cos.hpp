@@ -31,7 +31,7 @@ namespace boost { namespace simd
      - special cases are handled as if the operation is implemented by `bs::cosh(i*z)`,
        where i is the imaginary unit.
 
-    @see ( %real ) cos
+    @see ( %real ) [cos](@ref  real-cos)
 
     @par Example:
 

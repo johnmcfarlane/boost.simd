@@ -65,7 +65,7 @@ namespace boost { namespace simd { namespace cmplx
       - If z is (NaN,+y) (for any finite non-zero y), the result is(NaN,NaN)
       - If z is (NaN,NaN), the result is(NaN,NaN)
 
-    @see ( %real ) cosh
+    @see ( %real ) [cosh](@ref  real-cosh)
 
     @par Example:
 

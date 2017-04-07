@@ -28,7 +28,7 @@ namespace boost { namespace simd
     @endcode
 
 
-    @see ( %real ) is_eqz
+    @see ( %real ) [is_eqz](@ref  real-is_eqz)
 
     @par Example:
 

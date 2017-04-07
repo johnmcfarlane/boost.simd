@@ -69,7 +69,7 @@ namespace boost { namespace simd { namespace cmplx
         - If z is (NaN,\f$\infty\f$), the result is (\f$\pm0, \pi/2\f$) (the sign of the real part is unspecified)
         - If z is (NaN,NaN), the result is (NaN,NaN)
 
-    @see ( %real ) atanh
+    @see ( %real ) [atanh](@ref  real-atanh)
 
     @par Example:
 

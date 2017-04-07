@@ -11,37 +11,57 @@
 #ifndef BOOST_SIMD_CONSTANT_FALSE_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_FALSE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-False False (function object)
 
-    Generates a value of the chosen type equals to @c false.
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/false.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto false();
+        @endcode
+
+    2.  @code
+        template<typename T> auto false( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the False constant.
 
 
-    @par Header <boost/simd/constant/false.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
-    For type @c T modeling Logical
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
     T r = False<T>();
     @endcode
-
     is equivalent to:
-
     @code
     T r = false;
     @endcode
 
-    @return A value of type @c T equals to @c false.
+    2.  A value of type @c T so that:
+    @code
+    T x, r = False( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = False<T>();
+    @endcode
 
-    @see functional::false
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T False();
-} }
-#endif
 
 #include <boost/simd/constant/scalar/false.hpp>
 #include <boost/simd/constant/simd/false.hpp>

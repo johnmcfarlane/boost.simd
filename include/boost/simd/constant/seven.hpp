@@ -11,30 +11,54 @@
 #ifndef BOOST_SIMD_CONSTANT_SEVEN_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_SEVEN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Seven Seven (function object)
 
-    Generate the constant seven.
+    Generates a value of the chosen type which all bits are set to 1.
 
-    @return The Seven constant for the proper type
+    @headerref{<boost/simd/constant/seven.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto seven();
+        @endcode
+
+    2.  @code
+        template<typename T> auto seven( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Seven constant.
+
+
+    @par Parameters
+
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
+
+    @par Return Value
+    1.  A value of type @c T so that:
+    @code
+    T r = Seven<T>();
+    @endcode
+
+
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Seven( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Seven<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Seven();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generate the  constant seven.
-
-      @return The Seven constant for the proper type
-    **/
-    Value Seven();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/seven.hpp>
 #include <boost/simd/constant/simd/seven.hpp>

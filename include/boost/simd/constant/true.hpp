@@ -11,19 +11,54 @@
 #ifndef BOOST_SIMD_CONSTANT_TRUE_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_TRUE_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-True True (function object)
 
-    Generate the constant true.
+    Generates a value of the chosen type which all bits are set to 1.
 
-    @return The True constant for the proper type
+    @headerref{<boost/simd/constant/true.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto true();
+        @endcode
+
+    2.  @code
+        template<typename T> auto true( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the True constant.
+
+
+    @par Parameters
+
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
+
+    @par Return Value
+    1.  A value of type @c T so that:
+    @code
+    T r = True<T>();
+    @endcode
+
+
+    2.  A value of type @c T so that:
+    @code
+    T x, r = True( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = True<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T True();
-} }
-#endif
 
 #include <boost/simd/constant/scalar/true.hpp>
 #include <boost/simd/constant/simd/true.hpp>

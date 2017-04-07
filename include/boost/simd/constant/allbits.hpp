@@ -24,14 +24,14 @@
     @par Description
 
     1.  @code
-        template<typename Type> auto allbits();
+        template<typename T> auto allbits();
         @endcode
 
     2.  @code
-        template<typename Type> auto allbits( boost::simd::as_<Type> const& target );
+        template<typename T> auto allbits( boost::simd::as_<T> const& target );
         @endcode
 
-    1. and 2.  return a value of type @c Type containing the Allbits constant.
+    1. and 2.  return a value of type @c T containing the Allbits constant.
 
 
     @par Parameters
@@ -41,7 +41,7 @@
     | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
     @par Return Value
-    1.  A value of type @c Type so that:
+    1.  A value of type @c T so that:
     @code
     T r = Allbits<T>();
     @endcode
@@ -55,7 +55,7 @@
          T r = T(~0);
          @endcode
 
-    2.  A value of type @c Type so that:
+    2.  A value of type @c T so that:
     @code
     T x, r = Allbits( boost::simd::as(x));
     @endcode
@@ -65,7 +65,7 @@
     @endcode
 
     @par Requirements
-    - **Type** models Vectorizable
+    - **T** models Vectorizable
   **/
 
 #include <boost/simd/constant/scalar/allbits.hpp>

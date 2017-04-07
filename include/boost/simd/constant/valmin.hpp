@@ -11,54 +11,54 @@
 #ifndef BOOST_SIMD_CONSTANT_VALMIN_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_VALMIN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Valmin Valmin (function object)
 
-    Generate the minimum finite representable value of a given type as a constant.
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/valmin.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto valmin();
+        @endcode
+
+    2.  @code
+        template<typename T> auto valmin( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Valmin constant.
 
 
-    @par Header <boost/simd/constant/valmin.hpp>
+    @par Parameters
 
-    @par Semantic
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
-    For any type @c T,
-
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
-    T x = Valmin<T>();
+    T r = Valmin<T>();
     @endcode
-
     return the minimum finite representable value for this type.
 
-    @return The minimum finite representable value of the input type
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Valmin( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Valmin<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Valmin();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-
-      Generate the minimum representable value of a given type as a constant.
-
-      @par Semantic
-
-      For any type @c T,
-
-      @code
-      T x = valmin(as(T{}));
-      @endcode
-
-      return the minimum representable value for this type.
-
-      @return The minimum representable value of the input type
-    **/
-    Value Valmin();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/valmin.hpp>
 #include <boost/simd/constant/simd/valmin.hpp>

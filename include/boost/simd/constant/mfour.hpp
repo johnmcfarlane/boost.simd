@@ -11,30 +11,54 @@
 #ifndef BOOST_SIMD_CONSTANT_MFOUR_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_MFOUR_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Mfour Mfour (function object)
 
-    Generate the constant mfour.
+    Generates a value of the chosen type which all bits are set to 1.
 
-    @return The Mfour constant for the proper type
+    @headerref{<boost/simd/constant/mfour.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto mfour();
+        @endcode
+
+    2.  @code
+        template<typename T> auto mfour( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Mfour constant.
+
+
+    @par Parameters
+
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
+
+    @par Return Value
+    1.  A value of type @c T so that:
+    @code
+    T r = Mfour<T>();
+    @endcode
+
+
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Mfour( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Mfour<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Mfour();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generate the  constant mfour.
-
-      @return The Mfour constant for the proper type
-    **/
-    Value Mfour();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/mfour.hpp>
 #include <boost/simd/constant/simd/mfour.hpp>

@@ -11,62 +11,57 @@
 #ifndef BOOST_SIMD_CONSTANT_EIGHT_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_EIGHT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Eight Eight (function object)
 
-    Generates a value of the chosen type equals to eight.
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/eight.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto eight();
+        @endcode
+
+    2.  @code
+        template<typename T> auto eight( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Eight constant.
 
 
-    @par Header <boost/simd/constant/eight.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
     T r = Eight<T>();
     @endcode
-
     is equivalent to:
-
     @code
     T r = static_cast<T>(8);
     @endcode
 
-    @return A value of type @c T equals to eight.
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Eight( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Eight<T>();
+    @endcode
 
-    @see functional::eight
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Eight();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generates a value of the chosen type equals to eight.
-
-      @par Semantic:
-
-      For any value @c x of type @c T:
-      @code
-      T r = simd::functional::eight( boost::simd::as(x));
-      @endcode
-
-      is equivalent to:
-
-      @code
-      T r = simd::Eight<T>();
-      @endcode
-
-      @return A value of type @c T containing the value eight.
-
-      @see Eight
-    **/
-    Value Eight();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/eight.hpp>
 #include <boost/simd/constant/simd/eight.hpp>

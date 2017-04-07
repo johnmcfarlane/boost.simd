@@ -11,66 +11,58 @@
 #ifndef BOOST_SIMD_CONSTANT_BITINCREMENT_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_BITINCREMENT_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Bitincrement Bitincrement (function object)
 
-    Generates a value of the chosen type which represents the minimal increment value for @c T.
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/bitincrement.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto bitincrement();
+        @endcode
+
+    2.  @code
+        template<typename T> auto bitincrement( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Bitincrement constant.
 
 
-    @par Header <boost/simd/constant/bitincrement.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
-    For any type @c T,
+    @par Return Value
+    1.  A value of type @c T so that:
+    @code
+    T r = Bitincrement<T>();
+    @endcode
+    generates a value so that, for any value @c x of type @c T,
+    @code
+    x + r == simd::nextafter(x, 1);
+    @endcode
+    evaluates to @c true.
 
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Bitincrement( boost::simd::as(x));
+    @endcode
+    is equivalent to:
     @code
     T r = Bitincrement<T>();
     @endcode
 
-    generates a value so that, for any value @c x of type @c T,
-
-    @code
-    x + r == simd::nextafter(x, 1);
-    @endcode
-
-    evaluates to @c true.
-
-    @return A value of type @c T containing the minimal increment value for @c T
-
-    @see functional::bitincrement
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Bitincrement();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generates a value of the chosen type which represents the minimal increment value for @c T.
-
-      @par Semantic:
-
-      For any value @c x of type @c T:
-      @code
-      T r = simd::functional::bitincrement( boost::simd::as(x));
-      @endcode
-
-      is similar to:
-
-      @code
-      T r = simd::Bitincrement<T>();
-      @endcode
-
-      @return A value of type @c T containing the minimal increment value for @c T
-
-      @see Bitincrement
-    **/
-    Value Bitincrement();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/bitincrement.hpp>
 #include <boost/simd/constant/simd/bitincrement.hpp>

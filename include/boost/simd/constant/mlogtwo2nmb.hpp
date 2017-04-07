@@ -11,50 +11,57 @@
 #ifndef BOOST_SIMD_CONSTANT_MLOGTWO2NMB_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_MLOGTWO2NMB_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
+  @ingroup group-constant
+  @defgroup constant-Mlogtwo2nmb Mlogtwo2nmb (function object)
 
-    @ingroup group-constant
+    Generates a value of the chosen type which all bits are set to 1.
 
-    Generates constant Mlogtwo2nmb.
+    @headerref{<boost/simd/constant/mlogtwo2nmb.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto mlogtwo2nmb();
+        @endcode
+
+    2.  @code
+        template<typename T> auto mlogtwo2nmb( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Mlogtwo2nmb constant.
 
 
-    @par Header <boost/simd/constant/mlogtwo2nmb.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
     T r = Mlogtwo2nmb<T>();
     @endcode
-
     is similar to:
-
     @code
       r =  -log(exp2(T(Nbmantissabits<T>())));
     @endcode
 
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Mlogtwo2nmb( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Mlogtwo2nmb<T>();
+    @endcode
 
-**/
-  template<typename T> T Mlogtwo2nmb();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-
-
-      Generates constant Mlogtwo2nmb.
-
-      Generate the  constant mlogtwo2nmb.
-
-      @return The Mlogtwo2nmb constant for the proper type
-    **/
-    const boost::dispatch::functor<tag::mlogtwo2nmb_> mlogtwo2nmb = {};
-  }
-} }
-#endif
+    @par Requirements
+    - **T** models Vectorizable
+  **/
 
 #include <boost/simd/constant/scalar/mlogtwo2nmb.hpp>
 #include <boost/simd/constant/simd/mlogtwo2nmb.hpp>

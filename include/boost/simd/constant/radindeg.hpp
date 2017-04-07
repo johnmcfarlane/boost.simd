@@ -11,54 +11,58 @@
 #ifndef BOOST_SIMD_CONSTANT_RADINDEG_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_RADINDEG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
+  @ingroup group-constant
+  @defgroup constant-Radindeg Radindeg (function object)
 
-    @ingroup group-constant
+    Generates a value of the chosen type which all bits are set to 1.
 
-    Constant Radindeg : Degree in Radian multiplier, \f$\frac\pi{180}\f$.
+    @headerref{<boost/simd/constant/radindeg.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto radindeg();
+        @endcode
+
+    2.  @code
+        template<typename T> auto radindeg( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Radindeg constant.
 
 
-    @par Header <boost/simd/constant/radindeg.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
-    For type T:
+    @par Return Value
+    1.  A value of type @c T so that:
+    @code
+    T r = Radindeg<T>();
+    @endcode
+    is similar to:
+    @code
+    T r = Pi<T>()/Ratio<T>(180);
+    @endcode
+    @see  inrad, indeg, Radindegr, Deginrad
 
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Radindeg( boost::simd::as(x));
+    @endcode
+    is equivalent to:
     @code
     T r = Radindeg<T>();
     @endcode
 
-    is similar to:
-
-    @code
-    T r = Pi<T>()/Ratio<T>(180);
-    @endcode
-
-    @see  inrad, indeg, Radindegr, Deginrad
-    @return a value of type T
-
-**/
-  template<typename T> T Radindeg();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-
-
-      Constant Radindeg : Degree in Radian multiplier, \f$\frac{180}\pi\f$.
-
-      Generate the  constant radindeg.
-
-      @return The Radindeg constant for the proper type
-    **/
-    Value Radindeg();
-  }
-} }
-#endif
+    @par Requirements
+    - **T** models Vectorizable
+  **/
 
 #include <boost/simd/constant/scalar/radindeg.hpp>
 #include <boost/simd/constant/simd/radindeg.hpp>

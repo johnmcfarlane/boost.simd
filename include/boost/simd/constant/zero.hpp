@@ -11,45 +11,57 @@
 #ifndef BOOST_SIMD_CONSTANT_ZERO_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_ZERO_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Zero Zero (function object)
 
-    Generate  value 0
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/zero.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto zero();
+        @endcode
+
+    2.  @code
+        template<typename T> auto zero( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Zero constant.
 
 
-    @par Header <boost/simd/constant/zero.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
     T r = Zero<T>();
     @endcode
-
     is similar to:
-
     @code
     T r = T(0);
     @endcode
 
-    @return The Zero constant for the proper type
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Zero( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Zero<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Zero();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generate the  constant zero.
-
-      @return The Zero constant for the proper type
-    **/
-    Value Zero();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/zero.hpp>
 #include <boost/simd/constant/simd/zero.hpp>

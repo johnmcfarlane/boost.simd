@@ -11,46 +11,57 @@
 #ifndef BOOST_SIMD_CONSTANT_PI_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_PI_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-Pi Pi (function object)
 
-    Generate value \f$\pi\f$ that is the half length of a circle of radius one
-    ... in normal temperature and pressure conditions.
+    Generates a value of the chosen type which all bits are set to 1.
+
+    @headerref{<boost/simd/constant/pi.hpp>}
+
+    @par Description
+
+    1.  @code
+        template<typename T> auto pi();
+        @endcode
+
+    2.  @code
+        template<typename T> auto pi( boost::simd::as_<T> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c T containing the Pi constant.
 
 
-    @par Header <boost/simd/constant/pi.hpp>
+    @par Parameters
 
-    @par Semantic:
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
 
+    @par Return Value
+    1.  A value of type @c T so that:
     @code
     T r = Pi<T>();
     @endcode
-
     is similar to:
-
     @code
     T r = T(4*atan(1));
     @endcode
 
-    @return The Pi constant for the proper type
+    2.  A value of type @c T so that:
+    @code
+    T x, r = Pi( boost::simd::as(x));
+    @endcode
+    is equivalent to:
+    @code
+    T r = Pi<T>();
+    @endcode
+
+    @par Requirements
+    - **T** models Vectorizable
   **/
-  template<typename T> T Pi();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generate the  constant pi.
-
-      @return The Pi constant for the proper type
-    **/
-    Value Pi();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/pi.hpp>
 #include <boost/simd/constant/simd/pi.hpp>

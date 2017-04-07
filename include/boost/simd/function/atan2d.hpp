@@ -30,7 +30,7 @@
       For every parameters of same floating type
       `atan2d(y, x)` is similar  to: `indeg(atan2(y, x))`
 
-    @see atan2,  atan2pi
+    @see ( %real ) [atan2](@ref real-atan2), [atan2pi](@ref real-atan2pi)
 
     @par Example:
 

@@ -31,8 +31,7 @@
       returns the arc @c r in the interval  \f$[-0.5, 0.5[\f$
       such that <tt>tanpi(r) == x</tt>.
 
-    @see atan2, atan2d, atand, atan, tanpi
-
+    @see ( %real ) [atan2](@ref real-atan2), [atan2d](@ref real-atan2d), [atand](@ref real-atand), [atan](@ref real-atan), [tanpi](@ref real-tanpi)
 
     @par Example:
 

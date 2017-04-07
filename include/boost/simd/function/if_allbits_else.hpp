@@ -25,7 +25,7 @@
       Value1 if_allbits_else(Value0 const& c, Value1 const& f);
       @endcode
 
-    @see genmask, Allbits, Nan
+    @see ( %real ) [genmask](@ref real-genmask), [Allbits](@ref constant-Allbits), [Nan](@ref constant-Nan)
 
     @par Example:
 

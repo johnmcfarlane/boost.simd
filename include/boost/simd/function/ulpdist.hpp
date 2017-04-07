@@ -72,7 +72,7 @@
     \arg  @c ulpdist(1.0,1-Eps\<double\>())==0.5
     \arg  @c ulpdist(double(Pi\<float\>()),Pi\<double\>())==9.84293e+07
 
-    @see ulp, Eps, eps
+    @see ( %real ) [ulp](@ref real-ulp), [Eps](@ref constant-Eps), [eps](@ref real-eps)
 
     @par Example:
 

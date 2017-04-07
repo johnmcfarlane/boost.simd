@@ -27,7 +27,7 @@
       as_logical_t<Value0> logical_not(Value0 const& x, Value1 const& y);
       @endcode
 
-    @see logical_notor,  logical_xor, logical_andnot,  logical_notand,  logical_ornot, logical_and,  logical_or
+    @see ( %real ) [logical_notor](@ref real-logical_notor), [logical_xor](@ref real-logical_xor), [logical_andnot](@ref real-logical_andnot), [logical_notand](@ref real-logical_notand), [logical_ornot](@ref real-logical_ornot), [logical_and](@ref real-logical_and), [logical_or](@ref real-logical_or)
 
     @par Example:
 

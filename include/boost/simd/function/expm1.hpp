@@ -33,8 +33,7 @@
 
     - result is accurate even for @c x of small modulus
 
-    @see exp
-
+    @see ( %real ) [exp](@ref real-exp)
 
     @par Example:
 

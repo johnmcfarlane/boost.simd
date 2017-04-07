@@ -29,8 +29,7 @@
 
     This function is not defined for floating entries
 
-    @see  ilog2
-
+    @see ( %real ) [ilog2](@ref real-ilog2)
 
     @par Example:
 

@@ -30,7 +30,7 @@
 
       - std_ for floating entries calls the stdlibc++ function std::fmin.
 
-    @see min, minmag, minnummag
+    @see ( %real ) [min](@ref real-min), [minmag](@ref real-minmag), [minnummag](@ref real-minnummag)
 
     @par Example:
 

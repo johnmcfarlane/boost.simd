@@ -43,7 +43,7 @@
     else r = x;
     @endcode
 
-    @see Minf, Inf, Valmax, Valmin
+    @see ( %real ) [Minf](@ref constant-Minf), [Inf](@ref constant-Inf), [Valmax](@ref constant-Valmax), [Valmin](@ref constant-Valmin)
 
     @par Note
 

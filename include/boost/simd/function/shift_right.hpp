@@ -30,7 +30,8 @@
     @par Note:
       - on many architectures a scalar second parameter results in a much faster call
 
-    @see  shift_left, shr, rshl, rshr, rol, ror
+    @see ( %real ) [shift_left](@ref real-shift_left), [shr](@ref real-shr), [rshl](@ref real-rshl), [rshr](@ref real-rshr), [rol](@ref real-rol), [ror](@ref real-ror)
+
     @par Example:
 
       @snippet shift_right.cpp shift_right

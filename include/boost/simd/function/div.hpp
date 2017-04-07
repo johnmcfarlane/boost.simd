@@ -37,7 +37,7 @@
     namespace booost::simd) and provides the same result as if the function object whose
     option is the name was applied to the floating division of the parameters.
 
-    @see divides, rec
+    @see ( %real ) [divides](@ref real-divides), [rec](@ref real-rec)
 
     @par Example:
 

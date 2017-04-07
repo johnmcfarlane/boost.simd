@@ -29,8 +29,7 @@
 
        - pedantic_     is similar to Invpi<T>*pedantic_(acos)(x);
 
-    @see acos, acospi, cosd
-
+    @see ( %real ) [acos](@ref real-acos), [acospi](@ref real-acospi), [cosd](@ref real-cosd)
 
     @par Example:
 

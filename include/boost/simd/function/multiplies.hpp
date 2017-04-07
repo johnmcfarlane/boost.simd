@@ -31,7 +31,7 @@
 
      - `saturated_` (See @ref group-decorator) computes the saturated product.
 
-    @see minus, divides, plus
+    @see ( %real ) [minus](@ref real-minus), [divides](@ref real-divides), [plus](@ref real-plus)
 
     @par Example:
 

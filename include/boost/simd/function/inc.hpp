@@ -29,7 +29,7 @@
 
      - saturated_ ensures that @c saturated_(inc)(x) will never be strictly
      less than @c x, avoiding the wrap around from @ref Valmax to
-    @see plus, dec, minus
+    @see ( %real ) [plus](@ref real-plus), [dec](@ref real-dec), [minus](@ref real-minus)
 
     @par Example:
 

@@ -40,7 +40,7 @@
     arithmetic operators and using the @ref rec function or @ref shift_right function
     can be sometimes handy to gain some cycles.
 
-    @see div, rem, rec, shift_right
+    @see ( %real ) [div](@ref real-div), [rem](@ref real-rem), [rec](@ref real-rec), [shift_right](@ref real-shift_right)
 
     @par Example:
 

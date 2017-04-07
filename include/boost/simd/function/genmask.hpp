@@ -26,7 +26,7 @@
 
       @endcode
 
-    @see genmaskc
+    @see ( %real ) [genmaskc](@ref real-genmaskc)
 
     @par Example:
 

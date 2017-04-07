@@ -42,7 +42,7 @@
 
     This can be corrected using the pedantic_ decorator that ensures the standard behaviour at a cost.
 
-    @see min,  maxnum, maxnummag, maxmag
+    @see ( %real ) [min](@ref real-min), [maxnum](@ref real-maxnum), [maxnummag](@ref real-maxnummag), [maxmag](@ref real-maxmag)
 
     @par Example:
 

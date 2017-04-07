@@ -29,7 +29,7 @@
 
     - saturated_ for integer entries ensure that sqr(x) is never strictly less than x
 
-    @see sqrt, sqr_abs
+    @see ( %real ) [sqrt](@ref real-sqrt), [sqr_abs](@ref real-sqr_abs)
 
     @par Example:
 

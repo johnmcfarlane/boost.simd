@@ -26,7 +26,7 @@
       std::pair<IEEEValue, IEEEValue> sinhcosh(IEEEValue const& x);
       @endcode
 
-    @see  sinh, cosh
+    @see ( %real ) [sinh](@ref real-sinh), [cosh](@ref real-cosh)
 
     @par Example:
 

@@ -26,7 +26,7 @@
       Value imag(Value const& x);
       @endcode
 
-    @see  real
+    @see ( %real ) [real](@ref real-real)
 
     @par Example:
 

@@ -39,8 +39,7 @@
 
     See if it suits you better or use raw_ decorator for intermediate solution.
 
-    @see pow, rec, sqrt, cbrt
-
+    @see ( %real ) [pow](@ref real-pow), [rec](@ref real-rec), [sqrt](@ref real-sqrt), [cbrt](@ref real-cbrt)
 
     @par Example:
 

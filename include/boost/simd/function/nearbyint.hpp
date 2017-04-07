@@ -36,7 +36,8 @@
     -  This function is in general faster than @ref round which do the rouding on
         half integer values away from zero.
 
-    @see round, ceil, floor, trunc
+    @see ( %real ) [round](@ref real-round), [ceil](@ref real-ceil), [floor](@ref real-floor), [trunc](@ref real-trunc)
+
   **/
 
 #include <boost/simd/function/scalar/nearbyint.hpp>

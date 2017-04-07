@@ -25,8 +25,7 @@
       IEEEValue erfcx(IEEEValue const& x);
       @endcode
 
-    @see erfc, erf
-
+    @see ( %real ) [erfc](@ref real-erfc), [erf](@ref real-erf)
 
     @par Example:
 

@@ -50,8 +50,7 @@
        associated to the floating entry type.
 
 
-    @see is_eqz, is_denormal, is_normal, is_inf, is_nan
-
+    @see ( %real ) [is_eqz](@ref real-is_eqz), [is_denormal](@ref real-is_denormal), [is_normal](@ref real-is_normal), [is_inf](@ref real-is_inf), [is_nan](@ref real-is_nan)
 
     @par Example:
 

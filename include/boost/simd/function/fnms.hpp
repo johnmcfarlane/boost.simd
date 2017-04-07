@@ -45,7 +45,7 @@
     If you need pedantic fnms capabilities in all circumstances in your own
     code you can use the pedantic_ decorator (can be very expensive).
 
-    @see fms, fma, fnma
+    @see ( %real ) [fms](@ref real-fms), [fma](@ref real-fma), [fnma](@ref real-fnma)
 
     @par Example:
 

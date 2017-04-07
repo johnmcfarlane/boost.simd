@@ -29,8 +29,7 @@
 
     provisions are made for obtaining a flint result from a flint argument.
 
-    @see exp2, exp, pow
-
+    @see ( %real ) [exp2](@ref real-exp2), [exp](@ref real-exp), [pow](@ref real-pow)
 
     @par Example:
 

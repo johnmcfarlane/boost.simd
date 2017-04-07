@@ -28,7 +28,7 @@
     @par Note:
       This function does not overflow.
 
-    @see meanof
+    @see ( %real ) [meanof](@ref real-meanof)
 
     @par Example:
 

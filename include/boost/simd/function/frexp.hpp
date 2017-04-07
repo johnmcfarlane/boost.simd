@@ -59,8 +59,7 @@
       mantissa \f$m\f$ and an exponent \f$e\f$ so that:  \f$x = m\times 2^e\f$,
       with absolute value of \f$m \in [0.5, 1[\f$ (except for \f$x = 0\f$)
 
-    @see ifrexp, exponent, mantissa
-
+    @see ( %real ) [ifrexp](@ref real-ifrexp), [exponent](@ref real-exponent), [mantissa](@ref real-mantissa)
 
     @par Example:
 

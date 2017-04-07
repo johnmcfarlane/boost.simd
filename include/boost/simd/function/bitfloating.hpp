@@ -32,8 +32,7 @@
     by @c bifloating is the same as the original order on the floating elements,
     an increment can be used to find the successor.
 
-    @see next, prev, successor,  predecessor,  nextafter, bitinteger
-
+    @see ( %real ) [next](@ref real-next), [prev](@ref real-prev), [successor](@ref real-successor), [predecessor](@ref real-predecessor), [nextafter](@ref real-nextafter), [bitinteger](@ref real-bitinteger)
 
     @par Example:
 

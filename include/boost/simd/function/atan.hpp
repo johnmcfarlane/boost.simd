@@ -35,8 +35,7 @@
       returns the arc @c r in the interval  \f$[-\pi/2, \pi/2[\f$
       such that <tt>tan(r) == x</tt>.
 
-    @see atan2, atand, atanpi, tan
-
+    @see ( %real ) [atan2](@ref real-atan2), [atand](@ref real-atand), [atanpi](@ref real-atanpi), [tan](@ref real-tan)
 
     @par Example:
 

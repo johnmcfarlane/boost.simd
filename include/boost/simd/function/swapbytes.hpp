@@ -25,7 +25,7 @@
       Value swapbytes(Value const& x);
       @endcode
 
-    @see reverse,  reversebits
+    @see ( %real ) [reverse](@ref real-reverse), [reversebits](@ref real-reversebits)
 
     @par Example:
 

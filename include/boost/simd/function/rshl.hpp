@@ -27,9 +27,7 @@
       Value rshl(Value const& x, IntegerValue const& n);
       @endcode
 
-    @see  rshr, shr, shl
-
-
+    @see ( %real ) [rshr](@ref real-rshr), [shr](@ref real-shr), [shl](@ref real-shl)
 
     @par Example:
 

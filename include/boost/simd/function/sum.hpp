@@ -25,8 +25,7 @@
       scalar_of_t<Value> sum(Value const& x);
       @endcode
 
-    @see sum
-
+    @see ( %real ) [sum](@ref real-sum)
 
     @par Example:
 

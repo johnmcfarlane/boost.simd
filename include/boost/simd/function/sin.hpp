@@ -31,8 +31,7 @@
       optional parameter  which is a tag on speed and accuracy
       (see @ref cos for further details)
 
-    @see sincos, sind, sinpi
-
+    @see ( %real ) [sincos](@ref real-sincos), [sind](@ref real-sind), [sinpi](@ref real-sinpi)
 
     @par Example:
 

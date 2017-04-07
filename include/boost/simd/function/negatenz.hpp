@@ -30,8 +30,7 @@
     If @c x is  null the result is \f$\pm0\f$. Take care that @c negatenz distinguish
     between the signs of `T(0)` and `-T(0)` when `T` is a floating type.
 
-    @see negatenz, Mzero, is_positive, is_negative
-
+    @see ( %real ) [negatenz](@ref real-negatenz), [Mzero](@ref constant-Mzero), [is_positive](@ref real-is_positive), [is_negative](@ref real-is_negative)
 
     @par Example:
 

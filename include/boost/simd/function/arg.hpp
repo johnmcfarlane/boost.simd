@@ -40,7 +40,7 @@
     - This function implement the restriction to real numbers of the
        complex arg(ument) function.
 
-    @see is_negative, Pi, Nan
+    @see ( %real ) [is_negative](@ref real-is_negative), [Pi](@ref constant-Pi), [Nan](@ref constant-Nan)
 
     @par Example:
 

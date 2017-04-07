@@ -33,7 +33,7 @@
 
     @par Notes
       The regular call to this functor is `cos(x)`,  but
-    @see  sincos, cosd, cospi
+    @see ( %real ) [sincos](@ref real-sincos), [cosd](@ref real-cosd), [cospi](@ref real-cospi)
 
     @par Example:
 

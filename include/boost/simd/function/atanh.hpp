@@ -25,7 +25,7 @@
       IEEEValue atanh(IEEEValue const& x);
       @endcode
 
-    @see cosh, sinh, acosh, asinh, atanh, asech, acoth, acsch
+    @see ( %real ) [cosh](@ref real-cosh), [sinh](@ref real-sinh), [acosh](@ref real-acosh), [asinh](@ref real-asinh), [atanh](@ref real-atanh), [asech](@ref real-asech), [acoth](@ref real-acoth), [acsch](@ref real-acsch)
 
     @par Example:
 

@@ -26,8 +26,7 @@
       IEEEValue sqrt1pm1(IEEEValue const& x);
       @endcode
 
-    @see log1p, expm1.
-
+    @see ( %real ) [log1p](@ref real-log1p), [expm1.](@ref real-expm1.)
 
     @par Example:
 

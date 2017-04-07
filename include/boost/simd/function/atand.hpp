@@ -31,8 +31,7 @@
       returns the arc @c r in the interval  \f$[-90, 90[\f$
       such that <tt>tand(r) == x</tt>.
 
-    @see atan2d, atan2, atan, atanpi, tand
-
+    @see ( %real ) [atan2d](@ref real-atan2d), [atan2](@ref real-atan2), [atan](@ref real-atan), [atanpi](@ref real-atanpi), [tand](@ref real-tand)
 
     @par Example:
 

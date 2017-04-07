@@ -34,7 +34,7 @@
     This operation is NOT properly saturated.
     To ensure proper saturation use the decorartor pedantic_
 
-    @see nearbyint, ifloor, iround, ifix, iceil
+    @see ( %real ) [nearbyint](@ref real-nearbyint), [ifloor](@ref real-ifloor), [iround](@ref real-iround), [ifix](@ref real-ifix), [iceil](@ref real-iceil)
 
     @par Example:
 

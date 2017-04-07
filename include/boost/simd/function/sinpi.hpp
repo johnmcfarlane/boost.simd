@@ -26,7 +26,7 @@
       IEEEValue sinpi(IEEEValue const& x);
       @endcode
 
-    @see sine, sincospi, sin, sind
+    @see ( %real ) [sine](@ref real-sine), [sincospi](@ref real-sincospi), [sin](@ref real-sin), [sind](@ref real-sind)
 
     @par Example:
 

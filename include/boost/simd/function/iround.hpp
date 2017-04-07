@@ -28,7 +28,7 @@
     @par Note:
     This operation is properly saturated
 
-    @see round, iround, iround, ifix, inearbyint
+    @see ( %real ) [round](@ref real-round), [iround](@ref real-iround), [iround](@ref real-iround), [ifix](@ref real-ifix), [inearbyint](@ref real-inearbyint)
 
     @par Example:
 

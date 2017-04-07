@@ -25,8 +25,7 @@
       Value frac(Value const& x);
       @endcode
 
-    @see trunc, modf
-
+    @see ( %real ) [trunc](@ref real-trunc), [modf](@ref real-modf)
 
     @par Example:
 

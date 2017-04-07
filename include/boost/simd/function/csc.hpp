@@ -31,8 +31,7 @@
       with a second optional parameter  which is a tag on
       speed and accuracy (see @ref cos for further details)
 
-    @see cscd, cscpi
-
+    @see ( %real ) [cscd](@ref real-cscd), [cscpi](@ref real-cscpi)
 
     @par Example:
 

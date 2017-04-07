@@ -33,8 +33,7 @@
 
     For integral type inputs exponent is always 0 and mantissa reduces to identity.
 
-    @see mantissa,  frexp, ldexp
-
+    @see ( %real ) [mantissa](@ref real-mantissa), [frexp](@ref real-frexp), [ldexp](@ref real-ldexp)
 
     @par Example:
 

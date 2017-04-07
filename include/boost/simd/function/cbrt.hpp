@@ -29,8 +29,7 @@
 
       - std_ for floating entries calls @c std::cbrt
 
-    @see pow, sqrt
-
+    @see ( %real ) [pow](@ref real-pow), [sqrt](@ref real-sqrt)
 
     @par Example:
 

@@ -25,7 +25,7 @@
       IEEEValue asinpi(IEEEValue const & x);
       @endcode
 
-    @see asin, asind, sinpi
+    @see ( %real ) [asin](@ref real-asin), [asind](@ref real-asind), [sinpi](@ref real-sinpi)
 
     @par Example:
 

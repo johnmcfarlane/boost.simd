@@ -34,7 +34,7 @@
 
      - @c ceil is also used as parameter to pass to @ref div or @ref rem
 
-    @see  floor, round, nearbyint, trunc, iceil
+    @see ( %real ) [floor](@ref real-floor), [round](@ref real-round), [nearbyint](@ref real-nearbyint), [trunc](@ref real-trunc), [iceil](@ref real-iceil)
 
     @par Example:
 

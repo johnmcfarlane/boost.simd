@@ -29,8 +29,7 @@
     @par Note
     This function asserts for negative or null values.
 
-    @see  twopower, exponent
-
+    @see ( %real ) [twopower](@ref real-twopower), [exponent](@ref real-exponent)
 
     @par Example:
 

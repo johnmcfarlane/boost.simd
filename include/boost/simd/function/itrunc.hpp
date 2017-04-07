@@ -29,7 +29,8 @@
       Value itrunc(Value const& x);
       @endcode
 
-    @see ifix
+    @see ( %real ) [ifix](@ref real-ifix)
+
   **/
 
 #include <boost/simd/function/scalar/itrunc.hpp>

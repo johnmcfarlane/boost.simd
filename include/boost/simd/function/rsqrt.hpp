@@ -30,7 +30,7 @@
     - raw_  if full accuracy is not needed gives access on some architectures to faster
     but less accurate version of the function.
 
-    @see sqrt
+    @see ( %real ) [sqrt](@ref real-sqrt)
 
     @par Example:
 

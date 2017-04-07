@@ -30,8 +30,7 @@
     Take care that overflow is very easy to get here especially for integral
     types.
 
-    @see cumsum, cummin, cummax
-
+    @see ( %real ) [cumsum](@ref real-cumsum), [cummin](@ref real-cummin), [cummax](@ref real-cummax)
 
     @par Example:
 

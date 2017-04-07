@@ -31,8 +31,7 @@
     \f$x = m\times 2^e\f$, with |m| \f$\in[1, 2[\f$. (Except for zero,
     for which \f$m = 0\f$).
 
-    @see frexp, pow, exponent
-
+    @see ( %real ) [frexp](@ref real-frexp), [pow](@ref real-pow), [exponent](@ref real-exponent)
 
     @par Example:
 

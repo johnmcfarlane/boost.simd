@@ -29,7 +29,7 @@
 
       Using `is_eqz(x)` is equivalent to `x == 0`
 
-    @see is_nez, is_lez, is_ltz
+    @see ( %real ) [is_nez](@ref real-is_nez), [is_lez](@ref real-is_lez), [is_ltz](@ref real-is_ltz)
 
     @par Example:
 

@@ -35,7 +35,7 @@
     The result may be negative for signed integers as @ref abs(@ref Valmin) is undefined.
     To avoid the problem you can apply to dist the saturated_ decorator (See @ref group-decorator.)
 
-    @see  ulpdist, abs
+    @see ( %real ) [ulpdist](@ref real-ulpdist), [abs](@ref real-abs)
 
     @par Example:
 

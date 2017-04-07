@@ -32,7 +32,7 @@
 
       Using `is_equal(x,y)` is equivalent to `x == y`
 
-    @see  is_not_equal, is_eqz, is_equal_with_equal_nans
+    @see ( %real ) [is_not_equal](@ref real-is_not_equal), [is_eqz](@ref real-is_eqz), [is_equal_with_equal_nans](@ref real-is_equal_with_equal_nans)
 
     @par Example:
 

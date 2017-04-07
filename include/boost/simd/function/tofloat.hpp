@@ -27,8 +27,7 @@
       as_floating_t<Value> tofloat(Value const& x);
       @endcode
 
-    @see toint, touint, cast
-
+    @see ( %real ) [toint](@ref real-toint), [touint](@ref real-touint), [cast](@ref real-cast)
 
     @par Example:
 

@@ -31,7 +31,7 @@
       returns the arc @c r in the interval  \f$[-90, 90[\f$ such that
       <tt>sin(r) == x</tt>.  If @c x is outside \f$[-1, 1[\f$ the result is Nan.
 
-    @see asin,  asinpi
+    @see ( %real ) [asin](@ref real-asin), [asinpi](@ref real-asinpi)
 
     @par Example:
 

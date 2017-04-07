@@ -32,8 +32,7 @@
      (see @ref cos for further details)
 
 
-    @see csc, cscpi
-
+    @see ( %real ) [csc](@ref real-csc), [cscpi](@ref real-cscpi)
 
     @par Example:
 

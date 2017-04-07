@@ -31,7 +31,7 @@
 
     - `r = unary_plus(x)` is equivalent to  `r = +x` for SIMD types.
 
-    @see  plus, unary_minus
+    @see ( %real ) [plus](@ref real-plus), [unary_minus](@ref real-unary_minus)
 
     @par Example:
 

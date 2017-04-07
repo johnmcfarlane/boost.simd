@@ -51,7 +51,7 @@
 
        boost.simd also provides @ref signgam which independantly computes the sign.
 
-    @see gamma, signgam
+    @see ( %real ) [gamma](@ref real-gamma), [signgam](@ref real-signgam)
 
     @par Example:
 

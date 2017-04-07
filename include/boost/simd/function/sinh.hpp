@@ -25,7 +25,7 @@
       IEEEValue sinh(IEEEValue const& x);
       @endcode
 
-    @see tanh, cosh, sech, csch, sinhcosh
+    @see ( %real ) [tanh](@ref real-tanh), [cosh](@ref real-cosh), [sech](@ref real-sech), [csch](@ref real-csch), [sinhcosh](@ref real-sinhcosh)
 
     @par Example:
 

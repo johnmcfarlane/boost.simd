@@ -31,7 +31,7 @@
 
      - `saturated_` (See @ref group-decorator) computes the saturated difference.
 
-    @see plus, divides, multiplies
+    @see ( %real ) [plus](@ref real-plus), [divides](@ref real-divides), [multiplies](@ref real-multiplies)
 
     @par Example:
 

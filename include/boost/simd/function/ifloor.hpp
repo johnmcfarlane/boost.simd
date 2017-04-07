@@ -28,7 +28,7 @@
     @par Note:
     This operation is properly saturated
 
-    @see floor, ifloor, iround, ifix, inearbyint
+    @see ( %real ) [floor](@ref real-floor), [ifloor](@ref real-ifloor), [iround](@ref real-iround), [ifix](@ref real-ifix), [inearbyint](@ref real-inearbyint)
 
     @par Example:
 

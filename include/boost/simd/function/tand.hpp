@@ -32,8 +32,7 @@
       second optional parameter  which is a tag on speed and accuracy
       (see @ref cos for further details)
 
-    @see tan, tanpi
-
+    @see ( %real ) [tan](@ref real-tan), [tanpi](@ref real-tanpi)
 
     @par Example:
 

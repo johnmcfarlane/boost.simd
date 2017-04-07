@@ -29,8 +29,7 @@
 
        - pedantic_     is similar to indeg(pedantic_)(acos(x));
 
-    @see acos, acospi, cosd, indeg
-
+    @see ( %real ) [acos](@ref real-acos), [acospi](@ref real-acospi), [cosd](@ref real-cosd), [indeg](@ref real-indeg)
 
     @par Example:
 

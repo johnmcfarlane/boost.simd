@@ -30,7 +30,7 @@
 
     - The result type is the logical type associated to the first argument.
 
-    @see logical_not,  logical_xor, logical_andnot,  logical_notor,  logical_ornot, logical_and,  logical_or
+    @see ( %real ) [logical_not](@ref real-logical_not), [logical_xor](@ref real-logical_xor), [logical_andnot](@ref real-logical_andnot), [logical_notor](@ref real-logical_notor), [logical_ornot](@ref real-logical_ornot), [logical_and](@ref real-logical_and), [logical_or](@ref real-logical_or)
 
     @par Example:
 

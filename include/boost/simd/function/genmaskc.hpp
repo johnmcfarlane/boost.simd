@@ -26,7 +26,7 @@
       Value genmaskc(Value const& x);
       @endcode
 
-    @see genmask
+    @see ( %real ) [genmask](@ref real-genmask)
 
     @par Example:
 

@@ -25,8 +25,7 @@
       IntegerValue reversebits(IntegerValue const& x);
       @endcode
 
-    @see reverse,  swapbytes
-
+    @see ( %real ) [reverse](@ref real-reverse), [swapbytes](@ref real-swapbytes)
 
     @par Example:
 

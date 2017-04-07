@@ -32,7 +32,7 @@
 
      - std_ call std::hypot
 
-    @see sqr, sqrt
+    @see ( %real ) [sqr](@ref real-sqr), [sqrt](@ref real-sqrt)
 
     @par Example:
 

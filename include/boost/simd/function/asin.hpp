@@ -35,8 +35,7 @@
       returns the arc @c r in the interval  \f$[-\pi/2, \pi/2]\f$ such that
       <tt>sin(r) == x</tt>.  If @c x is outside \f$[-1, 1]\f$ the result is Nan.
 
-    @see asind, asinpi, sin
-
+    @see ( %real ) [asind](@ref real-asind), [asinpi](@ref real-asinpi), [sin](@ref real-sin)
 
     @par Example:
 

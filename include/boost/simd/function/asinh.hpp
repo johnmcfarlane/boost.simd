@@ -25,7 +25,7 @@
       IEEEValue asinh(IEEEValue const & x);
       @endcode
 
-    @see log, sqrt, sinh, inc
+    @see ( %real ) [log](@ref real-log), [sqrt](@ref real-sqrt), [sinh](@ref real-sinh), [inc](@ref real-inc)
 
     @par Example:
 

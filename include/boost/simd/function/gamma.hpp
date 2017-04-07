@@ -29,7 +29,7 @@
 
      - std_ calls @c std::tgamma
 
-    @see gammaln
+    @see ( %real ) [gammaln](@ref real-gammaln)
 
     @par Example:
 

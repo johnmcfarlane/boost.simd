@@ -36,8 +36,7 @@
 
          Take care that large floating entries are always integral and even !
 
-    @see sincospi, cos, cosd
-
+    @see ( %real ) [sincospi](@ref real-sincospi), [cos](@ref real-cos), [cosd](@ref real-cosd)
 
     @par Example:
 

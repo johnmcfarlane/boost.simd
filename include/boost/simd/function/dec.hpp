@@ -31,7 +31,7 @@
       strictly greater than @c x,
       avoiding the wrap around from @ref Valmin to @ref Valmax with integer types
 
-    @see inc, minus
+    @see ( %real ) [inc](@ref real-inc), [minus](@ref real-minus)
 
     @par Example:
 

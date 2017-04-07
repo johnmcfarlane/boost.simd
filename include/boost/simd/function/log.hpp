@@ -35,7 +35,7 @@
     - log(x) return Nan for negative entries (peculiarly Mzero
     for floating numbers).
 
-    @see log10, log2, log1p
+    @see ( %real ) [log10](@ref real-log10), [log2](@ref real-log2), [log1p](@ref real-log1p)
 
     @par Example:
 

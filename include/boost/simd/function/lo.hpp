@@ -27,7 +27,7 @@
       as_integer_t<Value> lo(Value const& x);
       @endcode
 
-    @see  hi
+    @see ( %real ) [hi](@ref real-hi)
 
     @par Example:
 

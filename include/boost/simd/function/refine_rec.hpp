@@ -29,7 +29,7 @@
       IEEEValue refine_rec(IEEEValue const& x, IEEEValue const& est);
       @endcode
 
-    @see rec
+    @see ( %real ) [rec](@ref real-rec)
 
   **/
 

@@ -26,7 +26,7 @@
       Value fix(Value const& x);
       @endcode
 
-    @see ceil, floor, round,  nearbyint, trunc, ifix, itrunc
+    @see ( %real ) [ceil](@ref real-ceil), [floor](@ref real-floor), [round](@ref real-round), [nearbyint](@ref real-nearbyint), [trunc](@ref real-trunc), [ifix](@ref real-ifix), [itrunc](@ref real-itrunc)
 
     @par Example:
 

@@ -36,7 +36,7 @@
       - For floating point number it is also one of the two ouputs of
         the @ref modf function.
         And we have:
-    @see abs, frac, floor, sign, modf, itrunc
+    @see ( %real ) [abs](@ref real-abs), [frac](@ref real-frac), [floor](@ref real-floor), [sign](@ref real-sign), [modf](@ref real-modf), [itrunc](@ref real-itrunc)
 
     @par Example:
 

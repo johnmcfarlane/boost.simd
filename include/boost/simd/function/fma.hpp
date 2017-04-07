@@ -48,7 +48,7 @@
     code you can use the pedantic_ or std_ decorator
     (although both can be very expensive).
 
-    @see fms, fnma, fnms
+    @see ( %real ) [fms](@ref real-fms), [fnma](@ref real-fnma), [fnms](@ref real-fnms)
 
     @par Example:
 

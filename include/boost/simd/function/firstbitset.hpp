@@ -26,9 +26,7 @@
       as_integer_t<Value> firstbitset(Value const& x);
       @endcode
 
-    @see  ffs,  firstbitunset
-
-
+    @see ( %real ) [ffs](@ref real-ffs), [firstbitunset](@ref real-firstbitunset)
 
     @par Example:
 

@@ -30,7 +30,7 @@
 
      - std_ for floating entries calls the stdlibc++ function std::fmax.
 
-    @see max, maxnummag,  maxmag
+    @see ( %real ) [max](@ref real-max), [maxnummag](@ref real-maxnummag), [maxmag](@ref real-maxmag)
 
     @par Example:
 

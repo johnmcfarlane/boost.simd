@@ -25,7 +25,7 @@
       IEEEValue asec(IEEEValue const & x);
       @endcode
 
-    @see asecd, asecpi
+    @see ( %real ) [asecd](@ref real-asecd), [asecpi](@ref real-asecpi)
 
     @par Example:
 

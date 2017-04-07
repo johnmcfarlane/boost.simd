@@ -56,8 +56,7 @@
 
     Without the pedantic_ decorator  @ref Nan or @ref Inf are not handled properly.
 
-    @see exponent, mantissa, frexp
-
+    @see ( %real ) [exponent](@ref real-exponent), [mantissa](@ref real-mantissa), [frexp](@ref real-frexp)
 
     @par Example:
 

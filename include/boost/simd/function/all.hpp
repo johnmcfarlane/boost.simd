@@ -26,7 +26,7 @@
       bool all(Value const &x);
       @endcode
 
-    @see any, none, nbtrue
+    @see ( %real ) [any](@ref real-any), [none](@ref real-none), [nbtrue](@ref real-nbtrue)
 
     @par Example:
 

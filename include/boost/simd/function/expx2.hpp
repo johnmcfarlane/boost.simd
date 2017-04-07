@@ -31,8 +31,7 @@
     provisions are made for obtaining more accurate results for large @c x.
     The second argument @c s defaults to 1.
 
-    @see exp
-
+    @see ( %real ) [exp](@ref real-exp)
 
     @par Example:
 

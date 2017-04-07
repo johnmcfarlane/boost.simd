@@ -32,7 +32,7 @@
 
       Using `is_greater_equal(x,y)` is equivalent to `x >= y`
 
-    @see  is_greater, is_gtz
+    @see ( %real ) [is_greater](@ref real-is_greater), [is_gtz](@ref real-is_gtz)
 
     @par Example:
 

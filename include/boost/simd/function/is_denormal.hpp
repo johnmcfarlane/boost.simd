@@ -29,7 +29,7 @@
 
     Using `is_denormal(x)` is similar to `(x != 0) && (abs(x) < Smallestposval<T>())`
 
-    @see Smallestposval
+    @see ( %real ) [Smallestposval](@ref constant-Smallestposval)
 
     @par Example:
 

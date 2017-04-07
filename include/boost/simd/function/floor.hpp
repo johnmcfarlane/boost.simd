@@ -34,7 +34,7 @@
 
      - @c floor is also used as parameter to pass to @ref div or @ref rem
 
-    @see  ceil, round, nearbyint, trunc, ifloor
+    @see ( %real ) [ceil](@ref real-ceil), [round](@ref real-round), [nearbyint](@ref real-nearbyint), [trunc](@ref real-trunc), [ifloor](@ref real-ifloor)
 
     @par Example:
 

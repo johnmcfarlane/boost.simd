@@ -31,7 +31,7 @@
       is similar  to: `atan2(y, x)/Pi`
 
 
-    @see atan2,  atan2pi
+    @see ( %real ) [atan2](@ref real-atan2), [atan2pi](@ref real-atan2pi)
 
     @par Example:
 

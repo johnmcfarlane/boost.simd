@@ -33,7 +33,7 @@
     - raw_ for floating entries can gain some speed with less accuracy
     on some architectures.
 
-    @see rsqrt, sqr_abs, sqr
+    @see ( %real ) [rsqrt](@ref real-rsqrt), [sqr_abs](@ref real-sqr_abs), [sqr](@ref real-sqr)
 
     @par Example:
 

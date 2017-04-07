@@ -32,8 +32,7 @@
       a second optional parameter  which is a tag on speed and accuracy
       (see @ref cos for further details)
 
-    @see cscd, csc
-
+    @see ( %real ) [cscd](@ref real-cscd), [csc](@ref real-csc)
 
     @par Example:
 

@@ -44,8 +44,7 @@
     some simpler algorithms as this one
     can be used, but the precision is only insured on specific intervals.
 
-    @see rem_pio2, rem_pio2_medium,rem_2pi, rem_pio2_cephes,
-
+    @see ( %real ) [rem_pio2](@ref real-rem_pio2), [rem_pio2_medium](@ref real-rem_pio2_medium), [rem_2pi](@ref real-rem_2pi), [rem_pio2_cephes](@ref real-rem_pio2_cephes)
 
     @par Example:
 

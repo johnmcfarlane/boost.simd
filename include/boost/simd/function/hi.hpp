@@ -27,7 +27,7 @@
       as_integer_t<Value, unsigned> hi(Value const& x);
       @endcode
 
-    @see  lo
+    @see ( %real ) [lo](@ref real-lo)
 
     @par Example:
 

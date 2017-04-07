@@ -62,7 +62,7 @@
        - if y is +/-0, Nan is returned
        - if either argument is NaN, Nan is returned
 
-    @see div
+    @see ( %real ) [div](@ref real-div)
 
     @par Example:
 

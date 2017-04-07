@@ -26,7 +26,7 @@
       std::pair<IEEEValue, IEEEValue> sincospi(IEEEValue const& x);
       @endcode
 
-    @see sincosd, sincos
+    @see ( %real ) [sincosd](@ref real-sincosd), [sincos](@ref real-sincos)
 
     @par Example:
 

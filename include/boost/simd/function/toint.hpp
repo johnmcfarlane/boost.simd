@@ -32,7 +32,7 @@
 
     @par Notes
 
-    @see touint, tofloat
+    @see ( %real ) [touint](@ref real-touint), [tofloat](@ref real-tofloat)
 
     @par Example:
 

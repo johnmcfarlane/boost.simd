@@ -34,8 +34,7 @@
 
       - For floating point numbers, all @ref Minf  strict predecessors are @ref Nan.
 
-    @see next, prev, successor, nextafter, Minf, Valmin, Nan
-
+    @see ( %real ) [next](@ref real-next), [prev](@ref real-prev), [successor](@ref real-successor), [nextafter](@ref real-nextafter), [Minf](@ref constant-Minf), [Valmin](@ref constant-Valmin), [Nan](@ref constant-Nan)
 
     @par Example:
 

@@ -33,8 +33,7 @@
 
     - provisions are made to obtain a flint result from a flint argument
 
-    @see exp, exp10, pow, pow2
-
+    @see ( %real ) [exp](@ref real-exp), [exp10](@ref real-exp10), [pow](@ref real-pow), [pow2](@ref real-pow2)
 
     @par Example:
 

@@ -39,7 +39,7 @@
     else if (y <  x)  r = prev(x);
     @endcode
 
-    @see next, prev, successor, predecessor
+    @see ( %real ) [next](@ref real-next), [prev](@ref real-prev), [successor](@ref real-successor), [predecessor](@ref real-predecessor)
 
     @par Decorators
 

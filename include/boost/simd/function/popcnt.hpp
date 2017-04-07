@@ -25,9 +25,7 @@
       as_integer_t<Value> popcnt(Value const& x);
       @endcode
 
-    @see  clz, ctz
-
-
+    @see ( %real ) [clz](@ref real-clz), [ctz](@ref real-ctz)
 
     @par Example:
 

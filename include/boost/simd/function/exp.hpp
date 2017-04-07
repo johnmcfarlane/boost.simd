@@ -29,8 +29,7 @@
 
       - std_ for floating entries calls @c std::exp
 
-    @see exp2, exp10, pow, expm1, log
-
+    @see ( %real ) [exp2](@ref real-exp2), [exp10](@ref real-exp10), [pow](@ref real-pow), [expm1](@ref real-expm1), [log](@ref real-log)
 
     @par Example:
 

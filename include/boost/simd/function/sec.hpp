@@ -25,9 +25,7 @@
       IEEEValue sec(IEEEValue const& x);
       @endcode
 
-    @see cos, secd, secpi
-
-
+    @see ( %real ) [cos](@ref real-cos), [secd](@ref real-secd), [secpi](@ref real-secpi)
 
     @par Example:
 

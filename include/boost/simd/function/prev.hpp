@@ -40,7 +40,7 @@
       Value prev(Value const& x);
       @endcode
 
-    @see prev, nextafter, successor, predecessor
+    @see ( %real ) [prev](@ref real-prev), [nextafter](@ref real-nextafter), [successor](@ref real-successor), [predecessor](@ref real-predecessor)
 
     @par Example:
 

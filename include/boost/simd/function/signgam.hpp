@@ -25,8 +25,7 @@
       IEEEValue signgam(IEEEValue const& x);
       @endcode
 
-    @see gamma, gammaln
-
+    @see ( %real ) [gamma](@ref real-gamma), [gammaln](@ref real-gammaln)
 
     @par Example:
 

@@ -46,8 +46,7 @@
     - the regular version (no decorator) is less accurate around for x < 0.9
       (up to circa 256 ulp), but is faster by a factor 2 than the pedantic version.
 
-    @see acosd, acospi, cos
-
+    @see ( %real ) [acosd](@ref real-acosd), [acospi](@ref real-acospi), [cos](@ref real-cos)
 
     @par Example:
 

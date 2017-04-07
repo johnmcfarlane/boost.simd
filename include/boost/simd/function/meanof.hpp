@@ -28,7 +28,7 @@
     @par Note:
       This function does not overflow.
 
-    @see average
+    @see ( %real ) [average](@ref real-average)
 
     @par Example:
 

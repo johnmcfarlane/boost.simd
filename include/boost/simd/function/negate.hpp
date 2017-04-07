@@ -29,8 +29,7 @@
     @par Note
     If y is @ref Zero the result is zero. This can be avoided using @ref negatenz or @ref copysign.
 
-    @see sign, negatenz, copysign,  Mzero,  is_positive, is_negative
-
+    @see ( %real ) [sign](@ref real-sign), [negatenz](@ref real-negatenz), [copysign](@ref real-copysign), [Mzero](@ref constant-Mzero), [is_positive](@ref real-is_positive), [is_negative](@ref real-is_negative)
 
     @par Example:
 

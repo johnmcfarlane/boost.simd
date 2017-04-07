@@ -30,8 +30,7 @@
 
      - The semantics of the function are similar to @ref cos ones.
 
-    @see sincosd, cos, cospi
-
+    @see ( %real ) [sincosd](@ref real-sincosd), [cos](@ref real-cos), [cospi](@ref real-cospi)
 
     @par Example:
 

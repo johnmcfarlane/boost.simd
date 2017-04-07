@@ -30,7 +30,7 @@
 
       - std_ for floating entries calls @c std::log1p
 
-    @see log, exp, expm1
+    @see ( %real ) [log](@ref real-log), [exp](@ref real-exp), [expm1](@ref real-expm1)
 
     @par Example:
 

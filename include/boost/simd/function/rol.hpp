@@ -29,8 +29,7 @@
     @par Note
     This function asserts if the integral parameter is out of range
 
-    @see  ror, rrol, rror
-
+    @see ( %real ) [ror](@ref real-ror), [rrol](@ref real-rrol), [rror](@ref real-rror)
 
     @par Example:
 

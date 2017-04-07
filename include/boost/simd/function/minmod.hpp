@@ -30,7 +30,7 @@
 
     Using `minmod(x, y)` is similar to `x*y > 0 ? min(x, y) : 0`
 
-    @see min, minnum, minnummag, minmag
+    @see ( %real ) [min](@ref real-min), [minnum](@ref real-minnum), [minnummag](@ref real-minnummag), [minmag](@ref real-minmag)
 
     @par Example:
 

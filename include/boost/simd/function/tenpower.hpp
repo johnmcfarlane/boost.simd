@@ -33,7 +33,7 @@
     This function is not defined for floating entries and intended to be used for
     small integer values.
 
-    @see exp10
+    @see ( %real ) [exp10](@ref real-exp10)
 
     @par Example:
 

@@ -25,7 +25,7 @@
       scalar_of_t<Value> maximum(Value const& x);
       @endcode
 
-    @see minimum
+    @see ( %real ) [minimum](@ref real-minimum)
 
     @par Example:
 

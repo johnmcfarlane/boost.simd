@@ -26,7 +26,7 @@
       IEEEValue acscd(IEEEValue const & x);
       @endcode
 
-    @see acsc, accscpi
+    @see ( %real ) [acsc](@ref real-acsc), [accscpi](@ref real-accscpi)
 
     @par Example:
 

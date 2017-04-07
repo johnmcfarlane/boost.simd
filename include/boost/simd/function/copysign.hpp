@@ -25,8 +25,7 @@
       Value copysign(Value const& x, Value const& y);
       @endcode
 
-    @see sign, signnz, is_positive
-
+    @see ( %real ) [sign](@ref real-sign), [signnz](@ref real-signnz), [is_positive](@ref real-is_positive)
 
     @par Example:
 

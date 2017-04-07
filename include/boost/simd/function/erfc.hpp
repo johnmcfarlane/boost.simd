@@ -29,8 +29,7 @@
 
    - std_ calls @c std::erfc
 
-    @see erf, erfcx
-
+    @see ( %real ) [erf](@ref real-erf), [erfcx](@ref real-erfcx)
 
     @par Example:
 

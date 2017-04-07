@@ -30,7 +30,7 @@
       - On many architectures a scalar second parameter results in a much faster call.
       - If the second entry is negative the result is not defined.
 
-    @see  shift_right, shift_left, rshl, rshr, rol, ror
+    @see ( %real ) [shift_right](@ref real-shift_right), [shift_left](@ref real-shift_left), [rshl](@ref real-rshl), [rshr](@ref real-rshr), [rol](@ref real-rol), [ror](@ref real-ror)
 
     @par Example:
 

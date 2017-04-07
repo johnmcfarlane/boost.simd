@@ -60,8 +60,7 @@
      result which in fact is not more absurd than the IEEE choices.
      It will be conforming in all other cases.
 
-    @see atan, atand, atanpi
-
+    @see ( %real ) [atan](@ref real-atan), [atand](@ref real-atand), [atanpi](@ref real-atanpi)
 
     @par Example:
 

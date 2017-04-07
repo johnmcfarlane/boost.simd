@@ -32,8 +32,7 @@
       with a second optional parameter  which is a tag on speed
       and accuracy (see @ref cos for further details)
 
-    @see cos, sin, tan, cot, cotpi
-
+    @see ( %real ) [cos](@ref real-cos), [sin](@ref real-sin), [tan](@ref real-tan), [cot](@ref real-cot), [cotpi](@ref real-cotpi)
 
     @par Example:
 

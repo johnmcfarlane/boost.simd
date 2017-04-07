@@ -30,9 +30,7 @@
       Value sign(Value const& x);
       @endcode
 
-    @see signnz, is_negative, is_positive,  bitofsign
-
-
+    @see ( %real ) [signnz](@ref real-signnz), [is_negative](@ref real-is_negative), [is_positive](@ref real-is_positive), [bitofsign](@ref real-bitofsign)
 
     @par Example:
 

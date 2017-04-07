@@ -25,9 +25,7 @@
       Value ulp(Value const& x);
       @endcode
 
-    @see ulpdist, eps, Eps
-
-
+    @see ( %real ) [ulpdist](@ref real-ulpdist), [eps](@ref real-eps), [Eps](@ref constant-Eps)
 
     @par Example:
 

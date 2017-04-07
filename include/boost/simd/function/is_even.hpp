@@ -37,7 +37,7 @@
 
     Be conscious that all sufficiently great floating points values are even...
 
-    @see is_odd, is_flint
+    @see ( %real ) [is_odd](@ref real-is_odd), [is_flint](@ref real-is_flint)
 
     @par Example:
 

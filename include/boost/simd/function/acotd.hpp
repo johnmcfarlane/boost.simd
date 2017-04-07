@@ -31,8 +31,7 @@
       returns the arc @c r in the interval  \f$[0, 180[\f$ such that
       <tt>cotd(r) == x</tt>.
 
-    @see acot, acotpi, cotd
-
+    @see ( %real ) [acot](@ref real-acot), [acotpi](@ref real-acotpi), [cotd](@ref real-cotd)
 
     @par Example:
 

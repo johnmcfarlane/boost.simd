@@ -32,9 +32,7 @@
 
     - @c ctz asserts is the entry is 0
 
-    @see  clz, popcnt
-
-
+    @see ( %real ) [clz](@ref real-clz), [popcnt](@ref real-popcnt)
 
     @par Example:
 

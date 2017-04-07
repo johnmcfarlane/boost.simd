@@ -34,7 +34,7 @@
 
     - `r = unary_minus(x)` is equivalent to  `r = -x` for SIMD types.
 
-    @see  minus, unary_plus
+    @see ( %real ) [minus](@ref real-minus), [unary_plus](@ref real-unary_plus)
 
     @par Example:
 

@@ -29,8 +29,7 @@
 
     - raw_  is faster but can be inaccurate.
 
-    @see pow, abs
-
+    @see ( %real ) [pow](@ref real-pow), [abs](@ref real-abs)
 
     @par Example:
 

@@ -25,7 +25,7 @@
       Value cumsum(Value const& x);
       @endcode
 
-    @see cumprod, cummin, cummax
+    @see ( %real ) [cumprod](@ref real-cumprod), [cummin](@ref real-cummin), [cummax](@ref real-cummax)
 
     @par Example:
 

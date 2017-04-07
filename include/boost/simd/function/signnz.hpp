@@ -35,7 +35,7 @@
     (in this later case the result is undefined).
 
 
-    @see Mzero, sign, is_negative, is_positive
+    @see ( %real ) [Mzero](@ref constant-Mzero), [sign](@ref real-sign), [is_negative](@ref real-is_negative), [is_positive](@ref real-is_positive)
 
     @par Example:
 

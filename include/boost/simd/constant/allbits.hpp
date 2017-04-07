@@ -11,68 +11,62 @@
 #ifndef BOOST_SIMD_CONSTANT_ALLBITS_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_ALLBITS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
+
+
   /*!
-    @ingroup group-constant
+  @ingroup group-constant
+  @defgroup constant-allbits Allbits (function object)
 
     Generates a value of the chosen type which all bits are set to 1.
 
+    @headerref{<boost/simd/constant/allbits.hpp>}
 
-    @par Header <boost/simd/constant/allbits.hpp>
+    @par Description
 
-    @par Semantic:
+    1.  @code
+        template<typename Type> auto allbits();
+        @endcode
 
+    2.  @code
+        template<typename Type> auto allbits( boost::simd::as_<Type> const& target );
+        @endcode
+
+    1. and 2.  return a value of type @c Type containing the Allbits constant.
+
+
+    @par Parameters
+
+    | Name                | Description                                                         |
+    |--------------------:|:--------------------------------------------------------------------|
+    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
+
+    @par Return Value
+    1.  A value of type @c Type so that:
+    @code
+    T r = Allbits<T>();
+    @endcode
+    is equivalent to:
+       - if T is floating point:
+         @code
+         T r = Nan<T>();
+         @endcode
+       - otherwise:
+         @code
+         T r = T(~0);
+         @endcode
+
+    2.  A value of type @c Type so that:
+    @code
+    T x, r = Allbits( boost::simd::as(x));
+    @endcode
+    is equivalent to:
     @code
     T r = Allbits<T>();
     @endcode
 
-    is equivalent to:
-
-    - if T is floating point:
-      @code
-      T r = Nan<T>();
-      @endcode
-
-    - otherwise:
-      @code
-      T r = T(~0);
-      @endcode
-
-    @return A value of type @c T with all its bits set to 1
-
-    @see functional::allbits
+    @par Requirements
+    - **Type** models Vectorizable
   **/
-  template<typename T> T Allbits();
-
-  namespace functional
-  {
-    /*!
-      @ingroup group-callable-constant
-      Generates a value of the chosen type which all bits are set to 1.
-
-      @par Semantic:
-
-      For any value @c x of type @c T:
-      @code
-      T r = simd::functional::allbits( boost::simd::as(x));
-      @endcode
-
-      is equivalent to:
-
-      @code
-      T r = simd::Allbits<T>();
-      @endcode
-
-      @return A value of type @c T with all its bits set to 1
-
-      @see Allbits
-    **/
-    Value Allbits();
-  }
-} }
-#endif
 
 #include <boost/simd/constant/scalar/allbits.hpp>
 #include <boost/simd/constant/simd/allbits.hpp>

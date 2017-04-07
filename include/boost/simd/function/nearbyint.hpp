@@ -33,7 +33,7 @@
     - to even means that half integer values are rounded to the nearest
     even value.
 
-    -  This function is in general faster than @ref round which do the rouding on
+    -  This function is in general faster than @ref [round](@ref real-round) which do the rouding on
         half integer values away from zero.
 
     @see ( %real ) [round](@ref real-round), [ceil](@ref real-ceil), [floor](@ref real-floor), [trunc](@ref real-trunc)

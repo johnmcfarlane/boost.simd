@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_odd is_odd (function object)
 
-    This function object returns @ref True or @ref False according x is odd or not.
+    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is odd or not.
 
     @headerref{<boost/simd/function/is_odd.hpp>}
 

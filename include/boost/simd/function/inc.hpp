@@ -28,7 +28,7 @@
     @par Decorators
 
      - saturated_ ensures that @c saturated_(inc)(x) will never be strictly
-     less than @c x, avoiding the wrap around from @ref Valmax to
+     less than @c x, avoiding the wrap around from @ref [Valmax](@ref constant-Valmax) to
     @see ( %real ) [plus](@ref real-plus), [dec](@ref real-dec), [minus](@ref real-minus)
 
     @par Example:

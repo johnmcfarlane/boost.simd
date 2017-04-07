@@ -30,7 +30,7 @@
 
       As most other trigonometric function cotd can be called
       with a second optional parameter  which is a tag on speed
-      and accuracy (see @ref cos for further details)
+      and accuracy (see @ref [cos](@ref real-cos) for further details)
 
     @see ( %real ) [cos](@ref real-cos), [sin](@ref real-sin), [tan](@ref real-tan), [cot](@ref real-cot), [cotpi](@ref real-cotpi)
 

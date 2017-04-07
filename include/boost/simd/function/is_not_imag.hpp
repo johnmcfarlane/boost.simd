@@ -15,9 +15,9 @@
     @ingroup group-predicates
     @defgroup real-is_not_imag is_not_imag (function object)
 
-    This function object returns @ref True or @ref False according x is not pure imaginary or is.
+    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is not pure imaginary or is.
 
-    For non complex numbers it is @ref True except if x is @ref Zero.
+    For non complex numbers it is @ref [True](@ref constant-True) except if x is @ref [Zero](@ref constant-Zero).
 
     @headerref{<boost/simd/function/is_not_imag.hpp>}
 

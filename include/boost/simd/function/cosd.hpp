@@ -28,7 +28,7 @@
 
     @par Note
 
-     - The semantics of the function are similar to @ref cos ones.
+     - The semantics of the function are similar to @ref [cos](@ref real-cos) ones.
 
     @see ( %real ) [sincosd](@ref real-sincosd), [cos](@ref real-cos), [cospi](@ref real-cospi)
 

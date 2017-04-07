@@ -34,7 +34,7 @@
 
     - In fact it only substracts \f$\pi/2\f$ to the input
     so it can be viewed as a specially accurate minuspio_2 function outside
-    the interval in which it can be used as a substitute to @ref rem_pio2.
+    the interval in which it can be used as a substitute to @ref [rem_pio2](@ref real-rem_pio2).
 
     - The reduction of the argument modulo \f$\pi/2\f$ is generally
     the most difficult part of trigonometric evaluations.

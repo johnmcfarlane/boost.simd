@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_ord is_ord (function object)
 
-    This function object returns @ref True if neither x nor y is @ref Nan.
+    This function object returns @ref [True](@ref constant-True) if neither x nor y is @ref [Nan](@ref constant-Nan).
 
     @headerref{<boost/simd/function/is_ord.hpp>}
 

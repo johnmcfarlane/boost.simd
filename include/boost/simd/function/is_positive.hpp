@@ -15,11 +15,11 @@
     @ingroup group-predicates
     @defgroup real-is_positive is_positive (function object)
 
-    This function object returns @ref True if x is positive else @ref False.
+    This function object returns @ref [True](@ref constant-True) if x is positive else @ref [False](@ref constant-False).
 
-    This function differs from @ref is_gtz for floating point arguments,
-    because @ref Zero is positive but not greater than 0, and @ref Mzero is
-    not positive and not greater than 0, It's probably @ref is_gtz that
+    This function differs from @ref [is_gtz](@ref real-is_gtz) for floating point arguments,
+    because @ref [Zero](@ref constant-Zero) is positive but not greater than 0, and @ref [Mzero](@ref constant-Mzero) is
+    not positive and not greater than 0, It's probably @ref [is_gtz](@ref real-is_gtz) that
     you want.
 
     @headerref{<boost/simd/function/is_positive.hpp>}

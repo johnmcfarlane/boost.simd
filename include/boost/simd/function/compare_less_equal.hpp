@@ -18,7 +18,7 @@
     This function object returns a @c bool that is the result of the
     lexicographic test for <= on all elements of the entries
 
-    It is probably not what you wish. Have a look to @ref is_less_equal
+    It is probably not what you wish. Have a look to @ref [is_less_equal](@ref real-is_less_equal)
 
     @headerref{<boost/simd/function/compare_less_equal.hpp>}
 

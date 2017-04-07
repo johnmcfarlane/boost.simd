@@ -16,7 +16,7 @@
     @defgroup real-ifnot_inc ifnot_inc (function object)
 
     This function object conditionally returns  @c x (respectively @c x+1)
-    if @c c is @ref True (respectively  @ref False)
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
     @headerref{<boost/simd/function/ifnot_inc.hpp>}
 

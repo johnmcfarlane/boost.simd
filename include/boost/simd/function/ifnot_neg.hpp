@@ -15,7 +15,7 @@
     @ingroup group-boolean
     @defgroup real-ifnot_neg ifnot_neg (function object)
 
-    This function object conditionally returns -x if @c c is @ref False and x otherwise.
+    This function object conditionally returns -x if @c c is @ref [False](@ref constant-False) and x otherwise.
 
     @headerref{<boost/simd/function/ifnot_neg.hpp>}
 

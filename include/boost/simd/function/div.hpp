@@ -31,9 +31,9 @@
     For any value @c x and @c y of same type `div({option, }x, y)`
     returns the quotient of @c x by @c y respecting to the option specified.
 
-    With no option this function is equivalent to `divides(x, y)` (See @ref divides.)
+    With no option this function is equivalent to `divides(x, y)` (See @ref [divides](@ref real-divides).)
 
-    Options may be @ref ceil, @ref floor, @ref fix, @ref round, @ref nearbyint (in the
+    Options may be @ref [ceil](@ref real-ceil), @ref [floor](@ref real-floor), @ref [fix](@ref real-fix), @ref [round](@ref real-round), @ref [nearbyint](@ref real-nearbyint) (in the
     namespace booost::simd) and provides the same result as if the function object whose
     option is the name was applied to the floating division of the parameters.
 

@@ -21,7 +21,7 @@
 
    provides a saturated version of some functors which produce integral typed values on return.
 
-   This is peculiarly interesting in SIMD mode, as unlike scalars types, SIMD @ref pack of
+   This is peculiarly interesting in SIMD mode, as unlike scalars types, SIMD @ref [pack](@ref real-pack) of
    integers are not promoted  during current arithmetic operations and this increases the
    overflow risks.
 

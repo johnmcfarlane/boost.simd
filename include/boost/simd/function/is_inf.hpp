@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_inf is_inf (function object)
 
-    This function object returns @ref True if x is inf or -inf else returns @ref False.
+    This function object returns @ref [True](@ref constant-True) if x is inf or -inf else returns @ref [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_inf.hpp>}
 

@@ -30,7 +30,7 @@
 
      As most other trigonometric function sind can be called
      with a second optional parameter  which is a tag on speed and accuracy
-     (see @ref cos for further details)
+     (see @ref [cos](@ref real-cos) for further details)
 
    see sincosd, sin, sinpi
 

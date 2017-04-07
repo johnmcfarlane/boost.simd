@@ -32,7 +32,7 @@
 
     @par Notes
 
-     - @c floor is also used as parameter to pass to @ref div or @ref rem
+     - @c floor is also used as parameter to pass to @ref [div](@ref real-div) or @ref [rem](@ref real-rem)
 
     @see ( %real ) [ceil](@ref real-ceil), [round](@ref real-round), [nearbyint](@ref real-nearbyint), [trunc](@ref real-trunc), [ifloor](@ref real-ifloor)
 

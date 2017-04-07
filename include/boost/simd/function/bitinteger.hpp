@@ -17,7 +17,7 @@
 
     This function object transforms a floating point value
     in an integer with a preserving order formula.
-    This function is the converse of @ref bitfloating.
+    This function is the converse of @ref [bitfloating](@ref real-bitfloating).
 
     @headerref{<boost/simd/function/bitinteger.hpp>}
 

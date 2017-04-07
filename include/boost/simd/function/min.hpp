@@ -35,7 +35,7 @@
 
     Using `min(x, y)` is similar to `(x <  y) ? x : y` which is the standard behaviour.
 
-    With this definition min(x, @ref Nan) should return x...
+    With this definition min(x, @ref [Nan](@ref constant-Nan)) should return x...
 
     On some systems the intrinsic used returns Nan as soon x or y is a nan.
     So the real definition of our min function must add: but if y is Nan the result is system dependent.

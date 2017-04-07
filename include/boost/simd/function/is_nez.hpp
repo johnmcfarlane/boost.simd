@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_nez is_nez (function object)
 
-    This function object returns @ref True if x is not equal to @ref Zero else returns @ref False.
+    This function object returns @ref [True](@ref constant-True) if x is not equal to @ref [Zero](@ref constant-Zero) else returns @ref [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_nez.hpp>}
 

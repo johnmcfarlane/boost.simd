@@ -18,7 +18,7 @@
     This function object returns @c true if and only if two corresponding entries
     elements are not equal.
 
-    It is probably not what you wish. Have a look to @ref is_not_equal
+    It is probably not what you wish. Have a look to @ref [is_not_equal](@ref real-is_not_equal)
 
     @headerref{<boost/simd/function/compare_not_equal.hpp>}
 

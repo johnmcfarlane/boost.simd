@@ -28,7 +28,7 @@
 
     @par Notes:
 
-    - This function never returns @ref Zero (zero is considered positive for integers).
+    - This function never returns @ref [Zero](@ref constant-Zero) (zero is considered positive for integers).
 
     - For floating point numbers the bit of sign is taken into account and so
     we always have `signnz(-z) == -signnz(z)` except is the entry is a NaN

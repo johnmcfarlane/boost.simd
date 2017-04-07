@@ -16,7 +16,7 @@
     @defgroup real-bitfloating bitfloating (function object)
 
     This function object  transforms an integer value to a floating point one
-    with a preserving order formula. This function is the converse of @ref bitinteger.
+    with a preserving order formula. This function is the converse of @ref [bitinteger](@ref real-bitinteger).
 
     @headerref{<boost/simd/function/bitfloating.hpp>}
 

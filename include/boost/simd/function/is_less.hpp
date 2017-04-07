@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_less is_less (function object)
 
-    This function object returns  @ref True or @ref False according x is less than y or not.
+    This function object returns  @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is less than y or not.
     Infix notation can be used with operator '<'.
 
     @headerref{<boost/simd/function/is_less.hpp>}

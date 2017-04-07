@@ -16,11 +16,11 @@
     @defgroup real-sign sign (function object)
 
     This function object returns the sign of @c x. i.e. -1, 0 or 1,
-    depending on the fact  @c x is less than @ref Zero, @ref Zero or
-    greater than @ref Zero.
+    depending on the fact  @c x is less than @ref [Zero](@ref constant-Zero), @ref [Zero](@ref constant-Zero) or
+    greater than @ref [Zero](@ref constant-Zero).
 
-    For floating,  the sign of @ref Nan is @ref Nan,
-    the sign of @ref Mzero is also @ref Zero.
+    For floating,  the sign of @ref [Nan](@ref constant-Nan) is @ref [Nan](@ref constant-Nan),
+    the sign of @ref [Mzero](@ref constant-Mzero) is also @ref [Zero](@ref constant-Zero).
 
     @headerref{<boost/simd/function/sign.hpp>}
 

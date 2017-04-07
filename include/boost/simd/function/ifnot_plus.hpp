@@ -16,7 +16,7 @@
     @defgroup real-ifnot_plus ifnot_plus (function object)
 
     This function object conditionally returns  @c x (respectively @c x+y)
-    if @c c is @ref True (respectively  @ref False)
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
     @headerref{<boost/simd/function/ifnot_plus.hpp>}
 

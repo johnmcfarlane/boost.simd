@@ -16,7 +16,7 @@
     @defgroup real-sqr_abs sqr_abs (function object)
 
     This function computes the square of the absolute value of its parameter.
-    For real entries it coincides with @ref sqr.
+    For real entries it coincides with @ref [sqr](@ref real-sqr).
 
     @headerref{<boost/simd/function/sqr.hpp>}
 

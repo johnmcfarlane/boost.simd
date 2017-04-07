@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_real is_real (function object)
 
-    This function object returns @ref True or @ref False according x is real or not.
+    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is real or not.
     For non complex numbers this is always true.
 
     @headerref{<boost/simd/function/is_real.hpp>}

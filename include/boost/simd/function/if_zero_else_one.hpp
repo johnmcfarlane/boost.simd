@@ -16,7 +16,7 @@
     @defgroup real-if_zero_else_one if_zero_else_one (function object)
 
     This function object conditionally returns  @c 0 (respectively @c 1)
-    if @c c is @ref True (respectively  @ref False)
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
     @headerref{<boost/simd/function/if_zero_else_one.hpp>}
 

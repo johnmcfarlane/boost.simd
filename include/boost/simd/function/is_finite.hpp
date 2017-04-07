@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_finite is_finite (function object)
 
-    This function object returns @ref True if x is not inf, -inf or nan, else returns @ref False.
+    This function object returns @ref [True](@ref constant-True) if x is not inf, -inf or nan, else returns @ref [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_finite.hpp>}
 

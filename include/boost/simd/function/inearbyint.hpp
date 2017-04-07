@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-inearbyint inearbyint (function object)
 
-    This function object computes the integer conversion of the @ref nearbyint of its parameter.
+    This function object computes the integer conversion of the @ref [nearbyint](@ref real-nearbyint) of its parameter.
 
     @headerref{<boost/simd/function/inearbyint.hpp>}
 

@@ -35,7 +35,7 @@
 
     Returns the arc @c r in the interval
     \f$[0, \pi[\f$ such that <tt>cos(r) == x</tt>.
-    If @c x is outside \f$[-1, 1[\f$ the result is @ref Nan.
+    If @c x is outside \f$[-1, 1[\f$ the result is @ref [Nan](@ref constant-Nan).
 
     @par Decorators
 

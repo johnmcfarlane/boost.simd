@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_ngtz is_ngtz (function object)
 
-    This function object returns @ref True if x is not greater than @ref Zero else returns @ref False.
+    This function object returns @ref [True](@ref constant-True) if x is not greater than @ref [Zero](@ref constant-Zero) else returns @ref [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_ngtz.hpp>}
 

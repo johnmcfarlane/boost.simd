@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_not_equal is_not_equal (function object)
 
-    This function object returns @ref True if x and y are not equal else @ref False.
+    This function object returns @ref [True](@ref constant-True) if x and y are not equal else @ref [False](@ref constant-False).
     Infix notation can be used with operator '!='.
 
     @headerref{<boost/simd/function/is_not_equal.hpp>}

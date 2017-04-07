@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_lez is_lez (function object)
 
-    This function object returns @ref True or @ref False according x is less or equal to @ref Zero or not.
+    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is less or equal to @ref [Zero](@ref constant-Zero) or not.
 
     @headerref{<boost/simd/function/is_lez.hpp>}
 

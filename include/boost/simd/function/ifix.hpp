@@ -17,7 +17,7 @@
 
     This function object convert to integer by saturated truncation.
 
-    This is an alias of saturated_(toint) (See @ref toint)
+    This is an alias of saturated_(toint) (See @ref [toint](@ref real-toint))
 
     @headerref{<boost/simd/function/ifix.hpp>}
 

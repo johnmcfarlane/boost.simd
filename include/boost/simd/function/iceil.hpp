@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-iceil iceil (function object)
 
-    This function object computes the integer conversion of the @ref ceil of its parameter.
+    This function object computes the integer conversion of the @ref [ceil](@ref real-ceil) of its parameter.
 
     @headerref{<boost/simd/function/iceil.hpp>}
 

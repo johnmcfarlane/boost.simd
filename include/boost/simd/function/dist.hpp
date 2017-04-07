@@ -32,8 +32,8 @@
 
     @par Notes
 
-    The result may be negative for signed integers as @ref abs(@ref Valmin) is undefined.
-    To avoid the problem you can apply to dist the saturated_ decorator (See @ref group-decorator.)
+    The result may be negative for signed integers as @ref [abs](@ref real-abs)(@ref [Valmin](@ref constant-Valmin)) is undefined.
+    To avoid the problem you can apply to dist the saturated_ decorator (See @ref [group](@ref real-group)-decorator.)
 
     @see ( %real ) [ulpdist](@ref real-ulpdist), [abs](@ref real-abs)
 

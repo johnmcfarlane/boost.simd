@@ -16,7 +16,7 @@
     @defgroup real-if_plus if_plus (function object)
 
     This function object conditionally returns  @c x+y (respectively @c x)
-    if @c c is @ref True (respectively  @ref False)
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
     @headerref{<boost/simd/function/if_plus.hpp>}
 

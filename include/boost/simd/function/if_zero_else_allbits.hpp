@@ -15,10 +15,10 @@
     @ingroup group-boolean
     @defgroup real-if_zero_else_allbits if_zero_else_allbits (function object)
 
-    This function object conditionally returns  @c 0 (respectively @ref Allbits)
-    if @c c is @ref True (respectively  @ref False)
+    This function object conditionally returns  @c 0 (respectively @ref [Allbits](@ref constant-Allbits))
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
-    This is an alias of @ref genmaskc
+    This is an alias of @ref [genmaskc](@ref real-genmaskc)
 
     @headerref{<boost/simd/function/if_zero_else_allbits.hpp>}
 

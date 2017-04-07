@@ -45,7 +45,7 @@
 
       With no option this function is equivalent to `x-div(fix, x, y)*y`
 
-      `option` may be @ref ceil, @ref floor, @ref fix, @ref round, @ref nearbyint (in the
+      `option` may be @ref [ceil](@ref real-ceil), @ref [floor](@ref real-floor), @ref [fix](@ref real-fix), @ref [round](@ref real-round), @ref [nearbyint](@ref real-nearbyint) (in the
       namespace booost::simd).
       Each option provides the same result as `x-div(option, x, y)*y`.
 

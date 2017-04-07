@@ -36,7 +36,7 @@
 
     The reduction of the argument modulo \f$\pi/2\f$ is generally
     the most difficult part of trigonometric evaluations.
-    The accurate algorithm @ref rem_pio2 is over costly and implies the knowledge
+    The accurate algorithm @ref [rem_pio2](@ref real-rem_pio2) is over costly and implies the knowledge
     of a few hundred \f$\pi\f$ decimals
     some simpler algorithms as this one
     can be used, but the precision is only insured on smaller intervals.

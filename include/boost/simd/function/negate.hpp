@@ -27,7 +27,7 @@
       @endcode
 
     @par Note
-    If y is @ref Zero the result is zero. This can be avoided using @ref negatenz or @ref copysign.
+    If y is @ref [Zero](@ref constant-Zero) the result is zero. This can be avoided using @ref [negatenz](@ref real-negatenz) or @ref [copysign](@ref real-copysign).
 
     @see ( %real ) [sign](@ref real-sign), [negatenz](@ref real-negatenz), [copysign](@ref real-copysign), [Mzero](@ref constant-Mzero), [is_positive](@ref real-is_positive), [is_negative](@ref real-is_negative)
 

@@ -18,7 +18,7 @@
     This function object returns the return a @c bool that is the result of the
     lexicographic test for > on all elements of the entries
 
-    It is probably not what you wish. Have a look to @ref is_greater
+    It is probably not what you wish. Have a look to @ref [is_greater](@ref real-is_greater)
 
     @headerref{<boost/simd/function/compare_greater.hpp>}
 

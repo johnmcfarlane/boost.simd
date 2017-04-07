@@ -47,7 +47,7 @@
 
     @par Note
 
-    Let us recall that @ref Valmin and @ref Minf (resp. @ref Valmax and @ref Inf)
+    Let us recall that @ref [Valmin](@ref constant-Valmin) and @ref [Minf](@ref constant-Minf) (resp. @ref [Valmax](@ref constant-Valmax) and @ref [Inf](@ref constant-Inf))
     are identical if Target is  an integer type.
 
 

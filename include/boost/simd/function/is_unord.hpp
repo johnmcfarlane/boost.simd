@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_unord is_unord (function object)
 
-    This function object returns @ref True if x or y is nan.
+    This function object returns @ref [True](@ref constant-True) if x or y is nan.
 
     @headerref{<boost/simd/function/is_unord.hpp>}
 

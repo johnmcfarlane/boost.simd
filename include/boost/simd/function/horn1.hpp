@@ -55,7 +55,7 @@
 
       \f$ x^n+\sum_0^{n-1} C(i)x^i \f$
 
-    This differs from @ref horn only by the fact that the leading polynomial
+    This differs from @ref [horn](@ref real-horn) only by the fact that the leading polynomial
     coefficient is one, saving one multiplication.
 
   **/

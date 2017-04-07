@@ -15,10 +15,10 @@
     @ingroup group-boolean
     @defgroup real-if_else_nan if_else_nan (function object)
 
-    This function object conditionally returns @c x (respectively @ref Nan)
-    if @c c is @ref True (respectively  @ref False)
+    This function object conditionally returns @c x (respectively @ref [Nan](@ref constant-Nan))
+    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
 
-    This is an alias of @ref if_else_allbits
+    This is an alias of @ref [if_else_allbits](@ref real-if_else_allbits)
 
     @headerref{<boost/simd/function/if_else_nan.hpp>}
 

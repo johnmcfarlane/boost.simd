@@ -17,7 +17,7 @@
 
     This function object returns the return the bitwise bitwise_not of the entry
     Infix notation can be used with operator '~'
-    This is a convenience alias of @ref complement
+    This is a convenience alias of @ref [complement](@ref real-complement)
 
     @headerref{<boost/simd/function/bitwise_not.hpp>}
 

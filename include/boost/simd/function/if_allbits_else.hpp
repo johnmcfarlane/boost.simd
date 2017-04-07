@@ -15,7 +15,7 @@
     @ingroup group-boolean
     @defgroup real-if_allbits_else if_allbits_else (function object)
 
-    This function object  returns @ref Allbits if  @c c is @ref True else returns @c f
+    This function object  returns @ref [Allbits](@ref constant-Allbits) if  @c c is @ref [True](@ref constant-True) else returns @c f
 
     @headerref{<boost/simd/function/if_allbits_else.hpp>}
 

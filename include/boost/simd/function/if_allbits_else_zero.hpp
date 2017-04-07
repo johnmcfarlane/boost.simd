@@ -16,8 +16,8 @@
     @defgroup real-if_allbits_else_zero if_allbits_else_zero (function object)
 
     This function object returns a mask of bits. All ones if the
-    argument is non @ref Zero else all zeros.
-    This is an alias of @ref genmask
+    argument is non @ref [Zero](@ref constant-Zero) else all zeros.
+    This is an alias of @ref [genmask](@ref real-genmask)
 
     @headerref{<boost/simd/function/if_allbits_else_zero.hpp>}
 

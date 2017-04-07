@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_not_nan is_not_nan (function object)
 
-    This function object returns @ref False or @ref True according x is @ref Nan or not.
+    This function object returns @ref [False](@ref constant-False) or @ref [True](@ref constant-True) according x is @ref [Nan](@ref constant-Nan) or not.
 
     @headerref{<boost/simd/function/is_not_nan.hpp>}
 

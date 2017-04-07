@@ -49,7 +49,7 @@
        Be aware that POSIX version of @c lgamma is not thread-safe: each execution of the function
        stores the sign of the gamma function of @c x in the static external variable signgam.
 
-       boost.simd also provides @ref signgam which independantly computes the sign.
+       boost.simd also provides @ref [signgam](@ref real-signgam) which independantly computes the sign.
 
     @see ( %real ) [gamma](@ref real-gamma), [signgam](@ref real-signgam)
 

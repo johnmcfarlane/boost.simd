@@ -29,7 +29,7 @@
 
     @par Decorators
 
-     - `saturated_` (See @ref [group](@ref real-group)-decorator) computes the saturated product.
+     - `saturated_` (See  [group](@ref real-group)-decorator) computes the saturated product.
 
     @see ( %real ) [minus](@ref real-minus), [divides](@ref real-divides), [plus](@ref real-plus)
 

@@ -15,8 +15,8 @@
     @ingroup group-predicates
     @defgroup real-majority majority (function object)
 
-    This function object returns @ref [True](@ref constant-True) if at least two inputs
-    are not @ref [Zero](@ref constant-Zero) else @ref [False](@ref constant-False).
+    This function object returns  [True](@ref constant-True) if at least two inputs
+    are not  [Zero](@ref constant-Zero) else  [False](@ref constant-False).
 
     @headerref{<boost/simd/function/majority.hpp>}
 

@@ -42,7 +42,7 @@
 
     @par Decorators
 
-     - pedantic_ slower, but special values as @ref [Nan](@ref constant-Nan) or @ref [Inf](@ref constant-Inf) are handled properly.
+     - pedantic_ slower, but special values as  [Nan](@ref constant-Nan) or  [Inf](@ref constant-Inf) are handled properly.
 
      - std_ transmits the call to @c std::frexp and converts the exponent.
 
@@ -53,7 +53,7 @@
 
     - the exponent and matissa are both returned as floating values:
       if you need integral type exponent (as in the standard library)
-      use @ref [ifrexp](@ref real-ifrexp)
+      use  [ifrexp](@ref real-ifrexp)
 
     - This function splits a floating point value \f$x\f$ in a signed
       mantissa \f$m\f$ and an exponent \f$e\f$ so that:  \f$x = m\times 2^e\f$,

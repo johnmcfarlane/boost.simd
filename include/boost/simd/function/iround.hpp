@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-iround iround (function object)
 
-    This function object computes the integer conversion of the @ref [round](@ref real-round) of its parameter.
+    This function object computes the integer conversion of the  [round](@ref real-round) of its parameter.
 
     @headerref{<boost/simd/function/iround.hpp>}
 

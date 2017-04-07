@@ -28,8 +28,8 @@
 
     @par Note
 
-     -  The semantics of the function are similar to @ref [cos](@ref real-cos) ones.
-        See @ref [cos](@ref real-cos) for further details
+     -  The semantics of the function are similar to  [cos](@ref real-cos) ones.
+        See  [cos](@ref real-cos) for further details
 
      - As it conveys a peculiar meaning,  unlike the orher cosine, cospi is defined
          for integral types and the result of cospi(n) coincides with \f$(-1)^n\f$.

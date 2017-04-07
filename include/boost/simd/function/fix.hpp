@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-fix fix (function object)
 
-    This function object computes the truncation toward @ref [Zero](@ref constant-Zero)
+    This function object computes the truncation toward  [Zero](@ref constant-Zero)
     of its parameter.
 
     @headerref{<boost/simd/function/fix.hpp>}

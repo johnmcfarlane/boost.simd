@@ -33,7 +33,7 @@
      - This algorithm is accurate over  the full floating range,  but also is over
       costly and implies the knowledge  of a few hundred \f$\pi\f$ decimals
 
-     - Some simpler algorithms  @ref [rem_pio2_medium](@ref real-rem_pio2_medium), @ref [rem_pio2_cephes](@ref real-rem_pio2_cephes) or @ref [rem_pio2_straight](@ref real-rem_pio2_straight)
+     - Some simpler algorithms   [rem_pio2_medium](@ref real-rem_pio2_medium),  [rem_pio2_cephes](@ref real-rem_pio2_cephes) or  [rem_pio2_straight](@ref real-rem_pio2_straight)
       can often be used, but the precision is only insured on smaller intervals.
 
       - Using  `std::tie(n, r) = rem_pio2(x);` is similar to ` n = div(inearbyint, x, Pio_2<T>())`

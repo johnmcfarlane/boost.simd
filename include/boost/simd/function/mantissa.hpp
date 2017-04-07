@@ -26,7 +26,7 @@
       @endcode
 
     @par Note
-    The @ref [exponent](@ref real-exponent) @c e and signed @ref [mantissa](@ref real-mantissa) @c m of a floating
+    The  [exponent](@ref real-exponent) @c e and signed  [mantissa](@ref real-mantissa) @c m of a floating
     point entry @c x are related by
     \f$x = m\times 2^e\f$, with |m| \f$\in[1, 2[\f$. (Except for zero,
     for which \f$m = 0\f$).

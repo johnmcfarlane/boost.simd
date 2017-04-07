@@ -16,7 +16,7 @@
     @defgroup real-ifnot_minus ifnot_minus (function object)
 
     This function object conditionally returns  @c x (respectively @c x-y)
-    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
+    if @c c is  [True](@ref constant-True) (respectively   [False](@ref constant-False))
 
     @headerref{<boost/simd/function/ifnot_minus.hpp>}
 

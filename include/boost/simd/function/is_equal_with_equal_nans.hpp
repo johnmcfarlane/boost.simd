@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_equal_with_equal_nans is_equal_with_equal_nans (function object)
 
-    This unction object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x and y are equal or not.
+    This unction object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x and y are equal or not.
     Nans are considered equal
 
     @headerref{<boost/simd/function/is_equal_with_equal_nans.hpp>}

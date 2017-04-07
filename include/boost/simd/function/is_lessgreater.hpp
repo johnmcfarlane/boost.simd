@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_lessgreater is_lessgreater (function object)
 
-    This function object returns @ref [True](@ref constant-True) if neither x nor y is @ref [Nan](@ref constant-Nan) and x is not equal to y.
+    This function object returns  [True](@ref constant-True) if neither x nor y is  [Nan](@ref constant-Nan) and x is not equal to y.
 
     @headerref{<boost/simd/function/is_lessgreater.hpp>}
 

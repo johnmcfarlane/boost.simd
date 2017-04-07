@@ -15,11 +15,11 @@
     @ingroup group-predicates
     @defgroup real-is_negative is_negative (function object)
 
-    This function object returns @ref [True](@ref constant-True) if x is negative else @ref [False](@ref constant-False).
+    This function object returns  [True](@ref constant-True) if x is negative else  [False](@ref constant-False).
 
-    This function differs from @ref [is_ltz](@ref real-is_ltz) for floating point arguments,
-    because @ref [Mzero](@ref constant-Mzero) is negative but not less than zero, and @ref [Mzero](@ref constant-Mzero) is
-    not positive and not greater than zero, It's probably @ref [is_ltz](@ref real-is_ltz) that
+    This function differs from  [is_ltz](@ref real-is_ltz) for floating point arguments,
+    because  [Mzero](@ref constant-Mzero) is negative but not less than zero, and  [Mzero](@ref constant-Mzero) is
+    not positive and not greater than zero, It's probably  [is_ltz](@ref real-is_ltz) that
     you want.
 
     @headerref{<boost/simd/function/is_negative.hpp>}

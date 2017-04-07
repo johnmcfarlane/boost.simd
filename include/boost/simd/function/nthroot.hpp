@@ -17,9 +17,9 @@
 
     This function object returns the nth root of its first argument: \f$\sqrt[n]{x}\f$
     \arg n must be of integer type
-    \arg if n is even and x negative the result is @ref [Nan](@ref constant-Nan)
-    \arg if x is null the result is @ref [Zero](@ref constant-Zero)
-    \arg if x is one  the result is @ref [One](@ref constant-One)
+    \arg if n is even and x negative the result is  [Nan](@ref constant-Nan)
+    \arg if x is null the result is  [Zero](@ref constant-Zero)
+    \arg if x is one  the result is  [One](@ref constant-One)
 
     @headerref{<boost/simd/function/nthroot.hpp>}
 
@@ -35,7 +35,7 @@
 
     @par Note:
     nthroot is slower than `pow(x, rec(tofloat(n))`) because
-    it takes care of some limits issues that @ref [pow](@ref real-pow) ignores.
+    it takes care of some limits issues that  [pow](@ref real-pow) ignores.
 
     See if it suits you better or use raw_ decorator for intermediate solution.
 

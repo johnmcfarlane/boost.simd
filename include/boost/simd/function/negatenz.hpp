@@ -15,8 +15,8 @@
     @ingroup group-ieee
     @defgroup real-negatenz negatenz (function object)
 
-    This function object returns @c x multiplied by the @ref [signnz](@ref real-signnz) of @c y.
-    The result is unspecified if @c y is @ref [Nan](@ref constant-Nan)
+    This function object returns @c x multiplied by the  [signnz](@ref real-signnz) of @c y.
+    The result is unspecified if @c y is  [Nan](@ref constant-Nan)
 
     @headerref{<boost/simd/function/negatenz.hpp>}
 

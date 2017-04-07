@@ -30,14 +30,14 @@
 
     @par Decorators
 
-     - `saturated_` (See @ref [group](@ref real-group)-decorator) computes the saturated division. The only
-     difference is to allow for integer types to divide @ref [Valmin](@ref constant-Valmin) by -1 returning @ref [Valmax](@ref constant-Valmax).
+     - `saturated_` (See  [group](@ref real-group)-decorator) computes the saturated division. The only
+     difference is to allow for integer types to divide  [Valmin](@ref constant-Valmin) by -1 returning  [Valmax](@ref constant-Valmax).
      In the regular case (no decorator) the result is undefined.
 
     @par Note
 
     As usual the simd division is often more expansive than the other
-    arithmetic operators and using the @ref [rec](@ref real-rec) function or @ref [shift_right](@ref real-shift_right) function
+    arithmetic operators and using the  [rec](@ref real-rec) function or  [shift_right](@ref real-shift_right) function
     can be sometimes handy to gain some cycles.
 
     @see ( %real ) [div](@ref real-div), [rem](@ref real-rem), [rec](@ref real-rec), [shift_right](@ref real-shift_right)

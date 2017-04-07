@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-trunc trunc (function object)
 
-    This function object computes the truncation toward @ref [Zero](@ref constant-Zero)
+    This function object computes the truncation toward  [Zero](@ref constant-Zero)
     of its parameter.
 
     @headerref{<boost/simd/function/trunc.hpp>}
@@ -34,7 +34,7 @@
       - the call to `trunc(x)` is similar to `sign(x)*floor(abs(x))`
 
       - For floating point number it is also one of the two ouputs of
-        the @ref [modf](@ref real-modf) function.
+        the  [modf](@ref real-modf) function.
         And we have:
     @see ( %real ) [abs](@ref real-abs), [frac](@ref real-frac), [floor](@ref real-floor), [sign](@ref real-sign), [modf](@ref real-modf), [itrunc](@ref real-itrunc)
 

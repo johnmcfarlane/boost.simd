@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_not_denormal is_not_denormal (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is not denormal.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x is not denormal.
 
     @headerref{<boost/simd/function/is_not_denormal.hpp>}
 

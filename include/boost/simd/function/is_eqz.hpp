@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_eqz is_eqz (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is @ref [Zero](@ref constant-Zero) or not.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x is  [Zero](@ref constant-Zero) or not.
 
     @headerref{<boost/simd/function/is_eqz.hpp>}
 

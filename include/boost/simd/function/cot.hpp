@@ -29,7 +29,7 @@
 
       As most other trigonometric function cot can be called
       with a second optional parameter  which is a tag on speed and accuracy
-      (see @ref [cos](@ref real-cos) for further details)
+      (see  [cos](@ref real-cos) for further details)
 
     @see ( %real ) [cos](@ref real-cos), [sin](@ref real-sin), [tan](@ref real-tan), [cotd](@ref real-cotd), [cotpi](@ref real-cotpi)
 

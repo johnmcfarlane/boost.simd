@@ -16,7 +16,7 @@
     @defgroup real-if_else if_else (function object)
 
     This function object conditionally returns @c t (respectively @c f) if @c c
-    is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
+    is  [True](@ref constant-True) (respectively   [False](@ref constant-False))
 
     @headerref{<boost/simd/function/if_else.hpp>}
 

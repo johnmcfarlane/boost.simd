@@ -15,8 +15,8 @@
     @ingroup group-boolean
     @defgroup real-if_minus if_minus (function object)
 
-    This function object conditionally returns @c x-y (respectively @c x)  if @c c is @ref [True](@ref constant-True)
-    (respectively  @ref [False](@ref constant-False))
+    This function object conditionally returns @c x-y (respectively @c x)  if @c c is  [True](@ref constant-True)
+    (respectively   [False](@ref constant-False))
 
     @headerref{<boost/simd/function/if_minus.hpp>}
 

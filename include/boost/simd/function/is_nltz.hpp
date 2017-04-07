@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_nltz is_nltz (function object)
 
-    This function object returns @ref [True](@ref constant-True) if x is not less than @ref [Zero](@ref constant-Zero) else returns @ref [False](@ref constant-False).
+    This function object returns  [True](@ref constant-True) if x is not less than  [Zero](@ref constant-Zero) else returns  [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_nltz.hpp>}
 

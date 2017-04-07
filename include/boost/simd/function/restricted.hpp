@@ -35,11 +35,11 @@
 
       For example if you are sure that all input angles are between
       \f$-\pi/4\f$ and \f$\pi/4\f$, then
-      this may be used be used with @ref [cos](@ref real-cos) : restricted_(cos)
+      this may be used be used with  [cos](@ref real-cos) : restricted_(cos)
       (or with the other direct trigonometric functions).
 
        - the simd gain will be at least 5 for floats on an sse4.2 sytem
-       - the result will be @ref [Nan](@ref constant-Nan) outside the limited interval...
+       - the result will be  [Nan](@ref constant-Nan) outside the limited interval...
 
   **/
 

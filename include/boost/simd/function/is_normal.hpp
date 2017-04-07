@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_normal is_normal (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is normal or not.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x is normal or not.
 
     @headerref{<boost/simd/function/is_normal.hpp>}
 

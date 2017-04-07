@@ -42,19 +42,19 @@
 
     @par Decorators
 
-     - pedantic_ slower, but special values as @ref [Nan](@ref constant-Nan) or @ref [Inf](@ref constant-Inf) are handled properly.
+     - pedantic_ slower, but special values as  [Nan](@ref constant-Nan) or  [Inf](@ref constant-Inf) are handled properly.
 
      - std_ transmits the call to @c std::frexp.
 
     @par Note:
 
-    if you need floating type exponent (unlike the standard)  use @ref [frexp](@ref real-frexp)
+    if you need floating type exponent (unlike the standard)  use  [frexp](@ref real-frexp)
 
     This function splits a floating point value \f$x\f$ in a signed mantissa \f$m\f$ and
     an exponent \f$e\f$ so that:  \f$x = m\times 2^e\f$,
     with absolute value of \f$m \in [0.5, 1[\f$ (except for \f$x = 0\f$)
 
-    Without the pedantic_ decorator  @ref [Nan](@ref constant-Nan) or @ref [Inf](@ref constant-Inf) are not handled properly.
+    Without the pedantic_ decorator   [Nan](@ref constant-Nan) or  [Inf](@ref constant-Inf) are not handled properly.
 
     @see ( %real ) [exponent](@ref real-exponent), [mantissa](@ref real-mantissa), [frexp](@ref real-frexp)
 

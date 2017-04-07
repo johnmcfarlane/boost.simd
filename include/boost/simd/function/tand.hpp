@@ -30,7 +30,7 @@
 
       As most other trigonometric function tand can be called with a
       second optional parameter  which is a tag on speed and accuracy
-      (see @ref [cos](@ref real-cos) for further details)
+      (see  [cos](@ref real-cos) for further details)
 
     @see ( %real ) [tan](@ref real-tan), [tanpi](@ref real-tanpi)
 

@@ -15,8 +15,8 @@
     @ingroup group-boolean
     @defgroup real-if_else_zero if_else_zero (function object)
 
-    This function object conditionally returns @c x (respectively @ref [Zero](@ref constant-Zero))
-    if @c c is @ref [True](@ref constant-True) (respectively  @ref [False](@ref constant-False))
+    This function object conditionally returns @c x (respectively  [Zero](@ref constant-Zero))
+    if @c c is  [True](@ref constant-True) (respectively   [False](@ref constant-False))
 
     @headerref{<boost/simd/function/if_else_zero.hpp>}
 

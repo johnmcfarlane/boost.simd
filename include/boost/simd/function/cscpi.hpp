@@ -30,7 +30,7 @@
 
       As most other trigonometric function cscpi can be called with
       a second optional parameter  which is a tag on speed and accuracy
-      (see @ref [cos](@ref real-cos) for further details)
+      (see  [cos](@ref real-cos) for further details)
 
     @see ( %real ) [cscd](@ref real-cscd), [csc](@ref real-csc)
 

@@ -15,7 +15,7 @@
     @ingroup group-arithmetic
     @defgroup real-ifloor ifloor (function object)
 
-    This function object computes the integer conversion of the @ref [floor](@ref real-floor) of its parameter.
+    This function object computes the integer conversion of the  [floor](@ref real-floor) of its parameter.
 
     @headerref{<boost/simd/function/ifloor.hpp>}
 

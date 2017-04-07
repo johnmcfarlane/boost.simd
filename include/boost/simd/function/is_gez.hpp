@@ -15,8 +15,8 @@
     @ingroup group-predicates
     @defgroup real-is_gez is_gez (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x
-    is greater or equal to @ref [Zero](@ref constant-Zero) or not.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x
+    is greater or equal to  [Zero](@ref constant-Zero) or not.
 
     @headerref{<boost/simd/function/is_gez.hpp>}
 

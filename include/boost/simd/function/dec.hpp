@@ -29,7 +29,7 @@
 
     - saturated_ ensures that @c saturated_(dec)(x) will never be
       strictly greater than @c x,
-      avoiding the wrap around from @ref [Valmin](@ref constant-Valmin) to @ref [Valmax](@ref constant-Valmax) with integer types
+      avoiding the wrap around from  [Valmin](@ref constant-Valmin) to  [Valmax](@ref constant-Valmax) with integer types
 
     @see ( %real ) [inc](@ref real-inc), [minus](@ref real-minus)
 

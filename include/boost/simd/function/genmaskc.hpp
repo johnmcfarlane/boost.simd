@@ -16,7 +16,7 @@
     @defgroup real-genmaskc genmaskc (function object)
 
     This function object returns a mask of bits. This mask is full of ones if the
-    input element is @ref [Zero](@ref constant-Zero) else full of zeros.
+    input element is  [Zero](@ref constant-Zero) else full of zeros.
 
     @headerref{<boost/simd/function/genmaskc.hpp>}
 

@@ -30,9 +30,9 @@
      If @c n is null returns @c x else computes the `n`-th greatest representable value strictly less
      than @c x in its type.  @c n must be positive or null.
 
-      - For integer types it saturates at @ref [Valmin](@ref constant-Valmin).
+      - For integer types it saturates at  [Valmin](@ref constant-Valmin).
 
-      - For floating point numbers, all @ref [Minf](@ref constant-Minf)  strict predecessors are @ref [Nan](@ref constant-Nan).
+      - For floating point numbers, all  [Minf](@ref constant-Minf)  strict predecessors are  [Nan](@ref constant-Nan).
 
     @see ( %real ) [next](@ref real-next), [prev](@ref real-prev), [successor](@ref real-successor), [nextafter](@ref real-nextafter), [Minf](@ref constant-Minf), [Valmin](@ref constant-Valmin), [Nan](@ref constant-Nan)
 

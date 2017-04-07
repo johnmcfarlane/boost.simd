@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_not_greater_equal is_not_greater_equal (function object)
 
-    This function object returns @ref [True](@ref constant-True) if x is not greater or equal to y else returns @ref [False](@ref constant-False).
+    This function object returns  [True](@ref constant-True) if x is not greater or equal to y else returns  [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_not_greater_equal.hpp>}
 

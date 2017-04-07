@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_ltz is_ltz (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is less than @ref [Zero](@ref constant-Zero) or not.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x is less than  [Zero](@ref constant-Zero) or not.
 
     @headerref{<boost/simd/function/is_ltz.hpp>}
 

@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_not_less_equal is_not_less_equal (function object)
 
-    This function object returns @ref [True](@ref constant-True)  or @ref [False](@ref constant-False) depending on whether x is
+    This function object returns  [True](@ref constant-True)  or  [False](@ref constant-False) depending on whether x is
     not less or equal to y or is.
 
     @headerref{<boost/simd/function/is_not_less_equal.hpp>}

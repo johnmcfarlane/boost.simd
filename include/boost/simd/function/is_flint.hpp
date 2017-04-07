@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_flint is_flint (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according x is a flint or not.
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according x is a flint or not.
 
     @headerref{<boost/simd/function/is_flint.hpp>}
 

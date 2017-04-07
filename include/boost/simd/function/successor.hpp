@@ -30,8 +30,8 @@
      If @c n is null returns @c x else computes the `n`-th least representable value strictly greater
      than x in its type. @c n must be positive or null.
 
-      - For integer it saturate at @ref [Valmax](@ref constant-Valmax).
-      - For floating point numbers, all @ref [Inf](@ref constant-Inf)  strict successors are @ref [Nan](@ref constant-Nan).
+      - For integer it saturate at  [Valmax](@ref constant-Valmax).
+      - For floating point numbers, all  [Inf](@ref constant-Inf)  strict successors are  [Nan](@ref constant-Nan).
 
 
     @par Example:

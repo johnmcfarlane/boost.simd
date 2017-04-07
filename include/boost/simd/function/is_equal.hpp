@@ -15,7 +15,7 @@
     @ingroup group-operator
     @defgroup real-is_equal is_equal (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False)
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False)
     according x and y are equal or not.
 
     Infix notation can be used with operator '=='

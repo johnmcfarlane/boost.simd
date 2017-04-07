@@ -15,7 +15,7 @@
     @ingroup group-reduction
     @defgroup real-nbtrue nbtrue (function object)
 
-     This function object returns the number of non @ref [Zero](@ref constant-Zero) elements of the
+     This function object returns the number of non  [Zero](@ref constant-Zero) elements of the
    argument.
 
     @headerref{<boost/simd/function/nbtrue.hpp>}

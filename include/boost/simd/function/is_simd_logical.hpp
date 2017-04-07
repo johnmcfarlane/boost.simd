@@ -15,7 +15,7 @@
     @ingroup group-reduction
     @defgroup real-is_simd_logical is_simd_logical (function object)
 
-    returns @ref [True](@ref constant-True) if each vector elements have all bits or no bit set.
+    returns  [True](@ref constant-True) if each vector elements have all bits or no bit set.
 
     @headerref{<boost/simd/function/is_simd_logical.hpp>}
 

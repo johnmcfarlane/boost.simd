@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_nlez is_nlez (function object)
 
-    This function object returns @ref [True](@ref constant-True) if x is not less or equal to @ref [Zero](@ref constant-Zero) else returns @ref [False](@ref constant-False).
+    This function object returns  [True](@ref constant-True) if x is not less or equal to  [Zero](@ref constant-Zero) else returns  [False](@ref constant-False).
 
     @headerref{<boost/simd/function/is_nlez.hpp>}
 

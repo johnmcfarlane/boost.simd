@@ -15,7 +15,7 @@
     @ingroup group-predicates
     @defgroup real-is_greater is_greater (function object)
 
-    This function object returns @ref [True](@ref constant-True) or @ref [False](@ref constant-False) according
+    This function object returns  [True](@ref constant-True) or  [False](@ref constant-False) according
     x is greater than y or not.
 
     Infix notation can be used with operator '>'.

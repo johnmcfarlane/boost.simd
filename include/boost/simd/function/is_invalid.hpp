@@ -15,7 +15,7 @@
     @ingroup group-predicatesq
     @defgroup real-is_invalid is_invalid (function object)
 
-    This function object returns @ref [True](@ref constant-True) if x is inf, -inf or nan, else returns @ref [False](@ref constant-False)
+    This function object returns  [True](@ref constant-True) if x is inf, -inf or nan, else returns  [False](@ref constant-False)
 
     @headerref{<boost/simd/function/is_invalid.hpp>}
 

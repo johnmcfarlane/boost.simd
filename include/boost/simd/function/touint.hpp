@@ -27,7 +27,7 @@
 
     @par Decorators
 
-    - saturated_ (See @ref [group](@ref real-group)-decorator) as stated above ensures good behaviour on
+    - saturated_ (See  [group](@ref real-group)-decorator) as stated above ensures good behaviour on
       limiting values.
 
     @par Notes

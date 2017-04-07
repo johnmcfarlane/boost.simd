@@ -26,7 +26,7 @@
       bool all(Value const &x);
       @endcode
 
-    @see ant, none, nbtrue
+    @see any, none, nbtrue
 
     @par Example:
 

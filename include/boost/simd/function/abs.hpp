@@ -47,7 +47,7 @@
     a C macro version which may be called instead of the boost simd version.
     To avoid this you may prefix abs using boost::simd::abs notation.
 
-    @see sqr_abs, sqr
+    @see ( %real ) [sqr_abs](@ref real-sqr_abs), [sqr](@ref real-sqr)
 
     @par Example:
 

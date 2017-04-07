@@ -39,7 +39,7 @@
       - Using  `std::tie(n, r) = rem_pio2(x);` is similar to ` n = div(inearbyint, x, Pio_2<T>())`
       and `r =  remainder(x, Pio_2<T>())`
 
-    @see rem_pio2_medium, rem_pio2_straight, rem_2pi,  rem_pio2_cephes,
+    @see rem_pio2_medium, rem_pio2_straight, rem_2pi,  rem_pio2_cephes
 
     @par Example:
 

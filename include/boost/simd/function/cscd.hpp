@@ -32,7 +32,7 @@
      (see @ref cos for further details)
 
 
-    @see csc, cscpi,
+    @see csc, cscpi
 
 
     @par Example:

@@ -26,8 +26,7 @@
       Value complement(Value const& x);
       @endcode
 
-    @see  bitwise_and, bitwise_or, bitwise_xor, bitwise_notand,
-    bitwise_andnot, bitwise_notor, bitwise_ornot
+    @see  bitwise_and, bitwise_or, bitwise_xor, bitwise_notand, bitwise_andnot, bitwise_notor, bitwise_ornot
 
     @par Example:
 

@@ -45,11 +45,11 @@
     @code
     T r = Bitincrement<T>();
     @endcode
-    generates a value so that, for any value @c x of type @c T,
+    generates a value @c r of type @c T so that,
     @code
-    x + r == simd::nextafter(x, 1);
+    T r == simd::next(T(0));
     @endcode
-    evaluates to @c true.
+    evaluates to @c true. For integral types this is one.
 
     2.  A value of type @c T so that:
     @code

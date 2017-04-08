@@ -38,7 +38,7 @@
 
     | Name                | Description                                                         |
     |--------------------:|:--------------------------------------------------------------------|
-    | **target**          | a [placeholder](@ref type-as) value encapsulating the constant type |
+    | **target**          | a [placeholder](@ref as) value encapsulating the constant type |
 
     @par Return Value
     1.  A value of type @c T so that:

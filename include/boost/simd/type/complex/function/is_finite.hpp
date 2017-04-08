@@ -9,9 +9,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_FINITE_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_FINITE_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -40,9 +37,7 @@ namespace boost { namespace simd
        @snippet c_is_finite.txt is_finite
 
   **/
-  as_logical<IEEEValue> boost::simd::is_finite(complex<IEEEValue);
-} }
-#endif
+
 #include <boost/simd/function/is_finite.hpp>
 #include <boost/simd/type/complex/function/impl/is_finite.hpp>
 

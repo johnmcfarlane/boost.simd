@@ -106,8 +106,8 @@ namespace boost { namespace simd
       - @c first, @c last and @c out must be pointer to Vectorizable type.
 
       - @c f must be a polymorphic binary function object, i.e callable on generic types.
-      - @c boost::simd::pack<T1>::static_size @c == @c boost::simd::pack<T><U>::static_size
-      - @c boost::simd::pack<T2>::static_size @c == @c boost::simd::pack<T><U>::static_size
+      - @c boost::simd::pack<T1>::static_size @c == @c boost::simd::pack<U>::static_size
+      - @c boost::simd::pack<T2>::static_size @c == @c boost::simd::pack<U>::static_size
 
     @par Example
     @snippet transform.binary.cpp transform-binary

@@ -35,33 +35,33 @@ namespace boost { namespace simd
     All operators are included as soon as <boost/simd/pack.hpp> is included.
 
     <center>
-    | Name                    | op  | arity |   types      |  precondition/result                          |
-    |-------------------------|-----|-------|--------------|-----------------------------------------------|
-    | @ref bitwise_and        | &   |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
-    | @ref bitwise_or         | \|  |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
-    | @ref bitwise_xor        | ^   |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
-    | @ref complement         | ~   |  1    |  T1          |                                               |
-    | @ref divides            | /   |  2    |  T1, T1      |  arithmetic types               (2)           |
-    | @ref div                | /   |  2    |  T1, T1      |  arithmetic types               (2)           |
-    | @ref if_else            | NA  |  3    |  T1, T2, T2  |                                               |
-    | @ref is_equal           | ==  |  2    |  T1, T1      |                                               |
-    | @ref is_greater         | >   |  2    |  T1, T1      |                                               |
-    | @ref is_greater_equal   | >=  |  2    |  T1, T1      |                                               |
-    | @ref is_less            | <   |  2    |  T1, T1      |                                               |
-    | @ref is_less_equal      | <=  |  2    |  T1, T1      |                                               |
-    | @ref is_not_equal       | !=  |  2    |  T1, T1      |                                               |
-    | @ref logical_and        | &&  |  2    |  T1, T1      |  returns a @ref logical                       |
-    | @ref logical_not        | !   |  1    |  T1, T1      |  returns a @ref logical                       |
-    | @ref logical_or         | \|\||  2    |  T1, T1      |  returns a @ref logical                      |
-    | @ref minus              | -   |  2    |  T1, T1      |  arithmetic types                (2)          |
-    | @ref rem                | %   |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
-    | @ref multiplies         | *   |  2    |  T1, T1      |  arithmetic types                (2)          |
-    | @ref plus               | +   |  2    |  T1, T1      |  arithmetic types                (2)          |
-    | @ref shift_left         | <<  |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
-    | @ref shift_right        | >>  |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
-    | @ref shr (logical shift)|     |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
-    | @ref unary_minus        | -   |  1    |  T1          |  signed arithmetic types         (2)          |
-    | @ref unary_plus         | +   |  1    |  T1          |  arithmetic types                (2)          |
+    | Name                                        | op  | arity |   types      |  precondition/result                          |
+    |---------------------------------------------|-----|-------|--------------|-----------------------------------------------|
+    | [bitwise_and     ](@ref real-bitwise_and)        | &   |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
+    | [bitwise_or      ](@ref real-bitwise_or)         | \|  |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
+    | [bitwise_xor     ](@ref real-bitwise_xor)        | ^   |  2    |  T1, T2      |  same bit size for T1 and T2    (1)           |
+    | [complement      ](@ref real-complement)         | ~   |  1    |  T1          |                                               |
+    | [divides         ](@ref real-divides)            | /   |  2    |  T1, T1      |  arithmetic types               (2)           |
+    | [div             ](@ref real-div)                | /   |  2    |  T1, T1      |  arithmetic types               (2)           |
+    | [if_else         ](@ref real-if_else)            | NA  |  3    |  T1, T2, T2  |                                               |
+    | [is_equal        ](@ref real-is_equal)           | ==  |  2    |  T1, T1      |                                               |
+    | [is_greater      ](@ref real-is_greater)         | >   |  2    |  T1, T1      |                                               |
+    | [is_greater_equal](@ref real-is_greater_equal)   | >=  |  2    |  T1, T1      |                                               |
+    | [is_less         ](@ref real-is_less)            | <   |  2    |  T1, T1      |                                               |
+    | [is_less_equal   ](@ref real-is_less_equal)      | <=  |  2    |  T1, T1      |                                               |
+    | [is_not_equal    ](@ref real-is_not_equal)       | !=  |  2    |  T1, T1      |                                               |
+    | [logical_and     ](@ref real-logical_and)        | &&  |  2    |  T1, T1      |  returns a @ref logical                       |
+    | [logical_not     ](@ref real-logical_not)        | !   |  1    |  T1, T1      |  returns a @ref logical                       |
+    | [logical_or      ](@ref real-logical_or)         | \|\||  2    |  T1, T1      |  returns a @ref logical                       |
+    | [minus           ](@ref real-minus)              | -   |  2    |  T1, T1      |  arithmetic types                (2)          |
+    | [rem             ](@ref real-rem)                | %   |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
+    | [multiplies      ](@ref real-multiplies)         | *   |  2    |  T1, T1      |  arithmetic types                (2)          |
+    | [plus            ](@ref real-plus)               | +   |  2    |  T1, T1      |  arithmetic types                (2)          |
+    | [shift_left      ](@ref real-shift_left)         | <<  |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
+    | [shift_right     ](@ref real-shift_right)        | >>  |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
+    | [shr             ](@ref real-shr)                | NA  |  2    |  T1, T2      |  T2 is integral scalar or associated to T1 (3)|
+    | [unary_minus     ](@ref real-unary_minus)        | -   |  1    |  T1          |  signed arithmetic types         (2)          |
+    | [unary_plus      ](@ref real-unary_plus)         | +   |  1    |  T1          |  arithmetic types                (2)          |
     </center>
 
 
@@ -83,7 +83,7 @@ namespace boost { namespace simd
 
    Extensions:
 
-      @ref div "division"  and @ref rem "remainder" operators have extensions to be seen following the links.
+     [div]( @ref real-div) "division"  and [rem](@ref real-rem) "remainder" operators have extensions to be seen following the links.
 
   **/
 } }

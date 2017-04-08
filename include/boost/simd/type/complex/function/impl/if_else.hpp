@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE result_t operator()(A0 const& a0, A1 const& a1, A2 const& a2) const BOOST_NOEXCEPT
     {
-      return {if_else(a0, a1.real, a2.real), if_else(a0, a1.imag, a2.imag)};
+      return result_t(if_else(a0, a1.real, a2.real), if_else(a0, a1.imag, a2.imag));
     }
   };
 

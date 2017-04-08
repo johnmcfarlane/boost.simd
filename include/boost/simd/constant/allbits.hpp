@@ -15,7 +15,7 @@
 
   /*!
   @ingroup group-constant
-  @defgroup constant-allbits Allbits (function object)
+  @defgroup constant-Allbits Allbits (function object)
 
     Generates a value of the chosen type which all bits are set to 1.
 

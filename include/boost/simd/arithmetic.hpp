@@ -40,9 +40,9 @@ namespace boost { namespace simd
        has no effect on floating calls,  but on integer calls replaces the operation by its
        saturated equivalent.
 
-       Typically: overflows will be replaced by the  @ref Valmin/@ref Valmax proper value
+       Typically: overflows will be replaced by the [Valmin](@ref constant-Valmin)/[Valmax](@ref constant-Valmax) proper value
        instead of providing undefined behaviour (for signed integral types) or wrapping
-       modulo  @ref Valmax + 1 (for unsigned ones).
+       modulo  [Valmax](@ref constant-Valmax) + 1 (for unsigned ones).
 
        Peculiarly saturated_( [abs](@ref real-abs)) and saturated_( [dist](@ref real-dist)) ensure that the result will
        never be stricly negative (which is for instance the case of `abs(Valmin<T>())` for
@@ -136,10 +136,10 @@ namespace boost { namespace simd
           @c rem(opt, a, b) is equivalent to  @c a-b*div(opt, a, b)
 
        For floating entries the underlisted corner cases are handled in the following way:
-        - if  @c x is \f$\pm\infty\f$ ,  [](@ref real-)Nan is returned
+        - if  @c x is \f$\pm\infty\f$ ,  [Nan](@ref constant-Nan) is returned
         - if  @c x is \f$\pm0\f$ and  @c y is not  @c 0  @c x is returned if  @c pedantic_
           is used (else  @c 0: the sign bit is not preserved)
-        - if  @c y is \f$\pm0\f$,  [](@ref real-)Nan is returned
+        - if  @c y is \f$\pm0\f$,  [Nan](@ref constant-Nan) is returned
         - if either argument is a nan,  a nan is returned
 
        @par Example:

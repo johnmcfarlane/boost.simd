@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace cmplx
 
      - limit cases are properly handled using the pedantic_ decorator
 
-     - The computation use @ref hypot, the pedantic version uses @ref hypot with pedantic_ decorator
+     - The computation use [hypot](@ref real-hypot), the pedantic version uses [hypot](@ref real-hypot) with pedantic_ decorator
 
 
     @see ( %real ) [abs](@ref  real-abs), [sqr_abs](@ref  real-sqr_abs),  ( %complex ) [sqr_abs](@ref complex-sqr_abs)

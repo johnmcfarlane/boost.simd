@@ -18,7 +18,7 @@ namespace boost { namespace simd { namespace cmplx
     @defgroup complex-if_else if_else (function object, complex version)
 
     This function object, complex version conditionally returns @c t (respectively @c f) if @c c
-    is @ref True (respectively  @ref False)
+    is [True](@ref constant-True) (respectively  [False](@ref constant-False))
 
 
     @headerref{<boost/simd/type/complex/function/if_else.hpp>}

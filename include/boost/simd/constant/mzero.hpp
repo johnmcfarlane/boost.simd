@@ -56,8 +56,8 @@
     The existence of the sign can be used in special circumstances as
     choosing between \f$+\infty\f$ and \f$-\infty\f$ instead of nan in computing 1/0.
     \par
-    The sign of zero can be accessed through the @ref is_negative
-    and @ref is_positive predicates or the @ref bitofsign functions.
+    The sign of zero can be accessed through the [is_negative](@ref is_negative)
+    and [is_positive](@ref is_positive) predicates or the [bitofsign](@ref bitofsign) functions.
 
     2.  A value of type @c T so that:
     @code

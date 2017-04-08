@@ -23,7 +23,7 @@ namespace boost { namespace simd
     @ingroup group-algo
 
     Returns @ true if @c pred avaluates to @c true for any of the elements in the
-    ContiguousRange [first,last), and ^c false otherwise (in particular when the range is empty).
+    ContiguousRange [first,last), and @c false otherwise (in particular when the range is empty).
 
     @param first  Beginning of the range of elements to test
     @param last   End of the range of elements to test

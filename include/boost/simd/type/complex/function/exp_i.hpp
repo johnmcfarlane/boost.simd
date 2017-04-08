@@ -28,10 +28,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> exp_i(complex<IEEEValue> const& z);
     @endcode
 
-
-
-    @see ( %real ) [exp_i](@ref  real-exp_i)
-
     @par Example:
 
        @snippet c_exp_i.cpp exp_i

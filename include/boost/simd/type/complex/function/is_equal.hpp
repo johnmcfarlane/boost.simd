@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_EQUAL_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-is_equal is_equal (function object, complex version)
@@ -39,9 +35,6 @@ namespace boost { namespace simd
        @snippet c_is_equal.txt is_equal
 
   **/
-  as_logical<IEEEValue> boost::simd::is_equal(complex<IEEEValue> const& z1,complex<IEEEValue> const& z2);
-} }
-#endif
 
 #include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/type/complex/function/impl/is_equal.hpp>

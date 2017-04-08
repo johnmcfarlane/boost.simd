@@ -9,8 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INF_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INF_HPP_INCLUDED
 #if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -39,9 +37,7 @@ namespace boost { namespace simd
        @snippet c_is_inf.txt is_inf
 
   **/
-  as_logical<IEEEValue> boost::simd::is_inf(complex<IEEEValue);
-} }
-#endif
+
 #include <boost/simd/function/is_inf.hpp>
 #include <boost/simd/type/complex/function/impl/is_inf.hpp>
 

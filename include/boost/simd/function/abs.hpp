@@ -38,7 +38,7 @@
 
     @par Notes
 
-    - Be aware that for signed integers the absolute value of @ref Valmin is
+    - Be aware that for signed integers the absolute value of  [Valmin](@ref constant-Valmin) is
       not representable  in the input type and the result is undefined.
 
       To avoid this, you may use the `saturated_` decorator (See @ref group-decorator.)

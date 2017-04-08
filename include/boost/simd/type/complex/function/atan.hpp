@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace cmplx
     - take care that with non complex arguments, the real atan function is called except if you prefix it by the `cmplx::`
       namespace (see example below).
 
-    - Special cases are handled as if the operation is implemented by `-i*bs::atanh(i*z)`, where i is the imaginary unit.
+    - Special cases are handled as if the operation is implemented by `-i*(%atanh)(i*z)`, where i is the imaginary unit.
 
     - inverse sine (or arc sine) is a multivalued function and requires a branch cut on the complex plane.
       The branch cut is conventionally placed at the line segments  \f$[-\infty, -1]\f$ and  \f$[1, \infty]\f$ of the real axis.

@@ -43,8 +43,8 @@ namespace boost { namespace simd { namespace cmplx
 
     /// @brief Construct a complex from a real and imaginary parts.
     template<typename T0, typename T1>
-    complex(T0 const& rr, T1 const& ii) : real(static_cast<Type>(rr))
-                                        , imag(static_cast<Type>(ii))
+    complex(T0 const& rr, T1 const& ii) : real(Type(rr))
+                                        , imag(Type(ii))
     {}
 
     /// @brief std::complex compatibility

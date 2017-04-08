@@ -27,7 +27,7 @@ namespace boost { namespace simd
 
     @param first  Beginning of the range of elements
     @param last   End of the range of elements
-    @param std::forward<Pred>(pred)   Predicate to apply to each element in the range.
+    @param pred   Predicate to apply to each element in the range.
 
     @par Requirement
 

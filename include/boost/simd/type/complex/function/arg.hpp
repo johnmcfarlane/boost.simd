@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace cmplx
 
       - limit cases are properly handled using the pedantic_ decorator
 
-      - The computation use @ref atan2, the pedantic version uses @ref  atan2 with pedantic_ decorator
+      - The computation use [atan2](@ref real-atan2), the pedantic version uses [atan2](@ref real-atan2) with pedantic_ decorator
 
     @see ( %real ) [arg](@ref  real-arg)
 

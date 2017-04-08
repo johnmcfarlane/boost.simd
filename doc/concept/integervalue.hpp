@@ -29,7 +29,7 @@
 
   and if:
 
-    - <tt>std::is_integer<boost::simd::scalar_of<T>::type>::value</tt> evaluates to @c true
+    - `std::is_integer<boost::simd::scalar_of<T>::%type>::%value` evaluates to @c true
 
   @par Example
 

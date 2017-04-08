@@ -66,7 +66,7 @@ namespace boost { namespace simd
     @par Type Requirements
     - **Iterator** must be a @c ContiguousIterator to Vectorizable type.
     - If specified, **N** must be a non-zero power of two. Otherwise, it defaults to
-      <tt>pack<iterator_traits<Iterator>::type>::static_size</tt>.
+      `pack<iterator_traits<Iterator>::%type>::%static_size`.
 
     @par Related components
       - @ref ranges-range_t

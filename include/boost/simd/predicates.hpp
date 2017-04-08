@@ -19,7 +19,7 @@ namespace boost { namespace simd
     @defgroup group-predicates Predicates functions
 
       These functions provide scalar and SIMD algorithms for testing properties of values.
-      Tests such as checks for validity, infinity, sign and others are provided. As for  [](@ref real-)
+      Tests such as checks for validity, infinity, sign and others are provided. As for  [boolean](@ref group-boolean)
       group-boolean, these functions handle and return typed logical types.
 
     All these functions can be included individually or all of them just by including <boost/simd/predicates.hpp>
@@ -33,8 +33,8 @@ namespace boost { namespace simd
         |  [is_greater](@ref real-is_greater)              | >          |  [is_not_equal](@ref real-is_not_equal)   |  !=         |
       </center>
 
-         for floating entries negation as predicates as  is_not_greater(a, b) are not equivalent to
-         !is_greater(a, b) due to possible  [](@ref real-)Nan values;
+         for floating entries negation as predicates as  `is_not_greater(a, b)` are not equivalent to
+         `!is_greater(a, b)` due to possible [Nan](@ref constant-Nan) values;
 
            @par Example:
 

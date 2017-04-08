@@ -27,10 +27,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> mul_i(complex<IEEEValue> const& z);
     @endcode
 
-
-
-    @see ( %real ) [mul_i](@ref  real-mul_i)
-
     @par Example:
 
        @snippet c_mul_i.cpp mul_i

@@ -32,10 +32,6 @@ namespace boost { namespace simd { namespace cmplx
 
     `complex<IEEEValue> proj(complex<IEEEValue> const& z);`
 
-
-
-    @see ( %real ) [proj](@ref  real-proj)
-
     @par Example:
 
        @snippet c_proj.cpp proj

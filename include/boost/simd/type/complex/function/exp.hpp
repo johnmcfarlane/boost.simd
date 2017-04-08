@@ -26,12 +26,12 @@ namespace boost { namespace simd
     complex<IEEEValue> exp(complex<IEEEValue> const& z);
     @endcode
 
+    @par Note
 
-    @par Notes
-      for z = x+iy
+      - `exp(conj(z)`) is always equal to `conj(exp(z))`
 
-      - exp(conj(z)) == conj(exp(z))
-      - If z is (\f$\pm\f$0,+0), the result is (1,+0)
+    @par limits
+      - If z is (\f$\pm0\f$,+0), the result is (1,+0)
       - If z is (x,\f$\infty\f$) (for any finite x), the result is (NaN,NaN)
       - If z is (x,NaN) (for any finite x), the result is (NaN,NaN)
       - If z is (\f$\infty\f$,+0), the result is (\f$\infty\f$, +0)
@@ -39,7 +39,7 @@ namespace boost { namespace simd
       - If z is (\f$\infty\f$, y) (for any finite nonzero y), the result is (\f$\infty e^{iy}\f$)
       - If z is (\f$-\infty\f$, +\f$\infty\f$), the result is (\f$\pm0\f$,\f$\pm0\f$) (signs are unspecified)
       - If z is (\f$\infty\f$,+\f$\infty\f$), the result is (\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
-      - If z is (\f$-\infty\f$,NaN), the result is (\f$\pm\f$0,\f$\pm0\f$) (signs are unspecified)
+      - If z is (\f$-\infty\f$,NaN), the result is (\f$\pm0\f$,\f$\pm0\f$) (signs are unspecified)
       - If z is (\f$\infty\f$,NaN), the result is (\f$\pm\infty\f$,NaN) (the sign of the real part is unspecified)
       - If z is (NaN,+0), the result is (NaN,+0)
       - If z is (NaN,y) (for any nonzero y), the result is (NaN,NaN)

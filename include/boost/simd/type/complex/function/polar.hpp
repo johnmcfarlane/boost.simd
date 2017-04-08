@@ -27,10 +27,6 @@ namespace boost { namespace simd { namespace cmplx
     complex<IEEEValue> polar(IEEEValue const& rho, IEEEValue const& theta);
     @endcode
 
-
-
-    @see ( %real ) [polar](@ref  real-polar)
-
     @par Example:
 
        @snippet c_polar.cpp polar

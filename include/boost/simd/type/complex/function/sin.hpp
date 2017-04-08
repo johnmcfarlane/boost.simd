@@ -28,7 +28,7 @@ namespace boost { namespace simd
 
     @par Notes
 
-     - special cases are handled as if the operation is implemented by `-i*bs::sinh(i*z)`,
+     - special cases are handled as if the operation is implemented by `-i*sinh(i*z)`,
        where i is the imaginary unit.
 
     @see ( %real ) [sin](@ref  real-sin)

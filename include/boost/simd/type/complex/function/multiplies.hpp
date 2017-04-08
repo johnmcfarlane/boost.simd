@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-multiplies multiplies (complex function object)
+    @defgroup complex-multiplies multiplies (function object, complex version)
 
-    This complex function object implements the binary product operator for complex arithmetic
+    This function object, complex version implements the binary product operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.

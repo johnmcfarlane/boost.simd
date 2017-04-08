@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-tan tan (complex function object)
+    @defgroup complex-tan tan (function object, complex version)
 
-    This complex function object computes complex tangent of a complex value z.
+    This function object, complex version computes complex tangent of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/tan.hpp>}
 

@@ -15,9 +15,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_imag is_imag (complex function object)
+    @defgroup complex-is_imag is_imag (function object, complex version)
 
-    This complex function object returns True if and only if real part
+    This function object, complex version returns True if and only if real part
     of the parameter is zero.
 
     @headerref{<boost/simd/type/complex/function/is_imag.hpp>}

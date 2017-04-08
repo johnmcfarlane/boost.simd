@@ -15,9 +15,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_finite is_finite (complex function object)
+    @defgroup complex-is_finite is_finite (function object, complex version)
 
-    This complex function object returns True if and only if real and imaginary part
+    This function object, complex version returns True if and only if real and imaginary part
     of the parameters are both finite.
 
     @headerref{<boost/simd/type/complex/function/is_finite.hpp>}

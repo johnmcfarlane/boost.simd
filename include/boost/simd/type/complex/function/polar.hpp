@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-polar polar (complex function object)
+    @defgroup complex-polar polar (function object, complex version)
 
-    This complex function object constructs a complex from its modulus and argument.
+    This function object, complex version constructs a complex from its modulus and argument.
 
     @headerref{<boost/simd/type/complex/function/polar.hpp>}
 

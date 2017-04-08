@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-cosh cosh (complex function object)
+    @defgroup complex-cosh cosh (function object, complex version)
 
-    This complex function object computes the complex inverse hyperbolic tangent of z Branch cut exists outside
+    This function object, complex version computes the complex inverse hyperbolic tangent of z Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
 

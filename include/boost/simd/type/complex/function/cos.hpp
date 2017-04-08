@@ -14,8 +14,8 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-cos cos (complex function object)
-    This complex function object returns the complex cosine of a complex value z.
+    @defgroup complex-cos cos (function object, complex version)
+    This function object, complex version returns the complex cosine of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/cos.hpp>}
 

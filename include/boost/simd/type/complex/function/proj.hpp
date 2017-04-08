@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-proj proj (complex function object)
+    @defgroup complex-proj proj (function object, complex version)
 
-    This complex function object returns the projection of the complex number z onto the Riemann sphere.
+    This function object, complex version returns the projection of the complex number z onto the Riemann sphere.
 
     @headerref{<boost/simd/type/complex/function/proj.hpp>}
 

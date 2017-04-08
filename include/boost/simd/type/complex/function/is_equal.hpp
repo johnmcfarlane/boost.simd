@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_equal is_equal (complex function object)
+    @defgroup complex-is_equal is_equal (function object, complex version)
 
-    This complex function object returns True if and only if real and imaginary parts
+    This function object, complex version returns True if and only if real and imaginary parts
     of the parameters are equal.
 
     @headerref{<boost/simd/type/complex/function/is_equal.hpp>}

@@ -20,9 +20,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-exp_ipi exp_ipi (complex function object)
+    @defgroup complex-exp_ipi exp_ipi (function object, complex version)
 
-    This complex function object computes \f$ e^{i\pi z}\f$
+    This function object, complex version computes \f$ e^{i\pi z}\f$
 
 
     @headerref{<boost/simd/type/complex/function/exp_ipi.hpp>}

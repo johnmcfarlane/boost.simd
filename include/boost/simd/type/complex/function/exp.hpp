@@ -15,8 +15,8 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-exp exp (complex function object)
-    This complex function object returns the complex exp argument: \f$e^{z}\f$
+    @defgroup complex-exp exp (function object, complex version)
+    This function object, complex version returns the complex exp argument: \f$e^{z}\f$
 
     @headerref{<boost/simd/type/complex/function/exp.hpp>}
 

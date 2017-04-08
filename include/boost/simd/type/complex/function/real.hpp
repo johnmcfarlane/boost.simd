@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-real real (complex function object)
+    @defgroup complex-real real (function object, complex version)
 
-    This complex function object computes the real part of the parameter.
+    This function object, complex version computes the real part of the parameter.
 
     @headerref{<boost/simd/type/complex/function/real.hpp>}
 

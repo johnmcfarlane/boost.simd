@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-plus plus (complex function object)
+    @defgroup complex-plus plus (function object, complex version)
 
-    This complex function object implements the binary addition  operator for complex arithmetic
+    This function object, complex version implements the binary addition  operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.

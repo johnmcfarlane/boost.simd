@@ -15,9 +15,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-conj conj (complex function object)
+    @defgroup complex-conj conj (function object, complex version)
 
-    This complex function object computes the complex conjugate of z by reversing the sign of the imaginary part.
+    This function object, complex version computes the complex conjugate of z by reversing the sign of the imaginary part.
 
     @headerref{<boost/simd/type/complex/function/conj.hpp>}
 

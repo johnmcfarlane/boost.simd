@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-tanh tanh (complex function object)
+    @defgroup complex-tanh tanh (function object, complex version)
 
-    This complex function object computes complex hyperbolic tangent of a complex value z.
+    This function object, complex version computes complex hyperbolic tangent of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/tanh.hpp>}
 

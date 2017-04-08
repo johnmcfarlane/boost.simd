@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_invalid is_invalid (complex function object)
+    @defgroup complex-is_invalid is_invalid (function object, complex version)
 
-    This complex function object returns True if and only if real or imaginary part
+    This function object, complex version returns True if and only if real or imaginary part
     of the parameters is invalid.
 
     @headerref{<boost/simd/type/complex/function/is_invalid.hpp>}

@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_eqz is_eqz (complex function object)
+    @defgroup complex-is_eqz is_eqz (function object, complex version)
 
-    This complex function object returns True if and only if real and imaginary part
+    This function object, complex version returns True if and only if real and imaginary part
     of the parameters are both zero.
 
     @headerref{<boost/simd/type/complex/function/is_eqz.hpp>}

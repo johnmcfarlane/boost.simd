@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sinh sinh (complex function object)
+    @defgroup complex-sinh sinh (function object, complex version)
 
-    This complex function object computes the complex inverse hyperbolic tangent of z
+    This function object, complex version computes the complex inverse hyperbolic tangent of z
 
 
     @headerref{<boost/simd/type/complex/function/sinh.hpp>}

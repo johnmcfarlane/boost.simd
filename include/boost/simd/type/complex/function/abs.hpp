@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-abs abs (complex function object)
+    @defgroup complex-abs abs (function object, complex version)
 
-    This complex function object returns the magnitude of the complex number z also
+    This function object, complex version returns the magnitude of the complex number z also
     named modulus or absolute value.
 
     @headerref{<boost/simd/type/complex/function/abs.hpp>}

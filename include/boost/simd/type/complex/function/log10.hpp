@@ -20,9 +20,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-log10 log10 (complex function object)
+    @defgroup complex-log10 log10 (function object, complex version)
 
-    This complex function object computes complex common (base 10) logarithm of a complex value z.
+    This function object, complex version computes complex common (base 10) logarithm of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/log10.hpp>}
 

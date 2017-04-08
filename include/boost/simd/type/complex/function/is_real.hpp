@@ -15,9 +15,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-is_real is_real (function object)
+    @defgroup complex-is_real is_real (complex function object)
 
-    This function object returns True if and only if imaginary part
+    This complex function object returns True if and only if imaginary part
     of the parameter is zero.
 
     @headerref{<boost/simd/type/complex/function/is_real.hpp>}

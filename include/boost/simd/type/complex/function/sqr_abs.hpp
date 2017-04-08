@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sqr_abs sqr_abs (object function)
+    @defgroup complex-sqr_abs sqr_abs (complex function object)
 
-    This function object calculates the square of the modulus of the complex z
+    This complex function object calculates the square of the modulus of the complex z
 
     headerref{<boost/simd/type/complex/function/sqr_abs.hpp>}
 

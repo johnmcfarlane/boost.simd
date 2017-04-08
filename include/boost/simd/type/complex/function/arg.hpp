@@ -14,9 +14,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-arg arg (function object)
+    @defgroup complex-arg arg (complex function object)
 
-    This function object calculates the phase angle (in radians) of the complex number z
+    This complex function object calculates the phase angle (in radians) of the complex number z
 
     @headerref{<boost/simd/type/complex/function/arg.hpp>}
 

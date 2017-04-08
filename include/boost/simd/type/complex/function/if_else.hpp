@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-if_else if_else (function object)
+    @defgroup complex-if_else if_else (complex function object)
 
-    This function object conditionally returns @c t (respectively @c f) if @c c
+    This complex function object conditionally returns @c t (respectively @c f) if @c c
     is @ref True (respectively  @ref False)
 
 

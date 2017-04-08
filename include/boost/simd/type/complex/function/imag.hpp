@@ -15,9 +15,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-imag imag (function object)
+    @defgroup complex-imag imag (complex function object)
 
-    This function object computes the imaginary part of the parameter.
+    This complex function object computes the imaginary part of the parameter.
 
     @headerref{<boost/simd/type/complex/function/imag.hpp>}
 

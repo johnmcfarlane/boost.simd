@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sqrt sqrt (function object)
+    @defgroup complex-sqrt sqrt (complex function object)
 
-    This function object computes complex square root of a complex value z.
+    This complex function object computes complex square root of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/sqrt.hpp>}
 

@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-unary_minus unary_minus (function object)
+    @defgroup complex-unary_minus unary_minus (complex function object)
 
-    This function object computes the unary minus of its complex parameter by reversing
+    This complex function object computes the unary minus of its complex parameter by reversing
     the sign of the real and imaginary parts.
     Infix notation can be used with operator '-'
 

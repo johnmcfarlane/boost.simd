@@ -14,9 +14,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-acosh acosh (function object)
+    @defgroup complex-acosh acosh (complex function object)
 
-    This function object computes complex hyperbolic cosine of a complex value z.
+    This complex function object computes complex hyperbolic cosine of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/acosh.hpp>}
 

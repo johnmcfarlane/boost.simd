@@ -14,8 +14,8 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-sin sin (function object)
-    This function object returns the complex sine of a complex value z.
+    @defgroup complex-sin sin (complex function object)
+    This complex function object returns the complex sine of a complex value z.
 
     @headerref{<boost/simd/type/complex/function/sin.hpp>}
 

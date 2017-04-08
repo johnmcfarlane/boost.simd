@@ -16,9 +16,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-atan atan (function object)
+    @defgroup complex-atan atan (complex function object)
 
-    This function object computes complex arc tangent of a complex value z.
+    This complex function object computes complex arc tangent of a complex value z.
     Branch cut exists outside the interval [-i ; +i] along the imaginary axis.
 
     @headerref{<boost/simd/type/complex/function/atan.hpp>}

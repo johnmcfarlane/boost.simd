@@ -21,9 +21,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-asin asin (function object)
+    @defgroup complex-asin asin (complex function object)
 
-    This function object computes complex arc sine of a complex value z. Branch cut exists outside
+    This complex function object computes complex arc sine of a complex value z. Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
 

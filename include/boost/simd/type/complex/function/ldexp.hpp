@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-ldexp ldexp (function object)
+    @defgroup complex-ldexp ldexp (complex function object)
 
-    This function object returns ldexp aplied to both real and imaginary parts of the first input.
+    This complex function object returns ldexp aplied to both real and imaginary parts of the first input.
 
     @headerref{<boost/simd/type/complex/function/ldexp.hpp>}
 

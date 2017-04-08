@@ -14,9 +14,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-unary_plus unary_plus (function object)
+    @defgroup complex-unary_plus unary_plus (complex function object)
 
-    This function object computes the unary plus of its complex parameter
+    This complex function object computes the unary plus of its complex parameter
     (in fact acts as identity).
     Infix notation can be used with operator '-'
 

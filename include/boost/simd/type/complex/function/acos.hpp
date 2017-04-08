@@ -20,9 +20,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-acos acos (function object)
+    @defgroup complex-acos acos (complex function object)
 
-    This function object computes complex arc cosine of a complex value z. Branch cut exists outside
+    This complex function object computes complex arc cosine of a complex value z. Branch cut exists outside
     the interval \f$[-1, +1]\f$ along the real axis.
 
 

@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-divides divides (function object)
+    @defgroup complex-divides divides (complex function object)
 
-    This function object implements the binary division operator for complex arithmetic
+    This complex function object implements the binary division operator for complex arithmetic
     and for mixed complex/real arithmetic. Real arguments are treated as complex numbers
     with the real part equal to the argument and the imaginary part set to zero
     with possible optimization of the computations.

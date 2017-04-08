@@ -15,9 +15,9 @@ namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
-    @defgroup complex-exp_i exp_i (function object)
+    @defgroup complex-exp_i exp_i (complex function object)
 
-    This function object computes \f$ e^{iz}\f$
+    This complex function object computes \f$ e^{iz}\f$
 
 
     @headerref{<boost/simd/type/complex/function/exp_i.hpp>}

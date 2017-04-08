@@ -19,9 +19,9 @@ namespace boost { namespace simd
 
   /*!
     @ingroup group-complex
-    @defgroup complex-pow pow (function object)
+    @defgroup complex-pow pow (complex function object)
 
-    This function object computes complex x raised to a complex power y
+    This complex function object computes complex x raised to a complex power y
 
     @headerref{<boost/simd/type/complex/function/pow.hpp>}
 

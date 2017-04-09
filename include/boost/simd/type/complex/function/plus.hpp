@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_PLUS_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -43,9 +39,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_plus.txt plus
 
   **/
-  complex<IEEEValue> plus(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
-} } }
-#endif
 
 #include <boost/simd/function/plus.hpp>
 #include <boost/simd/type/complex/function/impl/plus.hpp>

@@ -9,15 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_EXP_IPI_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_EXP_IPI_HPP_INCLUDED
 
-#include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-exp_ipi exp_ipi (function object, complex version)
@@ -42,11 +33,12 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_exp_ipi.txt exp_ipi
 
   **/
-  complex<IEEEValue> exp_ipi(complex<IEEEValue> const& z);
-} } }
 
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/dispatch/function/make_callable.hpp>
+#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
+#include <boost/simd/detail/dispatch.hpp>
 
-#endif
 namespace boost { namespace simd
 {
   namespace tag

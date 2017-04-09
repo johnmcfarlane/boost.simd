@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQR_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_SQR_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -40,9 +36,7 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_sqr.txt sqr
 
   **/
-  complex<IEEEValue> sqr(complex<IEEEValue> const& z1);
-} } }
-#endif
+
 #include <boost/simd/function/sqr.hpp>
 #include <boost/simd/type/complex/function/impl/sqr.hpp>
 

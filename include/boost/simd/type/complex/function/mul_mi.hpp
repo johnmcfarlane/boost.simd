@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MUL_MI_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MUL_MI_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -36,9 +32,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_mul_mi.txt mul_mi
 
   **/
-  complex<IEEEValue> mul_mi(complex<IEEEValue> const& z1);
-} } }
-#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ACOSH_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ACOSH_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
 
   /*!
     @ingroup group-complex
@@ -62,8 +59,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_acosh.txt acosh
 
   **/
-} } }
-#endif
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>

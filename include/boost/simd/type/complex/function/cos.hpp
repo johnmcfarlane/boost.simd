@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_COS_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_COS_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -42,10 +39,7 @@ namespace boost { namespace simd
        @snippet c_cos.txt cos
 
   **/
-  complex<IEEEValue> cos(complex<IEEEValue> const& z);
-} }
 
-#endif
 
 #include <boost/simd/function/cos.hpp>
 #include <boost/simd/type/complex/function/impl/cos.hpp>

@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MULTIPLIES_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_MULTIPLIES_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -43,9 +39,7 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_multiplies.txt multiplies
 
   **/
-  complex<IEEEValue> multiplies(complex<IEEEValue> const& z1, complex<IEEEValue> const& z2);
-} } }
-#endif
+
 
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/type/complex/function/impl/multiplies.hpp>

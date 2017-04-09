@@ -8,11 +8,8 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ASINH_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ASINH_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
 
-namespace boost { namespace simd { namespace cmplx
-
-  /*!
+/*!
     @ingroup group-complex
     @defgroup complex-asinh asinh (function object, complex version)
 
@@ -63,8 +60,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_asinh.txt asinh
 
   **/
-} } }
-#endif
 
 #include <boost/simd/function/asinh.hpp>
 #include <boost/simd/type/complex/function/impl/asinh.hpp>

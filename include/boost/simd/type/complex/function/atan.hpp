@@ -9,11 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ATAN_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ATAN_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-atan atan (function object, complex version)
@@ -53,11 +48,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_atan.txt atan
 
   **/
-  complex<IEEEValue> atan(complex<IEEEValue> const& z);
-} } }
-
-
-#endif
 
 #include <boost/simd/function/atan.hpp>
 #include <boost/simd/type/complex/function/impl/atan.hpp>

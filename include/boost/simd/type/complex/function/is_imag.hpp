@@ -9,9 +9,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_IMAG_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_IMAG_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -40,8 +37,6 @@ namespace boost { namespace simd
        @snippet c_is_imag.txt is_imag
 
   **/
-} }
-#endif
 
 #include <boost/simd/function/is_imag.hpp>
 #include <boost/simd/type/complex/function/impl/is_imag.hpp>

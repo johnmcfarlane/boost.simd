@@ -9,16 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ASIN_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ASIN_HPP_INCLUDED
 
-#include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-asin asin (function object, complex version)
@@ -59,11 +49,11 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_asin.txt asin
 
   **/
-  complex<IEEEValue> asin(complex<IEEEValue> const& z);
-} } }
 
-
-#endif
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/dispatch/function/make_callable.hpp>
+#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
+#include <boost/simd/detail/dispatch.hpp>
 
 namespace boost { namespace simd
 {

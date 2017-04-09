@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ARG_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ARG_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -46,9 +43,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_arg.txt arg
 
   **/
-} } }
-
-#endif
 
 #include <boost/simd/function/arg.hpp>
 #include <boost/simd/type/complex/function/impl/arg.hpp>

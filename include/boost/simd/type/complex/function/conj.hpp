@@ -9,10 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_CONJ_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_CONJ_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-conj conj (function object, complex version)
@@ -39,8 +35,6 @@ namespace boost { namespace simd
        @snippet c_conj.txt conj
 
   **/
-} }
-#endif
 
 #include <boost/simd/function/conj.hpp>
 #include <boost/simd/type/complex/function/impl/conj.hpp>

@@ -9,10 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMAG_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IMAG_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
-
   /*!
     @ingroup group-complex
     @defgroup complex-imag imag (function object, complex version)
@@ -39,8 +35,6 @@ namespace boost { namespace simd
        @snippet c_imag.txt imag
 
   **/
-} }
-#endif
 
 #include <boost/simd/function/imag.hpp>
 #include <boost/simd/type/complex/function/impl/imag.hpp>

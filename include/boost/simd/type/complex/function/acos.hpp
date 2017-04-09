@@ -13,10 +13,6 @@
 #include <boost/simd/detail/dispatch/function/make_callable.hpp>
 #include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
 #include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -78,10 +74,6 @@ namespace boost { namespace simd
        @snippet c_acos.txt acos
 
   **/
-} }
-
-
-#endif
 
 namespace boost { namespace simd
 {

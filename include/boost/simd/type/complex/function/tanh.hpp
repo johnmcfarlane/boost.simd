@@ -8,10 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_TANH_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_TANH_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -61,9 +57,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_tanh.txt tanh
 
   **/
-} } }
-
-#endif
 
 #include <boost/simd/function/tanh.hpp>
 #include <boost/simd/type/complex/function/impl/tanh.hpp>

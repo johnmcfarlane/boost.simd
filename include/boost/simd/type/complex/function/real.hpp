@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_REAL_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_REAL_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -38,8 +35,7 @@ namespace boost { namespace simd
        @snippet c_real.txt real
 
   **/
-} }
-#endif
+
 #include <boost/simd/function/real.hpp>
 #include <boost/simd/type/complex/function/impl/real.hpp>
 

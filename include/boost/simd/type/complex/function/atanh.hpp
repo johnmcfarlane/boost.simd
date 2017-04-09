@@ -9,14 +9,6 @@
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ATANH_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_ATANH_HPP_INCLUDED
 
-#include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#if defined(DOXYGEN_ONLY)
-
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -80,11 +72,11 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_atanh.txt atanh
 
   **/
-  complex<IEEEValue> atanh(complex<IEEEValue> const& z);
-} } }
 
-
-#endif
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/dispatch/function/make_callable.hpp>
+#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
+#include <boost/simd/detail/dispatch.hpp>
 
 namespace boost { namespace simd
 {

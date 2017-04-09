@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_NOT_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_NOT_EQUAL_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -39,8 +36,7 @@ namespace boost { namespace simd
        @snippet c_is_not_equal.txt is_not_equal
 
   **/
-} }
-#endif
+
 #include <boost/simd/function/is_not_equal.hpp>
 #include <boost/simd/type/complex/function/impl/is_not_equal.hpp>
 

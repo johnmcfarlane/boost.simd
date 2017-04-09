@@ -8,9 +8,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INVALID_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IS_INVALID_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd
-{
 
   /*!
     @ingroup group-complex
@@ -39,8 +36,7 @@ namespace boost { namespace simd
        @snippet c_is_invalid.txt is_invalid
 
   **/
-} }
-#endif
+
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/type/complex/function/impl/is_invalid.hpp>
 

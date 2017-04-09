@@ -9,9 +9,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCTION_IF_ELSE_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
-namespace boost { namespace simd { namespace cmplx
-{
 
   /*!
     @ingroup group-complex
@@ -42,9 +39,6 @@ namespace boost { namespace simd { namespace cmplx
        @snippet c_if_else.txt if_else
 
   **/
-} } }
-
-#endif
 
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/type/complex/function/impl/if_else.hpp>

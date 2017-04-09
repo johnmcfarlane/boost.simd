@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Invexp_1 Invexp_1 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates constant 1/e.
 
     @headerref{<boost/simd/constant/invexp_1.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto invexp_1();
+        template<typename T> auto Invexp_1();
         @endcode
 
     2.  @code
-        template<typename T> auto invexp_1( boost::simd::as_<T> const& target );
+        template<typename T> auto Invexp_1( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Invexp_1 constant.

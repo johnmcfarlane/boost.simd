@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Valmax Valmax (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the maximum representable value of the given type.
 
     @headerref{<boost/simd/constant/valmax.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto valmax();
+        template<typename T> auto Valmax();
         @endcode
 
     2.  @code
-        template<typename T> auto valmax( boost::simd::as_<T> const& target );
+        template<typename T> auto Valmax( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Valmax constant.

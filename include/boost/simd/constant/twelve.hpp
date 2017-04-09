@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Twelve Twelve (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 12
 
     @headerref{<boost/simd/constant/twelve.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto twelve();
+        template<typename T> auto Twelve();
         @endcode
 
     2.  @code
-        template<typename T> auto twelve( boost::simd::as_<T> const& target );
+        template<typename T> auto Twelve( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Twelve constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Twelve<T>();
+    T r = T(12);
     @endcode
 
 

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Invsqrteps Invsqrteps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates value \f$\1/sqrt(Eps<T>()\f$
 
     @headerref{<boost/simd/constant/invsqrteps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto invsqrteps();
+        template<typename T> auto Invsqrteps();
         @endcode
 
     2.  @code
-        template<typename T> auto invsqrteps( boost::simd::as_<T> const& target );
+        template<typename T> auto Invsqrteps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Invsqrteps constant.

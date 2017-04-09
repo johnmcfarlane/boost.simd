@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_4 Fact_4 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 4! that is 24
 
     @headerref{<boost/simd/constant/fact_4.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_4();
+        template<typename T> auto Fact_4();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_4( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_4( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_4 constant.

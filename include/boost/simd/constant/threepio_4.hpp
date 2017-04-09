@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Threepio_4 Threepio_4 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$3\pi/4\f$
 
     @headerref{<boost/simd/constant/threepio_4.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto threepio_4();
+        template<typename T> auto Threepio_4();
         @endcode
 
     2.  @code
-        template<typename T> auto threepio_4( boost::simd::as_<T> const& target );
+        template<typename T> auto Threepio_4( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Threepio_4 constant.

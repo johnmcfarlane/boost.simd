@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_11 Fact_11 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 11! that is 39916800,
 
     @headerref{<boost/simd/constant/fact_11.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_11();
+        template<typename T> auto Fact_11();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_11( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_11( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_11 constant.

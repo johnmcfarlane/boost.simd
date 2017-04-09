@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Valmin Valmin (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the minimum finite representable value of the given type.
 
     @headerref{<boost/simd/constant/valmin.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto valmin();
+        template<typename T> auto Valmin();
         @endcode
 
     2.  @code
-        template<typename T> auto valmin( boost::simd::as_<T> const& target );
+        template<typename T> auto Valmin( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Valmin constant.

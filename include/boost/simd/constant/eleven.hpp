@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Eleven Eleven (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    nerates a value of the chosen type equal to eleven
 
     @headerref{<boost/simd/constant/eleven.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto eleven();
+        template<typename T> auto Eleven();
         @endcode
 
     2.  @code
-        template<typename T> auto eleven( boost::simd::as_<T> const& target );
+        template<typename T> auto Eleven( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Eleven constant.

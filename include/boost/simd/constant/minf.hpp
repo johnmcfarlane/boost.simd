@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-Minf Minf (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the -inf IEEE value (\f$-\infty\f$) for floating types and minimum value
+    for integer types
 
     @headerref{<boost/simd/constant/minf.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto minf();
+        template<typename T> auto Minf();
         @endcode
 
     2.  @code
-        template<typename T> auto minf( boost::simd::as_<T> const& target );
+        template<typename T> auto Minf( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Minf constant.

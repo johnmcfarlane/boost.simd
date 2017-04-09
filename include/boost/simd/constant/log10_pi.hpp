@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Log10_pi Log10_pi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates base ten logarithm of pi (\f$\log\!10(\pi)\f$)
 
     @headerref{<boost/simd/constant/log10_pi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto log10_pi();
+        template<typename T> auto Log10_pi();
         @endcode
 
     2.  @code
-        template<typename T> auto log10_pi( boost::simd::as_<T> const& target );
+        template<typename T> auto Log10_pi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Log10_pi constant.

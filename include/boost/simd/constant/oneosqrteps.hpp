@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Oneosqrteps Oneosqrteps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$1/\sqrt\epsilon\f$
 
     @headerref{<boost/simd/constant/oneosqrteps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto oneosqrteps();
+        template<typename T> auto Oneosqrteps();
         @endcode
 
     2.  @code
-        template<typename T> auto oneosqrteps( boost::simd::as_<T> const& target );
+        template<typename T> auto Oneosqrteps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Oneosqrteps constant.

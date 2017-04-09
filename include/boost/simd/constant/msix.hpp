@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Msix Msix (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -6
 
     @headerref{<boost/simd/constant/msix.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto msix();
+        template<typename T> auto Msix();
         @endcode
 
     2.  @code
-        template<typename T> auto msix( boost::simd::as_<T> const& target );
+        template<typename T> auto Msix( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Msix constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Msix<T>();
+    T r =T(-6)
     @endcode
 
 

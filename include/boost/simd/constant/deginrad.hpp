@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Deginrad Deginrad (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Constant radian in degree multiplier, \f$\frac{180}\pi\f$.
 
     @headerref{<boost/simd/constant/deginrad.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto deginrad();
+        template<typename T> auto Deginrad();
         @endcode
 
     2.  @code
-        template<typename T> auto deginrad( boost::simd::as_<T> const& target );
+        template<typename T> auto Deginrad( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Deginrad constant.

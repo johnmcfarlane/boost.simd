@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Nbexponentbits Nbexponentbits (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the number of exponent bits of a floating point number,
 
     @headerref{<boost/simd/constant/nbexponentbits.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto nbexponentbits();
+        template<typename T> auto Nbexponentbits();
         @endcode
 
     2.  @code
-        template<typename T> auto nbexponentbits( boost::simd::as_<T> const& target );
+        template<typename T> auto Nbexponentbits( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Nbexponentbits constant.

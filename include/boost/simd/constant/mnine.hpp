@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mnine Mnine (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates T(9).
 
     @headerref{<boost/simd/constant/mnine.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mnine();
+        template<typename T> auto Mnine();
         @endcode
 
     2.  @code
-        template<typename T> auto mnine( boost::simd::as_<T> const& target );
+        template<typename T> auto Mnine( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mnine constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mnine<T>();
+    T r = T(-9);
     @endcode
 
 

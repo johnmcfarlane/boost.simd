@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Sqrt_2 Sqrt_2 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  \f$\sqrt2\f$
 
     @headerref{<boost/simd/constant/sqrt_2.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto sqrt_2();
+        template<typename T> auto Sqrt_2();
         @endcode
 
     2.  @code
-        template<typename T> auto sqrt_2( boost::simd::as_<T> const& target );
+        template<typename T> auto Sqrt_2( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Sqrt_2 constant.

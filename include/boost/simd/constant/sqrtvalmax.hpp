@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Sqrtvalmax Sqrtvalmax (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the square root of the greatest finite representable value.
 
     @headerref{<boost/simd/constant/sqrtvalmax.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto sqrtvalmax();
+        template<typename T> auto Sqrtvalmax();
         @endcode
 
     2.  @code
-        template<typename T> auto sqrtvalmax( boost::simd::as_<T> const& target );
+        template<typename T> auto Sqrtvalmax( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Sqrtvalmax constant.

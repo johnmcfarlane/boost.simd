@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-Eps Eps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+   Generates a value of the chosen type equals to the difference between 1 and the next
+    representable value of the chosen type.
 
     @headerref{<boost/simd/constant/eps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto eps();
+        template<typename T> auto Eps();
         @endcode
 
     2.  @code
-        template<typename T> auto eps( boost::simd::as_<T> const& target );
+        template<typename T> auto Eps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Eps constant.

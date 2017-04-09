@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mfive Mfive (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -5.
 
     @headerref{<boost/simd/constant/mfive.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mfive();
+        template<typename T> auto Mfive();
         @endcode
 
     2.  @code
-        template<typename T> auto mfive( boost::simd::as_<T> const& target );
+        template<typename T> auto Mfive( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mfive constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mfive<T>();
+    T r = T(-5);
     @endcode
 
 

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Inf Inf (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the Inf IEEE value (\f$\infty\f$) for floating types and maximum representable value for integer types
 
     @headerref{<boost/simd/constant/inf.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto inf();
+        template<typename T> auto Inf();
         @endcode
 
     2.  @code
-        template<typename T> auto inf( boost::simd::as_<T> const& target );
+        template<typename T> auto Inf( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Inf constant.

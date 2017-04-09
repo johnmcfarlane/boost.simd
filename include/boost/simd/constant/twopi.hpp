@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Twopi Twopi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$2\pi\f$
 
     @headerref{<boost/simd/constant/twopi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto twopi();
+        template<typename T> auto Twopi();
         @endcode
 
     2.  @code
-        template<typename T> auto twopi( boost::simd::as_<T> const& target );
+        template<typename T> auto Twopi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Twopi constant.

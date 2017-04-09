@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Smallestposval Smallestposval (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the least non zero, non denormal, positive value.
 
     @headerref{<boost/simd/constant/smallestposval.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto smallestposval();
+        template<typename T> auto Smallestposval();
         @endcode
 
     2.  @code
-        template<typename T> auto smallestposval( boost::simd::as_<T> const& target );
+        template<typename T> auto Smallestposval( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Smallestposval constant.

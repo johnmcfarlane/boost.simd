@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Pio2_3 Pio2_3 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a constant used in modular computation involving \f$\pi\f$
 
     @headerref{<boost/simd/constant/pio2_3.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto pio2_3();
+        template<typename T> auto Pio2_3();
         @endcode
 
     2.  @code
-        template<typename T> auto pio2_3( boost::simd::as_<T> const& target );
+        template<typename T> auto Pio2_3( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Pio2_3 constant.

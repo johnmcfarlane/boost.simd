@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Invlog_10 Invlog_10 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    enerates constant \f$1/\log(10)\f$.
 
     @headerref{<boost/simd/constant/invlog_10.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto invlog_10();
+        template<typename T> auto Invlog_10();
         @endcode
 
     2.  @code
-        template<typename T> auto invlog_10( boost::simd::as_<T> const& target );
+        template<typename T> auto Invlog_10( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Invlog_10 constant.

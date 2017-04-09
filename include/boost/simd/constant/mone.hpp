@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mone Mone (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -1
 
     @headerref{<boost/simd/constant/mone.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mone();
+        template<typename T> auto Mone();
         @endcode
 
     2.  @code
-        template<typename T> auto mone( boost::simd::as_<T> const& target );
+        template<typename T> auto Mone( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mone constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mone<T>();
+    T r = T(-1);
     @endcode
 
 

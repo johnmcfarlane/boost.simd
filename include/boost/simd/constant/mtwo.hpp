@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mtwo Mtwo (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -2
 
     @headerref{<boost/simd/constant/mtwo.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mtwo();
+        template<typename T> auto Mtwo();
         @endcode
 
     2.  @code
-        template<typename T> auto mtwo( boost::simd::as_<T> const& target );
+        template<typename T> auto Mtwo( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mtwo constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mtwo<T>();
+    T r = T(-2);
     @endcode
 
 

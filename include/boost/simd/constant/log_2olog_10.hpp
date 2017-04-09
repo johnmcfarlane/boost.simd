@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Log_2olog_10 Log_2olog_10 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    nerates constant Log_2olog_10 : \f$\frac{\log(2)}{\log(10)}\f$.
 
     @headerref{<boost/simd/constant/log_2olog_10.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto log_2olog_10();
+        template<typename T> auto Log_2olog_10();
         @endcode
 
     2.  @code
-        template<typename T> auto log_2olog_10( boost::simd::as_<T> const& target );
+        template<typename T> auto Log_2olog_10( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Log_2olog_10 constant.

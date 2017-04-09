@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Three Three (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 3
 
     @headerref{<boost/simd/constant/three.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto three();
+        template<typename T> auto Three();
         @endcode
 
     2.  @code
-        template<typename T> auto three( boost::simd::as_<T> const& target );
+        template<typename T> auto Three( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Three constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Three<T>();
+    T r = T(3);
     @endcode
 
 

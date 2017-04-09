@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Twotonmb Twotonmb (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  two to the number of mantissa bits.
 
     @headerref{<boost/simd/constant/twotonmb.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto twotonmb();
+        template<typename T> auto Twotonmb();
         @endcode
 
     2.  @code
-        template<typename T> auto twotonmb( boost::simd::as_<T> const& target );
+        template<typename T> auto Twotonmb( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Twotonmb constant.

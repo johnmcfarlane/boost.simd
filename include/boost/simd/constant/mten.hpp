@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mten Mten (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -10
 
     @headerref{<boost/simd/constant/mten.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mten();
+        template<typename T> auto Mten();
         @endcode
 
     2.  @code
-        template<typename T> auto mten( boost::simd::as_<T> const& target );
+        template<typename T> auto Mten( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mten constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mten<T>();
+    T r = T(-10)
     @endcode
 
 

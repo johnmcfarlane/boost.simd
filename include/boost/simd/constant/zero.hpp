@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Zero Zero (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates constant zero.
 
     @headerref{<boost/simd/constant/zero.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto zero();
+        template<typename T> auto Zero();
         @endcode
 
     2.  @code
-        template<typename T> auto zero( boost::simd::as_<T> const& target );
+        template<typename T> auto Zero( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Zero constant.

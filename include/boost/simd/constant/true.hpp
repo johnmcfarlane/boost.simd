@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-True True (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+        Generates a value of the logical type associated to the chosen type equal to @c true
+
 
     @headerref{<boost/simd/constant/true.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto true();
+        template<typename T> auto True();
         @endcode
 
     2.  @code
-        template<typename T> auto true( boost::simd::as_<T> const& target );
+        template<typename T> auto True( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the True constant.

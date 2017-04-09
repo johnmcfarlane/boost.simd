@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-Signmask Signmask (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a mask with the lone most significand bit set to one
+    (even if the type is unsigned).
 
     @headerref{<boost/simd/constant/signmask.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto signmask();
+        template<typename T> auto Signmask();
         @endcode
 
     2.  @code
-        template<typename T> auto signmask( boost::simd::as_<T> const& target );
+        template<typename T> auto Signmask( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Signmask constant.

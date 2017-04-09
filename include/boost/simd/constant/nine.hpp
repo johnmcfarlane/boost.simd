@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Nine Nine (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 9
 
     @headerref{<boost/simd/constant/nine.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto nine();
+        template<typename T> auto Nine();
         @endcode
 
     2.  @code
-        template<typename T> auto nine( boost::simd::as_<T> const& target );
+        template<typename T> auto Nine( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Nine constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Nine<T>();
+    T r = T(9);
     @endcode
 
 

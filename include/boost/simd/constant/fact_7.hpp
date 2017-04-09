@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_7 Fact_7 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 7! that is 5040
 
     @headerref{<boost/simd/constant/fact_7.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_7();
+        template<typename T> auto Fact_7();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_7( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_7( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_7 constant.

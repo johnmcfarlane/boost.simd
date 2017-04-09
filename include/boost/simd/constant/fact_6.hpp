@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_6 Fact_6 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 6! that is 720
 
     @headerref{<boost/simd/constant/fact_6.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_6();
+        template<typename T> auto Fact_6();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_6( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_6( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_6 constant.

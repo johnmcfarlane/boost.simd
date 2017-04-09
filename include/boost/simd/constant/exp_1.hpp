@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Exp_1 Exp_1 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates constant e base of the atural logarithms.
 
     @headerref{<boost/simd/constant/exp_1.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto exp_1();
+        template<typename T> auto Exp_1();
         @endcode
 
     2.  @code
-        template<typename T> auto exp_1( boost::simd::as_<T> const& target );
+        template<typename T> auto Exp_1( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Exp_1 constant.

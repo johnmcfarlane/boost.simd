@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mzero Mzero (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -0.
 
     @headerref{<boost/simd/constant/mzero.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mzero();
+        template<typename T> auto Mzero();
         @endcode
 
     2.  @code
-        template<typename T> auto mzero( boost::simd::as_<T> const& target );
+        template<typename T> auto Mzero( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mzero constant.

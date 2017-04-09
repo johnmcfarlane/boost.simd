@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Radindeg Radindeg (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  degree in radian multiplier, \f$\frac\pi{180}\f$.
 
     @headerref{<boost/simd/constant/radindeg.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto radindeg();
+        template<typename T> auto Radindeg();
         @endcode
 
     2.  @code
-        template<typename T> auto radindeg( boost::simd::as_<T> const& target );
+        template<typename T> auto Radindeg( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Radindeg constant.

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Pio_6 Pio_6 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$\frac\pi{6}\f$.
 
     @headerref{<boost/simd/constant/pio_6.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto pio_6();
+        template<typename T> auto Pio_6();
         @endcode
 
     2.  @code
-        template<typename T> auto pio_6( boost::simd::as_<T> const& target );
+        template<typename T> auto Pio_6( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Pio_6 constant.

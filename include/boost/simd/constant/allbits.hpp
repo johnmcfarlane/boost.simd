@@ -24,11 +24,11 @@
     @par Description
 
     1.  @code
-        template<typename T> auto allbits();
+        template<typename T> auto Allbits();
         @endcode
 
     2.  @code
-        template<typename T> auto allbits( boost::simd::as_<T> const& target );
+        template<typename T> auto Allbits( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Allbits constant.

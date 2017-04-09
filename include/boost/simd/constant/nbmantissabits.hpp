@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Nbmantissabits Nbmantissabits (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the number of mantissa bits of a floating point number.
 
     @headerref{<boost/simd/constant/nbmantissabits.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto nbmantissabits();
+        template<typename T> auto Nbmantissabits();
         @endcode
 
     2.  @code
-        template<typename T> auto nbmantissabits( boost::simd::as_<T> const& target );
+        template<typename T> auto Nbmantissabits( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Nbmantissabits constant.

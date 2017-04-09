@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Logeps Logeps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the natural logarithm of the [Eps](@ref constant-Eps) constant.
 
     @headerref{<boost/simd/constant/logeps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto logeps();
+        template<typename T> auto Logeps();
         @endcode
 
     2.  @code
-        template<typename T> auto logeps( boost::simd::as_<T> const& target );
+        template<typename T> auto Logeps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Logeps constant.

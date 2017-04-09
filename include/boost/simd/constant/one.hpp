@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-One One (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the constant one.
 
     @headerref{<boost/simd/constant/one.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto one();
+        template<typename T> auto One();
         @endcode
 
     2.  @code
-        template<typename T> auto one( boost::simd::as_<T> const& target );
+        template<typename T> auto One( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the One constant.
@@ -53,7 +53,7 @@
     @endcode
     is equivalent to:
     @code
-    T r = One<T>();
+    T r = T(1);
     @endcode
 
     @par Requirements

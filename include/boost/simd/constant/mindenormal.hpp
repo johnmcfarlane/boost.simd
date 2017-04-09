@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mindenormal Mindenormal (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the least of all non zero positive value including denormals
 
     @headerref{<boost/simd/constant/mindenormal.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mindenormal();
+        template<typename T> auto Mindenormal();
         @endcode
 
     2.  @code
-        template<typename T> auto mindenormal( boost::simd::as_<T> const& target );
+        template<typename T> auto Mindenormal( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mindenormal constant.

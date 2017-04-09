@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Quarter Quarter (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 1/4.
 
     @headerref{<boost/simd/constant/quarter.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto quarter();
+        template<typename T> auto Quarter();
         @endcode
 
     2.  @code
-        template<typename T> auto quarter( boost::simd::as_<T> const& target );
+        template<typename T> auto Quarter( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Quarter constant.

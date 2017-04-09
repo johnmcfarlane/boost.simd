@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mantissamask Mantissamask (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a mask used to compute the mantissa of a floating point value
 
     @headerref{<boost/simd/constant/mantissamask.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mantissamask();
+        template<typename T> auto Mantissamask();
         @endcode
 
     2.  @code
-        template<typename T> auto mantissamask( boost::simd::as_<T> const& target );
+        template<typename T> auto Mantissamask( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mantissamask constant.

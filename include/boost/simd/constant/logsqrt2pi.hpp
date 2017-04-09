@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Logsqrt2pi Logsqrt2pi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates value \f$\log\sqrt{2\pi}\f$
 
     @headerref{<boost/simd/constant/logsqrt2pi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto logsqrt2pi();
+        template<typename T> auto Logsqrt2pi();
         @endcode
 
     2.  @code
-        template<typename T> auto logsqrt2pi( boost::simd::as_<T> const& target );
+        template<typename T> auto Logsqrt2pi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Logsqrt2pi constant.

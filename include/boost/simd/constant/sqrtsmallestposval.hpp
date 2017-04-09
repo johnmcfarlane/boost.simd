@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-Sqrtsmallestposval Sqrtsmallestposval (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  Generate the square root of the least non zero positive non denormal
+    value of the chosen type.
 
     @headerref{<boost/simd/constant/sqrtsmallestposval.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto sqrtsmallestposval();
+        template<typename T> auto Sqrtsmallestposval();
         @endcode
 
     2.  @code
-        template<typename T> auto sqrtsmallestposval( boost::simd::as_<T> const& target );
+        template<typename T> auto Sqrtsmallestposval( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Sqrtsmallestposval constant.

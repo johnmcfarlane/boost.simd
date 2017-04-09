@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Tan_3pio_8 Tan_3pio_8 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$\tan3\frac\pi{8} = \sqrt2 + 1\f$.
 
     @headerref{<boost/simd/constant/tan_3pio_8.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto tan_3pio_8();
+        template<typename T> auto Tan_3pio_8();
         @endcode
 
     2.  @code
-        template<typename T> auto tan_3pio_8( boost::simd::as_<T> const& target );
+        template<typename T> auto Tan_3pio_8( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Tan_3pio_8 constant.

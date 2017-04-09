@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Eight Eight (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+  Generates a value of the chosen type equal to eight.
 
     @headerref{<boost/simd/constant/eight.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto eight();
+        template<typename T> auto Eight();
         @endcode
 
     2.  @code
-        template<typename T> auto eight( boost::simd::as_<T> const& target );
+        template<typename T> auto Eight( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Eight constant.

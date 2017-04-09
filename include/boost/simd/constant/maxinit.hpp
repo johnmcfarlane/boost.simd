@@ -17,18 +17,22 @@
   @ingroup group-constant
   @defgroup constant-Maxinit Maxinit (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the constant maxinit which is identical to minf for
+    arithmetic real types but that must be specialized for complex values ordering.
+    maxinit is the value to be returned when a maximum of the elements function
+    is used on an  empty container.
+
 
     @headerref{<boost/simd/constant/maxinit.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto maxinit();
+        template<typename T> auto Maxinit();
         @endcode
 
     2.  @code
-        template<typename T> auto maxinit( boost::simd::as_<T> const& target );
+        template<typename T> auto Maxinit( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Maxinit constant.

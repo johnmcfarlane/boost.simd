@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_5 Fact_5 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  5!,  that is 120
 
     @headerref{<boost/simd/constant/fact_5.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_5();
+        template<typename T> auto Fact_5();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_5( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_5( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_5 constant.

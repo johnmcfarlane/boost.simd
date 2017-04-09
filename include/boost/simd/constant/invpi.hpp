@@ -11,24 +11,22 @@
 #ifndef BOOST_SIMD_CONSTANT_INVPI_HPP_INCLUDED
 #define BOOST_SIMD_CONSTANT_INVPI_HPP_INCLUDED
 
-
-
   /*!
   @ingroup group-constant
   @defgroup constant-Invpi Invpi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Constant\f$\frac1\pi\f$.
 
     @headerref{<boost/simd/constant/invpi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto invpi();
+        template<typename T> auto Invpi();
         @endcode
 
     2.  @code
-        template<typename T> auto invpi( boost::simd::as_<T> const& target );
+        template<typename T> auto Invpi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Invpi constant.

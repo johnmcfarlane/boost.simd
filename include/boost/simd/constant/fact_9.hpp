@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fact_9 Fact_9 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 9! that is 362880,
 
     @headerref{<boost/simd/constant/fact_9.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fact_9();
+        template<typename T> auto Fact_9();
         @endcode
 
     2.  @code
-        template<typename T> auto fact_9( boost::simd::as_<T> const& target );
+        template<typename T> auto Fact_9( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fact_9 constant.

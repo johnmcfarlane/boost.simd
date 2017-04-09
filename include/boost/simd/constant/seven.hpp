@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Seven Seven (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 7
 
     @headerref{<boost/simd/constant/seven.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto seven();
+        template<typename T> auto Seven();
         @endcode
 
     2.  @code
-        template<typename T> auto seven( boost::simd::as_<T> const& target );
+        template<typename T> auto Seven( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Seven constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Seven<T>();
+    T r = T(7);
     @endcode
 
 

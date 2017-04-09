@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fourpi Fourpi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Constant \f$4\pi\f$.
 
     @headerref{<boost/simd/constant/fourpi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fourpi();
+        template<typename T> auto Fourpi();
         @endcode
 
     2.  @code
-        template<typename T> auto fourpi( boost::simd::as_<T> const& target );
+        template<typename T> auto Fourpi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fourpi constant.

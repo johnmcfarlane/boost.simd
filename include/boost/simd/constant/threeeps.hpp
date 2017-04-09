@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Threeeps Threeeps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a value equal to 3 times [Eps](@ref constant-Eps) of the chosen type
 
     @headerref{<boost/simd/constant/threeeps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto threeeps();
+        template<typename T> auto Threeeps();
         @endcode
 
     2.  @code
-        template<typename T> auto threeeps( boost::simd::as_<T> const& target );
+        template<typename T> auto Threeeps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Threeeps constant.

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fifteen Fifteen (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the constant fifteen.
 
     @headerref{<boost/simd/constant/fifteen.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fifteen();
+        template<typename T> auto Fifteen();
         @endcode
 
     2.  @code
-        template<typename T> auto fifteen( boost::simd::as_<T> const& target );
+        template<typename T> auto Fifteen( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fifteen constant.

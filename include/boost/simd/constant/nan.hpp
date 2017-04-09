@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Nan Nan (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  the Not a Number (Nan) constant..
 
     @headerref{<boost/simd/constant/nan.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto nan();
+        template<typename T> auto Nan();
         @endcode
 
     2.  @code
-        template<typename T> auto nan( boost::simd::as_<T> const& target );
+        template<typename T> auto Nan( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Nan constant.

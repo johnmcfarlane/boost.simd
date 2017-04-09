@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Thirdrooteps Thirdrooteps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the cubic root of [Eps](@ref constant-Eps).
 
     @headerref{<boost/simd/constant/thirdrooteps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto thirdrooteps();
+        template<typename T> auto Thirdrooteps();
         @endcode
 
     2.  @code
-        template<typename T> auto thirdrooteps( boost::simd::as_<T> const& target );
+        template<typename T> auto Thirdrooteps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Thirdrooteps constant.

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-False False (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a value of the logical type associated to the chosen type equal to @c false
 
     @headerref{<boost/simd/constant/false.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto false();
+        template<typename T> auto False();
         @endcode
 
     2.  @code
-        template<typename T> auto false( boost::simd::as_<T> const& target );
+        template<typename T> auto False( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the False constant.

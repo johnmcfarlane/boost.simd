@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Fourthrooteps Fourthrooteps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the 4th root of constant [Eps](@ref constant-Eps) : \f$\sqrt[4]\epsilon\f$.
 
     @headerref{<boost/simd/constant/fourthrooteps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto fourthrooteps();
+        template<typename T> auto Fourthrooteps();
         @endcode
 
     2.  @code
-        template<typename T> auto fourthrooteps( boost::simd::as_<T> const& target );
+        template<typename T> auto Fourthrooteps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Fourthrooteps constant.

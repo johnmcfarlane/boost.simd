@@ -17,18 +17,22 @@
   @ingroup group-constant
   @defgroup constant-Greatestnoninteger Greatestnoninteger (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the least integer value which is exactly
+    representable in the type and
+    equal to its integral successor.
+
+    All floating numbers greater than `Greatestnoninteger` are integral.
 
     @headerref{<boost/simd/constant/greatestnoninteger.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto greatestnoninteger();
+        template<typename T> auto Greatestnoninteger();
         @endcode
 
     2.  @code
-        template<typename T> auto greatestnoninteger( boost::simd::as_<T> const& target );
+        template<typename T> auto Greatestnoninteger( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Greatestnoninteger constant.

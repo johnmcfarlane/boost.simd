@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Sixteen Sixteen (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 16
 
     @headerref{<boost/simd/constant/sixteen.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto sixteen();
+        template<typename T> auto Sixteen();
         @endcode
 
     2.  @code
-        template<typename T> auto sixteen( boost::simd::as_<T> const& target );
+        template<typename T> auto Sixteen( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Sixteen constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Sixteen<T>();
+    T r = T(16);
     @endcode
 
 

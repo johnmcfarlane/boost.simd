@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Cgold Cgold (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a value of the chosen type which represents the conjugate Golden Ratio.
 
     @headerref{<boost/simd/constant/cgold.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto cgold();
+        template<typename T> auto Cgold();
         @endcode
 
     2.  @code
-        template<typename T> auto cgold( boost::simd::as_<T> const& target );
+        template<typename T> auto Cgold( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Cgold constant.

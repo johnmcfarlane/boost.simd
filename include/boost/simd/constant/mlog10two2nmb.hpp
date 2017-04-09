@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mlog10two2nmb Mlog10two2nmb (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates constant Mlog10two2nmb.
 
     @headerref{<boost/simd/constant/mlog10two2nmb.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mlog10two2nmb();
+        template<typename T> auto Mlog10two2nmb();
         @endcode
 
     2.  @code
-        template<typename T> auto mlog10two2nmb( boost::simd::as_<T> const& target );
+        template<typename T> auto Mlog10two2nmb( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mlog10two2nmb constant.

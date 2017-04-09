@@ -17,18 +17,21 @@
   @ingroup group-constant
   @defgroup constant-Splitfactor Splitfactor (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  a constant used to split a floating number in two parts,
+    in floating point routines (such [two_add](@ref real-two_add) and
+    [two_prod](@ref real-two_prod) to get extra precision.
+
 
     @headerref{<boost/simd/constant/splitfactor.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto splitfactor();
+        template<typename T> auto Splitfactor();
         @endcode
 
     2.  @code
-        template<typename T> auto splitfactor( boost::simd::as_<T> const& target );
+        template<typename T> auto Splitfactor( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Splitfactor constant.

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Twopio_3 Twopio_3 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates  \f$2\frac\pi{3}\f$
 
     @headerref{<boost/simd/constant/twopio_3.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto twopio_3();
+        template<typename T> auto Twopio_3();
         @endcode
 
     2.  @code
-        template<typename T> auto twopio_3( boost::simd::as_<T> const& target );
+        template<typename T> auto Twopio_3( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Twopio_3 constant.

@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Mhalf Mhalf (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates -0.5.
 
     @headerref{<boost/simd/constant/mhalf.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto mhalf();
+        template<typename T> auto Mhalf();
         @endcode
 
     2.  @code
-        template<typename T> auto mhalf( boost::simd::as_<T> const& target );
+        template<typename T> auto Mhalf( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Mhalf constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Mhalf<T>();
+    T r = T(0.5);
     @endcode
 
 

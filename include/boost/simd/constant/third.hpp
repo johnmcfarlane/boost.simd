@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Third Third (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates value 1/3
 
     @headerref{<boost/simd/constant/third.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto third();
+        template<typename T> auto Third();
         @endcode
 
     2.  @code
-        template<typename T> auto third( boost::simd::as_<T> const& target );
+        template<typename T> auto Third( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Third constant.

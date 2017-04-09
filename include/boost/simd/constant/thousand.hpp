@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Thousand Thousand (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates 1000.
 
     @headerref{<boost/simd/constant/thousand.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto thousand();
+        template<typename T> auto Thousand();
         @endcode
 
     2.  @code
-        template<typename T> auto thousand( boost::simd::as_<T> const& target );
+        template<typename T> auto Thousand( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Thousand constant.
@@ -43,7 +43,7 @@
     @par Return Value
     1.  A value of type @c T so that:
     @code
-    T r = Thousand<T>();
+    T r =T(1000)
     @endcode
 
 

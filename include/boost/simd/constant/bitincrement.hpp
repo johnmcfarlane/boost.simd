@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Bitincrement Bitincrement (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a value of the chosen type which represents the minimal increment value for @c T.
 
     @headerref{<boost/simd/constant/bitincrement.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto bitincrement();
+        template<typename T> auto Bitincrement();
         @endcode
 
     2.  @code
-        template<typename T> auto bitincrement( boost::simd::as_<T> const& target );
+        template<typename T> auto Bitincrement( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Bitincrement constant.

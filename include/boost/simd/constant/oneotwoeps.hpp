@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Oneotwoeps Oneotwoeps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates \f$1/(2\epsilon)\f$
 
     @headerref{<boost/simd/constant/oneotwoeps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto oneotwoeps();
+        template<typename T> auto Oneotwoeps();
         @endcode
 
     2.  @code
-        template<typename T> auto oneotwoeps( boost::simd::as_<T> const& target );
+        template<typename T> auto Oneotwoeps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Oneotwoeps constant.

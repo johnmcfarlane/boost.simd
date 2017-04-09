@@ -17,21 +17,21 @@
   @ingroup group-constant
   @defgroup constant-Euler Euler (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates a value of the chosen type approximating the Euler-Mascheroni constant: \f$\gamma = \lim_{n \rightarrow \infty } \left( 1+ \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + ... + \frac{1}{n} - \ln(n) \right)\f$.
 
     @headerref{<boost/simd/constant/euler.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto euler();
+        template<typename T> auto Euler();
         @endcode
 
     2.  @code
-        template<typename T> auto euler( boost::simd::as_<T> const& target );
+        template<typename T> auto Euler( boost::simd::as_<T> const& target );
         @endcode
 
-    1. and 2.  return a value of type @c T containing the Euler constant.
+      1. and 2.  return a value of type @c T containing the Euler constant.
 
 
     @par Parameters

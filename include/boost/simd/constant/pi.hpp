@@ -17,18 +17,19 @@
   @ingroup group-constant
   @defgroup constant-Pi Pi (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates value \f$\pi\f$ that is the half length of a circle of radius one
+    ... in normal temperature and pressure conditions.
 
     @headerref{<boost/simd/constant/pi.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto pi();
+        template<typename T> auto Pi();
         @endcode
 
     2.  @code
-        template<typename T> auto pi( boost::simd::as_<T> const& target );
+        template<typename T> auto Pi( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Pi constant.

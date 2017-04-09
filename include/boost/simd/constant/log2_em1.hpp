@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Log2_em1 Log2_em1 (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates constant Log2_em1 : \f$\log2(e)-1\f$
 
     @headerref{<boost/simd/constant/log2_em1.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto log2_em1();
+        template<typename T> auto Log2_em1();
         @endcode
 
     2.  @code
-        template<typename T> auto log2_em1( boost::simd::as_<T> const& target );
+        template<typename T> auto Log2_em1( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Log2_em1 constant.

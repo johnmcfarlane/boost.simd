@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Meight Meight (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the constant -8
 
     @headerref{<boost/simd/constant/meight.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto meight();
+        template<typename T> auto Meight();
         @endcode
 
     2.  @code
-        template<typename T> auto meight( boost::simd::as_<T> const& target );
+        template<typename T> auto Meight( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Meight constant.

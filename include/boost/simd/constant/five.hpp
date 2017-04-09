@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Five Five (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the constant five.
 
     @headerref{<boost/simd/constant/five.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto five();
+        template<typename T> auto Five();
         @endcode
 
     2.  @code
-        template<typename T> auto five( boost::simd::as_<T> const& target );
+        template<typename T> auto Five( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Five constant.

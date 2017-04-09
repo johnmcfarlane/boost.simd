@@ -17,18 +17,20 @@
   @ingroup group-constant
   @defgroup constant-Nbdigits Nbdigits (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the number of mantissa bits of a floating point number,
+    and the total number of bits for integral types.
+
 
     @headerref{<boost/simd/constant/nbdigits.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto nbdigits();
+        template<typename T> auto Nbdigits();
         @endcode
 
     2.  @code
-        template<typename T> auto nbdigits( boost::simd::as_<T> const& target );
+        template<typename T> auto Nbdigits( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Nbdigits constant.

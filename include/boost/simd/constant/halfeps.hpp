@@ -17,18 +17,18 @@
   @ingroup group-constant
   @defgroup constant-Halfeps Halfeps (function object)
 
-    Generates a value of the chosen type which all bits are set to 1.
+    Generates the machine epsilon.
 
     @headerref{<boost/simd/constant/halfeps.hpp>}
 
     @par Description
 
     1.  @code
-        template<typename T> auto halfeps();
+        template<typename T> auto Halfeps();
         @endcode
 
     2.  @code
-        template<typename T> auto halfeps( boost::simd::as_<T> const& target );
+        template<typename T> auto Halfeps( boost::simd::as_<T> const& target );
         @endcode
 
     1. and 2.  return a value of type @c T containing the Halfeps constant.

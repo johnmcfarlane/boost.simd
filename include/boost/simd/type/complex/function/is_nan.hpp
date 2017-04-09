@@ -9,7 +9,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_NAN_HPP_INCLUDED
 #define BOOST_SIMD_TYPE_COMPLEX_FUNCION_IS_NAN_HPP_INCLUDED
-#if defined(DOXYGEN_ONLY)
 
   /*!
     @ingroup group-complex

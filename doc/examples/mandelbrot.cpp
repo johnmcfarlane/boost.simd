@@ -30,10 +30,14 @@
 
 typedef float T;
 namespace bs = boost::simd;
+//! [mandelbrot-types1]
 using pack_t = bs::pack<T>;
 using pack_i = bs::pack<int>;
 using pack_l = bs::as_logical_t<pack_t>;
+//! [mandelbrot-types1]
+//! [mandelbrot-types2]
 using cpack_t= bs::complex<pack_t>;
+//! [mandelbrot-types2]
 
 struct mandelbrot
 {

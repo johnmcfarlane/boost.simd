@@ -26,6 +26,12 @@ Here is the scalar version:
 
 This code is vectorized as follows:
 
+We need to define some types:
+
+@snippet mandelbrot.cpp mandelbrot-simd
+
+Once done
+
 @snippet mandelbrot.cpp mandelbrot-simd
 
 The function of interest here is bs::if_inc, which increments each element of the iter vector which has
@@ -34,6 +40,18 @@ not yet converged. This allows us to continue our calculation on the relevant el
 We have also used the function bs::any returns a boolean value if any of its parameter element is non zero,
 We have also used the bs::sqr function which squares its argument and the bs::fma function (fused multiply add) which
 can accelerate and increase accuracy "a*b+c" computations on some architectures.
+
+@section complex-impl Using complex implementation
+
+In fact the julia set computations arise in the complex plane and the preceding implementation use real parts
+and imaginary parts in separate computations.
+
+With
+@code
+using cpack_t= bs::complex<pack_t>` type, one can directly write:
+@endcode
+
+@snippet mandelbrot.cpp mandelbrot-complex-simd
 
 @section julia-performance Performance
 
@@ -47,5 +65,8 @@ for both SSE4.2 and AVX2 and executed on an Intel Xeon CPU E3-1240 v3 @ 3.40GHz.
 <tr><td>SIMD AVX2           <td>119              <td> x6.45
 </table>
 
+The performance of the complex code is a few percent better. There is in the file mandelbrot.cpp two other implementations one using
+`std::complex` and one using scalar bs::complex. The scalar complex version is also a few percent better that the scalar one,
+but the std:complex one is 10 times slower.
 
 <div style="text-align: right;" markdown="1">Prev:  [Distance between 2D Points Part 2](@ref tutorial-distance-hypot)</div>

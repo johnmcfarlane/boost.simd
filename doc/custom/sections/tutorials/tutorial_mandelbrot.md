@@ -28,7 +28,7 @@ This code is vectorized as follows:
 
 We need to define some types:
 
-@snippet mandelbrot.cpp mandelbrot-simd
+@snippet mandelbrot.cpp mandelbrot-types1
 
 Once done
 
@@ -47,9 +47,10 @@ In fact the julia set computations arise in the complex plane and the preceding 
 and imaginary parts in separate computations.
 
 With
-@code
-using cpack_t= bs::complex<pack_t>` type, one can directly write:
-@endcode
+
+@snippet mandelbrot.cpp mandelbrot-types2
+
+one can directly write:
 
 @snippet mandelbrot.cpp mandelbrot-complex-simd
 

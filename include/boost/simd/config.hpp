@@ -14,6 +14,23 @@
 // Get version number
 #include <boost/simd/version.hpp>
 
+// Detect stupid ICC/GCC combo
+#if defined(BOOST_INTEL_GCC_VERSION) && (BOOST_INTEL_GCC_VERSION < 40600)
+#define BOOST_SIMD_INCOMPLETE_STD
+#endif
+
+#if defined(BOOST_SIMD_INCOMPLETE_STD)
+#include <boost/type_traits.hpp>
+namespace boost { namespace simd {
+  namespace tt_ = boost;
+} }
+#else
+#include <type_traits>
+namespace boost { namespace simd {
+  namespace tt_ = std;
+} }
+#endif
+
 // Get the config already done for dispatch
 #include <boost/simd/detail/dispatch/config.hpp>
 

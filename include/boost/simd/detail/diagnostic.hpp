@@ -11,10 +11,11 @@
 #ifndef BOOST_SIMD_DETAIL_DIAGNOSTIC_HPP_INCLUDED
 #define BOOST_SIMD_DETAIL_DIAGNOSTIC_HPP_INCLUDED
 
-#include <ostream>
+#include <boost/simd/detail/meta/declval.hpp>
+#include <boost/core/demangle.hpp>
 #include <iostream>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch/detail/declval.hpp>
+#include <ostream>
+#include <memory>
 
 #if defined(BOOST_SIMD_ENABLE_DIAG)
 
@@ -33,7 +34,7 @@ class diagnostic
   struct is_streamable
   {
     template <typename U>
-    static auto test( int ) -> decltype( std::cout << bd::detail::declval<U>()
+    static auto test( int ) -> decltype( std::cout << detail::declval<U>()
                                        , tt::true_type()
                                        );
 
@@ -134,6 +135,5 @@ diagnostic<T>* diagnostic<T>::instance_ = nullptr;
 #define BOOST_SIMD_DIAG(expr)
 
 #endif
-
 
 #endif

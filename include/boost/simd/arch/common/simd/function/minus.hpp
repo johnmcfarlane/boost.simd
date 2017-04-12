@@ -20,7 +20,6 @@
 #include <boost/simd/function/is_less_equal.hpp>
 #include <boost/simd/function/is_ltz.hpp>
 #include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/plus.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/function/splat.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>

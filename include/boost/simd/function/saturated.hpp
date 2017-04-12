@@ -13,7 +13,6 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/decorator.hpp>
-#include <boost/simd/detail/dispatch.hpp>
 
 #if defined(DOXYGEN_ONLY)
 namespace boost { namespace simd
@@ -43,12 +42,8 @@ namespace boost { namespace simd
 
 namespace boost { namespace simd
 {
-  struct saturated_tag : decorator_<saturated_tag>
-  {
-    using parent = decorator_<saturated_tag>;
-  };
-
-  const detail::decorator<saturated_tag> saturated_ = {};
+  struct saturated_tag {};
+  constexpr detail::decorator<saturated_tag> saturated_ = {};
 } }
 
 #endif

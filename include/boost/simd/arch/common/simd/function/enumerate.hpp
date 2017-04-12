@@ -10,7 +10,6 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ENUMERATE_HPP_INCLUDED
 
 #include <boost/simd/function/make.hpp>
-#include <boost/simd/function/plus.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/detail/nsm.hpp>

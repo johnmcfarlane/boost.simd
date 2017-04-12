@@ -11,10 +11,9 @@
 #ifndef BOOST_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 
-#if defined(DOXYGEN_ONLY)
 namespace boost { namespace simd
 {
-
+#if defined(DOXYGEN_ONLY)
   /*!
     @ingroup group-operator
     This function object computes the sum of two parameters of the same type.
@@ -39,8 +38,9 @@ namespace boost { namespace simd
 
   **/
   Value plus(Value const& x, Value const& y);
-} }
 #endif
+
+} }
 
 #include <boost/simd/function/scalar/plus.hpp>
 #include <boost/simd/function/simd/plus.hpp>

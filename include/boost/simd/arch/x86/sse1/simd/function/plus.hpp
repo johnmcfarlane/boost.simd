@@ -10,25 +10,17 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_PLUS_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 
-namespace boost { namespace simd { namespace ext
+#include <boost/simd/pack.hpp>
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( plus_
-                          , (typename A0)
-                          , bs::sse1_
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<float,4> plus_ ( BOOST_SIMD_SUPPORTS(sse1_)
+                                        , pack<float,4> const& a0, pack<float,4> const& a1
+                                        ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-       return _mm_add_ps(a0,a1);
-    }
-  };
+    return _mm_add_ps(a0,a1);
+  }
 } } }
 
 #endif

@@ -10,15 +10,11 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IF_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IF_MINUS_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/if_else_zero.hpp>
-#include <boost/simd/function/if_else.hpp>
-#include <boost/simd/function/unary_minus.hpp>
 #include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/plus.hpp>
-#include <boost/simd/function/unary_minus.hpp>
 
 namespace boost { namespace simd { namespace ext
 {

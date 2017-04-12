@@ -9,81 +9,95 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/traits.hpp>
+#include <boost/simd/pack.hpp>
 #include <boost/simd/function/bitwise_ornot.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/function/saturated.hpp>
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_gez.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/constant/valmax.hpp>
-#include <boost/simd/constant/zero.hpp>
+#include <boost/simd/detail/function/map_to.hpp>
+#include <boost/simd/detail/meta/pick.hpp>
+#include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF ( plus_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  // -----------------------------------------------------------------------------------------------
+  // regular cases
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE pack<T,N,X> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                      , pack<T,N,X> const& a
+                                      , pack<T,N,X> const& b
+                                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator()(const saturated_tag &, const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return a0+a1;
-    }
-  };
+    return map_to(simd::plus, a, b);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( plus_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::uint_<A0>, X>
-                          , bs::pack_<bd::uint_<A0>, X>
-                          )
+  // -----------------------------------------------------------------------------------------------
+  // saturated cases
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> splus_( pack<T,N> const& a, pack<T,N> const& b
+                                    , case_<0> const& // IEEE saturated plus
+                                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator()(const saturated_tag &, const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      A0 const s = a0+a1;
-      return s | genmask(s < a0);
-    }
-  };
+    return a + b;
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( plus_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::int_<A0>, X>
-                          , bs::pack_<bd::int_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> splus_( pack<T,N> const& a, pack<T,N> const& b
+                                    , case_<1> const& // signed integers saturated plus
+                                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator()(const saturated_tag &, const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      using utype = bd::as_unsigned_t<A0>;
-      using stype = typename A0::value_type;
+    using type = pack<T, N>;
+    using utype = pack< typename tt_::make_unsigned<T>::type, N>;
+    enum sizee { value = sizeof(T)*CHAR_BIT-1 };
 
-      utype ux = bitwise_cast<utype>(a0);
-      utype const uy = bitwise_cast<utype>(a1);
-      utype const res = ux + uy;
+    auto ux = bitwise_cast<utype>(a);
+    auto uy = bitwise_cast<utype>(b);
+    auto res = ux + uy;
 
-      ux = shr(ux, sizeof(stype)*CHAR_BIT-1) + utype(Valmax<stype>());
+    ux = shr(ux, sizee::value) + utype(Valmax<T>());
+    auto t = is_gez(bitwise_cast<type>(bitwise_ornot(ux ^ uy, uy ^ res )));
 
-      auto t = is_gez(bitwise_cast<A0>(bitwise_ornot(ux ^ uy, uy ^ res )));
+    return bitwise_cast<type>(if_else(t, ux, res));
+  }
 
-      return bitwise_cast<A0>(if_else(t, ux, res));
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> splus_( pack<T,N> const& a, pack<T,N> const& b
+                                    , case_<2> const& // unsigned integers saturated plus
+                                    ) BOOST_NOEXCEPT
+  {
+    auto s = a + b;
+    return s | genmask(s < a);
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                    , saturated_tag const&, pack<T,N> const& a, pack<T,N> const& b
+                                    ) BOOST_NOEXCEPT
+  {
+    return splus_ ( a, b
+                  , typename detail::pick < T , tt_::is_floating_point
+                                              , tt_::is_signed
+                                              , tt_::is_unsigned
+                                          >::type{}
+                  );
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                    , saturated_tag const&
+                                                    , pack<T,N,simd_emulation_> const& a
+                                                    , pack<T,N,simd_emulation_> const& b
+                                                    ) BOOST_NOEXCEPT
+  {
+    return map_to( saturated_(simd::plus), a, b);
+  }
 } } }
 
 #endif

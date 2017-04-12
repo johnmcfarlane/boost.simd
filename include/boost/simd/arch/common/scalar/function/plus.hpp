@@ -9,39 +9,90 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_PLUS_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/config.hpp>
+#include <boost/simd/function/saturated.hpp>
+#include <boost/simd/function/saturate.hpp>
+#include <boost/simd/detail/meta/pick.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( plus_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T plus_(BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_), T const& a, T const& b) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a+b)
-    {
-      return a+b;
-    }
-  };
+    return a+b;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( plus_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::fundamental_<T>>
-                          ,  bd::scalar_<bd::fundamental_<T>>
-                          )
+  // -----------------------------------------------------------------------------------------------
+  // Saturated cases
+  template<typename T, typename Sz> BOOST_FORCEINLINE
+  T splus_( T const& a, T const& b, detail::case_<0> const&, Sz const& ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(T a, T b) const BOOST_NOEXCEPT
-    {
-      return a+b;
-    }
-  };
+    // IEEE case
+    return a + b;
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T splus_ ( T const& a, T const& b
+                    , detail::case_<1> const&, tt_::true_type const&
+                    ) BOOST_NOEXCEPT
+  {
+    // large signed integral case
+    using utype = typename tt_::make_unsigned<T>::type;
+    enum sizee { value = sizeof(T)*CHAR_BIT-1 };
+
+    utype ux = a, uy = b;
+    utype res = ux + uy;
+
+    ux = (ux >> sizee::value) + Valmax<T>();
+
+    if( T((ux ^ uy) | ~(uy ^ res)) >= T(0)) return ux;
+    return static_cast<T>(res);
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T splus_ ( T const& a, T const& b
+                    , detail::case_<1> const&, tt_::false_type const&
+                    ) BOOST_NOEXCEPT
+  {
+    // small signed integral case
+    auto r = a+b;
+    return static_cast<T>(saturate<T>(r));
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T splus_( T const& a, T const& b, detail::case_<2> const&, tt_::true_type const& ) BOOST_NOEXCEPT
+  {
+    // large unsigned integral case
+    T r  = a + b;
+    return r | -(r < a);
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T splus_( T const& a, T const& b, detail::case_<2> const&, tt_::false_type const& ) BOOST_NOEXCEPT
+  {
+    // small unsigned integral case - use C promotion then clamp
+    auto        r   = a+b;
+    decltype(r) mx  = boost::simd::Valmax<T>();
+    return static_cast<T>(std::min(mx,r));
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T plus_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+          , saturated_tag const&, T const& a, T const& b
+          ) BOOST_NOEXCEPT
+  {
+    return splus_ ( a ,b
+                  , typename detail::pick <T, tt_::is_floating_point
+                                            , tt_::is_signed
+                                            , tt_::is_unsigned
+                                          >::type{}
+                  , tt_::integral_constant<bool,(sizeof(T) >= 4)>{}
+                  );
+  }
 } } }
-
-#include <boost/simd/arch/common/scalar/function/plus_s.hpp>
 
 #endif

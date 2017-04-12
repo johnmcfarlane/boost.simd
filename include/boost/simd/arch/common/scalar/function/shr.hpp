@@ -11,44 +11,38 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SHR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SHR_HPP_INCLUDED
 
-#include <boost/simd/detail/assert_utils.hpp>
+#include <boost/simd/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/assert_utils.hpp>
+#include <boost/assert.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( shr_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          , bd::scalar_< bd::integer_<A1> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T shr_( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                          , T v, int s
+                          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0  operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using uitype = bd::as_integer_t<A0, unsigned>;
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shr : shift is out of range");
-      return uitype(a0) >> a1;
-    }
-  };
+    using type = typename std::make_unsigned<T>::type;
+    BOOST_ASSERT_MSG(assert_good_shift<T>(s), "shr : shift is out of range");
+    return type(v) >> s;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( shr_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::integer_<A1> >
-                          )
+  BOOST_FORCEINLINE double shr_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                                , double v, int s
+                                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using uitype = bd::as_integer_t<A0, unsigned>;
-      return bitwise_cast<A0>(shr(bitwise_cast<uitype>(a0), a1));
-    }
-  };
+    return bitwise_cast<double>(shr( bitwise_cast<std::uint64_t>(v),s));
+  }
+
+  BOOST_FORCEINLINE float  shr_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                                , float v, int s
+                                ) BOOST_NOEXCEPT
+  {
+    return bitwise_cast<float>(shr( bitwise_cast<std::uint32_t>(v),s));
+  }
 } } }
-
 
 #endif

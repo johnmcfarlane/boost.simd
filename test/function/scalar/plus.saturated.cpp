@@ -21,7 +21,6 @@
 #include <boost/simd/constant/mtwo.hpp>
 #include <boost/simd/constant/two.hpp>
 
-//saturated_TODO
 STF_CASE_TPL (" plus signed int",  STF_SIGNED_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
@@ -40,7 +39,7 @@ STF_CASE_TPL (" plus signed int",  STF_SIGNED_INTEGRAL_TYPES)
   STF_EQUAL(bs::saturated_(plus)(bs::Valmax<T>(),bs::One<T>()), bs::Valmax<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::Valmin<T>(),bs::Mone<T>()), bs::Valmin<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::Zero<T>(), bs::Zero<T>()), bs::Zero<T>());
-} // end of test for signed_int_
+}
 
 STF_CASE_TPL (" plus unsigned int",  STF_UNSIGNED_INTEGRAL_TYPES)
 {
@@ -56,7 +55,7 @@ STF_CASE_TPL (" plus unsigned int",  STF_UNSIGNED_INTEGRAL_TYPES)
   STF_EQUAL(bs::saturated_(plus)(bs::One<T>(), bs::One<T>()), bs::Two<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::Valmax<T>(),bs::One<T>()), bs::Valmax<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::Zero<T>(), bs::Zero<T>()), bs::Zero<T>());
-} // end of test for unsigned_int_
+}
 
 STF_CASE_TPL (" plus real",  STF_IEEE_TYPES)
 {
@@ -75,7 +74,8 @@ STF_CASE_TPL (" plus real",  STF_IEEE_TYPES)
   STF_EQUAL(bs::saturated_(plus)(bs::Minf<T>(), bs::Minf<T>()), bs::Minf<T>());
   STF_IEEE_EQUAL(bs::saturated_(plus)(bs::Nan<T>(), bs::Nan<T>()), bs::Nan<T>());
 #endif
+
   STF_EQUAL(bs::saturated_(plus)(bs::Mone<T>(), bs::Mone<T>()), bs::Mtwo<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::One<T>(), bs::One<T>()), bs::Two<T>());
   STF_EQUAL(bs::saturated_(plus)(bs::Zero<T>(), bs::Zero<T>()), bs::Zero<T>());
-} // end of test for floating_
+}

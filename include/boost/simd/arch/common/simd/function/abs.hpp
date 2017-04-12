@@ -13,9 +13,7 @@
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/bitwise_notand.hpp>
-#include <boost/simd/function/bitwise_xor.hpp>
 #include <boost/simd/function/shift_right.hpp>
-#include <boost/simd/function/plus.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/detail/constant/maxleftshift.hpp>
 #include <boost/simd/constant/mzero.hpp>

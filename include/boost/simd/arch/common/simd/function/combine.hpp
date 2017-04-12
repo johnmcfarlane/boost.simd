@@ -53,7 +53,10 @@ namespace boost { namespace simd { namespace ext
                                           , nsm::list<N...> const&
                                           ) BOOST_NOEXCEPT
     {
-      return typename result_t::storage_type{{a,b}};
+      result_t that;
+      that.storage()[0] = a;
+      that.storage()[1] = b;
+      return that;
     }
 
     template<typename K, typename... N>

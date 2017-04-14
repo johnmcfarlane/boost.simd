@@ -8,10 +8,10 @@
 */
 //==================================================================================================
 #include <boost/simd/constant/allbits.hpp>
+#include <boost/simd/constant/nan.hpp>
 #include <boost/simd/as.hpp>
 #include <limits>
 #include <scalar_test.hpp>
-#include <boost/simd/constant/nan.hpp>
 
 STF_CASE_TPL( "Check allbits behavior"
             , (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
@@ -19,12 +19,11 @@ STF_CASE_TPL( "Check allbits behavior"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::allbits;
   using boost::simd::Allbits;
 
   STF_TYPE_IS(decltype(Allbits<T>()), T);
   STF_EQUAL(Allbits<T>(), T(-1));
-  STF_EQUAL(allbits( as(T{}) ), T(-1));
+  STF_EQUAL(Allbits( as(T{}) ), T(-1));
 }
 
 STF_CASE_TPL( "Check allbits behavior"
@@ -32,10 +31,9 @@ STF_CASE_TPL( "Check allbits behavior"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::allbits;
   using boost::simd::Allbits;
 
   STF_TYPE_IS(decltype(Allbits<T>()), T);
   STF_IEEE_EQUAL(Allbits<T>(), boost::simd::Nan<T>());
-  STF_IEEE_EQUAL(allbits( as(T{}) ), boost::simd::Nan<T>());
+  STF_IEEE_EQUAL(Allbits( as(T{}) ), boost::simd::Nan<T>());
 }

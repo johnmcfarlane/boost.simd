@@ -12,44 +12,22 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_ZERO_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(zero_, zero);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Zero(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct zero_ : boost::dispatch::constant_value_<zero_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,zero_,boost::dispatch::constant_value_<zero_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0x00000000UL, 0x0000000000000000ULL);
-    };
+    return zero( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Zero() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, zero_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::zero_,zero);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Zero()
-  BOOST_NOEXCEPT_DECLTYPE(detail::zero( boost::dispatch::as_<T>{}))
-  {
-    return detail::zero( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Zero(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Zero<T>())
-  {
-    return Zero<T>();
+    return zero( boost::simd::as_<T>{} );
   }
 } }
 

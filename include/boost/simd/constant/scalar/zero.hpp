@@ -11,7 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_ZERO_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/zero.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/scalar/constant/zero.hpp>
+#include <boost/simd/arch/common/generic/constant/zero.hpp>
 
 #endif

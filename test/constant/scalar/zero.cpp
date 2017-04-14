@@ -9,7 +9,6 @@
 //==================================================================================================
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/as.hpp>
-#include <limits>
 #include <scalar_test.hpp>
 
 STF_CASE_TPL( "Check zero behavior"
@@ -19,8 +18,9 @@ STF_CASE_TPL( "Check zero behavior"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::zero;
   using boost::simd::Zero;
 
-  STF_IEEE_EQUAL(Zero<T>(), T(0));
+  STF_TYPE_IS(decltype(Zero<T>()), T);
+  STF_EQUAL(Zero<T>(), T(0));
+  STF_EQUAL(Zero( as(T{}) ), T(0));
 }

@@ -11,6 +11,5 @@
 #define BOOST_SIMD_CONSTANT_SIMD_ONE_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/one.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

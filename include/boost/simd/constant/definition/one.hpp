@@ -12,46 +12,23 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_ONE_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(one_, one);
+
+  template<typename T>
+  BOOST_FORCEINLINE T One(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct one_ : boost::dispatch::constant_value_<one_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,one_,boost::dispatch::constant_value_<one_>);
-      BOOST_SIMD_REGISTER_CONSTANT(1,0x3f800000UL, 0x3ff0000000000000ULL);
-    };
+    return one( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T One() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, one_)
+    return one( boost::simd::as_<T>{} );
   }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::one_,one);
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto One() BOOST_NOEXCEPT_DECLTYPE(detail::one( boost::dispatch::as_<T>{}))
-  {
-    return detail::one( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto One(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(One<T>())
-  {
-    return One<T>();
-  }
-
 } }
 
 #endif

@@ -7,33 +7,47 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#include <boost/simd/constant/one.hpp>
+#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/pack.hpp>
 #include <algorithm>
 
 #include <simd_test.hpp>
 
-STF_CASE_TPL( "Check One behavior"
-            , (double)(float)
-              (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
-              (std::int8_t )(std::int16_t )(std::int32_t )(std::int64_t )
-            )
+namespace bs = boost::simd;
+
+template <typename T, std::size_t N, typename Env>
+void test(Env& runtime)
 {
-  namespace bs =  boost::simd;
-  using pack_t  = bs::pack<T>;
-  using hpack_t = bs::pack<T,pack_t::static_size/2>;
-  using dpack_t = bs::pack<T,pack_t::static_size*2>;
-
-  auto are_correct = [](T e) { return e == bs::One<T>(); };
-
-  auto pack  = bs::One<pack_t>();
-  auto hpack = bs::One<hpack_t>();
-  auto dpack = bs::One<dpack_t>();
-
-  STF_EXPECT(( std::all_of(pack.begin() , pack.end(), are_correct ) ));
-  STF_EXPECT(( std::all_of(hpack.begin(),hpack.end(), are_correct ) ));
-  STF_EXPECT(( std::all_of(dpack.begin(),dpack.end(), are_correct ) ));
+  using p_t = bs::pack<T, N>;
+  auto are_correct = [](T e) { return e == T(1); };
+  auto p = bs::One<p_t>();
+  STF_EXPECT(( std::all_of(p.begin() , p.end(), are_correct ) ));
 }
 
+STF_CASE_TPL("Check One<T> behavior" , STF_NUMERIC_TYPES)
+{
+  static const std::size_t N = bs::pack<T>::static_size;
 
+  test<T, N>(runtime);
+  test<T, N/2>(runtime);
+  test<T, N*2>(runtime);
+}
 
+template <typename T, std::size_t N, typename Env>
+void test_as(Env& runtime)
+{
+  using p_t = bs::pack<T, N>;
+  auto are_correct = [](T e) { return e == T(1); };
+  auto p = bs::One(bs::as_<p_t>());
+
+  STF_EXPECT(( std::all_of(p.begin() , p.end(), are_correct ) ));
+}
+
+STF_CASE_TPL("Check One(as<T>) behavior" , STF_NUMERIC_TYPES)
+{
+  static const std::size_t N = bs::pack<T>::static_size;
+
+  test_as<T, N>(runtime);
+  test_as<T, N/2>(runtime);
+  test_as<T, N*2>(runtime);
+}

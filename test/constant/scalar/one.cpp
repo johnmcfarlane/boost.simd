@@ -9,7 +9,6 @@
 //==================================================================================================
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/as.hpp>
-#include <limits>
 #include <scalar_test.hpp>
 
 STF_CASE_TPL( "Check one behavior"
@@ -19,7 +18,6 @@ STF_CASE_TPL( "Check one behavior"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::one;
   using boost::simd::One;
 
   STF_EQUAL(One<T>(), T(1));

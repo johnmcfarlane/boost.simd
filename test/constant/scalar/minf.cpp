@@ -13,12 +13,11 @@
 #include <scalar_test.hpp>
 
 STF_CASE_TPL( "Check minf behavior for integral types"
-             , (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
+            , (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
               (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::minf;
   using boost::simd::Minf;
 
   STF_IEEE_EQUAL(Minf<T>(), std::numeric_limits<T>::min());
@@ -29,7 +28,6 @@ STF_CASE_TPL( "Check minf behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::minf;
   using boost::simd::Minf;
 
   STF_IEEE_EQUAL(Minf<T>(), -std::numeric_limits<T>::infinity());

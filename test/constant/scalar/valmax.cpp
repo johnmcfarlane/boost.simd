@@ -9,19 +9,18 @@
 //==================================================================================================
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/as.hpp>
-#include <limits>
 #include <scalar_test.hpp>
 
-STF_CASE_TPL( "Check valmax behavior"
+STF_CASE_TPL( "Check valmax behavior on integers"
             , (double)(float)
               (std::uint8_t)(std::uint16_t)(std::uint32_t)(std::uint64_t)
               (std::int8_t)(std::int16_t)(std::int32_t)(std::int64_t)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::valmax;
   using boost::simd::Valmax;
 
-  STF_IEEE_EQUAL(Valmax<T>()      , std::numeric_limits<T>::max());
-  STF_IEEE_EQUAL(valmax( as(T{})) , std::numeric_limits<T>::max());
+  STF_TYPE_IS(decltype(Valmax<T>()), T);
+  STF_EQUAL(Valmax<T>(), std::numeric_limits<T>::max());
+  STF_EQUAL(Valmax( as(T{}) ), std::numeric_limits<T>::max());
 }

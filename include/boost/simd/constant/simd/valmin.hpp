@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_VALMIN_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/valmin.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/valmin.hpp>
 
 #endif

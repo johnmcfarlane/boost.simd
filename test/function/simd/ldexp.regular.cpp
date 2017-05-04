@@ -40,22 +40,19 @@ void test(Env& runtime)
   using p_t = bs::pack<T, N>;
   using pi_t = bs::pack<iT, N>;
 
-  T a1[N],  b[N], d[N];
+  T a1[N],  b[N];
   iT a2[N];
   for(std::size_t i = 0; i < N; ++i)
   {
      a1[i] = (i%2) ? T(i) : T(-i);
      a2[i] = i%(sizeof(T)*8-1);
      b[i] = bs::ldexp(a1[i], a2[i]);
-     d[i] = bs::pedantic_(bs::ldexp)(a1[i], a2[i]);
    }
 
   p_t aa1(&a1[0], &a1[0]+N);
   pi_t aa2(&a2[0], &a2[0]+N);
   p_t bb(&b[0], &b[0]+N);
-  p_t dd(&d[0], &d[0]+N);
   STF_IEEE_EQUAL(bs::ldexp(aa1, aa2), bb);
-  STF_IEEE_EQUAL(bs::pedantic_(bs::ldexp)(aa1, aa2), dd);
 }
 
 STF_CASE_TPL("Check ldexp on pack" , STF_NUMERIC_TYPES)
@@ -76,7 +73,6 @@ void tests(Env& runtime)
   {
     a1[i] = (i%2) ? T(i) : T(-1.*i);
     b[i] = bs::ldexp(a1[i], 2);
-    c[i] = bs::pedantic_(bs::ldexp)(a1[i], 2);
   }
 
   p_t aa1(&a1[0], &a1[0]+N);
@@ -84,7 +80,6 @@ void tests(Env& runtime)
   p_t cc(&c[0], &c[0]+N);
 
   STF_IEEE_EQUAL(bs::ldexp(aa1, 2)            , bb);
-  STF_IEEE_EQUAL(bs::pedantic_(bs::ldexp)(aa1, 2) , cc);
 }
 
 STF_CASE_TPL("Check ldexp on pack/scalar" , STF_NUMERIC_TYPES)
@@ -138,8 +133,27 @@ STF_CASE_TPL("ldexpi", STF_INTEGRAL_TYPES)
   STF_EQUAL(ldexp(bs::One <p_t>(), 2), r_t(4));
   STF_EQUAL(ldexp(bs::Three<p_t>(), 2), r_t(12));
   STF_EQUAL(ldexp(bs::Mone<p_t>(), 2), r_t(-4));
+  STF_EQUAL(ldexp(bs::One <p_t>(),  pi_t(2)), r_t(4));
+  STF_EQUAL(ldexp(bs::Three<p_t>(), pi_t(2)), r_t(12));
+  STF_EQUAL(ldexp(bs::Mone<p_t>(), pi_t(2)), r_t(-4));
 }
 
+STF_CASE_TPL("ldexpui", STF_INTEGRAL_TYPES)
+{
+  namespace bs = boost::simd;
+  namespace bd = boost::dispatch;
+  using bs::ldexp;
+ using p_t = bs::pack<T>;
+  using pi_t = bd::as_integer_t<p_t, unsigned>;
+  using r_t = decltype(ldexp(p_t(), pi_t()));
+
+  // return type conformity test
+  STF_TYPE_IS(r_t, p_t);
+
+  STF_EQUAL(ldexp(bs::One <p_t>(),  pi_t(2)), r_t(4));
+  STF_EQUAL(ldexp(bs::Three<p_t>(), pi_t(2)), r_t(12));
+  STF_EQUAL(ldexp(bs::Mone<p_t>(), pi_t(2)), r_t(-4));
+}
 
 STF_CASE_TPL("ldexp floating exponent", STF_IEEE_TYPES)
 {
@@ -148,7 +162,7 @@ STF_CASE_TPL("ldexp floating exponent", STF_IEEE_TYPES)
   using bs::ldexp;
   using p_t = bs::pack<T>;
 
-  using r_t = decltype(bs::pedantic_(ldexp)(p_t(), p_t()));
+  using r_t = decltype(ldexp(p_t(), p_t()));
 
   // return type conformity test
   STF_TYPE_IS(r_t, p_t);

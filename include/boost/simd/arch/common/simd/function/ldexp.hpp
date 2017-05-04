@@ -81,7 +81,7 @@ namespace boost { namespace simd { namespace ext
     {
       using iA0 = bd::as_integer_t<A0>;
       using sA0 = bd::scalar_of_t<A0>;
-      iA0 e = a1;
+      iA0 e = bitwise_cast<iA0>(a1);
       A0 f = One<A0>();
 #ifndef BOOST_SIMD_NO_DENORMALS
       auto denormal =  is_less(e, Minexponent<A0>());

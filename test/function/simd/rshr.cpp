@@ -80,3 +80,36 @@ STF_CASE_TPL("Check rshr on pack with pack shift" , STF_SIGNED_INTEGRAL_TYPES)
   tests<T, N/2>(runtime);
   tests<T, N*2>(runtime);
 }
+
+template <typename T, int N, typename Env>
+void testu(Env& runtime)
+{
+  using iT =  bd::as_integer_t<T, unsigned>;
+  using p_t = bs::pack<T, N>;
+  using i_t = bs::pack<iT, N>;
+
+  T a1[N], b[N];
+  iT sh[N];
+
+  for(int i = 0; i < N; ++i)
+  {
+    sh[i] = i%(8*sizeof(T));
+    a1[i] = (i%2) ? T(i) : T(-i);
+    b[i] = bs::rshr(a1[i],sh[i]);
+  }
+
+  p_t aa1(&a1[0], &a1[0]+N);
+  p_t bb(&b[0], &b[0]+N);
+  i_t sh1(&sh[0], &sh[0]+N);
+  STF_EQUAL(bs::rshr(aa1, sh1), bb);
+}
+
+STF_CASE_TPL("Check rshr on pack with pack shift" , STF_INTEGRAL_TYPES)
+{
+  static const std::size_t N = bs::pack<T>::static_size;
+
+  testu<T, N>(runtime);
+  testu<T, N/2>(runtime);
+  testu<T, N*2>(runtime);
+}
+

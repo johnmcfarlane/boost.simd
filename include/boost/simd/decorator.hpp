@@ -19,7 +19,6 @@ namespace boost { namespace simd
     @ingroup group-functions
     @defgroup group-decorator  Decorators
 
-
     @par Rationale
        Up to now we have five different decorators that can be used to
        modify the behaviour of some functors. Use of a functor with no decorator
@@ -55,11 +54,6 @@ namespace boost { namespace simd
         with "normal" and zero parameters) and treating corner cases only if the
         performance loss is no more than a few percent.
 
-    - pedantic_ implies
-
-        if a standard exists the function is as conformant as possible whatever the
-        loss in performances can be.
-
     - std_
 
         is reserved to the direct call of a libc++ version of the function: this means that
@@ -75,7 +69,6 @@ namespace boost { namespace simd
         is used to indicate a restrained range of validity for a function. Up to now only
         direct trigonometic function can use this decorator which restricts their validity range to
         \f$[-\pi/4, \pi/4]\f$ (they return a nan outside),  but with an important speed-up.
-
 
     @par Note:
        Not "normal" values are as defined by the libc++ @c fpclassify by not returning

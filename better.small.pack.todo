@@ -1,0 +1,44 @@
+Small pack special cases
+
+ - store/aligned_store -> cf load
+    function.simd.aligned_store.unit (SEGFAULT)
+    function.simd.stream.unit (SEGFAULT)
+    function.simd.aligned_load.misaligned.arithmetic.unit
+    function.simd.store.pointer.arithmetic.unit
+
+ - combine/slice => shuffle<0,1,4,5>(l,r) // shuffle<2,3,2,3>() + identity
+
+-----------------------------------------------------
+
+function.simd.abs.regular.unit
+function.simd.average.unit
+function.simd.group.unit
+function.simd.groups.unit
+function.simd.interleave_second.unit
+function.simd.maxmag.unit
+function.simd.maxnummag.unit
+function.simd.meanof.unit
+function.simd.minmag.unit
+function.simd.minnummag.unit
+function.simd.negatenz.unit
+function.simd.repeat_lower_half.unit
+function.simd.repeat_upper_half.unit
+>>>>>>> function.simd.reverse.unit
+function.simd.shift_right.unit
+function.simd.signnz.unit
+function.simd.split_multiplies.unit
+function.simd.sum.unit
+function.simd.cast.float.unit
+function.simd.cast.int32.unit
+function.simd.cast.int16.unit
+function.simd.cast.int8.unit
+function.simd.cast.uint32.unit
+function.simd.cast.uint16.unit
+function.simd.cast.uint8.unit
+function.simd.shuffle.interleave.second.unit
+function.simd.slide.unary.arithmetic.unit
+function.simd.slide.unary.logical.unit
+function.simd.slide.binary.arithmetic.unit
+function.simd.slide.binary.logical.unit
+function.simd.split.arithmetic.high.unit
+function.simd.split.arithmetic.pair.unit

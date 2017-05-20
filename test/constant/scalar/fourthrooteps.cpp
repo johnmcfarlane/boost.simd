@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check fourthrooteps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fourthrooteps;
   using boost::simd::Fourthrooteps;
 
   STF_TYPE_IS(decltype(Fourthrooteps<T>()), T);
   STF_EQUAL(Fourthrooteps<T>(), T(1));
-  STF_EQUAL(fourthrooteps( as(T{}) ),T(1));
+  STF_EQUAL(Fourthrooteps( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check fourthrooteps behavior for floating types"
@@ -31,13 +30,12 @@ STF_CASE_TPL( "Check fourthrooteps behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fourthrooteps;
   using boost::simd::Fourthrooteps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Fourthrooteps<T>()), T);
   auto z1 = Fourthrooteps<T>();
   STF_ULP_EQUAL(z1*z1*z1*z1, Eps<T>(), 1);
-  auto z2 = fourthrooteps( as(T{}) );
+  auto z2 = Fourthrooteps( as(T{}) );
   STF_ULP_EQUAL(z2*z2*z2*z2, Eps<T>(), 2);
 }

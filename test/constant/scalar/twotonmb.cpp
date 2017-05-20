@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check twotonmb behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twotonmb;
   using boost::simd::Twotonmb;
 
   STF_TYPE_IS(decltype(Twotonmb<T>()), T);
   STF_EQUAL(Twotonmb<T>(), T(1));
-  STF_EQUAL(twotonmb( as(T{}) ),T(1));
+  STF_EQUAL(Twotonmb( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check twotonmb behavior for floating types"
@@ -31,11 +30,10 @@ STF_CASE_TPL( "Check twotonmb behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twotonmb;
   using boost::simd::Twotonmb;
   using boost::simd::Nbmantissabits;
 
   STF_TYPE_IS(decltype(Twotonmb<T>()), T);
   STF_IEEE_EQUAL(Twotonmb<T>(), T(1ll << Nbmantissabits<T>()));
-  STF_IEEE_EQUAL(twotonmb( as(T{}) ), T(1ll << Nbmantissabits<T>()));
+  STF_IEEE_EQUAL(Twotonmb( as(T{}) ), T(1ll << Nbmantissabits<T>()));
 }

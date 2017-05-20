@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check mlog2two2nmb behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mlog2two2nmb;
   using boost::simd::Mlog2two2nmb;
   T ref = T(0);
   STF_TYPE_IS(decltype(Mlog2two2nmb<T>()), T);
   STF_EQUAL(Mlog2two2nmb<T>(), ref);
-  STF_EQUAL(mlog2two2nmb( as(T{}) ),ref);
+  STF_EQUAL(Mlog2two2nmb( as(T{}) ),ref);
 }
 
 STF_CASE_TPL( "Check mlog2two2nmb behavior for double"
@@ -31,13 +30,12 @@ STF_CASE_TPL( "Check mlog2two2nmb behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mlog2two2nmb;
   using boost::simd::Mlog2two2nmb;
   using boost::simd::Nbmantissabits;
   T ref = -T(Nbmantissabits<T>());
 
   STF_TYPE_IS(decltype(Mlog2two2nmb<T>()), T);
   STF_IEEE_EQUAL(Mlog2two2nmb<T>(), ref);
-  STF_IEEE_EQUAL(mlog2two2nmb( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Mlog2two2nmb( as(T{}) ), ref);
 }
 

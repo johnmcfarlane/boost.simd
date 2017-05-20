@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_SMALLESTPOSVAL_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/smallestposval.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/smallestposval.hpp>
 
 #endif

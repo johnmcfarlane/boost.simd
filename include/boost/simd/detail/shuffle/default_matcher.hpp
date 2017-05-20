@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
 
   // -----------------------------------------------------------------------------------------------
   // Half-permutation snatcher
-  template<bool isUpper, int... Ps> struct half_
+  template<bool isUpper, int... Ps> struct demi_
   {
     using perm = nsm::integral_list<int,Ps...>;
     template<typename I, typename C>
@@ -66,8 +66,8 @@ namespace boost { namespace simd { namespace detail
     {
       // Aggregate storage has a chance to be the combination of two regular shuffles
       auto s = slice(a0);
-      return combine( shuffle<half_<false,P...>>(s[0],s[1])
-                    , shuffle<half_<true ,P...>>(s[0],s[1])
+      return combine( shuffle<demi_<false,P...>>(s[0],s[1])
+                    , shuffle<demi_<true ,P...>>(s[0],s[1])
                     );
     }
 

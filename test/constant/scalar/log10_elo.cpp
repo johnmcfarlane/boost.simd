@@ -20,12 +20,11 @@ STF_CASE_TPL( "Check log10_elo behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::log10_elo;
   using boost::simd::Log10_elo;
   T ref = T(0);
   STF_TYPE_IS(decltype(Log10_elo<T>()), T);
   STF_EQUAL(Log10_elo<T>(), ref);
-  STF_EQUAL(log10_elo( as(T{}) ),ref);
+  STF_EQUAL(Log10_elo( as(T{}) ),ref);
 }
 
 STF_CASE_TPL( "Check log10_elo behavior for double"
@@ -33,13 +32,12 @@ STF_CASE_TPL( "Check log10_elo behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::log10_elo;
   using boost::simd::Log10_elo;
   T ref = T(0);
 
   STF_TYPE_IS(decltype(Log10_elo<T>()), T);
   STF_IEEE_EQUAL(Log10_elo<T>(), ref);
-  STF_IEEE_EQUAL(log10_elo( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Log10_elo( as(T{}) ), ref);
 }
 
 STF_CASE_TPL( "Check log10_elo behavior for float"
@@ -47,7 +45,6 @@ STF_CASE_TPL( "Check log10_elo behavior for float"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::log10_elo;
   using boost::simd::Log10_elo;
   using boost::simd::Log10_ehi;
   using boost::simd::Eps;
@@ -57,5 +54,5 @@ STF_CASE_TPL( "Check log10_elo behavior for float"
   T ref = T(7.0073188e-04);
   STF_TYPE_IS(decltype(Log10_elo<T>()), T);
   STF_IEEE_EQUAL(Log10_elo<T>(), ref);
-  STF_IEEE_EQUAL(log10_elo( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Log10_elo( as(T{}) ), ref);
 }

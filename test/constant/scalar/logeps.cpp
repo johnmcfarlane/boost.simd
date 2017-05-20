@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check logeps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logeps;
   using boost::simd::Logeps;
 
   STF_TYPE_IS(decltype(Logeps<T>()), T);
   STF_EQUAL(Logeps<T>(), T(0));
-  STF_EQUAL(logeps( as(T{}) ),T(0));
+  STF_EQUAL(Logeps( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check logeps behavior for double type"
@@ -30,12 +29,11 @@ STF_CASE_TPL( "Check logeps behavior for double type"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logeps;
   using boost::simd::Logeps;
 
   STF_TYPE_IS(decltype(Logeps<T>()), T);
   STF_IEEE_EQUAL(Logeps<T>(), -36.043653389117156089696070315825);
-  STF_IEEE_EQUAL(logeps( as(T{}) ), -36.043653389117156089696070315825);
+  STF_IEEE_EQUAL(Logeps( as(T{}) ), -36.043653389117156089696070315825);
 }
 
 STF_CASE_TPL( "Check logeps behavior for float type"
@@ -43,10 +41,9 @@ STF_CASE_TPL( "Check logeps behavior for float type"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logeps;
   using boost::simd::Logeps;
 
   STF_TYPE_IS(decltype(Logeps<T>()), T);
   STF_IEEE_EQUAL(Logeps<T>(), -15.9423847f);
-  STF_IEEE_EQUAL(logeps( as(T{}) ), -15.9423847f);
+  STF_IEEE_EQUAL(Logeps( as(T{}) ), -15.9423847f);
 }

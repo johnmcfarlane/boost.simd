@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check eps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::eps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Eps<T>()), T);
   STF_EQUAL(Eps<T>(), T(1));
-  STF_EQUAL(eps( as(T{}) ),T(1));
+  STF_EQUAL(Eps( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check eps behavior for double type"
@@ -30,22 +29,20 @@ STF_CASE_TPL( "Check eps behavior for double type"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::eps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Eps<T>()), T);
   STF_IEEE_EQUAL(Eps<T>(), 2.220446049250313e-16);
-  STF_IEEE_EQUAL(eps( as(T{}) ), 2.220446049250313e-16);
+  STF_IEEE_EQUAL(Eps( as(T{}) ), 2.220446049250313e-16);
 }
 STF_CASE_TPL( "Check eps behavior for float type"
             , (float)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::eps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Eps<T>()), T);
   STF_IEEE_EQUAL(Eps<T>(),   T(1.192092895507843e-07));
-  STF_IEEE_EQUAL(eps( as(T{}) ),   T(1.192092895507813e-07));
+  STF_IEEE_EQUAL(Eps( as(T{}) ),   T(1.192092895507813e-07));
 }

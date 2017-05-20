@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check logpi behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logpi;
   using boost::simd::Logpi;
 
   STF_TYPE_IS(decltype(Logpi<T>()), T);
   STF_EQUAL(Logpi<T>(), T(1));
-  STF_EQUAL(logpi( as(T{}) ),T(1));
+  STF_EQUAL(Logpi( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check logpi behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check logpi behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logpi;
   using boost::simd::Logpi;
 
   STF_TYPE_IS(decltype(Logpi<T>()), T);
   STF_IEEE_EQUAL(Logpi<T>(), T(1.1447298858494001741434273513531));
-  STF_IEEE_EQUAL(logpi( as(T{}) ), T(1.1447298858494001741434273513531));
+  STF_IEEE_EQUAL(Logpi( as(T{}) ), T(1.1447298858494001741434273513531));
 }

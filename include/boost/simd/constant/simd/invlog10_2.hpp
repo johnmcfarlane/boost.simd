@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_INVLOG10_2_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/invlog10_2.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/invlog10_2.hpp>
 
 #endif

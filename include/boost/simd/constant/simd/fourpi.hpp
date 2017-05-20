@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_FOURPI_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/fourpi.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/fourpi.hpp>
 
 #endif

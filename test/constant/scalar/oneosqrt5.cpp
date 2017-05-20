@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check oneosqrt5 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::oneosqrt5;
   using boost::simd::Oneosqrt5;
 
   STF_TYPE_IS(decltype(Oneosqrt5<T>()), T);
   STF_EQUAL(Oneosqrt5<T>(), T(0));
-  STF_EQUAL(oneosqrt5( as(T{}) ),T(0));
+  STF_EQUAL(Oneosqrt5( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check oneosqrt5 behavior for floating types"
@@ -30,12 +29,11 @@ STF_CASE_TPL( "Check oneosqrt5 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::oneosqrt5;
   using boost::simd::Oneosqrt5;
 
   STF_TYPE_IS(decltype(Oneosqrt5<T>()), T);
   auto z1 = Oneosqrt5<T>();
   STF_ULP_EQUAL(z1*z1, T(1/5.0), 0.5);
-  auto z2 = oneosqrt5( as(T{}) );
+  auto z2 = Oneosqrt5( as(T{}) );
   STF_ULP_EQUAL(z2*z2, T(1/5.0), 0.5);
 }

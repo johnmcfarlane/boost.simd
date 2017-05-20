@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_TWOOPI_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/twoopi.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/twoopi.hpp>
 
 #endif

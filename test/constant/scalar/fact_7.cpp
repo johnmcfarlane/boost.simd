@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check fact_7 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_7;
   using boost::simd::Fact_7;
 
   STF_TYPE_IS(decltype(Fact_7<T>()), T);
   STF_EQUAL(Fact_7<T>(), T(5040));
-  STF_EQUAL(fact_7( as(T{}) ),T(5040));
+  STF_EQUAL(Fact_7( as(T{}) ),T(5040));
 }
 
 STF_CASE_TPL( "Check fact_7 behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check fact_7 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_7;
   using boost::simd::Fact_7;
 
   STF_TYPE_IS(decltype(Fact_7<T>()), T);
   STF_IEEE_EQUAL(Fact_7<T>(), T(5040));
-  STF_IEEE_EQUAL(fact_7( as(T{}) ), T(5040));
+  STF_IEEE_EQUAL(Fact_7( as(T{}) ), T(5040));
 }

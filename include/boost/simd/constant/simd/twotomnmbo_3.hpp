@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_TWOTOMNMBO_3_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/twotomnmbo_3.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/twotomnmbo_3.hpp>
 
 #endif

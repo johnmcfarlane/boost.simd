@@ -19,12 +19,11 @@ STF_CASE_TPL( "Check cgold behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::cgold;
   using boost::simd::Cgold;
 
   STF_TYPE_IS(decltype(Cgold<T>()), T);
   STF_EQUAL(Cgold<T>(), T(0));
-  STF_EQUAL(cgold( as(T{}) ),T(0));
+  STF_EQUAL(Cgold( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check cgold behavior for floating types"
@@ -32,12 +31,11 @@ STF_CASE_TPL( "Check cgold behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::cgold;
   using boost::simd::Cgold;
 
   STF_TYPE_IS(decltype(Cgold<T>()), T);
   STF_ULP_EQUAL(Cgold<T>()+T(1), Cgold<T>()*Cgold<T>(), 1);
   STF_LESS(  Cgold<T>(), T(1));
-  auto z = cgold( as(T{}));
+  auto z = Cgold( as(T{}));
   STF_ULP_EQUAL((z+T(1)),z*z, 1);
                                               }

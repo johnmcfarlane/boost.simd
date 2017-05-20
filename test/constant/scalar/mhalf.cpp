@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check mhalf behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mhalf;
   using boost::simd::Mhalf;
 
   STF_TYPE_IS(decltype(Mhalf<T>()), T);
   STF_EQUAL(Mhalf<T>(), T(0));
-  STF_EQUAL(mhalf( as(T{}) ),T(0));
+  STF_EQUAL(Mhalf( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check mhalf behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check mhalf behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mhalf;
   using boost::simd::Mhalf;
 
   STF_TYPE_IS(decltype(Mhalf<T>()), T);
   STF_IEEE_EQUAL(Mhalf<T>(), T(-1/2.0));
-  STF_IEEE_EQUAL(mhalf( as(T{}) ), T(-1/2.0));
+  STF_IEEE_EQUAL(Mhalf( as(T{}) ), T(-1/2.0));
 }

@@ -12,58 +12,23 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_INF_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/constant/definition/valmax.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(inf_, inf);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Inf(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct inf_ : boost::dispatch::constant_value_<inf_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,inf_,boost::dispatch::constant_value_<inf_>);
-
-      struct value_map
-      {
-        template<typename X>
-        static auto value(X const& x) -> decltype(valmax_::value_map::value(x));
-
-        template<typename X>
-        static nsm::single_<0x7F800000U> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static nsm::double_<0x7FF0000000000000ULL> value(boost::dispatch::double_<X> const&);
-      };
-    };
+    return inf( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Inf() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, inf_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::inf_,inf);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Inf()
-  -> decltype(detail::inf(boost::dispatch::as_<T>{}))
-  {
-    return detail::inf( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Inf(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Inf<T>())
-  {
-    return Inf<T>();
+    return inf( boost::simd::as_<T>{} );
   }
 } }
 
 #endif
-

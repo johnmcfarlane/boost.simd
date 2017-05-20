@@ -2,7 +2,7 @@
 /*!
   @file
 
-  @copyright 2016 NumScale SAS
+  @copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -12,44 +12,22 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_SIXTEEN_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(sixteen_, sixteen);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Sixteen(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct sixteen_ : boost::dispatch::constant_value_<sixteen_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,sixteen_,boost::dispatch::constant_value_<sixteen_>);
-      BOOST_SIMD_REGISTER_CONSTANT(16, 0x41800000UL, 0x4030000000000000ULL);
-    };
+    return sixteen( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Sixteen() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, sixteen_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::sixteen_,sixteen);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Sixteen()
-  BOOST_NOEXCEPT_DECLTYPE(detail::sixteen( boost::dispatch::as_<T>{}))
-  {
-    return detail::sixteen( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Sixteen(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Sixteen<T>())
-  {
-    return Sixteen<T>();
+    return sixteen( boost::simd::as_<T>{} );
   }
 } }
 

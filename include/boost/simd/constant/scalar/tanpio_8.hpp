@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_TANPIO_8_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/tanpio_8.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/tanpio_8.hpp>
 
 #endif

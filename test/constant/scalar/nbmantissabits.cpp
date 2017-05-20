@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check nbmantissabits behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbmantissabits;
   using boost::simd::Nbmantissabits;
 
   STF_TYPE_IS(decltype(Nbmantissabits<T>()), T);
   STF_EQUAL(Nbmantissabits<T>(), T(0));
-  STF_EQUAL(nbmantissabits( as(T{}) ),T(0));
+  STF_EQUAL(Nbmantissabits( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check nbmantissabits behavior for double"
@@ -30,22 +29,20 @@ STF_CASE_TPL( "Check nbmantissabits behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbmantissabits;
   using boost::simd::Nbmantissabits;
 
   STF_TYPE_IS(decltype(Nbmantissabits<T>()), std::int64_t);
   STF_IEEE_EQUAL(Nbmantissabits<T>(), 52);
-  STF_IEEE_EQUAL(nbmantissabits( as(T{}) ), 52);
+  STF_IEEE_EQUAL(Nbmantissabits( as(T{}) ), 52);
 }
 STF_CASE_TPL( "Check nbmantissabits behavior for float"
             , (float)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbmantissabits;
   using boost::simd::Nbmantissabits;
 
   STF_TYPE_IS(decltype(Nbmantissabits<T>()), std::int32_t);
   STF_IEEE_EQUAL(Nbmantissabits<T>(), 23);
-  STF_IEEE_EQUAL(nbmantissabits( as(T{}) ), 23);
+  STF_IEEE_EQUAL(Nbmantissabits( as(T{}) ), 23);
 }

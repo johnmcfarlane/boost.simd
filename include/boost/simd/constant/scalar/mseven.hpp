@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_MSEVEN_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/mseven.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/mseven.hpp>
 
 #endif

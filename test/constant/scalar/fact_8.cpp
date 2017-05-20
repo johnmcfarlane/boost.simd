@@ -16,12 +16,11 @@ STF_CASE_TPL( "Check fact_8 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_8;
   using boost::simd::Fact_8;
 
   STF_TYPE_IS(decltype(Fact_8<T>()), T);
   STF_EQUAL(Fact_8<T>(), T(40320));
-  STF_EQUAL(fact_8( as(T{}) ),T(40320));
+  STF_EQUAL(Fact_8( as(T{}) ),T(40320));
 }
 
 STF_CASE_TPL( "Check fact_8 behavior for floating types"
@@ -29,10 +28,9 @@ STF_CASE_TPL( "Check fact_8 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_8;
   using boost::simd::Fact_8;
 
   STF_TYPE_IS(decltype(Fact_8<T>()), T);
   STF_IEEE_EQUAL(Fact_8<T>(), T(40320));
-  STF_IEEE_EQUAL(fact_8( as(T{}) ), T(40320));
+  STF_IEEE_EQUAL(Fact_8( as(T{}) ), T(40320));
 }

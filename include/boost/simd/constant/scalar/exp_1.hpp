@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_EXP_1_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/exp_1.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/exp_1.hpp>
 
 #endif

@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check sqrt_2o_3 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrt_2o_3;
   using boost::simd::Sqrt_2o_3;
 
   STF_TYPE_IS(decltype(Sqrt_2o_3<T>()), T);
   STF_EQUAL(Sqrt_2o_3<T>(), T(0));
-  STF_EQUAL(sqrt_2o_3( as(T{}) ),T(0));
+  STF_EQUAL(Sqrt_2o_3( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check sqrt_2o_3 behavior for floating types"
@@ -31,7 +30,6 @@ STF_CASE_TPL( "Check sqrt_2o_3 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrt_2o_3;
   using boost::simd::Sqrt_2o_3;
   using boost::simd::Ratio;
 
@@ -40,7 +38,7 @@ STF_CASE_TPL( "Check sqrt_2o_3 behavior for floating types"
   auto z1 = Sqrt_2o_3<T>();
   STF_ULP_EQUAL(z1*z1, (Ratio<T,2,3>()), 0.5);
 
-  auto z2 = sqrt_2o_3( as(T{}) );
+  auto z2 = Sqrt_2o_3( as(T{}) );
   STF_ULP_EQUAL(z2*z2, (Ratio<T,2,3>()), 0.5);
 
 }

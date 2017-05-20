@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check invexp_1 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::invexp_1;
   using boost::simd::Invexp_1;
   T ref = T(0);
   STF_TYPE_IS(decltype(Invexp_1<T>()), T);
   STF_EQUAL(Invexp_1<T>(), ref);
-  STF_EQUAL(invexp_1( as(T{}) ),ref);
+  STF_EQUAL(Invexp_1( as(T{}) ),ref);
 }
 
 STF_CASE_TPL( "Check invexp_1 behavior for double/float"
@@ -30,13 +29,12 @@ STF_CASE_TPL( "Check invexp_1 behavior for double/float"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::invexp_1;
   using boost::simd::Invexp_1;
   T ref = T(0.367879441171442321595523770161);
 
   STF_TYPE_IS(decltype(Invexp_1<T>()), T);
   STF_IEEE_EQUAL(Invexp_1<T>(), ref);
-  STF_IEEE_EQUAL(invexp_1( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Invexp_1( as(T{}) ), ref);
 }
 
 

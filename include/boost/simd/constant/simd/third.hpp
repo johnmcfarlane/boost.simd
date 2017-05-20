@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_THIRD_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/third.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/third.hpp>
 
 #endif

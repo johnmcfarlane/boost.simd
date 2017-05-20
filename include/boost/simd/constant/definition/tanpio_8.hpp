@@ -2,7 +2,7 @@
 /*!
   @file
 
-  @copyright 2016 NumScale SAS
+  @copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -12,44 +12,22 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_TANPIO_8_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(tanpio_8_, tanpio_8);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Tanpio_8(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct tanpio_8_ : boost::dispatch::constant_value_<tanpio_8_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,tanpio_8_,boost::dispatch::constant_value_<tanpio_8_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0X3ED413CDUL, 0X3FDA827999FCEF31ULL);
-    };
+    return tanpio_8( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Tanpio_8() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, tanpio_8_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::tanpio_8_,tanpio_8);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Tanpio_8()
-  BOOST_NOEXCEPT_DECLTYPE(detail::tanpio_8( boost::dispatch::as_<T>{}))
-  {
-    return detail::tanpio_8( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Tanpio_8(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Tanpio_8<T>())
-  {
-    return Tanpio_8<T>();
+    return tanpio_8( boost::simd::as_<T>{} );
   }
 } }
 

@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check mindenormal behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mindenormal;
   using boost::simd::Mindenormal;
 
   STF_TYPE_IS(decltype(Mindenormal<T>()), T);
   STF_EQUAL(Mindenormal<T>(), T(1));
-  STF_EQUAL(mindenormal( as(T{}) ),T(1));
+  STF_EQUAL(Mindenormal( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check mindenormal behavior for double"
@@ -30,22 +29,20 @@ STF_CASE_TPL( "Check mindenormal behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mindenormal;
   using boost::simd::Mindenormal;
 
   STF_TYPE_IS(decltype(Mindenormal<T>()), T);
   STF_IEEE_EQUAL(Mindenormal<T>(), 4.940656458412465e-324);
-  STF_IEEE_EQUAL(mindenormal( as(T{}) ), 4.940656458412465e-324);
+  STF_IEEE_EQUAL(Mindenormal( as(T{}) ), 4.940656458412465e-324);
 }
 STF_CASE_TPL( "Check mindenormal behavior for float"
             , (float)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mindenormal;
   using boost::simd::Mindenormal;
 
   STF_TYPE_IS(decltype(Mindenormal<T>()), T);
   STF_IEEE_EQUAL(Mindenormal<T>(), 1.4012985e-45f);
-  STF_IEEE_EQUAL(mindenormal( as(T{}) ), 1.4012985e-45f);
+  STF_IEEE_EQUAL(Mindenormal( as(T{}) ), 1.4012985e-45f);
 }

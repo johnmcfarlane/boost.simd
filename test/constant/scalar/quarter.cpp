@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check quarter behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::quarter;
   using boost::simd::Quarter;
 
   STF_TYPE_IS(decltype(Quarter<T>()), T);
   STF_EQUAL(Quarter<T>(), T(0));
-  STF_EQUAL(quarter( as(T{}) ),T(0));
+  STF_EQUAL(Quarter( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check quarter behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check quarter behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::quarter;
   using boost::simd::Quarter;
 
   STF_TYPE_IS(decltype(Quarter<T>()), T);
   STF_IEEE_EQUAL(Quarter<T>(), T(1/4.0));
-  STF_IEEE_EQUAL(quarter( as(T{}) ), T(1/4.0));
+  STF_IEEE_EQUAL(Quarter( as(T{}) ), T(1/4.0));
 }

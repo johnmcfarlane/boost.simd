@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_INV2PI_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/inv2pi.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/inv2pi.hpp>
 
 #endif

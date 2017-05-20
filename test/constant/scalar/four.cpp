@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check four behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::four;
   using boost::simd::Four;
 
   STF_TYPE_IS(decltype(Four<T>()), T);
   STF_EQUAL(Four<T>(), T(4));
-  STF_EQUAL(four( as(T{}) ),T(4));
+  STF_EQUAL(Four( as(T{}) ),T(4));
 }
 
 STF_CASE_TPL( "Check four behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check four behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::four;
   using boost::simd::Four;
 
   STF_TYPE_IS(decltype(Four<T>()), T);
   STF_IEEE_EQUAL(Four<T>(), T(4));
-  STF_IEEE_EQUAL(four( as(T{}) ), T(4));
+  STF_IEEE_EQUAL(Four( as(T{}) ), T(4));
 }

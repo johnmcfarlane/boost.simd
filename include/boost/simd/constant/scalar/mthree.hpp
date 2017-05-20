@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_MTHREE_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/mthree.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/mthree.hpp>
 
 #endif

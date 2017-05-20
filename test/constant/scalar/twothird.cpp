@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check twothird behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twothird;
   using boost::simd::Twothird;
 
   STF_TYPE_IS(decltype(Twothird<T>()), T);
   STF_EQUAL(Twothird<T>(), T(0));
-  STF_EQUAL(twothird( as(T{}) ),T(0));
+  STF_EQUAL(Twothird( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check twothird behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check twothird behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twothird;
   using boost::simd::Twothird;
 
   STF_TYPE_IS(decltype(Twothird<T>()), T);
   STF_IEEE_EQUAL(Twothird<T>(), T(2/3.0));
-  STF_IEEE_EQUAL(twothird( as(T{}) ), T(2/3.0));
+  STF_IEEE_EQUAL(Twothird( as(T{}) ), T(2/3.0));
 }

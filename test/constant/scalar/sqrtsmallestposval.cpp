@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check sqrtsmallestposval behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrtsmallestposval;
   using boost::simd::Sqrtsmallestposval;
 
   STF_TYPE_IS(decltype(Sqrtsmallestposval<T>()), T);
   STF_EQUAL(Sqrtsmallestposval<T>(), T(1));
-  STF_EQUAL(sqrtsmallestposval( as(T{}) ),T(1));
+  STF_EQUAL(Sqrtsmallestposval( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check sqrtsmallestposval behavior for floating types"
@@ -31,14 +30,13 @@ STF_CASE_TPL( "Check sqrtsmallestposval behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrtsmallestposval;
   using boost::simd::Sqrtsmallestposval;
   using boost::simd::Smallestposval;
 
   STF_TYPE_IS(decltype(Sqrtsmallestposval<T>()), T);
   auto z1 = Sqrtsmallestposval<T>();
   STF_ULP_EQUAL(z1*z1, Smallestposval<T>(), 0.5);
-  auto z2 = sqrtsmallestposval( as(T{}) );
+  auto z2 = Sqrtsmallestposval( as(T{}) );
   STF_ULP_EQUAL(z2*z2, Smallestposval<T>(), 0.5);
 
 }

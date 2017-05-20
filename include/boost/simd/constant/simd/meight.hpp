@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_MEIGHT_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/meight.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/meight.hpp>
 
 #endif

@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_LOGEPS_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/logeps.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/logeps.hpp>
 
 #endif

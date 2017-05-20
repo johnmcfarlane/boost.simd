@@ -18,11 +18,10 @@ STF_CASE_TPL( "Check mfive behavior for all types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mfive;
   using boost::simd::Mfive;
 
   STF_TYPE_IS(decltype(Mfive<T>()), T);
   STF_EQUAL(Mfive<T>(), T(-5));
-  STF_EQUAL(mfive( as(T{}) ),T(-5));
+  STF_EQUAL(Mfive( as(T{}) ),T(-5));
 }
 

@@ -15,11 +15,10 @@
 STF_CASE_TPL( "Check nan behavior with floating types", (double)(float) )
 {
   using boost::simd::as;
-  using boost::simd::detail::nan;
   using boost::simd::Nan;
 
   STF_IEEE_EQUAL(Nan<T>(), std::numeric_limits<T>::quiet_NaN());
-  STF_IEEE_EQUAL(nan( as(T{}) ), std::numeric_limits<T>::quiet_NaN());
+  STF_IEEE_EQUAL(Nan( as(T{}) ), std::numeric_limits<T>::quiet_NaN());
 }
 
 STF_CASE_TPL( "Check nan behavior with integral types"
@@ -28,9 +27,8 @@ STF_CASE_TPL( "Check nan behavior with integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nan;
   using boost::simd::Nan;
 
   STF_IEEE_EQUAL(Nan<T>()       , T{0});
-  STF_IEEE_EQUAL(nan( as(T{}) ) , T{0});
+  STF_IEEE_EQUAL(Nan( as(T{}) ) , T{0});
 }

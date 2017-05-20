@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_SQRT_2O_3_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/sqrt_2o_3.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/sqrt_2o_3.hpp>
 
 #endif

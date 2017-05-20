@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check sqrt_1o_5 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrt_1o_5;
   using boost::simd::Sqrt_1o_5;
 
   STF_TYPE_IS(decltype(Sqrt_1o_5<T>()), T);
   STF_EQUAL(Sqrt_1o_5<T>(), T(0));
-  STF_EQUAL(sqrt_1o_5( as(T{}) ),T(0));
+  STF_EQUAL(Sqrt_1o_5( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check sqrt_1o_5 behavior for floating types"
@@ -30,13 +29,12 @@ STF_CASE_TPL( "Check sqrt_1o_5 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrt_1o_5;
   using boost::simd::Sqrt_1o_5;
 
   STF_TYPE_IS(decltype(Sqrt_1o_5<T>()), T);
   auto z1 = Sqrt_1o_5<T>();
   STF_ULP_EQUAL(z1*z1, T(1/5.0), 0.5);
-  auto z2 = sqrt_1o_5( as(T{}) );
+  auto z2 = Sqrt_1o_5( as(T{}) );
   STF_ULP_EQUAL(z2*z2, T(1/5.0), 0.5);
 
 }

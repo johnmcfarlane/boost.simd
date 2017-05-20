@@ -18,11 +18,10 @@ STF_CASE_TPL( "Check mfour behavior for all types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mfour;
   using boost::simd::Mfour;
 
   STF_TYPE_IS(decltype(Mfour<T>()), T);
   STF_EQUAL(Mfour<T>(), T(-4));
-  STF_EQUAL(mfour( as(T{}) ),T(-4));
+  STF_EQUAL(Mfour( as(T{}) ),T(-4));
 }
 

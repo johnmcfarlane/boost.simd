@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_PIO_3_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/pio_3.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/pio_3.hpp>
 
 #endif

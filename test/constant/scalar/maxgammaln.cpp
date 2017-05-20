@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check maxgammaln behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::maxgammaln;
   using boost::simd::Maxgammaln;
 
   STF_TYPE_IS(decltype(Maxgammaln<T>()), T);
   STF_EQUAL(Maxgammaln<T>(), T(1));
-  STF_EQUAL(maxgammaln( as(T{}) ),T(1));
+  STF_EQUAL(Maxgammaln( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check maxgammaln behavior for double"
@@ -30,22 +29,20 @@ STF_CASE_TPL( "Check maxgammaln behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::maxgammaln;
   using boost::simd::Maxgammaln;
 
   STF_TYPE_IS(decltype(Maxgammaln<T>()), T);
   STF_IEEE_EQUAL(Maxgammaln<T>(), 2.556348e305);
-  STF_IEEE_EQUAL(maxgammaln( as(T{}) ), 2.556348e305);
+  STF_IEEE_EQUAL(Maxgammaln( as(T{}) ), 2.556348e305);
 }
 STF_CASE_TPL( "Check maxgammaln behavior for float"
             , (float)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::maxgammaln;
   using boost::simd::Maxgammaln;
 
   STF_TYPE_IS(decltype(Maxgammaln<T>()), T);
   STF_IEEE_EQUAL(Maxgammaln<T>(), 2.035093e36f);
-  STF_IEEE_EQUAL(maxgammaln( as(T{}) ), 2.035093e36f);
+  STF_IEEE_EQUAL(Maxgammaln( as(T{}) ), 2.035093e36f);
 }

@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_MLOGTWO2NMB_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/mlogtwo2nmb.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/mlogtwo2nmb.hpp>
 
 #endif

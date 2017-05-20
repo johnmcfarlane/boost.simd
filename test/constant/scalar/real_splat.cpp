@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check real_splat behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::real_splat;
   using boost::simd::Real_splat;
 
   STF_TYPE_IS(decltype(Real_splat<T>()), T);
   STF_EQUAL(Real_splat<T>(), T(1));
-  STF_EQUAL(real_splat( as(T{}) ),T(1));
+  STF_EQUAL(Real_splat( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check real_splat behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check real_splat behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::real_splat;
   using boost::simd::Real_splat;
 
   STF_TYPE_IS(decltype(Real_splat<T>()), T);
   STF_IEEE_EQUAL(Real_splat<T>(), T(1));
-  STF_IEEE_EQUAL(real_splat( as(T{}) ), T(1));
+  STF_IEEE_EQUAL(Real_splat( as(T{}) ), T(1));
 }

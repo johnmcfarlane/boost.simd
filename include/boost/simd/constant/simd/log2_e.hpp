@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_LOG2_E_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/log2_e.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/log2_e.hpp>
 
 #endif

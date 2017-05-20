@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check mnine behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mnine;
   using boost::simd::Mnine;
 
   STF_TYPE_IS(decltype(Mnine<T>()), T);
   STF_EQUAL(Mnine<T>(), T(-9));
-  STF_EQUAL(mnine( as(T{}) ),T(-9));
+  STF_EQUAL(Mnine( as(T{}) ),T(-9));
 }
 
 STF_CASE_TPL( "Check mnine behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check mnine behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mnine;
   using boost::simd::Mnine;
 
   STF_TYPE_IS(decltype(Mnine<T>()), T);
   STF_IEEE_EQUAL(Mnine<T>(), T(-9));
-  STF_IEEE_EQUAL(mnine( as(T{}) ), T(-9));
+  STF_IEEE_EQUAL(Mnine( as(T{}) ), T(-9));
 }

@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check mlogtwo2nmb behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mlogtwo2nmb;
   using boost::simd::Mlogtwo2nmb;
   T ref = T(0);
   STF_TYPE_IS(decltype(Mlogtwo2nmb<T>()), T);
   STF_EQUAL(Mlogtwo2nmb<T>(), ref);
-  STF_EQUAL(mlogtwo2nmb( as(T{}) ),ref);
+  STF_EQUAL(Mlogtwo2nmb( as(T{}) ),ref);
 }
 
 STF_CASE_TPL( "Check mlogtwo2nmb behavior for double"
@@ -30,12 +29,11 @@ STF_CASE_TPL( "Check mlogtwo2nmb behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mlogtwo2nmb;
   using boost::simd::Mlogtwo2nmb;
   T ref = -T(36.0436533891171560896960703158);
   STF_TYPE_IS(decltype(Mlogtwo2nmb<T>()), T);
   STF_IEEE_EQUAL(Mlogtwo2nmb<T>(), ref);
-  STF_IEEE_EQUAL(mlogtwo2nmb( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Mlogtwo2nmb( as(T{}) ), ref);
 }
 
 STF_CASE_TPL( "Check mlogtwo2nmb behavior for float"
@@ -43,10 +41,9 @@ STF_CASE_TPL( "Check mlogtwo2nmb behavior for float"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mlogtwo2nmb;
   using boost::simd::Mlogtwo2nmb;
   T ref = -T(15.942385152878742116596);
   STF_TYPE_IS(decltype(Mlogtwo2nmb<T>()), T);
   STF_IEEE_EQUAL(Mlogtwo2nmb<T>(), ref);
-  STF_IEEE_EQUAL(mlogtwo2nmb( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Mlogtwo2nmb( as(T{}) ), ref);
 }

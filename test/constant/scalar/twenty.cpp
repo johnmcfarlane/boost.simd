@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check twenty behavior for all types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twenty;
   using boost::simd::Twenty;
 
   STF_TYPE_IS(decltype(Twenty<T>()), T);
   STF_EQUAL(Twenty<T>(), T(20));
-  STF_EQUAL(twenty( as(T{}) ),T(20));
+  STF_EQUAL(Twenty( as(T{}) ),T(20));
 }
 
 

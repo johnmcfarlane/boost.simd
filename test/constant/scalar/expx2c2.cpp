@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check expx2c2 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::expx2c2;
   using boost::simd::Expx2c2;
   T ref = T(0);
   STF_TYPE_IS(decltype(Expx2c2<T>()), T);
   STF_EQUAL(Expx2c2<T>(), ref);
-  STF_EQUAL(expx2c2( as(T{}) ),ref);
+  STF_EQUAL(Expx2c2( as(T{}) ),ref);
 }
 
 STF_CASE_TPL( "Check expx2c2 behavior for double"
@@ -30,13 +29,12 @@ STF_CASE_TPL( "Check expx2c2 behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::expx2c2;
   using boost::simd::Expx2c2;
   T ref = T(1.0/128);
 
   STF_TYPE_IS(decltype(Expx2c2<T>()), T);
   STF_IEEE_EQUAL(Expx2c2<T>(), ref);
-  STF_IEEE_EQUAL(expx2c2( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Expx2c2( as(T{}) ), ref);
 }
 
 STF_CASE_TPL( "Check expx2c2 behavior for float"
@@ -44,10 +42,9 @@ STF_CASE_TPL( "Check expx2c2 behavior for float"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::expx2c2;
   using boost::simd::Expx2c2;
   T ref = 1.f/32;
   STF_TYPE_IS(decltype(Expx2c2<T>()), T);
   STF_IEEE_EQUAL(Expx2c2<T>(), ref);
-  STF_IEEE_EQUAL(expx2c2( as(T{}) ), ref);
+  STF_IEEE_EQUAL(Expx2c2( as(T{}) ), ref);
 }

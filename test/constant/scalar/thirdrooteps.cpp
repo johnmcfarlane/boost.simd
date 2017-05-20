@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check thirdrooteps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::thirdrooteps;
   using boost::simd::Thirdrooteps;
 
   STF_TYPE_IS(decltype(Thirdrooteps<T>()), T);
   STF_EQUAL(Thirdrooteps<T>(), T(1));
-  STF_EQUAL(thirdrooteps( as(T{}) ),T(1));
+  STF_EQUAL(Thirdrooteps( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check thirdrooteps behavior for floating types"
@@ -31,13 +30,12 @@ STF_CASE_TPL( "Check thirdrooteps behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::thirdrooteps;
   using boost::simd::Thirdrooteps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Thirdrooteps<T>()), T);
   auto z1 = Thirdrooteps<T>();
   STF_ULP_EQUAL(z1*z1*z1, Eps<T>(), 0.5);
-  auto z2 = thirdrooteps( as(T{}));
+  auto z2 = Thirdrooteps( as(T{}));
   STF_ULP_EQUAL(z2*z2*z2, Eps<T>(), 0.5);
 }

@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_FACT_7_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/fact_7.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/fact_7.hpp>
 
 #endif

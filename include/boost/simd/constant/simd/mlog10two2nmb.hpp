@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_MLOG10TWO2NMB_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/mlog10two2nmb.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/mlog10two2nmb.hpp>
 
 #endif

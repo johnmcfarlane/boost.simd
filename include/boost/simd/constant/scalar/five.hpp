@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_FIVE_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/five.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/five.hpp>
 
 #endif

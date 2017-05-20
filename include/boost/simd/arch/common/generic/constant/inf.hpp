@@ -1,50 +1,44 @@
 //==================================================================================================
-/**
-  Copyright 2017 NumScale SAS
+/*!
+  @file
+
+  @copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_CGOLD_HPP_INCLUDED
-#define BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_CGOLD_HPP_INCLUDED
+#ifndef BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_INF_HPP_INCLUDED
+#define BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_INF_HPP_INCLUDED
 
 #include <boost/simd/detail/meta/value_type.hpp>
-#include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/as.hpp>
 #include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
   template<typename Type>
-  BOOST_FORCEINLINE Type cgold_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE Type inf_( as_<Type> const&, std::true_type const& ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return Type{bitwise_cast<base>(0XBF1E377AU)};
+    return Type(std::numeric_limits<base>::infinity());
   }
 
   template<typename Type>
-  BOOST_FORCEINLINE Type cgold_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE Type inf_( as_<Type> const&, std::false_type const& ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return Type{bitwise_cast<base>(0XBFE3C6EF372FE950ULL)};
-  }
-
-  template<typename Type, typename Value>
-  BOOST_FORCEINLINE Type cgold_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
-  {
-    return Type(0);
+    return Type(std::numeric_limits<base>::max());
   }
 
   template<typename Type, typename Arch>
-  BOOST_FORCEINLINE Type cgold_ ( BOOST_SIMD_SUPPORTS(Arch)
+  BOOST_FORCEINLINE Type inf_ ( BOOST_SIMD_SUPPORTS(Arch)
                                   , as_<Type> const& tgt
                                   ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return cgold_( tgt, as_<base>{});
+    return inf_( tgt, std::is_floating_point<base>{});
   }
 } } }
 
 #endif
-

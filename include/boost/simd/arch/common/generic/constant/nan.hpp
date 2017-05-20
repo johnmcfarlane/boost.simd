@@ -20,20 +20,20 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE Type nan_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return Type{bitwise_cast<base>(0XFFFFFFFFUL)};
+    return Type{bitwise_cast<base>(0xFFFFFFFFU)};
   }
 
   template<typename Type>
   BOOST_FORCEINLINE Type nan_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return Type{bitwise_cast<base>(0XFFFFFFFFFFFFFFFFULL)};
+    return Type{bitwise_cast<base>(0xFFFFFFFFFFFFFFFFULL)};
   }
 
   template<typename Type, typename Value>
   BOOST_FORCEINLINE Type nan_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
   {
-    return Type(0);
+    return Type(-1);
   }
 
   template<typename Type, typename Arch>
@@ -44,6 +44,29 @@ namespace boost { namespace simd { namespace detail
     using base = detail::value_type_t<Type>;
     return nan_( tgt, as_<base>{});
   }
+
+//   template<typename Type>
+//   BOOST_FORCEINLINE Type nan_( as_<Type> const&, std::true_type const& ) BOOST_NOEXCEPT
+//   {
+//     using base = detail::value_type_t<Type>;
+//     return Type(std::numeric_limits<base>::quiet_NaN());
+//   }
+
+//   template<typename Type>
+//   BOOST_FORCEINLINE Type nan_( as_<Type> const&, std::false_type const& ) BOOST_NOEXCEPT
+//   {
+//     return Type(0);
+//   }
+
+//   template<typename Type, typename Arch>
+//   BOOST_FORCEINLINE Type nan_ ( BOOST_SIMD_SUPPORTS(Arch)
+//                                   , as_<Type> const& tgt
+//                                   ) BOOST_NOEXCEPT
+//   {
+//     using base = detail::value_type_t<Type>;
+//     return nan_( tgt, std::is_floating_point<base>{});
+//   }
+
 } } }
 
 #endif

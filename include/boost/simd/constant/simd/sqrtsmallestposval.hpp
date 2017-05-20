@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_SQRTSMALLESTPOSVAL_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/sqrtsmallestposval.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/sqrtsmallestposval.hpp>
 
 #endif

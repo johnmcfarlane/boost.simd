@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check logsqrt2pi behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logsqrt2pi;
   using boost::simd::Logsqrt2pi;
 
   STF_TYPE_IS(decltype(Logsqrt2pi<T>()), T);
   STF_EQUAL(Logsqrt2pi<T>(), T(1));
-  STF_EQUAL(logsqrt2pi( as(T{}) ),T(1));
+  STF_EQUAL(Logsqrt2pi( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check logsqrt2pi behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check logsqrt2pi behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::logsqrt2pi;
   using boost::simd::Logsqrt2pi;
 
   STF_TYPE_IS(decltype(Logsqrt2pi<T>()), T);
   STF_IEEE_EQUAL(Logsqrt2pi<T>(), T(0.91893853320467274178032973640562));
-  STF_IEEE_EQUAL(logsqrt2pi( as(T{}) ), T(0.91893853320467274178032973640562));
+  STF_IEEE_EQUAL(Logsqrt2pi( as(T{}) ), T(0.91893853320467274178032973640562));
 }

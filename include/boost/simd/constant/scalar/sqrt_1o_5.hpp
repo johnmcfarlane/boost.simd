@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_SQRT_1O_5_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/sqrt_1o_5.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/sqrt_1o_5.hpp>
 
 #endif

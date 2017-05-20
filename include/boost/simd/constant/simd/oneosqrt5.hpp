@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_ONEOSQRT5_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/oneosqrt5.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/oneosqrt5.hpp>
 
 #endif

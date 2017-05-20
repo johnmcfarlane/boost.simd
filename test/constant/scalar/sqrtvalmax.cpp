@@ -19,13 +19,12 @@
 //             )
 // {
 //   using boost::simd::as;
-//   using boost::simd::detail::sqrtvalmax;
 //   using boost::simd::Sqrtvalmax;
 //   using boost::simd::Valmax;
 
 //   STF_TYPE_IS(decltype(Sqrtvalmax<T>()), T);
 //   STF_EQUAL(Sqrtvalmax<T>(), boost::simd::isqrt(Valmax<T>());
-//   STF_EQUAL(sqrtvalmax( as(T{}) ),boost::simd::isqrt(Valmax<T>());
+//   STF_EQUAL(Sqrtvalmax( as(T{}) ),boost::simd::isqrt(Valmax<T>());
 // }
 
 STF_CASE_TPL( "Check sqrtvalmax behavior for floating types"
@@ -33,7 +32,6 @@ STF_CASE_TPL( "Check sqrtvalmax behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrtvalmax;
   using boost::simd::Sqrtvalmax;
   using boost::simd::Valmax;
 
@@ -41,6 +39,6 @@ STF_CASE_TPL( "Check sqrtvalmax behavior for floating types"
   STF_TYPE_IS(decltype(Sqrtvalmax<T>()), T);
   auto z1 = Sqrtvalmax<T>();
   STF_ULP_EQUAL(z1*z1, Valmax<T>(), 1.5);
-  auto z2 = sqrtvalmax( as(T{}) );
+  auto z2 = Sqrtvalmax( as(T{}) );
   STF_ULP_EQUAL(z2*z2, Valmax<T>(), 1.5);
 }

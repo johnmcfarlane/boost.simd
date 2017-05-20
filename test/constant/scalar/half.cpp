@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check half behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::half;
   using boost::simd::Half;
 
   STF_TYPE_IS(decltype(Half<T>()), T);
   STF_EQUAL(Half<T>(), T(0));
-  STF_EQUAL(half( as(T{}) ),T(0));
+  STF_EQUAL(Half( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check half behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check half behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::half;
   using boost::simd::Half;
 
   STF_TYPE_IS(decltype(Half<T>()), T);
   STF_IEEE_EQUAL(Half<T>(), T(1/2.0));
-  STF_IEEE_EQUAL(half( as(T{}) ), T(1/2.0));
+  STF_IEEE_EQUAL(Half( as(T{}) ), T(1/2.0));
 }

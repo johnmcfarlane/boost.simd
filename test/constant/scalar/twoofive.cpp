@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check twoofive behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twoofive;
   using boost::simd::Twoofive;
 
   STF_TYPE_IS(decltype(Twoofive<T>()), T);
   STF_EQUAL(Twoofive<T>(), T(0));
-  STF_EQUAL(twoofive( as(T{}) ),T(0));
+  STF_EQUAL(Twoofive( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check twoofive behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check twoofive behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::twoofive;
   using boost::simd::Twoofive;
 
   STF_TYPE_IS(decltype(Twoofive<T>()), T);
   STF_IEEE_EQUAL(Twoofive<T>(), T(2/5.0));
-  STF_IEEE_EQUAL(twoofive( as(T{}) ), T(2/5.0));
+  STF_IEEE_EQUAL(Twoofive( as(T{}) ), T(2/5.0));
 }

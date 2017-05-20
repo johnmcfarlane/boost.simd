@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check log10_pi behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::log10_pi;
   using boost::simd::Log10_pi;
 
   STF_TYPE_IS(decltype(Log10_pi<T>()), T);
   STF_EQUAL(Log10_pi<T>(), T(0));
-  STF_EQUAL(log10_pi( as(T{}) ),T(0));
+  STF_EQUAL(Log10_pi( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check log10_pi behavior for floating types"
@@ -30,11 +29,10 @@ STF_CASE_TPL( "Check log10_pi behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::log10_pi;
   using boost::simd::Log10_pi;
 
   STF_TYPE_IS(decltype(Log10_pi<T>()), T);
   auto z = T(0.497149872694133854351268288291);
   STF_IEEE_EQUAL(Log10_pi<T>(), z);
-  STF_IEEE_EQUAL(log10_pi( as(T{}) ), z);
+  STF_IEEE_EQUAL(Log10_pi( as(T{}) ), z);
 }

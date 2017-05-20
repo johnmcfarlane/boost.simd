@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check sqrteps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrteps;
   using boost::simd::Sqrteps;
 
   STF_TYPE_IS(decltype(Sqrteps<T>()), T);
   STF_EQUAL(Sqrteps<T>(), T(1));
-  STF_EQUAL(sqrteps( as(T{}) ),T(1));
+  STF_EQUAL(Sqrteps( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check sqrteps behavior for floating types"
@@ -31,14 +30,13 @@ STF_CASE_TPL( "Check sqrteps behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::sqrteps;
   using boost::simd::Sqrteps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Sqrteps<T>()), T);
   auto z1 = Sqrteps<T>();
   STF_ULP_EQUAL(z1*z1, Eps<T>(), 0.5);
-  auto z2 = sqrteps( as(T{}) );
+  auto z2 = Sqrteps( as(T{}) );
   STF_ULP_EQUAL(z2*z2, Eps<T>(), 0.5);
 
 }

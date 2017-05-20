@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check hundred behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::hundred;
   using boost::simd::Hundred;
 
   STF_TYPE_IS(decltype(Hundred<T>()), T);
   STF_EQUAL(Hundred<T>(), T(100));
-  STF_EQUAL(hundred( as(T{}) ),T(100));
+  STF_EQUAL(Hundred( as(T{}) ),T(100));
 }
 
 STF_CASE_TPL( "Check hundred behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check hundred behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::hundred;
   using boost::simd::Hundred;
 
   STF_TYPE_IS(decltype(Hundred<T>()), T);
   STF_IEEE_EQUAL(Hundred<T>(), T(100));
-  STF_IEEE_EQUAL(hundred( as(T{}) ), T(100));
+  STF_IEEE_EQUAL(Hundred( as(T{}) ), T(100));
 }

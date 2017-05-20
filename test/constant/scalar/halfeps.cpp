@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check halfeps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::halfeps;
   using boost::simd::Halfeps;
 
   STF_TYPE_IS(decltype(Halfeps<T>()), T);
   STF_EQUAL(Halfeps<T>(), T(1));
-  STF_EQUAL(halfeps( as(T{}) ),T(1));
+  STF_EQUAL(Halfeps( as(T{}) ),T(1));
 }
 
 STF_CASE_TPL( "Check halfeps behavior for floating types"
@@ -31,11 +30,10 @@ STF_CASE_TPL( "Check halfeps behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::halfeps;
   using boost::simd::Halfeps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Halfeps<T>()), T);
   STF_IEEE_EQUAL(Halfeps<T>(), Eps<T>()/2);
-  STF_IEEE_EQUAL(halfeps( as(T{}) ), Eps<T>()/2);
+  STF_IEEE_EQUAL(Halfeps( as(T{}) ), Eps<T>()/2);
 }

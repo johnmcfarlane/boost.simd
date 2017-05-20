@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_INF_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/inf.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/minf.hpp>
 
 #endif

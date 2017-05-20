@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_TWOPI_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/twopi.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/twopi.hpp>
 
 #endif

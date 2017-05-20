@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_CGOLD_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/cgold.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/cgold.hpp>
 
 #endif

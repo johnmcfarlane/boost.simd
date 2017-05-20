@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check nbexponentbits behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbexponentbits;
   using boost::simd::Nbexponentbits;
 
   STF_TYPE_IS(decltype(Nbexponentbits<T>()), T);
   STF_EQUAL(Nbexponentbits<T>(), T(0));
-  STF_EQUAL(nbexponentbits( as(T{}) ),T(0));
+  STF_EQUAL(Nbexponentbits( as(T{}) ),T(0));
 }
 
 STF_CASE_TPL( "Check nbexponentbits behavior for double"
@@ -30,22 +29,20 @@ STF_CASE_TPL( "Check nbexponentbits behavior for double"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbexponentbits;
   using boost::simd::Nbexponentbits;
 
   STF_TYPE_IS(decltype(Nbexponentbits<T>()), std::int64_t);
   STF_IEEE_EQUAL(Nbexponentbits<T>(), 11);
-  STF_IEEE_EQUAL(nbexponentbits( as(T{}) ), 11);
+  STF_IEEE_EQUAL(Nbexponentbits( as(T{}) ), 11);
 }
 STF_CASE_TPL( "Check nbexponentbits behavior for float"
             , (float)
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::nbexponentbits;
   using boost::simd::Nbexponentbits;
 
   STF_TYPE_IS(decltype(Nbexponentbits<T>()), std::int32_t);
   STF_IEEE_EQUAL(Nbexponentbits<T>(), 8);
-  STF_IEEE_EQUAL(nbexponentbits( as(T{}) ), 8);
+  STF_IEEE_EQUAL(Nbexponentbits( as(T{}) ), 8);
 }

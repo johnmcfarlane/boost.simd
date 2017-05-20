@@ -15,12 +15,11 @@ STF_CASE_TPL( "Check fact_12 behavior for integral types"
             , (std::uint32_t)(std::uint64_t)(std::int32_t)(std::int64_t))
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_12;
   using boost::simd::Fact_12;
 
   STF_TYPE_IS(decltype(Fact_12<T>()), T);
   STF_EQUAL(Fact_12<T>(), T(479001600));
-  STF_EQUAL(fact_12( as(T{}) ),T(479001600));
+  STF_EQUAL(Fact_12( as(T{}) ),T(479001600));
 }
 
 STF_CASE_TPL( "Check fact_12 behavior for floating types"
@@ -28,10 +27,9 @@ STF_CASE_TPL( "Check fact_12 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::fact_12;
   using boost::simd::Fact_12;
 
   STF_TYPE_IS(decltype(Fact_12<T>()), T);
   STF_IEEE_EQUAL(Fact_12<T>(), T(479001600));
-  STF_IEEE_EQUAL(fact_12( as(T{}) ), T(479001600));
+  STF_IEEE_EQUAL(Fact_12( as(T{}) ), T(479001600));
 }

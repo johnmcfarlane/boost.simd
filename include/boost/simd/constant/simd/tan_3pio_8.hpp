@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_TAN_3PIO_8_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/tan_3pio_8.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/tan_3pio_8.hpp>
 
 #endif

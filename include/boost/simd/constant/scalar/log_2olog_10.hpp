@@ -11,6 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_LOG_2OLOG_10_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/log_2olog_10.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/log_2olog_10.hpp>
 
 #endif

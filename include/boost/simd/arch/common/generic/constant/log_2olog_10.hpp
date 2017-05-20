@@ -20,7 +20,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE Type log_2olog_10_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
   {
     using base = detail::value_type_t<Type>;
-    return Type{bitwise_cast<base>(0X3E9A209BUL)};
+    return Type{bitwise_cast<base>(0X3E9A209BU)};
   }
 
   template<typename Type>

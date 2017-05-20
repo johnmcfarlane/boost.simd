@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check mten behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mten;
   using boost::simd::Mten;
 
   STF_TYPE_IS(decltype(Mten<T>()), T);
   STF_EQUAL(Mten<T>(), T(-10));
-  STF_EQUAL(mten( as(T{}) ),T(-10));
+  STF_EQUAL(Mten( as(T{}) ),T(-10));
 }
 
 STF_CASE_TPL( "Check mten behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check mten behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::mten;
   using boost::simd::Mten;
 
   STF_TYPE_IS(decltype(Mten<T>()), T);
   STF_IEEE_EQUAL(Mten<T>(), T(-10));
-  STF_IEEE_EQUAL(mten( as(T{}) ), T(-10));
+  STF_IEEE_EQUAL(Mten( as(T{}) ), T(-10));
 }

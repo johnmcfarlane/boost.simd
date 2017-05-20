@@ -17,12 +17,11 @@ STF_CASE_TPL( "Check pio_2 behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::pio_2;
   using boost::simd::Pio_2;
 
   STF_TYPE_IS(decltype(Pio_2<T>()), T);
   STF_EQUAL(Pio_2<T>(), T(2));
-  STF_EQUAL(pio_2( as(T{}) ),T(2));
+  STF_EQUAL(Pio_2( as(T{}) ),T(2));
 }
 
 STF_CASE_TPL( "Check pio_2 behavior for floating types"
@@ -30,10 +29,9 @@ STF_CASE_TPL( "Check pio_2 behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::pio_2;
   using boost::simd::Pio_2;
 
   STF_TYPE_IS(decltype(Pio_2<T>()), T);
   STF_IEEE_EQUAL(Pio_2<T>(), T(1.57079632679489661923132169164));
-  STF_IEEE_EQUAL(pio_2( as(T{}) ), T(1.57079632679489661923132169164));
+  STF_IEEE_EQUAL(Pio_2( as(T{}) ), T(1.57079632679489661923132169164));
 }

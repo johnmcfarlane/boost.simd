@@ -18,12 +18,11 @@ STF_CASE_TPL( "Check oneotwoeps behavior for integral types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::oneotwoeps;
   using boost::simd::Oneotwoeps;
 
   STF_TYPE_IS(decltype(Oneotwoeps<T>()), T);
   STF_EQUAL(Oneotwoeps<T>(), T(1/2.0));
-  STF_EQUAL(oneotwoeps( as(T{}) ),T(1/2.0));
+  STF_EQUAL(Oneotwoeps( as(T{}) ),T(1/2.0));
 }
 
 STF_CASE_TPL( "Check oneotwoeps behavior for floating types"
@@ -31,11 +30,10 @@ STF_CASE_TPL( "Check oneotwoeps behavior for floating types"
             )
 {
   using boost::simd::as;
-  using boost::simd::detail::oneotwoeps;
   using boost::simd::Oneotwoeps;
   using boost::simd::Eps;
 
   STF_TYPE_IS(decltype(Oneotwoeps<T>()), T);
   STF_IEEE_EQUAL(Oneotwoeps<T>(), T(1/(2.0*Eps<T>())));
-  STF_IEEE_EQUAL(oneotwoeps( as(T{}) ), T(1/(2.0*Eps<T>())));
+  STF_IEEE_EQUAL(Oneotwoeps( as(T{}) ), T(1/(2.0*Eps<T>())));
 }

@@ -12,12 +12,12 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_MAXEXPONENT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
+#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 /*
 
@@ -41,57 +41,54 @@
     @return The Maxexponent constant for the proper type
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  { 
-    namespace tt = nsm::type_traits;
-     struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,0> value(boost::dispatch::integer_<X> const&);
+namespace bd = boost::dispatch;
 
-        template<typename X>
-        static tt::integral_constant<std::int32_t,128> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int64_t,1024> value(boost::dispatch::double_<X> const&);
-      };
-    struct maxexponent_ : boost::dispatch::constant_value_<maxexponent_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,maxexponent_,boost::dispatch::constant_value_<maxexponent_>);
-      struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,0> value(boost::dispatch::integer_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int32_t,127> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int64_t,1023> value(boost::dispatch::double_<X> const&);
-      };
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, maxexponent_)
-  }
+namespace boost { namespace simd {
 
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::maxexponent_,maxexponent);
+
+    template<typename Type>
+    BOOST_FORCEINLINE bd::as_integer_t<Type> maxexponent_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      return bd::as_integer_t<Type>{127};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE bd::as_integer_t<Type> maxexponent_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      return bd::as_integer_t<Type>{1023};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type maxexponent_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type maxexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return maxexponent_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Maxexponent()
-  BOOST_NOEXCEPT_DECLTYPE(detail::maxexponent( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(maxexponent_, maxexponent);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Maxexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::maxexponent( boost::dispatch::as_<T>{} );
+    return maxexponent( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Maxexponent() BOOST_NOEXCEPT
+  {
+    return maxexponent( boost::simd::as_<T>{} );
   }
 } }
 
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
-
 #endif
+

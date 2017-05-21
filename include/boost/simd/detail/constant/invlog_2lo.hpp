@@ -10,42 +10,57 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_INVLOG_2LO_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct invlog_2lo_ : boost::dispatch::constant_value_<invlog_2lo_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,invlog_2lo_,boost::dispatch::constant_value_<invlog_2lo_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0,0xb9389ad4UL, 0x3de705fc2eefa200ULL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, invlog_2lo_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::invlog_2lo_,invlog_2lo);
+    template<typename Type>
+    BOOST_FORCEINLINE Type invlog_2lo_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0xb9389ad4U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type invlog_2lo_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0x3de705fc2eefa200ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type invlog_2lo_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type invlog_2lo_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return invlog_2lo_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Invlog_2lo()
-  BOOST_NOEXCEPT_DECLTYPE(detail::invlog_2lo( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(invlog_2lo_, invlog_2lo);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Invlog_2lo(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::invlog_2lo( boost::dispatch::as_<T>{} );
+    return invlog_2lo( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Invlog_2lo() BOOST_NOEXCEPT
+  {
+    return invlog_2lo( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

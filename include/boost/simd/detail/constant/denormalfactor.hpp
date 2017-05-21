@@ -8,21 +8,17 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_DENORMALFACTOR_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_DENORMALFACTOR_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_DENORMALFACTOR_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_DENORMALFACTOR_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-
-    @ingroup group-constant
+group-constant
 
     Generates constant Denormalfactor used in pedantic rsqrt
 
@@ -46,35 +42,51 @@
 
 */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct denormalfactor_ : boost::dispatch::constant_value_<denormalfactor_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,denormalfactor_,boost::dispatch::constant_value_<denormalfactor_>);
-      BOOST_SIMD_REGISTER_CONSTANT(1, 0x4b800000UL, 0x4330000000000000ULL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, denormalfactor_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::denormalfactor_,denormalfactor);
+    template<typename Type>
+    BOOST_FORCEINLINE Type denormalfactor_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X4B800000U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type denormalfactor_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X4330000000000000ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type denormalfactor_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(1);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type denormalfactor_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return denormalfactor_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Denormalfactor()
-  BOOST_NOEXCEPT_DECLTYPE(detail::denormalfactor( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(denormalfactor_, denormalfactor);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Denormalfactor(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::denormalfactor( boost::dispatch::as_<T>{} );
+    return denormalfactor( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Denormalfactor() BOOST_NOEXCEPT
+  {
+    return denormalfactor( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

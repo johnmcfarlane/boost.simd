@@ -11,13 +11,13 @@
 #ifndef BOOST_SIMD_DETAIL_CONSTANT_MEDIUM_PI_HPP_INCLUDED
 #define BOOST_SIMD_DETAIL_CONSTANT_MEDIUM_PI_HPP_INCLUDED
 
+
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 
 /*
 
@@ -49,35 +49,52 @@
 
 */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct medium_pi_ : boost::dispatch::constant_value_<medium_pi_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,medium_pi_,boost::dispatch::constant_value_<medium_pi_>);
-      BOOST_SIMD_REGISTER_CONSTANT(201, 0X43490FDB, 0X412921FB54442D18LL); //2^6/pi, //2^{18}/pi;
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, medium_pi_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::medium_pi_,medium_pi);
+    template<typename Type>
+    BOOST_FORCEINLINE Type medium_pi_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X43490FDBU)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type medium_pi_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(00X412921FB54442D18ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type medium_pi_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(201);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type medium_pi_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return medium_pi_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Medium_pi()
-  BOOST_NOEXCEPT_DECLTYPE(detail::medium_pi( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(medium_pi_, medium_pi);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Medium_pi(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::medium_pi( boost::dispatch::as_<T>{} );
+    return medium_pi( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Medium_pi() BOOST_NOEXCEPT
+  {
+    return medium_pi( boost::simd::as_<T>{} );
   }
 } }
 
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
-
 #endif
+

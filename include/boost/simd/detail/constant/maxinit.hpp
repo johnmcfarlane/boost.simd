@@ -12,13 +12,11 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_MAXINIT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/constant/definition/valmin.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 
 /*
 
@@ -33,46 +31,52 @@
     @return The Maxinit constant for the proper type
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct maxinit_ : boost::dispatch::constant_value_<maxinit_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,maxinit_,boost::dispatch::constant_value_<maxinit_>);
-
-      struct value_map
-      {
-        template<typename X>
-        static auto value(X const& x) -> decltype(valmin_::value_map::value(x));
-
-        template<typename X>
-        static nsm::single_<0xFF800000U> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static nsm::double_<0xFFF0000000000000ULL> value(boost::dispatch::double_<X> const&);
-      };
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, maxinit_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::maxinit_,maxinit);
+    template<typename Type>
+    BOOST_FORCEINLINE Type maxinit_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0xFF800000U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type maxinit_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0xFFF0000000000000ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type maxinit_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(std::numeric_limits<base>::min());
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type maxinit_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return maxinit_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Maxinit()
-  BOOST_NOEXCEPT_DECLTYPE(detail::maxinit( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(maxinit_, maxinit);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Maxinit(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::maxinit( boost::dispatch::as_<T>{} );
+    return maxinit( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Maxinit() BOOST_NOEXCEPT
+  {
+    return Maxinit( boost::simd::as_<T>{} );
   }
 } }
 
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
-
 #endif
+

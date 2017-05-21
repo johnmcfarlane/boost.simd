@@ -8,20 +8,17 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_MANTISSAMASK_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_MANTISSAMASK_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_MANTISSAMASK_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_MANTISSAMASK_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-    @ingroup group-constant
+group-constant
 
     Generate a mask used to compute the mantissa of a floating point value
 
@@ -41,35 +38,51 @@
     @return The Mantissamask constant for the proper type
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct mantissamask_ : boost::dispatch::constant_value_<mantissamask_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,mantissamask_,boost::dispatch::constant_value_<mantissamask_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0,0x807FFFFFUL,0x800FFFFFFFFFFFFFULL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, mantissamask_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::mantissamask_,mantissamask);
+    template<typename Type>
+    BOOST_FORCEINLINE Type mantissamask_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X807FFFFFU)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type mantissamask_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X800FFFFFFFFFFFFFULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type mantissamask_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type mantissamask_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return mantissamask_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Mantissamask()
-  BOOST_NOEXCEPT_DECLTYPE(detail::mantissamask( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(mantissamask_, mantissamask);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Mantissamask(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::mantissamask( boost::dispatch::as_<T>{} );
+    return mantissamask( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Mantissamask() BOOST_NOEXCEPT
+  {
+    return mantissamask( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

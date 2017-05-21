@@ -8,21 +8,17 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_PIX2_1_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_PIX2_1_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_PIX2_1_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_PIX2_1_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-
-    @ingroup group-constant
+group-constant
 
     Constant used in modular computation involving \f$\pi\f$
 
@@ -38,35 +34,51 @@
 
 */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct pix2_1_ : boost::dispatch::constant_value_<pix2_1_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,pix2_1_,boost::dispatch::constant_value_<pix2_1_>);
-      BOOST_SIMD_REGISTER_CONSTANT(1, 0X40C90F00, 0X401921FB54400000LL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, pix2_1_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::pix2_1_,pix2_1);
+    template<typename Type>
+    BOOST_FORCEINLINE Type pix2_1_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X40C90F00U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type pix2_1_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X401921FB54400000ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type pix2_1_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(1);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type pix2_1_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return pix2_1_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Pix2_1()
-  BOOST_NOEXCEPT_DECLTYPE(detail::pix2_1( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(pix2_1_, pix2_1);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Pix2_1(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::pix2_1( boost::dispatch::as_<T>{} );
+    return pix2_1( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Pix2_1() BOOST_NOEXCEPT
+  {
+    return pix2_1( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

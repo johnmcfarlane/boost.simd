@@ -12,12 +12,11 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_MASK1FREXP_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 
 /*
 
@@ -41,48 +40,51 @@
     @return The Mask1frexp constant for the proper type
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    namespace tt = nsm::type_traits;
-
-    struct mask1frexp_ : boost::dispatch::constant_value_<mask1frexp_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,mask1frexp_,boost::dispatch::constant_value_<mask1frexp_>);
-
-      struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,0> value(boost::dispatch::integer_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int32_t,0x7F800000L> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int64_t,0x7FF0000000000000LL> value(boost::dispatch::double_<X> const&);
-      };
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, mask1frexp_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::mask1frexp_,mask1frexp);
+    template<typename Type>
+    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0x7F800000U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0x7FF0000000000000ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type mask1frexp_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return mask1frexp_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Mask1frexp()
-  BOOST_NOEXCEPT_DECLTYPE(detail::mask1frexp( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(mask1frexp_, mask1frexp);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Mask1frexp(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::mask1frexp( boost::dispatch::as_<T>{} );
+    return mask1frexp( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Mask1frexp() BOOST_NOEXCEPT
+  {
+    return mask1frexp( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

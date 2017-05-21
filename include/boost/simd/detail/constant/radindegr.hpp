@@ -8,21 +8,17 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_RADINDEGR_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_RADINDEGR_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_RADINDEGR_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_RADINDEGR_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-
-    @ingroup group-constant
+group-constant
 
     Constant Radian in Degree residue can help to obtain better conversion
     from Radian to Degree
@@ -39,35 +35,51 @@
 
 */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct radindegr_ : boost::dispatch::constant_value_<radindegr_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,radindegr_,boost::dispatch::constant_value_<radindegr_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0XB53387C1, 0XBCE1E7AB456405F8ULL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, radindegr_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::radindegr_,radindegr);
+    template<typename Type>
+    BOOST_FORCEINLINE Type radindegr_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0XB53387C1U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type radindegr_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0XBCE1E7AB456405F8ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type radindegr_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type radindegr_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return radindegr_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Radindegr()
-  BOOST_NOEXCEPT_DECLTYPE(detail::radindegr( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(radindegr_, radindegr);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Radindegr(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::radindegr( boost::dispatch::as_<T>{} );
+    return radindegr( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Radindegr() BOOST_NOEXCEPT
+  {
+    return radindegr( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

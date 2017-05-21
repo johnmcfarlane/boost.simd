@@ -8,21 +8,17 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_MAXLOG_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_MAXLOG_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_MAXLOG_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_MAXLOG_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-
-    @ingroup group-constant
+group-constant
 
     Generates constant MaxLog used in logarithm/exponential computations
     log(x) return inf if x is greater than Maxlog (overflow)
@@ -47,35 +43,51 @@
 
 */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct maxlog_ : boost::dispatch::constant_value_<maxlog_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,maxlog_,boost::dispatch::constant_value_<maxlog_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0x42b0c0a5UL, 0x40862e42fefa39efULL);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, maxlog_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::maxlog_,maxlog);
+    template<typename Type>
+    BOOST_FORCEINLINE Type maxlog_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X42B0C0A5U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type maxlog_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X40862E42FEFA39EFULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type maxlog_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type maxlog_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return maxlog_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Maxlog()
-  BOOST_NOEXCEPT_DECLTYPE(detail::maxlog( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(maxlog_, maxlog);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Maxlog(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::maxlog( boost::dispatch::as_<T>{} );
+    return maxlog( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Maxlog() BOOST_NOEXCEPT
+  {
+    return maxlog( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

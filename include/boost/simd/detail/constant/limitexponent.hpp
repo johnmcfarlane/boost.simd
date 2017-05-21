@@ -12,12 +12,12 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_LIMITEXPONENT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
+#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 /*
 
@@ -40,49 +40,53 @@
 
     @return The Limitexponent constant for the proper type
   */
+namespace bd = boost::dispatch;
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    namespace tt = nsm::type_traits;
-
-    struct limitexponent_ : boost::dispatch::constant_value_<limitexponent_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,limitexponent_,boost::dispatch::constant_value_<limitexponent_>);
-
-      struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,0> value(boost::dispatch::integer_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int32_t,128> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int64_t,1024> value(boost::dispatch::double_<X> const&);
-      };
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, limitexponent_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::limitexponent_,limitexponent);
+
+    template<typename Type>
+    BOOST_FORCEINLINE bd::as_integer_t<Type> limitexponent_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      return bd::as_integer_t<Type>{128};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE bd::as_integer_t<Type> limitexponent_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      return bd::as_integer_t<Type>{1024};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type limitexponent_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type limitexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return limitexponent_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Limitexponent()
-  BOOST_NOEXCEPT_DECLTYPE(detail::limitexponent( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(limitexponent_, limitexponent);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Limitexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::limitexponent( boost::dispatch::as_<T>{} );
+    return limitexponent( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Limitexponent() BOOST_NOEXCEPT
+  {
+    return limitexponent( boost::simd::as_<T>{} );
   }
 } }
 
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
-
 #endif
+

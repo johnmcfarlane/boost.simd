@@ -8,55 +8,68 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_DETAIL_CONSTANT_EXPX2C1_HPP_INCLUDED
-#define BOOST_SIMD_DETAIL_CONSTANT_EXPX2C1_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_EXPX2C1_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_EXPX2C1_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
-
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 /*
-
-    @ingroup group-constant
+group-constant
 
     Generate the constant expx2c1.
 
     @return The Expx2c1 constant for the proper type
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct expx2c1_ : boost::dispatch::constant_value_<expx2c1_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,expx2c1_,boost::dispatch::constant_value_<expx2c1_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0x42000000UL, 0x4060000000000000ull);
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, expx2c1_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::expx2c1_,expx2c1);
+    template<typename Type>
+    BOOST_FORCEINLINE Type expx2c1_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X42000000U)};
+    }
+
+    template<typename Type>
+    BOOST_FORCEINLINE Type expx2c1_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return Type{bitwise_cast<base>(0X4060000000000000ULL)};
+    }
+
+    template<typename Type, typename Value>
+    BOOST_FORCEINLINE Type expx2c1_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    {
+      return Type(0);
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type expx2c1_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                   , as_<Type> const& tgt
+                                   ) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return expx2c1_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Expx2c1()
-  BOOST_NOEXCEPT_DECLTYPE(detail::expx2c1( boost::dispatch::as_<T>{}))
+  BOOST_SIMD_MAKE_CALLABLE(expx2c1_, expx2c1);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Expx2c1(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return detail::expx2c1( boost::dispatch::as_<T>{} );
+    return expx2c1( tgt );
+  }
+
+  template<typename T> BOOST_FORCEINLINE T Expx2c1() BOOST_NOEXCEPT
+  {
+    return expx2c1( boost::simd::as_<T>{} );
   }
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

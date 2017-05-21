@@ -12,12 +12,8 @@
 #define BOOST_SIMD_DETAIL_CONSTANT_BUTSIGN_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
   /*
     @ingroup group-constant
@@ -29,67 +25,80 @@
 
   */
 
-namespace boost { namespace simd
-{
-  namespace tag
-  {
-    struct butsign_ : boost::dispatch::constant_value_<butsign_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,butsign_,boost::dispatch::constant_value_<butsign_>);
-
-      struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,127> value(boost::dispatch::int8_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,32767> value(boost::dispatch::int16_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,2147483647> value(boost::dispatch::int32_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,9223372036854775807LL> value(boost::dispatch::int64_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,127> value(boost::dispatch::uint8_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,32767> value(boost::dispatch::uint16_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,2147483647> value(boost::dispatch::uint32_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<X,9223372036854775807LL> value(boost::dispatch::uint64_<X> const&);
-
-        template<typename X>
-        static nsm::single_<0xEFFFFFFFUL> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-        static nsm::double_<0xEFFFFFFFFFFFFFFFULL> value(boost::dispatch::double_<X> const&);
-      };
-    };
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, butsign_)
-  }
-
+namespace boost { namespace simd {
   namespace detail
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::butsign_,butsign);
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<double> const&) BOOST_NOEXCEPT
+    {
+      return Type{bitwise_cast<double>(0xEFFFFFFFFFFFFFFFULL)};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<float> const&) BOOST_NOEXCEPT
+    {
+      return Type{bitwise_cast<float>(0xEFFFFFFFU)};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<uint8_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{127};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<uint16_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{32767};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<uint32_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{2147483647};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<uint64_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{9223372036854775807ULL};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<int8_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{127};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<int16_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{32767};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<int32_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{2147483647};
+    }
+    template<typename Type>
+    BOOST_FORCEINLINE Type butsign_( as_<Type> const&, as_<int64_t> const& ) BOOST_NOEXCEPT
+    {
+      return Type{9223372036854775807LL};
+    }
+
+    template<typename Type, typename Arch>
+    BOOST_FORCEINLINE Type butsign_(BOOST_SIMD_SUPPORTS(Arch), as_<Type> const& tgt) BOOST_NOEXCEPT
+    {
+      using base = detail::value_type_t<Type>;
+      return butsign_( tgt, as_<base>{});
+    }
   }
 
-  template<typename T> BOOST_FORCEINLINE auto Butsign()
-  BOOST_NOEXCEPT_DECLTYPE(detail::butsign( boost::dispatch::as_<T>{}))
-  {
-    return detail::butsign( boost::dispatch::as_<T>{} );
-  }
+  BOOST_SIMD_MAKE_CALLABLE(butsign_, butsign);
+
+  template<typename T>
+  BOOST_FORCEINLINE auto Butsign(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    butsign( tgt )
+  )
+
+  template<typename T> BOOST_FORCEINLINE auto Butsign() BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    butsign( boost::simd::as_<T>{} )
+  )
 } }
-
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
 
 #endif

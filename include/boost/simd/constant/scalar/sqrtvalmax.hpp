@@ -11,6 +11,7 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_SQRTVALMAX_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/sqrtvalmax.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/sqrtvalmax.hpp>
 
 #endif
+

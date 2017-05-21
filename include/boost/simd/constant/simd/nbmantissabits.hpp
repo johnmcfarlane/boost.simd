@@ -11,6 +11,7 @@
 #define BOOST_SIMD_CONSTANT_SIMD_NBMANTISSABITS_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/nbmantissabits.hpp>
-#include <boost/simd/arch/common/simd/constant/constant_value.hpp>
+#include <boost/simd/arch/common/generic/constant/nbmantissabits.hpp>
 
 #endif
+

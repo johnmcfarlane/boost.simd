@@ -12,57 +12,24 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_NBMANTISSABITS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(nbmantissabits_, nbmantissabits);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Nbmantissabits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    namespace tt = nsm::type_traits;
-
-    struct nbmantissabits_ : boost::dispatch::constant_value_<nbmantissabits_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,nbmantissabits_,boost::dispatch::constant_value_<nbmantissabits_>);
-      struct value_map
-      {
-        template<typename X>
-        static tt::integral_constant<X,0> value(boost::dispatch::integer_<X> const&);
-
-        template<typename X>
-        static tt::integral_constant<std::int32_t,23> value(boost::dispatch::single_<X> const&);
-
-        template<typename X>
-       static tt::integral_constant<std::int64_t,52> value(boost::dispatch::double_<X> const&);
-      };
-    };
+    return nbmantissabits( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Nbmantissabits() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, nbmantissabits_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::nbmantissabits_,nbmantissabits);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Nbmantissabits()
-  BOOST_NOEXCEPT_DECLTYPE(detail::nbmantissabits( boost::dispatch::as_<T>{}))
-  {
-    return detail::nbmantissabits( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Nbmantissabits(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Nbmantissabits<T>())
-  {
-    return Nbmantissabits<T>();
+    return nbmantissabits( boost::simd::as_<T>{} );
   }
 } }
 
 #endif
+

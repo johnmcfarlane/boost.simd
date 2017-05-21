@@ -12,45 +12,24 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_MZERO_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(mzero_, mzero);
+
+  template<typename T>
+  BOOST_FORCEINLINE T Mzero(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    struct mzero_ : boost::dispatch::constant_value_<mzero_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,mzero_,boost::dispatch::constant_value_<mzero_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0x80000000UL, 0x8000000000000000ULL);
-    };
+    return mzero( tgt );
   }
 
-  namespace ext
+  template<typename T> BOOST_FORCEINLINE T Mzero() BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, mzero_)
-  }
-
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::mzero_,mzero);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Mzero()
-  BOOST_NOEXCEPT_DECLTYPE(detail::mzero( boost::dispatch::as_<T>{}))
-  {
-    return detail::mzero( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Mzero(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Mzero<T>())
-  {
-    return Mzero<T>();
+    return mzero( boost::simd::as_<T>{} );
   }
 } }
 
 #endif
+

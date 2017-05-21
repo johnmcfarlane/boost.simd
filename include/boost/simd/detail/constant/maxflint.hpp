@@ -92,7 +92,7 @@ namespace boost { namespace simd {
 
   template<typename T> BOOST_FORCEINLINE T Maxflint() BOOST_NOEXCEPT
   {
-    return Maxflint( boost::simd::as_<T>{} );
+    return maxflint( boost::simd::as_<T>{} );
   }
 } }
 

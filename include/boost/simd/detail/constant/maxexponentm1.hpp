@@ -47,14 +47,12 @@ namespace boost { namespace simd {
     template<typename Type>
     BOOST_FORCEINLINE bd::as_integer_t<Type> maxexponentm1_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
     {
-      using base = detail::value_type_t<Type>;
       return bd::as_integer_t<Type>{126};
     }
 
     template<typename Type>
     BOOST_FORCEINLINE bd::as_integer_t<Type> maxexponentm1_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
     {
-      using base = detail::value_type_t<Type>;
       return bd::as_integer_t<Type>{1022};
     }
 

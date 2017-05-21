@@ -63,7 +63,7 @@ namespace boost { namespace simd {
     BOOST_FORCEINLINE Type medium_pi_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
     {
       using base = detail::value_type_t<Type>;
-      return Type{bitwise_cast<base>(00X412921FB54442D18ULL)};
+      return Type{bitwise_cast<base>(0X412921FB54442D18ULL)};
     }
 
     template<typename Type, typename Value>

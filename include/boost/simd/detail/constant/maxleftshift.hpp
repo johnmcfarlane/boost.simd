@@ -48,7 +48,7 @@ namespace boost { namespace simd {
 
     template<typename Type, typename Arch>
     BOOST_FORCEINLINE Type maxleftshift_ ( BOOST_SIMD_SUPPORTS(Arch)
-                                   , as_<Type> const& tgt
+                                   , as_<Type> const&
                                    ) BOOST_NOEXCEPT
     {
       using base = detail::value_type_t<Type>;

@@ -51,6 +51,7 @@ namespace boost { namespace simd {
     template<typename Type, typename Value>
     BOOST_FORCEINLINE Type maxinit_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
     {
+      using base = detail::value_type_t<Type>;
       return Type(std::numeric_limits<base>::min());
     }
 

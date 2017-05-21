@@ -44,46 +44,46 @@ namespace boost { namespace simd {
   namespace detail
   {
     template<typename Type>
-    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+    BOOST_FORCEINLINE Type mask2frexp_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
     {
       using base = detail::value_type_t<Type>;
-      return Type{bitwise_cast<base>(00x3f000000U)};
+      return Type{bitwise_cast<base>(0x3f000000U)};
     }
 
     template<typename Type>
-    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+    BOOST_FORCEINLINE Type mask2frexp_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
     {
       using base = detail::value_type_t<Type>;
       return Type{bitwise_cast<base>(0x3fe0000000000000ULL)};
     }
 
     template<typename Type, typename Value>
-    BOOST_FORCEINLINE Type mask1frexp_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
+    BOOST_FORCEINLINE Type mask2frexp_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
     {
       return Type(0);
     }
 
     template<typename Type, typename Arch>
-    BOOST_FORCEINLINE Type mask1frexp_ ( BOOST_SIMD_SUPPORTS(Arch)
+    BOOST_FORCEINLINE Type mask2frexp_ ( BOOST_SIMD_SUPPORTS(Arch)
                                    , as_<Type> const& tgt
                                    ) BOOST_NOEXCEPT
     {
       using base = detail::value_type_t<Type>;
-      return mask1frexp_( tgt, as_<base>{});
+      return mask2frexp_( tgt, as_<base>{});
     }
   }
 
-  BOOST_SIMD_MAKE_CALLABLE(mask1frexp_, mask1frexp);
+  BOOST_SIMD_MAKE_CALLABLE(mask2frexp_, mask2frexp);
 
   template<typename T>
-  BOOST_FORCEINLINE T Mask1frexp(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T Mask2frexp(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
-    return mask1frexp( tgt );
+    return mask2frexp( tgt );
   }
 
-  template<typename T> BOOST_FORCEINLINE T Mask1frexp() BOOST_NOEXCEPT
+  template<typename T> BOOST_FORCEINLINE T Mask2frexp() BOOST_NOEXCEPT
   {
-    return mask1frexp( boost::simd::as_<T>{} );
+    return mask2frexp( boost::simd::as_<T>{} );
   }
 } }
 

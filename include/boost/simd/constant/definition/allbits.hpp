@@ -8,8 +8,8 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_CONSTANT_DEFINITION_NBMANTISSABITS_HPP_INCLUDED
-#define BOOST_SIMD_CONSTANT_DEFINITION_NBMANTISSABITS_HPP_INCLUDED
+#ifndef BOOST_SIMD_CONSTANT_DEFINITION_ALLBITS_HPP_INCLUDED
+#define BOOST_SIMD_CONSTANT_DEFINITION_ALLBITS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/overload.hpp>
@@ -17,17 +17,17 @@
 
 namespace boost { namespace simd
 {
-  BOOST_SIMD_MAKE_CALLABLE(nbmantissabits_, nbmantissabits);
+  BOOST_SIMD_MAKE_CALLABLE(allbits_, allbits);
 
   template<typename T>
-  BOOST_FORCEINLINE auto Nbmantissabits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT_DECLTYPE_BODY
+  BOOST_FORCEINLINE auto Allbits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    nbmantissabits( tgt )
+    allbits( tgt )
   )
 
-  template<typename T> BOOST_FORCEINLINE auto Nbmantissabits() BOOST_NOEXCEPT_DECLTYPE_BODY
+  template<typename T> BOOST_FORCEINLINE auto Allbits() BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    nbmantissabits( boost::simd::as_<T>{} )
+    allbits( boost::simd::as_<T>{} )
   )
 } }
 

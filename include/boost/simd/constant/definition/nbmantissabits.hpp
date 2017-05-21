@@ -25,10 +25,11 @@ namespace boost { namespace simd
     return nbmantissabits( tgt );
   }
 
-  template<typename T> BOOST_FORCEINLINE T Nbmantissabits() BOOST_NOEXCEPT
-  {
-    return nbmantissabits( boost::simd::as_<T>{} );
-  }
+  template<typename T> BOOST_FORCEINLINE auto Nbmantissabits() BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    nbmantissabits( boost::simd::as_<T>{} )
+  )
+
 } }
 
 #endif

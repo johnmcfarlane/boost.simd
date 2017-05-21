@@ -13,33 +13,34 @@
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/as.hpp>
 #include <type_traits>
+#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
   template<typename Type>
-  BOOST_FORCEINLINE as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  bd::as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
   {
-    using iType = as_integer_t<Type>;
+    using iType = bd::as_integer_t<Type>;
     return iType(23);
   }
 
   template<typename Type>
-  BOOST_FORCEINLINE as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  bd::as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
   {
-    using iType = as_integer_t<Type>;
+    using iType =  bd::as_integer_t<Type>;
     return iType(52);
   }
 
   template<typename Type, typename Value>
   BOOST_FORCEINLINE Type nbmantissabits_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
   {
-    return iType(0);
+    return Type(0);
   }
 
   template<typename Type, typename Arch>
-  BOOST_FORCEINLINE Type nbmantissabits_ ( BOOST_SIMD_SUPPORTS(Arch)
-                                  , as_<Type> const& tgt
-                                  ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE auto nbmantissabits_ ( BOOST_SIMD_SUPPORTS(Arch)
+                                         , as_<Type> const& tgt
+                                         ) BOOST_NOEXCEPT ->  decltype(nbmantissabits_( tgt, as_<detail::value_type_t<Type>>{}))
   {
     using base = detail::value_type_t<Type>;
     return nbmantissabits_( tgt, as_<base>{});

@@ -22,7 +22,7 @@ STF_CASE_TPL( "Check inf behavior for integral types"
   using boost::simd::Nbdigits;
 
   STF_TYPE_IS(decltype(Nbdigits<T>()), T);
-  STF_EQUAL(Nbdigits<T>(), T(0));
+  STF_EQUAL(Nbdigits<T>(), T(sizeof(T)*8));
 }
 
 STF_CASE_TPL( "Check inf behavior for float type"

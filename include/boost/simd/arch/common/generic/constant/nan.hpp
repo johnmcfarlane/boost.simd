@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace detail
   template<typename Type, typename Value>
   BOOST_FORCEINLINE Type nan_( as_<Type> const&, as_<Value> const& ) BOOST_NOEXCEPT
   {
-    return Type(-1);
+    return Type(0);
   }
 
   template<typename Type, typename Arch>

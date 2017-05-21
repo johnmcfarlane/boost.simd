@@ -11,5 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SIMD_ALLBITS_HPP_INCLUDED
 
 #include <boost/simd/constant/scalar/allbits.hpp>
+#include <boost/simd/arch/common/generic/constant/allbits.hpp>
 
 #endif

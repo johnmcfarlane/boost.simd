@@ -12,45 +12,23 @@
 #define BOOST_SIMD_CONSTANT_DEFINITION_INVEXP_1_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-#include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/as.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    struct invexp_1_ : boost::dispatch::constant_value_<invexp_1_>
-    {
-      BOOST_DISPATCH_MAKE_CALLABLE(ext,invexp_1_,boost::dispatch::constant_value_<invexp_1_>);
-      BOOST_SIMD_REGISTER_CONSTANT(0, 0x3ebc5ab2UL, 0x3fd78b56362cef38ull);
-    };
-  }
+  BOOST_SIMD_MAKE_CALLABLE(invexp_1_, invexp_1);
 
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, invexp_1_)
-  }
+  template<typename T>
+  BOOST_FORCEINLINE auto Invexp_1(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    invexp_1( tgt )
+  )
 
-  namespace detail
-  {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::invexp_1_,invexp_1);
-  }
-
-  template<typename T> BOOST_FORCEINLINE auto Invexp_1()
-  BOOST_NOEXCEPT_DECLTYPE(detail::invexp_1( boost::dispatch::as_<T>{}))
-  {
-    return detail::invexp_1( boost::dispatch::as_<T>{} );
-  }
-
-  template<typename T> BOOST_FORCEINLINE
-  auto Invexp_1(boost::dispatch::as_<T> const&) BOOST_NOEXCEPT_DECLTYPE(Invexp_1<T>())
-  {
-    return Invexp_1<T>();
-  }
+  template<typename T> BOOST_FORCEINLINE auto Invexp_1() BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    invexp_1( boost::simd::as_<T>{} )
+  )
 } }
 
 #endif

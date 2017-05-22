@@ -18,83 +18,123 @@
 #include <boost/simd/detail/constant/maxleftshift.hpp>
 #include <boost/simd/constant/mzero.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  //------------------------------------------------------------------------------------------------
-  // abs on signed values
-  BOOST_DISPATCH_OVERLOAD_IF( abs_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::signed_<A0>, X>
-                            )
-   {
-      BOOST_FORCEINLINE A0 operator()(const A0& a0) const BOOST_NOEXCEPT
-      {
-        A0 const s = shift_right(a0, Maxleftshift<typename A0::value_type>());
-        return (a0+s)^s;
-      }
-   };
+  //================================================================================================
+  // regular case
 
-  //------------------------------------------------------------------------------------------------
-  // abs on unsigned values is identity
-  BOOST_DISPATCH_OVERLOAD( abs_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::unsigned_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(const A0& a0) const BOOST_NOEXCEPT
-      {
-        return a0;
-      }
-   };
 
   //------------------------------------------------------------------------------------------------
   // abs on real values cleans the sign bit
-  BOOST_DISPATCH_OVERLOAD_IF( abs_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_abs_( pack<T,N> a, detail::case_<0> const&
+                                       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_notand(Mzero<A0>(),a0);
-    }
-  };
+    return bitwise_notand(Mzero(as(a)),a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( abs_
-                          , (typename T, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::unsigned_<T>, X>
-                          )
+  //------------------------------------------------------------------------------------------------
+  // abs on signed integral values
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_abs_( pack<T,N>a, detail::case_<1> const&
+                                       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(const saturated_tag &, T const& a) const BOOST_NOEXCEPT
-    {
-      return a;
-    }
-  };
+    auto const s = shift_right(a, Maxleftshift<T>());
+    return (a+s)^s;
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( abs_
-                          , (typename T, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::floating_<T>, X>
-                          )
+  //------------------------------------------------------------------------------------------------
+  // abs on unsigned values is identity
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_abs_( pack<T,N> a, detail::case_<2> const&
+                                       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(const saturated_tag &, T const& a) const BOOST_NOEXCEPT
-    {
-      return bs::abs(a);
-    }
-  };
+    return a;
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> abs_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                    , pack<T,N> const& a
+                                    ) BOOST_NOEXCEPT
+  {
+    return simd_abs_ ( a
+                     , typename detail::pick
+                       < T , tt_::is_floating_point
+                           , tt_::is_signed
+                           , tt_::is_unsigned
+                       >::type{}
+                     );
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_> abs_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                   , pack<T,N,simd_emulation_> const& a
+                                                   ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::abs, a);
+  }
+
+
+  //================================================================================================
+  // saturated_ decorator
+
+  //------------------------------------------------------------------------------------------------
+  // saturated abs on real values is merely abs
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_sat_abs_(  pack<T,N> a, detail::case_<0> const&
+                                           ) BOOST_NOEXCEPT
+  {
+    return bs::abs(a);
+  }
+
+  //------------------------------------------------------------------------------------------------
+  // saturated abs on signed integral values takes care of Valmin
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_sat_abs_( pack<T,N> a, detail::case_<1> const&
+                                           ) BOOST_NOEXCEPT
+  {
+    return if_else(a == Valmin(as(a)), Valmax(as(a)), bs::abs(a));
+  }
+
+  //------------------------------------------------------------------------------------------------
+  // saturated abs on unsigned values is identity
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> simd_sat_abs_( pack<T,N> a, detail::case_<2> const&
+                                           ) BOOST_NOEXCEPT
+  {
+    return a;
+  }
+
+   // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> abs_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                   , saturated_tag const&
+                                   , pack<T,N> const& a
+                                   ) BOOST_NOEXCEPT
+  {
+    return simd_sat_abs_ ( a
+                         , typename detail::pick
+                                 < T , tt_::is_floating_point
+                                     , tt_::is_signed
+                                     , tt_::is_unsigned
+                                 >::type{}
+                                );
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_> abs_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                   , saturated_tag const&
+                                                   , pack<T,N,simd_emulation_> const& a
+                                                   ) BOOST_NOEXCEPT
+  {
+    return map_to(saturated_(simd::abs), a);
+  }
+
 } } }
 
 #endif

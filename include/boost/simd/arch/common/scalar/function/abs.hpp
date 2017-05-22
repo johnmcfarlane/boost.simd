@@ -9,128 +9,144 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ABS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ABS_HPP_INCLUDED
 
+#include <boost/simd/config.hpp>
+#include <boost/simd/function/saturated.hpp>
+#include <boost/simd/function/saturate.hpp>
+#include <boost/simd/detail/meta/pick.hpp>
+#include <boost/config.hpp>
+#include <type_traits>
 #include <boost/simd/function/std.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/constant/valmin.hpp>
 #include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/function/bitwise_notand.hpp>
-#include <boost/simd/function/is_equal.hpp>
-#include <boost/simd/detail/dispatch/meta/as_unsigned.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/config.hpp>
 #include <cmath>
-#include <cstdlib>
+#include <boost/simd/detail/dispatch/meta/as_unsigned.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  //================================================================================================
+  //regular cases
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T reg_abs_( T a, detail::case_<0> const&
+                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(T a) const BOOST_NOEXCEPT
-    {
-      using utype = dispatch::as_unsigned_t<T>;
+    return bitwise_notand(Mzero<T>(),a);
+  }
 
-      utype mask = a >> (sizeof(T)*8 - 1);
-      return (a + mask) ^ mask;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T reg_abs_( T a, detail::case_<1> const&
+                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(T a) const BOOST_NOEXCEPT
-    {
-      return bitwise_notand(Mzero<T>(),a);
-    }
-  };
+    using utype = dispatch::as_unsigned_t<T>;
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unsigned_<T>>
-                          )
-  {
-    BOOST_FORCEINLINE T operator()(T a) const BOOST_NOEXCEPT
-    {
-      return a;
-    }
-  };
+    utype mask = a >> (sizeof(T)*8 - 1);
+    return (a + mask) ^ mask;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bd::scalar_<bd::bool_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T reg_abs_( T a, detail::case_<2> const&
+                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(T a) const BOOST_NOEXCEPT
-    {
-      return a;
-    }
-  };
+    return a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_<bd::floating_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T abs_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+          , T const& a
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()( std_tag const&, T a) const BOOST_NOEXCEPT
-    {
-      return std::fabs(a);
-    }
-  };
+    return reg_abs_ ( a
+                    , typename detail::pick
+                      <T, tt_::is_floating_point
+                        , tt_::is_signed
+                        , tt_::is_unsigned
+                      >::type{}
+                    );
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_<bd::unsigned_<T>>
-                          )
-  {
-    BOOST_FORCEINLINE T operator()( std_tag const&, T a) const BOOST_NOEXCEPT
-    {
-      return a;
-    }
-  };
+  //================================================================================================
+  // std_ decorator
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , boost::simd::std_tag
-                          , bd::scalar_<bd::integer_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T std_abs_( T a, detail::case_<0> const&
+                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()( std_tag const&,T a) const BOOST_NOEXCEPT
-    {
-      return std::abs(a);
-    }
-  };
+    return std::fabs(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( abs_
-                          , (typename T)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_<bd::signed_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T std_abs_( T a, detail::case_<1> const&
+                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(const saturated_tag &, T const& a0) const BOOST_NOEXCEPT
-    {
-      return (a0==Valmin<T>())?Valmax<T>():bs::abs(a0);
-    }
-  };
+    return std::abs(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T std_abs_( T a, detail::case_<2> const&
+                              ) BOOST_NOEXCEPT
+  {
+    return a;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T abs_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+         , std_tag const&
+         , T const& a
+         ) BOOST_NOEXCEPT
+  {
+    return std_abs_ ( a
+                    , typename detail::pick
+                      <T, tt_::is_floating_point
+                        , tt_::is_signed
+                        , tt_::is_unsigned
+                      >::type{}
+                    );
+  }
+
+  //================================================================================================
+  // saturated_ decorator
+
+  template<typename T>
+  BOOST_FORCEINLINE T sat_abs_( T a, detail::case_<0> const&
+                              ) BOOST_NOEXCEPT
+  {
+    return bs::abs(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T sat_abs_( T a, detail::case_<1> const&
+                              ) BOOST_NOEXCEPT
+  {
+    return (a==Valmin<T>())?Valmax<T>():bs::abs(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T sat_abs_( T a, detail::case_<2> const&
+                              ) BOOST_NOEXCEPT
+  {
+    return a;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T abs_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+         , saturated_tag const&
+         , T const& a
+         ) BOOST_NOEXCEPT
+  {
+    return sat_abs_ ( a
+                  , typename detail::pick
+                      <T, tt_::is_floating_point
+                        , tt_::is_signed
+                        , tt_::is_unsigned
+                      >::type{}
+                  );
+  }
 } } }
-
-#include <boost/simd/arch/common/scalar/function/abs_s.hpp>
 
 #endif

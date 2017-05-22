@@ -9,48 +9,33 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_ABS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_ABS_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <type_traits>
+#include <boost/simd/pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
 
-   BOOST_DISPATCH_OVERLOAD( abs_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::int32_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
-      {
-        return _mm256_abs_epi32(a0);
-      }
-   };
+  BOOST_FORCEINLINE pack<std::int32_t,8,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                                   , pack<std::int32_t,8,avx_> const& a0
+                                                   ) BOOST_NOEXCEPT
+  {
+    return _mm256_abs_epi32(a0);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( abs_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::int16_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
-      {
-        return _mm256_abs_epi16(a0);
-      }
-   };
+  BOOST_FORCEINLINE pack<std::int16_t,16,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                                    , pack<std::int16_t,16,avx_> const& a0
+                                                    ) BOOST_NOEXCEPT
+  {
+    return _mm256_abs_epi16(a0);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( abs_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::int8_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
-      {
-        return _mm256_abs_epi8(a0);
-      }
-   };
+  BOOST_FORCEINLINE pack<std::int8_t,32,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                                   , pack<std::int8_t,32,avx_> const& a0
+                                                   ) BOOST_NOEXCEPT
+  {
+    return _mm256_abs_epi8(a0);
+  }
+
 } } }
 
 #endif

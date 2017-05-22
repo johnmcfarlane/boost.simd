@@ -20,12 +20,14 @@ namespace boost { namespace simd
   BOOST_SIMD_MAKE_CALLABLE(nbdigits_, nbdigits);
 
   template<typename T>
-  BOOST_FORCEINLINE T Nbdigits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
-  {
-    return nbdigits( tgt );
-  }
+  BOOST_FORCEINLINE auto Nbdigits(boost::simd::as_<T> const& tgt)
+    BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     nbdigits( tgt )
+  )
 
-  template<typename T> BOOST_FORCEINLINE auto Nbdigits() BOOST_NOEXCEPT_DECLTYPE_BODY
+  template<typename T> BOOST_FORCEINLINE auto Nbdigits()
+    BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     nbdigits( boost::simd::as_<T>{} )
   )

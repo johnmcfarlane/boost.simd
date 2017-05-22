@@ -20,14 +20,14 @@
 #include <boost/simd/constant/exp_1.hpp>
 #include <boost/simd/constant/eps.hpp>
 
-STF_CASE_TPL ( "expm1",  STF_IEEE_TYPES)
+STF_CASE_TPL ( "expm1", STF_IEEE_TYPES)
 {
   namespace bs = boost::simd;
   using bs::expm1;
-  using r_t = decltype(expm1(T()));
+ using r_t = decltype(expm1(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, T);
+ STF_TYPE_IS(r_t, T);
 
   // specific values tests
 #ifndef BOOST_SIMD_NO_INVALIDS
@@ -40,4 +40,6 @@ STF_CASE_TPL ( "expm1",  STF_IEEE_TYPES)
   STF_ULP_EQUAL(expm1(bs::Zero<T>()), bs::Zero<r_t>(), 0);
   STF_ULP_EQUAL(expm1(bs::Eps<T>()), bs::Eps<r_t>(), 0);
   STF_ULP_EQUAL(expm1(-bs::Eps<T>()), -bs::Eps<r_t>(), 0.25);
+  STF_ULP_EQUAL(expm1(T(2)), T(6.38905609893065e+00), 0.5);
+  STF_ULP_EQUAL(expm1(T(10)), T(2.20254657948067e+04), 2.5);
 }

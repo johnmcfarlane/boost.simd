@@ -39,6 +39,8 @@
 
 namespace boost { namespace simd
 {
+  namespace bs =  boost::simd;
+
 #define BOOST_SIMD_PACK_DEFINE_BINOP(type_, op, f)                                                 \
   template <typename T, std::size_t N, typename U> BOOST_FORCEINLINE                               \
   typename std::enable_if<is_not_pack_t<U>::value && std::is_convertible<U, T>::value,             \

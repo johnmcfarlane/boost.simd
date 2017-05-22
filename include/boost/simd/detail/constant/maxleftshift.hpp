@@ -47,7 +47,7 @@ namespace boost { namespace simd {
   {
 
     template<typename Type, typename Arch>
-    BOOST_FORCEINLINE Type maxleftshift_ ( BOOST_SIMD_SUPPORTS(Arch)
+    BOOST_FORCEINLINE bd::as_integer_t<Type> maxleftshift_ ( BOOST_SIMD_SUPPORTS(Arch)
                                    , as_<Type> const&
                                    ) BOOST_NOEXCEPT
     {
@@ -59,7 +59,7 @@ namespace boost { namespace simd {
   BOOST_SIMD_MAKE_CALLABLE(maxleftshift_, maxleftshift);
 
   template<typename T>
-  BOOST_FORCEINLINE T Maxleftshift(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE bd::as_integer_t<T> Maxleftshift(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
     return maxleftshift( tgt );
   }

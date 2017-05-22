@@ -77,12 +77,12 @@ namespace boost { namespace simd {
   BOOST_SIMD_MAKE_CALLABLE(limitexponent_, limitexponent);
 
   template<typename T>
-  BOOST_FORCEINLINE T Limitexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  bd::as_integer_t<T> Limitexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
     return limitexponent( tgt );
   }
 
-  template<typename T> BOOST_FORCEINLINE T Limitexponent() BOOST_NOEXCEPT
+  template<typename T> BOOST_FORCEINLINE bd::as_integer_t<T> Limitexponent() BOOST_NOEXCEPT
   {
     return limitexponent( boost::simd::as_<T>{} );
   }

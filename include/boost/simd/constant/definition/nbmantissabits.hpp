@@ -20,12 +20,14 @@ namespace boost { namespace simd
   BOOST_SIMD_MAKE_CALLABLE(nbmantissabits_, nbmantissabits);
 
   template<typename T>
-  BOOST_FORCEINLINE T Nbmantissabits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
-  {
-    return nbmantissabits( tgt );
-  }
+  BOOST_FORCEINLINE auto Nbmantissabits(boost::simd::as_<T> const& tgt)
+    BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    nbmantissabits( tgt )
+  )
 
-  template<typename T> BOOST_FORCEINLINE auto Nbmantissabits() BOOST_NOEXCEPT_DECLTYPE_BODY
+  template<typename T> BOOST_FORCEINLINE auto Nbmantissabits()
+    BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     nbmantissabits( boost::simd::as_<T>{} )
   )

@@ -67,7 +67,7 @@ namespace boost { namespace simd {
     }
 
     template<typename Type, typename Arch>
-    BOOST_FORCEINLINE Type maxexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
+    BOOST_FORCEINLINE bd::as_integer_t<Type> maxexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
                                    , as_<Type> const& tgt
                                    ) BOOST_NOEXCEPT
     {
@@ -79,12 +79,12 @@ namespace boost { namespace simd {
   BOOST_SIMD_MAKE_CALLABLE(maxexponent_, maxexponent);
 
   template<typename T>
-  BOOST_FORCEINLINE T Maxexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  bd::as_integer_t<T> Maxexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
     return maxexponent( tgt );
   }
 
-  template<typename T> BOOST_FORCEINLINE T Maxexponent() BOOST_NOEXCEPT
+  template<typename T> BOOST_FORCEINLINE  bd::as_integer_t<T> Maxexponent() BOOST_NOEXCEPT
   {
     return maxexponent( boost::simd::as_<T>{} );
   }

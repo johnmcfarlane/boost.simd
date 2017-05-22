@@ -20,10 +20,11 @@ namespace boost { namespace simd
   BOOST_SIMD_MAKE_CALLABLE(nbexponentbits_, nbexponentbits);
 
   template<typename T>
-  BOOST_FORCEINLINE T Nbexponentbits(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
-  {
-    return nbexponentbits( tgt );
-  }
+  BOOST_FORCEINLINE auto Nbexponentbits(boost::simd::as_<T> const& tgt)
+    BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     nbexponentbits( tgt )
+  )
 
   template<typename T> BOOST_FORCEINLINE auto Nbexponentbits()
   BOOST_NOEXCEPT_DECLTYPE_BODY

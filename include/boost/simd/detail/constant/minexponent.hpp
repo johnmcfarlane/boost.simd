@@ -69,7 +69,7 @@ namespace boost { namespace simd {
     }
 
     template<typename Type, typename Arch>
-    BOOST_FORCEINLINE Type minexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
+    BOOST_FORCEINLINE bd::as_integer_t<Type> minexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
                                    , as_<Type> const& tgt
                                    ) BOOST_NOEXCEPT
     {
@@ -81,12 +81,12 @@ namespace boost { namespace simd {
   BOOST_SIMD_MAKE_CALLABLE(minexponent_, minexponent);
 
   template<typename T>
-  BOOST_FORCEINLINE T Minexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE bd::as_integer_t<T>  Minexponent(boost::simd::as_<T> const& tgt) BOOST_NOEXCEPT
   {
     return minexponent( tgt );
   }
 
-  template<typename T> BOOST_FORCEINLINE T Minexponent() BOOST_NOEXCEPT
+  template<typename T> BOOST_FORCEINLINE bd::as_integer_t<T>  Minexponent() BOOST_NOEXCEPT
   {
     return minexponent( boost::simd::as_<T>{} );
   }

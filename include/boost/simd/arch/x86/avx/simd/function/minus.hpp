@@ -8,41 +8,24 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_MINUS_HPP_INCLUDED
+#include <boost/simd/pack.hpp>
 
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/function/combine.hpp>
-#include <boost/simd/function/slice.hpp>
-
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  BOOST_FORCEINLINE pack<double,4> minus_( BOOST_SIMD_SUPPORTS(avx_)
+                                        , pack<double,4> const& a0, pack<double,4> const& a1
+                                        ) BOOST_NOEXCEPT
+  {
+    return _mm256_sub_pd(a0,a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( minus_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_sub_pd(a0,a1);
-      }
-   };
-
-   BOOST_DISPATCH_OVERLOAD( minus_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_sub_ps(a0,a1);
-      }
-   };
+  BOOST_FORCEINLINE pack<float,8> minus_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                        , pack<float,8> const& a0, pack<float,8> const& a1
+                                        ) BOOST_NOEXCEPT
+  {
+    return _mm256_sub_ps(a0,a1);
+  }
 } } }
 
 #endif
+

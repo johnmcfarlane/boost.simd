@@ -1,3 +1,4 @@
+// TDO DELETE UNUSED
 //==================================================================================================
 /*!
   @file
@@ -64,7 +65,8 @@ namespace boost { namespace simd { namespace ext
     static BOOST_FORCEINLINE A0 impl( A0 a0, A0 a1
                                     , const tt::true_type &) BOOST_NOEXCEPT
     {
-      using un_t = bd::as_unsigned_t<A0>;
+     using un_t = pack< typename tt_::make_unsigned<T>::type, N>;
+      enum sizee { value = sizeof(T)*CHAR_BIT-1 };
 
       un_t ux = a0;
       un_t uy = a1;

@@ -9,9 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ABS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ABS_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/bitwise_notand.hpp>
 #include <boost/simd/function/shift_right.hpp>
 #include <boost/simd/function/saturated.hpp>

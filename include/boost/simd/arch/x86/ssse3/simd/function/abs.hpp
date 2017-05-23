@@ -18,24 +18,35 @@
 
 namespace boost { namespace simd { namespace detail
 {
-
-  BOOST_FORCEINLINE pack<std::int32_t,4,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
-                                          , pack<std::int32_t,4,sse_> const& a0
-                                          ) BOOST_NOEXCEPT
+  template < typename T
+             , typename = typename std::enable_if<std::is_signed<T>::value>::type
+             , typename = typename std::enable_if<sizeof(typename T::value_type) == 4>::type
+  >
+  BOOST_FORCEINLINE pack<T,4,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
+                                        , pack<T,4,sse_> const& a0
+                                        ) BOOST_NOEXCEPT
   {
     return _mm_abs_epi32(a0);
   }
 
-  BOOST_FORCEINLINE pack<std::int16_t,8,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
-                                          , pack<std::int16_t,8,sse_> const& a0
-                                          ) BOOST_NOEXCEPT
+  template < typename T
+             , typename = typename std::enable_if<std::is_signed<T>::value>::type
+             , typename = typename std::enable_if<sizeof(typename T::value_type) == 2>::type
+  >
+  BOOST_FORCEINLINE pack<T,8,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
+                                        , pack<T,8,sse_> const& a0
+                                        ) BOOST_NOEXCEPT
   {
     return _mm_abs_epi16(a0);
   }
 
-  BOOST_FORCEINLINE pack<std::int8_t,16,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
-                                                , pack<std::int8_t,16,sse_> const& a0
-                                          ) BOOST_NOEXCEPT
+  template < typename T
+             , typename = typename std::enable_if<std::is_signed<T>::value>::type
+             , typename = typename std::enable_if<sizeof(typename T::value_type) == 1>::type
+  >
+  BOOST_FORCEINLINE pack<T,16,sse_> abs_ ( BOOST_SIMD_SUPPORTS(ssse3_)
+                                         , pack<T,16,sse_> const& a0
+                                         ) BOOST_NOEXCEPT
   {
     return _mm_abs_epi8(a0);
   }

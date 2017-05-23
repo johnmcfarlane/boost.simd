@@ -15,23 +15,26 @@
 namespace boost { namespace simd { namespace detail
 {
 
-  BOOST_FORCEINLINE pack<std::int32_t,8,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
-                                                   , pack<std::int32_t,8,avx_> const& a0
-                                                   ) BOOST_NOEXCEPT
+  template < typename dummy =  std::int32_t>
+  BOOST_FORCEINLINE pack<dummy,8,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                            , pack<std::int32_t,8,avx_> const& a0
+                                            ) BOOST_NOEXCEPT
   {
     return _mm256_abs_epi32(a0);
   }
 
-  BOOST_FORCEINLINE pack<std::int16_t,16,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
-                                                    , pack<std::int16_t,16,avx_> const& a0
-                                                    ) BOOST_NOEXCEPT
+  template < typename dummy =  std::int16_t>
+  BOOST_FORCEINLINE pack<dummy,16,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                             , pack<std::int16_t,16,avx_> const& a0
+                                             ) BOOST_NOEXCEPT
   {
     return _mm256_abs_epi16(a0);
   }
 
-  BOOST_FORCEINLINE pack<std::int8_t,32,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
-                                                   , pack<std::int8_t,32,avx_> const& a0
-                                                   ) BOOST_NOEXCEPT
+  template < typename dummy =  std::int8_t>
+  BOOST_FORCEINLINE pack<dummy,32,avx_> abs_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                                             , pack<std::int8_t,32,avx_> const& a0
+                                             ) BOOST_NOEXCEPT
   {
     return _mm256_abs_epi8(a0);
   }

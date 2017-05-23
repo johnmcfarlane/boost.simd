@@ -11,11 +11,12 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MINUS_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/config.hpp>
-#include <boost/simd/constant/valmax.hpp>
-#include <boost/simd/function/saturate.hpp>
+#include <boost/simd/config.hpp>
 #include <boost/simd/function/saturated.hpp>
+#include <boost/simd/function/saturate.hpp>
+#include <boost/simd/detail/meta/pick.hpp>
+#include <boost/config.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {

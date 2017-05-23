@@ -13,25 +13,21 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  BOOST_FORCEINLINE pack<double,2> minus_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pack<double,2> const& a0, pack<double,2> const& a1
-                                        ) BOOST_NOEXCEPT
-  {
-    return _mm_sub_pd(a0,a1);
-  }
 
   template<typename T>
   BOOST_FORCEINLINE pack<T,16,sse_> minus_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                                          , pack<T,16,sse_> const& a0, pack<T,16,sse_> const& a1
-                                          ) BOOST_NOEXCEPT
+                                           , pack<T,16,sse_> const& a0
+                                           , pack<T,16,sse_> const& a1
+                                           ) BOOST_NOEXCEPT
   {
     return _mm_sub_epi8(a0,a1);
   }
 
   template<typename T>
   BOOST_FORCEINLINE pack<T,8,sse_> minus_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pack<T,8,sse_> const& a0, pack<T,8,sse_> const& a1
-                                        ) BOOST_NOEXCEPT
+                                         , pack<T,8,sse_> const& a0
+                                         , pack<T,8,sse_> const& a1
+                                         ) BOOST_NOEXCEPT
   {
     return _mm_sub_epi16(a0,a1);
   }
@@ -40,36 +36,57 @@ namespace boost { namespace simd { namespace detail
           , typename = typename std::enable_if<std::is_integral<T>::value>::type
           >
   BOOST_FORCEINLINE pack<T,4,sse_> minus_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pack<T,4,sse_> const& a0, pack<T,4,sse_> const& a1
-                                        ) BOOST_NOEXCEPT
+                                         , pack<T,4,sse_> const& a0
+                                         , pack<T,4,sse_> const& a1
+                                         ) BOOST_NOEXCEPT
   {
     return _mm_sub_epi32(a0,a1);
   }
 
-  template< typename T
-          , typename = typename std::enable_if<std::is_integral<T>::value>::type
-          >
-  BOOST_FORCEINLINE pack<T,2,sse_> minus_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pack<T,2,sse_> const& a0, pack<T,2,sse_> const& a1
-                                        ) BOOST_NOEXCEPT
+ template< typename T >
+  BOOST_FORCEINLINE pack<T,2,sse_> sse_minus_( pack<T,2,sse_> const& a0
+                                             , pack<T,2,sse_> const& a1
+                                             , std::true_type
+                                             ) BOOST_NOEXCEPT
   {
     return _mm_sub_epi64(a0,a1);
   }
 
+  template< typename T >
+  BOOST_FORCEINLINE pack<T,2,sse_> sse_minus_( pack<T,2,sse_> const& a0
+                                             , pack<T,2,sse_> const& a1
+                                             , std::false_type
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm_sub_pd(a0,a1);
+  }
+
+  template< typename T >
+  BOOST_FORCEINLINE pack<T,2, sse_> minus_( BOOST_SIMD_SUPPORTS(sse2_)
+                                          , pack<T,2, sse_> const& a0
+                                          , pack<T,2, sse_> const& a1
+                                          ) BOOST_NOEXCEPT
+  {
+    return sse_minus_(a0, a1, std::is_integral<T>());
+  }
+
+
   // -----------------------------------------------------------------------------------------------
   // Support for saturated cases
   template<typename T> BOOST_FORCEINLINE
-  pack<T,16,sse_> saturated_minus_ ( pack<T,16,sse_> const& a0, pack<T,16,sse_> const& a1
-                                  , std::true_type const&
-                                  ) BOOST_NOEXCEPT
+  pack<T,16,sse_> saturated_minus_ ( pack<T,16,sse_> const& a0
+                                   , pack<T,16,sse_> const& a1
+                                   , std::true_type const&
+                                   ) BOOST_NOEXCEPT
   {
     return _mm_subs_epi8(a0,a1);
   }
 
   template<typename T> BOOST_FORCEINLINE
-  pack<T,16,sse_> saturated_minus_ ( pack<T,16,sse_> const& a0, pack<T,16,sse_> const& a1
-                                  , std::false_type const&
-                                  ) BOOST_NOEXCEPT
+  pack<T,16,sse_> saturated_minus_ ( pack<T,16,sse_> const& a0
+                                   , pack<T,16,sse_> const& a1
+                                   , std::false_type const&
+                                   ) BOOST_NOEXCEPT
   {
     return _mm_subs_epu8(a0,a1);
   }
@@ -84,25 +101,28 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T> BOOST_FORCEINLINE
-  pack<T,8,sse_> saturated_minus_( pack<T,8,sse_> const& a0, pack<T,8,sse_> const& a1
-                                , std::true_type const&
-                                ) BOOST_NOEXCEPT
+  pack<T,8,sse_> saturated_minus_( pack<T,8,sse_> const& a0
+                                 , pack<T,8,sse_> const& a1
+                                 , std::true_type const&
+                                 ) BOOST_NOEXCEPT
   {
     return _mm_subs_epi16(a0,a1);
   }
 
   template<typename T> BOOST_FORCEINLINE
-  pack<T,8,sse_> saturated_minus_( pack<T,8,sse_> const& a0, pack<T,8,sse_> const& a1
-                                , std::false_type const&
-                                ) BOOST_NOEXCEPT
+  pack<T,8,sse_> saturated_minus_( pack<T,8,sse_> const& a0
+                                 , pack<T,8,sse_> const& a1
+                                 , std::false_type const&
+                                 ) BOOST_NOEXCEPT
   {
     return _mm_subs_epu16(a0,a1);
   }
   template<typename T>
   BOOST_FORCEINLINE pack<T,8,sse_> minus_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , saturated_tag const&
-                                        , pack<T,8,sse_> const& a0, pack<T,8,sse_> const& a1
-                                        ) BOOST_NOEXCEPT
+                                         , saturated_tag const&
+                                         , pack<T,8,sse_> const& a0
+                                         , pack<T,8,sse_> const& a1
+                                         ) BOOST_NOEXCEPT
   {
     return saturated_minus_(a0,a1, std::is_signed<T>{});
   }

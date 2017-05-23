@@ -11,12 +11,17 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_MINUS_HPP_INCLUDED
 #include <boost/simd/pack.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
-  BOOST_FORCEINLINE pack<float,4> minus_ ( BOOST_SIMD_SUPPORTS(sse1_)
-                                        , pack<float,4> const& a0, pack<float,4> const& a1
-                                        ) BOOST_NOEXCEPT
+  template < typename T
+             , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
+  >
+  BOOST_FORCEINLINE pack<T,4, sse_> minus_ ( BOOST_SIMD_SUPPORTS(sse1_)
+                                           , pack<T,4, sse_> const& a0
+                                           , pack<T,4, sse_> const& a1
+                                           ) BOOST_NOEXCEPT
   {
     return _mm_sub_ps(a0,a1);
   }

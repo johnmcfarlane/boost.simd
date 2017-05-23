@@ -13,21 +13,17 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  namespace bs =  boost::simd;
-  namespace bd =  boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( bitwise_and_
-                          , (typename A0, typename A1)
-                          , bs::avx2_
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          , bs::pack_<bd::integer_<A1>, bs::avx_>
-                         )
+  template< typename T, std::size_t N
+          , typename = typename tt_::enable_if<tt_::is_integral<T>::value>::type
+          >
+  BOOST_FORCEINLINE pack<T,N,avx_> bitwise_and_( BOOST_SIMD_SUPPORTS(avx2_)
+                                               , pack<T,N,avx_> const& a0
+                                               , pack<T,N,avx_> const& a1
+                                               ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm256_and_si256(a0, a1);
-    }
-  };
+    return _mm256_and_si256(a0, a1);
+  }
+
 } } }
 
 #endif

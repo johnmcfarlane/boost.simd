@@ -12,34 +12,33 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITWISE_AND_HPP_INCLUDED
 
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
-#include <boost/simd/detail/nsm.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bs = boost::simd;
-  namespace bd = boost::dispatch;
 
-  BOOST_DISPATCH_OVERLOAD_IF( bitwise_and_
-                            , (typename A0, typename A1, typename X, typename Y)
-                            , (nsm::and_< nsm::not_ < std::is_same<A0,A1> >
-                                            , nsm::and_ < detail::is_native<X>
-                                                            , detail::is_native<Y>
-                                                            >
-                                            >
-                              )
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            , bs::pack_<bd::arithmetic_<A1>,Y>
-                            )
+  // Native implementation
+  template<typename T1, typename T2, std::size_t N, std::size_t M
+           , typename = typename std::enable_if<sizeof(T1)*N == sizeof(T2)*M>::type>
+  BOOST_FORCEINLINE pack<T1,N> bitwise_and_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                            , pack<T1,N> const& a
+                                            , pack<T2,M> const& b
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0, const A1& a1 ) const BOOST_NOEXCEPT
-    {
-      return bitwise_and(a0, simd::bitwise_cast<A0>(a1));
-    }
-  };
- } } }
+    return bitwise_and(a, simd::bitwise_cast<T1>(b));
+  }
+
+  // Emulated implementation
+  template<typename T1, typename T2, std::size_t N, std::size_t M
+           , typename = typename std::enable_if<sizeof(T1)*N == sizeof(T2)*M>::type>
+  BOOST_FORCEINLINE pack<T1,N,simd_emulation_> bitwise_and_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                            , pack<T1,N,simd_emulation_> const& a
+                                                            , pack<T2,M,simd_emulation_> const& b
+                                                            ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::bitwise_and, a, b);
+  }
+} } }
 
 #endif
 

@@ -11,52 +11,43 @@
 
 #include <boost/simd/detail/overload.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( bitwise_and_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
+  BOOST_FORCEINLINE pack<float,8> avx_bitwise_and_( pack<float,8> const& a0
+                                                  , pack<float,8> const& a1
+                                                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm256_and_ps(a0, a1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( bitwise_and_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
+    return _mm256_and_pd(a0, a1);
+  }
+  BOOST_FORCEINLINE pack<double,4> avx_bitwise_and_( pack<double,4> const& a0
+                                                   , pack<double,4> const& a1
+                                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm256_and_pd(a0, a1);
-    }
-  };
+    return _mm256_and_pd(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( bitwise_and_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T, N, avx_> avx_bitwise_and_ ( pack<T,N,avx_> const& a0
+                                                      , pack<T,N,avx_> const& a1
+                                                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
       return _mm256_castps_si256(_mm256_and_ps( _mm256_castsi256_ps(a0)
                                               , _mm256_castsi256_ps(a1)
                                               )
                                 );
-    }
-  };
+  }
+
+  template<typename T1, typename T2, std::size_t N, std::size_t M
+           , typename = typename std::enable_if<sizeof(T1)*N == sizeof(T2)*M>::type>
+  BOOST_FORCEINLINE pack<T,N, avx_> bitwise_and_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                                 , pack<T1,N,avx_> const& a
+                                                 , pack<T2,M,avx_> const& b
+                                                 ) BOOST_NOEXCEPT
+  {
+    using Type1 =  pack<T1,N,avx_>;
+    return avx_bitwise_and(a, simd::bitwise_cast<Type1>(b));
+  }
+
 } } }
 
 #endif

@@ -20,38 +20,54 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
   namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( bitwise_and_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
+
+  template<typename T> BOOST_FORCEINLINE
+  T simd_bitwise_and_( T const& a, T const& b
+                      , tt_::false_type const&, tt_::false_type const& ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a&b)
-    {
-      return a&b;
-    }
-  };
+    return a&b;
+  }
+
+  template<typename T1, typename T2> BOOST_FORCEINLINE
+  T1 simd_bitwise_and_( T1 const& a, T2 const& b
+                      , tt_::true_type const&, tt_::false_type const& ) BOOST_NOEXCEPT
+  {
+    using b_t = bd::as_integer_t<T1, unsigned>;
+    return bitwise_cast<T1>(b_t(bitwise_cast<b_t>(a) & bitwise_cast<b_t>(b)));
+  }
+  template<typename T> BOOST_FORCEINLINE
+  T simd_bitwise_and_( T const& a, T const& b
+                      , tt_::false_type const&, tt_::true_type const& ) BOOST_NOEXCEPT
+  {
+    using b_t = bd::as_integer_t<T, unsigned>;
+    return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) & bitwise_cast<b_t>(b)));
+  }
+
+  template<typename T1, typename T2> BOOST_FORCEINLINE
+  T1 simd_bitwise_and_( T1 const& a, T2 const& b
+                      , tt_::true_type const&, tt_::true_type const& ) BOOST_NOEXCEPT
+  {
+    using b_t = bd::as_integer_t<T1, unsigned>;
+    return bitwise_cast<T1>(b_t(bitwise_cast<b_t>(a) & bitwise_cast<b_t>(b)));
+  }
 
 
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF( bitwise_and_
-                            , (typename A0, typename A1)
-                            , (detail::same_sizeof<A0,A1>)
-                            , bd::cpu_
-                            , bd::scalar_<bd::fundamental_<A0>>
-                            , bd::scalar_<bd::fundamental_<A1>>
-                            )
+  template<typename T1, typename T2>
+  BOOST_FORCEINLINE
+  T1 bitwise_and_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+          , T1 const& a, T2 const& b
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using b_t = bd::as_integer_t<A0, unsigned>;
-      return bitwise_cast<A0>(b_t(bitwise_cast<b_t>(a0) & bitwise_cast<b_t>(a1)));
-    }
-  };
+    return simd_bitwise_and_ ( a ,b
+                             , nsm::and_< nsm::not_<std::is_same<T1, T2>>
+                                        , nsm::bool_<sizeof(T1) == sizeof(T2)>
+                                        >{}
+                             , std::is_floating_point<T1>{});
+  }
+
 } } }
 
 #endif

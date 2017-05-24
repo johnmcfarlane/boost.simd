@@ -1,21 +1,21 @@
 //==================================================================================================
-/*!
-    @file
+/**
+  Copyright 2017 NumScale SAS
 
-    @Copyright 2016 Numscale SAS
-
-    Distributed under the Boost Software License, Version 1.0.
-    (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <type_traits>
-#include <boost/simd/pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // Support for regular cases
   BOOST_FORCEINLINE pack<double,2> plus_( BOOST_SIMD_SUPPORTS(sse2_)
                                         , pack<double,2> const& a0, pack<double,2> const& a1
                                         ) BOOST_NOEXCEPT
@@ -101,6 +101,7 @@ namespace boost { namespace simd { namespace detail
   {
     return _mm_adds_epu16(a0,a1);
   }
+
   template<typename T>
   BOOST_FORCEINLINE pack<T,8,sse_> plus_( BOOST_SIMD_SUPPORTS(sse2_)
                                         , saturated_tag const&

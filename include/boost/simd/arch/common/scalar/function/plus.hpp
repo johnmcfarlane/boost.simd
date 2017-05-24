@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  Copyright 2016 NumScale SAS
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -18,9 +18,10 @@
 
 namespace boost { namespace simd { namespace detail
 {
+  // -----------------------------------------------------------------------------------------------
+  // Regular case
   template<typename T>
-  BOOST_FORCEINLINE
-  T plus_(BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_), T const& a, T const& b) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T plus_(BOOST_SIMD_SUPPORTS(cpu_), T const& a, T const& b) BOOST_NOEXCEPT
   {
     return a+b;
   }
@@ -81,9 +82,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  T plus_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
-          , saturated_tag const&, T const& a, T const& b
-          ) BOOST_NOEXCEPT
+  T plus_(BOOST_SIMD_SUPPORTS(cpu_), saturated_tag const&, T const& a, T const& b) BOOST_NOEXCEPT
   {
     return splus_ ( a ,b
                   , typename detail::pick <T, tt_::is_floating_point

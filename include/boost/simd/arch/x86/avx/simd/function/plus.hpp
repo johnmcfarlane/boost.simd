@@ -9,6 +9,8 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_PLUS_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
+
 namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE pack<double,4> plus_( BOOST_SIMD_SUPPORTS(avx_)

@@ -95,7 +95,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T> BOOST_FORCEINLINE T sabs_(T a, detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    return (a==Valmin<T>())?Valmax<T>():bs::abs(a);
+    return (a==Valmin<T>())?Valmax<T>():boost::simd::abs(a);
   }
 
   template<typename T> BOOST_FORCEINLINE T sabs_(T a, detail::case_<2> const&) BOOST_NOEXCEPT

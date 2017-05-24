@@ -12,17 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_BITWISE_NOT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/function/definition/complement.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/function/complement.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using bitwise_not_ = complement_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::bitwise_not_,bitwise_not);
+  auto  bitwise_not = complement;
 } }
 
 #endif

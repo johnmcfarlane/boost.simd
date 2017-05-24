@@ -14,36 +14,30 @@
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( complement_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T scomplement_(T a, tt_::true_type ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return ~a0;
-    }
-  };
+    using b_t = bd::as_integer_t<T, unsigned>;
+    return bitwise_cast<T>(~bitwise_cast<b_t>(a));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( complement_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T scomplement_(T a, tt_::false_type ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      using b_t = bd::as_integer_t<A0, unsigned>;
-      return bitwise_cast<A0>(~bitwise_cast<b_t>(a0));
-    }
-  };
+    return ~a;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T complement_( BOOST_SIMD_SUPPORTS(cpu_), T const& a) BOOST_NOEXCEPT
+  {
+    return scomplement_(a, tt_::is_floating_point<T>{});
+  }
+
 } } }
 
 #endif

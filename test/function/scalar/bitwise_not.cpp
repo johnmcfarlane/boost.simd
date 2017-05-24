@@ -24,7 +24,6 @@ STF_CASE_TPL ("check bitwise_not for floating",  STF_IEEE_TYPES)
 {
   namespace bs = boost::simd;
   using bs::bitwise_not;
-  using bs::tag::bitwise_not_;
   using r_t = decltype(bitwise_not(T()));
 
   // return type conformity test
@@ -41,7 +40,6 @@ STF_CASE_TPL ("check bitwise_not for integral",  STF_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   using bs::bitwise_not;
-  using bs::tag::bitwise_not_;
   using r_t = decltype(bitwise_not(T()));
 
   // return type conformity test

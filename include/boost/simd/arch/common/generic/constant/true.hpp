@@ -1,36 +1,24 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_TRUE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_TRUE_HPP_INCLUDED
 
-#include <boost/simd/logical.hpp>
-#include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/as.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( true_, (typename T), bd::cpu_
-                          , bd::target_<bd::generic_<bd::unspecified_<T>>>
-                          )
+  template<typename Type, typename Arch>
+  BOOST_FORCEINLINE Type true_( BOOST_SIMD_SUPPORTS(Arch), as_<Type> const&) BOOST_NOEXCEPT
   {
-    using result = as_logical_t<typename T::type>;
-
-    BOOST_FORCEINLINE result operator()(T const&) const BOOST_NOEXCEPT
-    {
-      return result(true);
-    }
-  };
+    return Type(true);
+  }
 } } }
 
 #endif

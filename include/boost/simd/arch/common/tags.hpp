@@ -24,6 +24,16 @@ namespace boost { namespace simd
 
     This tag represent any architecture providing at least one flavor of SIMD instruction set.
   **/
+
+  // TODO REMOVE AT THE END
+  using cpu_ = boost::dispatch::cpu_;
+
+  /*!
+    @ingroup group-hierarchy
+    @brief Common SIMD architecture hierarchy tag
+
+    This tag represent any architecture providing at least one flavor of SIMD instruction set.
+  **/
   struct simd_ : boost::dispatch::cpu_
   {
     using parent = boost::dispatch::cpu_;
@@ -34,7 +44,7 @@ namespace boost { namespace simd
     @brief Emulated SIMD architecture hierarchy tag
 
     This tag represent any architecture requiring some SIMD register to be emulated as an
-    array of scalars or other SIMD registers. This is often the case when dealing with a pack 
+    array of scalars or other SIMD registers. This is often the case when dealing with a pack
     of data of a size which is not compatible with hardware specifications.
   **/
   struct simd_emulation_ : boost::simd::simd_

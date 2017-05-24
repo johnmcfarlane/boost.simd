@@ -1,56 +1,53 @@
 //==================================================================================================
-/*!
-  @file
-
-  Copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITWISE_OR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITWISE_OR_HPP_INCLUDED
 
+#include <boost/simd/config.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/detail/traits.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/hierarchy.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-
   namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( bitwise_or_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
-  {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a|b)
-    {
-      return a|b;
-    }
-  };
 
-   BOOST_DISPATCH_OVERLOAD_IF( bitwise_or_
-                            , (typename A0, typename A1)
-                            , (detail::same_sizeof<A0,A1>)
-                            , bd::cpu_
-                            , bd::scalar_<bd::fundamental_<A0>>
-                            , bd::scalar_<bd::fundamental_<A1>>
-                            )
+  template<typename T>
+  BOOST_FORCEINLINE T bor_(T a, T b, tt_::false_type ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using b_t = bd::as_integer_t<A0, unsigned>;
-      return bitwise_cast<A0>(b_t(bitwise_cast<b_t>(a0) | bitwise_cast<b_t>(a1)));
-    }
-  };
+    // same type, T is not IEEE
+    return a | b;
+  }
 
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T bor_(T a, U b, tt_::false_type ) BOOST_NOEXCEPT
+  {
+    // different type, T is not IEEE
+    return a | bitwise_cast<T>(b);
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T bor_(T a, U b, tt_::true_type ) BOOST_NOEXCEPT
+  {
+    // different type, T is IEEE
+    using b_t = bd::as_integer_t<T, unsigned>;
+    return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) | bitwise_cast<b_t>(b)));
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T bitwise_or_(BOOST_SIMD_SUPPORTS(cpu_), T a, U b) BOOST_NOEXCEPT
+  {
+    static_assert ( sizeof(T) == sizeof(U)
+                  , "simd::bitwise_or - Arguments have incompatible size"
+                  );
+
+    return bor_(a ,b, tt_::is_floating_point<T>{});
+  }
 } } }
 
 #endif

@@ -1,44 +1,53 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
-#include <boost/simd/detail/nsm.hpp>
+#include <boost/simd/detail/pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF( bitwise_or_
-                            , (typename A0,typename A1,typename X, typename Y)
-                            , (nsm::and_< nsm::not_ < std::is_same<A0,A1> >
-                                            , nsm::and_ < detail::is_native<X>
-                                                            , detail::is_native<Y>
-                                                            >
-                                            >
-                              )
-                           , bd::cpu_
-                           , bs::pack_<bd::arithmetic_<A0>,X>
-                           , bs::pack_<bd::arithmetic_<A1>,Y>
-                           )
+  //================================================================================================
+  // Native implementation
+  template< typename T1, std::size_t N1, typename X1
+          , typename T2, std::size_t N2, typename X2
+          >
+  BOOST_FORCEINLINE pack<T1,N1,X1> bitwise_or_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                , pack<T1,N1,X1> const& a
+                                                , pack<T2,N2,X2> const& b
+                                                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0, const A1& a1) const BOOST_NOEXCEPT
-    {
-      return bitwise_or(a0, simd::bitwise_cast<A0>(a1));
-    }
-  };
+    static_assert ( sizeof(a) == sizeof(b)
+                  , "simd::bitwise_or - Arguments have incompatible size"
+                  );
+
+    return bitwise_or(a, simd::bitwise_cast<pack<T1,N1,X1>>(b));
+  }
+
+  //================================================================================================
+  // Emulated implementation
+  template<typename T1, typename T2, std::size_t N, std::size_t M>
+  BOOST_FORCEINLINE
+  pack<T1,N,simd_emulation_> bitwise_or_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                          , pack<T1,N,simd_emulation_> const& a
+                                          , pack<T2,M,simd_emulation_> const& b
+                                          ) BOOST_NOEXCEPT
+  {
+    static_assert ( sizeof(a) == sizeof(b)
+                  , "simd::bitwise_or - Arguments have incompatible size"
+                  );
+
+    return map_to( simd::bitwise_or, a, b);
+  }
 } } }
 
 #endif
+

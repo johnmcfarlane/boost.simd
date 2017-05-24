@@ -45,8 +45,8 @@ namespace boost { namespace simd { namespace detail
     T process(const T& a0, pattern_<Ps...> const&)
     {
       auto s = slice(a0);
-      return combine( shuffle<half_<false,Ps...>>(s[0],s[1])
-                    , shuffle<half_<true ,Ps...>>(s[0],s[1])
+      return combine( shuffle<demi_<false,Ps...>>(s[0],s[1])
+                    , shuffle<demi_<true ,Ps...>>(s[0],s[1])
                     );
     }
   };

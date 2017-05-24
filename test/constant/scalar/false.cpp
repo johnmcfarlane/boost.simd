@@ -15,12 +15,12 @@
 STF_CASE_TPL( "Check false behavior", STF_NUMERIC_TYPES )
 {
   using boost::simd::as;
-  using boost::simd::detail::false_;
   using boost::simd::logical;
   using boost::simd::False;
 
   STF_TYPE_IS(decltype(False<logical<T>>()), logical<T> );
+  STF_TYPE_IS(decltype(False<T>())         , logical<T> );
 
-  STF_EQUAL(  False<logical<T>>()          , false);
-  STF_EQUAL(  false_( as(logical<T>{}) )   , false);
+  STF_EQUAL( False<logical<T>>() , false);
+  STF_EQUAL( False<T>()          , false);
 }

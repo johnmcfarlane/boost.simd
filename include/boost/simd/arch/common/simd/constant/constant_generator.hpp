@@ -1,47 +1,36 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_CONSTANT_CONSTANT_GENERATOR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_CONSTANT_CONSTANT_GENERATOR_HPP_INCLUDED
 
 #if defined(BOOST_SIMD_DETECTED)
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/detail/constant_traits.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/as.hpp>
+#include <boost/simd/as.hpp>
 #include <boost/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_FALLBACK( (typename T, typename V, typename X)
-                                  , boost::dispatch::constant_value_<tag::constant_>
-                                  , bd::cpu_
-                                  , bd::scalar_<bd::unspecified_<V>>
-                                  , bd::target_< bs::pack_<bd::unspecified_<T>,X> >
-                                  )
+  // this should be auto in C++14 alas we support C++11 for still a bit of time
+  template<typename Value, typename Pack> struct constant_return
   {
-    using value_t   = typename T::type::value_type;
-    using scalar_t  = decltype(bd::functor<tag::constant_>{}(V(),bd::as_<value_t>()));
-    using result_t  = typename T::type::template rebind<scalar_t>;
-
-    BOOST_FORCEINLINE result_t operator()(V const& v, T const&) const
-    {
-      return result_t{ bd::functor<tag::constant_>{}(v,bd::as_<value_t>()) };
-    }
+    using scalar_t  = decltype(simd::constant(Value(),simd::as_<typename Pack::value_type>()));
+    using type      = typename Pack::template rebind<scalar_t>;
   };
+
+  template<typename Value, typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE typename constant_return<Value,pack<T,N,X>>::type
+  constant_(BOOST_SIMD_SUPPORTS(simd_), Value const& v, as_<pack<T,N,X>> const&) BOOST_NOEXCEPT
+  {
+    using result_t = typename constant_return<Value,pack<T,N,X>>::type;
+    return result_t{ simd::constant(v,as_<T>()) };
+  }
 } } }
 
 #endif
-
 #endif

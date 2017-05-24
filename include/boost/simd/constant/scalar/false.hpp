@@ -11,7 +11,6 @@
 #define BOOST_SIMD_CONSTANT_SCALAR_FALSE_HPP_INCLUDED
 
 #include <boost/simd/constant/definition/false.hpp>
-#include <boost/simd/arch/common/scalar/constant/constant_value.hpp>
 #include <boost/simd/arch/common/generic/constant/false.hpp>
 
 #endif

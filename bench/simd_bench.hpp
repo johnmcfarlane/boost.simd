@@ -104,16 +104,14 @@ inline std::string sanitized_function()
 {
   namespace ba = boost::algorithm;
   auto s = nsb::type_id<F>();
-  ba::ierase_all(s, "boost::dispatch::functor");
+  ba::ierase_all(s, "boost::simd::detail::callable_object");
   ba::ierase_all(s, "boost::simd::tag::");
+  ba::ierase_all(s, "void");
   ba::ierase_all(s, "<");
   ba::ierase_all(s, ">");
-  ba::ierase_all(s, "_");
   ba::ierase_all(s, " ");
-  auto i = s.find(",");
-  if (i != std::string::npos) {
-    s = s.substr(0, i);
-  }
+  ba::ierase_all(s, ",");
+  s.pop_back();
   return "boost::simd::" + s;
 }
 

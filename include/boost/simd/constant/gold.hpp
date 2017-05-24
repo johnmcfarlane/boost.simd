@@ -15,7 +15,7 @@
   @ingroup group-constant
   @defgroup constant-Gold Gold (function template)
 
-  Generates the Golden Ratio \f$\phi
+  Generates the Golden Ratio \f$\phi\f$
 
   @headerref{<boost/simd/constant/gold.hpp>}
 

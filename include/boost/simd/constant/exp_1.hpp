@@ -29,7 +29,7 @@
       template<typename T> T Exp_1( boost::simd::as_<T> const& target );
       @endcode
 
-  Generates a value of type @c T that evaluates to \f$e\f which is the unique number whose
+  Generates a value of type @c T that evaluates to \f$e\f$ which is the unique number whose
   natural logarithm is equal to one.
 
   @par Parameters

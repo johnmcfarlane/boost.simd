@@ -1,12 +1,10 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MINUS_HPP_INCLUDED
@@ -21,8 +19,7 @@
 namespace boost { namespace simd { namespace detail
 {
   template<typename T>
-  BOOST_FORCEINLINE
-  T minus_(BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_), T const& a, T const& b) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T minus_(BOOST_SIMD_SUPPORTS(cpu_), T const& a, T const& b) BOOST_NOEXCEPT
   {
     return a-b;
   }
@@ -88,9 +85,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  T minus_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
-          , saturated_tag const&, T const& a, T const& b
-          ) BOOST_NOEXCEPT
+  T minus_(BOOST_SIMD_SUPPORTS(cpu_), saturated_tag const&, T const& a, T const& b) BOOST_NOEXCEPT
   {
     return sminus_ ( a ,b
                   , typename detail::pick <T, tt_::is_floating_point

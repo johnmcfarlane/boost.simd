@@ -10,37 +10,35 @@
 #define BOOST_SIMD_DETAIL_PACK_OPERATORS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/function/plus.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/divides.hpp>
-#include <boost/simd/function/is_equal.hpp>
-#include <boost/simd/function/rem.hpp>
-#include <boost/simd/function/is_less.hpp>
-#include <boost/simd/function/is_less_equal.hpp>
-#include <boost/simd/function/is_greater.hpp>
-#include <boost/simd/function/is_greater_equal.hpp>
-#include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/function/bitwise_or.hpp>
-#include <boost/simd/function/bitwise_xor.hpp>
-#include <boost/simd/function/complement.hpp>
-#include <boost/simd/function/logical_not.hpp>
-#include <boost/simd/function/shift_left.hpp>
-#include <boost/simd/function/shift_right.hpp>
-#include <boost/simd/function/logical_and.hpp>
-#include <boost/simd/function/logical_or.hpp>
-#include <boost/simd/function/logical_not.hpp>
-#include <boost/simd/function/rem.hpp>
-#include <boost/simd/function/unary_plus.hpp>
-#include <boost/simd/function/unary_minus.hpp>
+#include <boost/simd/function/definition/plus.hpp>
+#include <boost/simd/function/definition/minus.hpp>
+#include <boost/simd/function/definition/multiplies.hpp>
+#include <boost/simd/function/definition/divides.hpp>
+#include <boost/simd/function/definition/is_equal.hpp>
+#include <boost/simd/function/definition/rem.hpp>
+#include <boost/simd/function/definition/is_less.hpp>
+#include <boost/simd/function/definition/is_less_equal.hpp>
+#include <boost/simd/function/definition/is_greater.hpp>
+#include <boost/simd/function/definition/is_greater_equal.hpp>
+#include <boost/simd/function/definition/bitwise_and.hpp>
+#include <boost/simd/function/definition/bitwise_or.hpp>
+#include <boost/simd/function/definition/bitwise_xor.hpp>
+#include <boost/simd/function/definition/complement.hpp>
+#include <boost/simd/function/definition/logical_not.hpp>
+#include <boost/simd/function/definition/shift_left.hpp>
+#include <boost/simd/function/definition/shift_right.hpp>
+#include <boost/simd/function/definition/logical_and.hpp>
+#include <boost/simd/function/definition/logical_or.hpp>
+#include <boost/simd/function/definition/logical_not.hpp>
+#include <boost/simd/function/definition/rem.hpp>
+#include <boost/simd/function/definition/unary_plus.hpp>
+#include <boost/simd/function/definition/unary_minus.hpp>
 #include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/meta/is_pack.hpp>
-#include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
 namespace boost { namespace simd
 {
-  namespace bs =  boost::simd;
-
 #define BOOST_SIMD_PACK_DEFINE_BINOP(type_, op, f)                                                 \
   template <typename T, std::size_t N, typename U> BOOST_FORCEINLINE                               \
   typename std::enable_if<is_not_pack_t<U>::value && std::is_convertible<U, T>::value,             \
@@ -79,14 +77,14 @@ BOOST_SIMD_PACK_DEFINE_BINOP(T, operator >> , shift_right)
                                                                                                    \
   template <typename T, std::size_t N, typename U> BOOST_FORCEINLINE                               \
   typename std::enable_if < is_not_pack_t<U>::value && std::is_convertible<U, T>::value            \
-                          , pack<bs::as_logical_t<T>, N>                                           \
+                          , pack<as_logical_t<T>, N>                                               \
                           >::type                                                                  \
   op(pack<T, N> const& p0, U const& s1) BOOST_NOEXCEPT                                             \
   { return f(p0, s1); }                                                                            \
                                                                                                    \
   template <typename T, std::size_t N, typename U> BOOST_FORCEINLINE                               \
   typename std::enable_if < is_not_pack_t<U>::value && std::is_convertible<U, T>::value            \
-                          , pack<bs::as_logical_t<T>, N>                                           \
+                          , pack<as_logical_t<T>, N>                                               \
                           >::type                                                                  \
   op(U const& s0, pack<T, N> const& p1) BOOST_NOEXCEPT                                             \
   { return f(s0, p1); }                                                                            \

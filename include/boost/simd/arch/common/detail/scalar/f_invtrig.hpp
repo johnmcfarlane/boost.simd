@@ -41,6 +41,7 @@
 #include <boost/simd/function/sqr.hpp>
 #include <boost/simd/function/sqrt.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
+#include <boost/simd/arch/common/detail/tags.hpp>
 
 namespace boost { namespace simd
 {

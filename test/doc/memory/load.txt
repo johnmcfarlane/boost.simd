@@ -1,0 +1,15 @@
+//! [load]
+Scalar :
+ - load<std::int32_t>(&a[2]) : 3
+ - load<float>(v.begin())    : 0.1
+ - load<double>(l.begin(),1) : 0.01
+
+Pack :
+ - load<pack<std::int32_t,4>>(&a[2])        : (3, 4, 5, 6)
+ - load<pack<float,4>>(v.begin())           : (0.1, 0.01, 0.001, 0.0001)
+ - load<pack<float,4>>(v.data(),1)          : (0.01, 0.001, 0.0001, 1e-05)
+ - load<pack<double, 2>>(l.begin(),l.end()) : (0.1, 0.01)
+
+Mask :
+ - load<pack<std::int32_t,4>>(mask(&a[0],[0,1,0,1]) : (0, 2, 0, 4)
+//! [load]

@@ -65,6 +65,24 @@ namespace boost { namespace simd { namespace ext
       return target_t( p[N::value]... );
     }
   };
+
+  BOOST_DISPATCH_OVERLOAD ( load_
+                          , (typename Target, typename Begin, typename Ext)
+                          , bd::cpu_
+                          , bd::input_iterator_<bd::scalar_<bd::unspecified_<Begin>>>
+                          , bd::target_<bs::pack_<bd::unspecified_<Target>, Ext>>
+                          )
+  {
+    using target_t  = typename Target::type;
+    using storage_t = typename target_t::storage_type;
+
+    BOOST_FORCEINLINE target_t operator()(Begin b, Target const&) const
+    {
+      Begin e = b;
+      std::advance(b,target_t::static_size);
+      return load<target_t>(b,e);
+    }
+  };
 } } }
 
 #endif

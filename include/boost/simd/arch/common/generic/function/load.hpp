@@ -35,7 +35,8 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE target operator()(Pointer p, Offset o, Target const&) const BOOST_NOEXCEPT
     {
-      return boost::simd::load<target>(p+o);
+      std::advance(p,o);
+      return boost::simd::load<target>(p);
     }
   };
 } } }

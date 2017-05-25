@@ -12,6 +12,7 @@ SET( SOURCES
     allocate.cpp
     allocator.cpp
     is_aligned.cpp
+    load.cpp
     mask.cpp
   )
 

@@ -23,8 +23,6 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
   //================================================================================================
   // regular (no decorator)
 

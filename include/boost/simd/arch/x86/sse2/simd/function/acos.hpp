@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
                                         ) BOOST_NOEXCEPT
   {
     using result_t = pack<double,2>;
-    return result_t(bs::acos(double(a0[0])),  bs::acos(double(a0[0])));
+    return result_t(bs::acos(double(a0[0])),  bs::acos(double(a0[1])));
   }
 
   BOOST_FORCEINLINE pack<double,2> acos_( BOOST_SIMD_SUPPORTS(sse2_)

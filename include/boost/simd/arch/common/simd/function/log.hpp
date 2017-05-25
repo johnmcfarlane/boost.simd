@@ -111,9 +111,9 @@ namespace boost { namespace simd { namespace ext
 #endif
       uiA0 ix = bitwise_cast<uiA0>(x);
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      ix += 0x3f800000 - 0x3f3504f3;
-      k += bitwise_cast<iA0>(ix>>23) - 0x7f;
-      ix = (ix&0x007fffff) + 0x3f3504f3;
+      ix += uiA0(0x3f800000 - 0x3f3504f3);
+      k += bitwise_cast<iA0>(ix>>23) - iA0(0x7f);
+      ix = (ix&uiA0(0x007fffff)) + uiA0(0x3f3504f3);
       x =  bitwise_cast<A0>(ix);
       A0 f = dec(x);
       A0 s = f/(Two<A0>() + f);
@@ -161,11 +161,11 @@ namespace boost { namespace simd { namespace ext
       }
 #endif
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      hx += 0x3ff00000 - 0x3fe6a09e;
-      k += bitwise_cast<iA0>(hx>>20) - 0x3ff;
+      hx += uiA0(0x3ff00000 - 0x3fe6a09e);
+      k += bitwise_cast<iA0>(hx>>20) - iA0(0x3ff);
       A0 dk = tofloat(k);
-      hx = (hx&0x000fffff) + 0x3fe6a09e;
-      x = bitwise_cast<A0>(hx<<32 | (bitwise_and(0xffffffffull, bitwise_cast<uiA0>(x))));
+      hx = (hx&uiA0(0x000fffff)) + uiA0(0x3fe6a09e);
+      x = bitwise_cast<A0>(hx<<32 | (bitwise_and(uiA0(0xffffffffull), bitwise_cast<uiA0>(x))));
 
       A0 f = dec(x);
       A0 hfsq = Half<A0>()*sqr(f);

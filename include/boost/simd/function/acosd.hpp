@@ -42,7 +42,7 @@ namespace boost { namespace simd
 } }
 #endif
 
-#include <boost/simd/function/scalar/acosd.hpp>
+#include <boost/simd/function/acosd.hpp>
 #include <boost/simd/function/simd/acosd.hpp>
 
 #endif

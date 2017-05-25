@@ -82,13 +82,13 @@ namespace boost { namespace simd { namespace ext
       auto isnez = is_nez(uf);
 
       uiA0 iu = bitwise_cast<uiA0>(uf);
-      iu += 0x3f800000 - 0x3f3504f3;
-      iA0 k = bitwise_cast<iA0>(iu>>23) - 0x7f;
+      iu += uiA0(0x3f800000 - 0x3f3504f3);
+      iA0 k = bitwise_cast<iA0>(iu>>23) - iA0(0x7f);
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      iu = (iu&0x007fffff) + 0x3f3504f3;
+      iu =(iu&uiA0(0x007fffff)) + uiA0(0x3f3504f3);
       A0 f =  dec(bitwise_cast<A0>(iu));
-      A0 s = f/(2.0f + f);
+      A0 s = f/(Two<A0>() + f);
       A0 z = sqr(s);
       A0 w = sqr(z);
       A0 t1= w*horn<A0, 0x3eccce13, 0x3e789e26>(w);
@@ -124,16 +124,16 @@ namespace boost { namespace simd { namespace ext
 
       /* reduce x into [sqrt(2)/2, sqrt(2)] */
       uiA0 hu = bitwise_cast<uiA0>(uf)>>32;
-      hu += 0x3ff00000 - 0x3fe6a09e;
-      iA0 k = bitwise_cast<iA0>(hu>>20) - 0x3ff;
+      hu += uiA0(0x3ff00000 - 0x3fe6a09e);
+      iA0 k = bitwise_cast<iA0>(hu>>20) - iA0(0x3ff);
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       A0  c =  if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
-      hu =  (hu&0x000fffff) + 0x3fe6a09e;
-      A0 f = bitwise_cast<A0>( bitwise_cast<uiA0>(hu<<32) | (bitwise_and(0xffffffffull, bitwise_cast<uiA0>(uf))));
+      hu =  (hu&uiA0(0x000fffff)) + uiA0(0x3fe6a09e);
+      A0 f = bitwise_cast<A0>( bitwise_cast<uiA0>(hu<<32) | (bitwise_and(uiA0(0xffffffffull), bitwise_cast<uiA0>(uf))));
       f = dec(f);
 
       A0 hfsq = Half<A0>()*sqr(f);
-      A0 s = f/(2.0 + f);
+      A0 s = f/(Two<A0>() + f);
       A0 z = sqr(s);
       A0 w = sqr(z);
       A0 t1= w*horn<A0, 0x3fd999999997fa04ll, 0x3fcc71c51d8e78afll, 0x3fc39a09d078c69fll > (w);
@@ -175,7 +175,7 @@ namespace boost { namespace simd { namespace ext
       /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
       A0  c = if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
 
-      A0 s = f/(2.0f + f);
+      A0 s = f/(Two<A0>() + f);
       A0 z = sqr(s);
       A0 w = sqr(z);
       A0 t1= w*horn<A0, 0x3eccce13, 0x3e789e26>(w);
@@ -217,7 +217,7 @@ namespace boost { namespace simd { namespace ext
       A0  c = if_else( k >= 2, oneminus(uf-a0), a0-dec(uf))/uf;
 
       A0 hfsq = Half<A0>()*sqr(f);
-      A0 s = f/(2.0 + f);
+      A0 s = f/(Two<A0>() + f);
       A0 z = sqr(s);
       A0 w = sqr(z);
       A0 t1= w*horn<A0, 0x3fd999999997fa04ll, 0x3fcc71c51d8e78afll, 0x3fc39a09d078c69fll > (w);

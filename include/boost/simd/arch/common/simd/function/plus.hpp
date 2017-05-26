@@ -110,7 +110,7 @@ namespace boost { namespace simd { namespace detail
                    , pack<T2,M> const& b
                    ) BOOST_NOEXCEPT
   {
-    using p_t =  typename std::decay<decltype(b)>::type;
+    using p_t =  pack<T2,M>;
     return simd::plus(p_t(a), b);
   }
 
@@ -124,7 +124,7 @@ namespace boost { namespace simd { namespace detail
                    , T2 b
                    ) BOOST_NOEXCEPT
   {
-    using p_t =  typename std::decay<decltype(a)>::type;
+    using p_t =  pack<T1,N>;
     return simd::plus(a, p_t(b));
   }
 
@@ -139,7 +139,7 @@ namespace boost { namespace simd { namespace detail
                     , pack<T2,M> const& b
                     ) BOOST_NOEXCEPT
   {
-    using p_t =  typename std::decay<decltype(b)>::type;
+    using p_t =  pack<T2,M>;
     return simd::plus(p_t(a), b);
   }
 
@@ -154,7 +154,7 @@ namespace boost { namespace simd { namespace detail
                    , T2 b
                    ) BOOST_NOEXCEPT
   {
-    using p_t =  typename std::decay<decltype(a)>::type;
+    using p_t =  pack<T1,N>;
     return simd::plus(a, p_t(b));
   }
 

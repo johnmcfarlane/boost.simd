@@ -47,6 +47,37 @@ namespace boost { namespace simd { namespace detail
 
     return map_to( simd::bitwise_and, a, b);
   }
+
+  //================================================================================================
+  // mixed implementation T1 pack < T2 >
+  template<typename T1, typename T2, std::size_t M
+           , typename = typename std::enable_if<std::is_convertible<T1, T2>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T2,M> bitwise_and_ ( BOOST_SIMD_SUPPORTS(simd_)
+                          , T1 a
+                          , pack<T2,M> const& b
+                          ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(b)>::type;
+    return simd::bitwise_and(p_t(a), b);
+  }
+
+  // mixed implementation pack < T1 > T2
+  template<typename T1, typename T2, std::size_t N
+           , typename = typename std::enable_if<std::is_convertible<T2, T1>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T1,N> bitwise_and_ ( BOOST_SIMD_SUPPORTS(simd_)
+                          , pack<T1,N> const& a
+                          , T2 b
+                          ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(a)>::type;
+    return simd::bitwise_and(a, p_t(b));
+  }
+
+
 } } }
 
 #endif

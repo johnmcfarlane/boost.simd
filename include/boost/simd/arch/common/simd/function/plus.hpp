@@ -98,6 +98,67 @@ namespace boost { namespace simd { namespace detail
   {
     return map_to( saturated_(simd::plus), a, b);
   }
+
+  //================================================================================================
+  // mixed implementation T1 pack < T2 >
+  template<typename T1, typename T2, std::size_t M
+           , typename = typename std::enable_if<std::is_convertible<T1, T2>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T2,M> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                   , T1 a
+                   , pack<T2,M> const& b
+                   ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(b)>::type;
+    return simd::plus(p_t(a), b);
+  }
+
+  // mixed implementation pack < T1 > T2
+  template<typename T1, typename T2, std::size_t N
+    , typename = typename std::enable_if<std::is_convertible<T2, T1>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T1,N> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                   , pack<T1,N> const& a
+                   , T2 b
+                   ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(a)>::type;
+    return simd::plus(a, p_t(b));
+  }
+
+  // saturated mixed implementation T1 pack < T2 >
+  template<typename T1, typename T2, std::size_t M
+           , typename = typename std::enable_if<std::is_convertible<T1, T2>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T2, M> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                    , saturated_tag const&
+                    , T1 a
+                    , pack<T2,M> const& b
+                    ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(b)>::type;
+    return simd::plus(p_t(a), b);
+  }
+
+  // saturated mixed implementation pack < T1 > T2
+  template<typename T1, typename T2, std::size_t N
+    , typename = typename std::enable_if<std::is_convertible<T2, T1>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T1,N> plus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                   , saturated_tag const&
+                   , pack<T1,N> const& a
+                   , T2 b
+                   ) BOOST_NOEXCEPT
+  {
+    using p_t =  typename std::decay<decltype(a)>::type;
+    return simd::plus(a, p_t(b));
+  }
+
+
 } } }
 
 #endif

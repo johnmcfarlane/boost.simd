@@ -12,25 +12,13 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_ACSCD_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, acscd_, boost::dispatch::elementwise_<acscd_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, acscd_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::acscd_,acscd);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(acscd_,acscd);
 } }
 
 #endif
+
+#

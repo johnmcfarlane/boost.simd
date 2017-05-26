@@ -12,6 +12,6 @@
 
 #include <boost/simd/function/scalar/acsc.hpp>
 #include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/acsc.hpp>
+#include <boost/simd/arch/common/generic/function/acsc.hpp>
 
 #endif

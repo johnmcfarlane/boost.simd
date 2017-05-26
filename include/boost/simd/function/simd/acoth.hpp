@@ -12,6 +12,6 @@
 
 #include <boost/simd/function/scalar/acoth.hpp>
 #include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/acoth.hpp>
+#include <boost/simd/arch/common/generic/function/acoth.hpp>
 
 #endif

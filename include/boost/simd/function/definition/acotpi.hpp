@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_ACOTPI_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, acotpi_, boost::dispatch::elementwise_<acotpi_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, acotpi_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::acotpi_,acotpi);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(acotpi_,acotpi);
 } }
 
 #endif
+

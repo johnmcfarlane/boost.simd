@@ -12,6 +12,6 @@
 
 #include <boost/simd/function/scalar/asecpi.hpp>
 #include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/asecpi.hpp>
+#include <boost/simd/arch/common/generic/function/asecpi.hpp>
 
 #endif

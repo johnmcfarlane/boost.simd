@@ -30,99 +30,87 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( asinh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+
+  BOOST_FORCEINLINE
+  double asinh_(BOOST_SIMD_SUPPORTS(cpu_)
+              , double a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
+    double x = bs::abs(a);
+    if  (BOOST_UNLIKELY(x < bs::Sqrteps<double>() ))
     {
-      A0 x = bs::abs(a0);
-      if  (BOOST_UNLIKELY(x < bs::Sqrteps<A0>() ))
+      return a;
+    }
+    else
+    {
+      double z;
+      if (x < 0.5)
       {
-        return a0;
+        double invx = bs::rec(x);
+        z = bs::log1p(x + x/(invx + bs::sqrt(fma(invx, invx, bs::One<double>()))));
+      }
+      else if (BOOST_UNLIKELY(x > Oneosqrteps<double>()))
+      {
+        z = log(x)+Log_2<double>();
       }
       else
       {
-        A0 z;
-        if (x < 0.5)
-        {
-          A0 invx = bs::rec(x);
-          z = bs::log1p(x + x/(invx + bs::sqrt(fma(invx, invx, bs::One<A0>()))));
-        }
-        else if (BOOST_UNLIKELY(x > Oneosqrteps<A0>()))
-        {
-          z = log(x)+Log_2<A0>();
-        }
-        else
-        {
-          z =  log(x+hypot(One<A0>(), x));
-        }
-        return bitwise_xor(z, bitofsign(a0));
+        z =  log(x+hypot(One<double>(), x));
       }
+      return bitwise_xor(z, bitofsign(a));
     }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( asinh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
+  BOOST_FORCEINLINE
+  float asinh_(BOOST_SIMD_SUPPORTS(cpu_)
+             , float a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
+    // Exhaustive test for: boost::dispatch::functor<bs::tag::asinh_, boost::simd::tag::sse4_2_>
+    //              versus:  float(boost::math::asinh(double)
+    //              With T: float
+    //            in range: [-3.40282e+38, 3.40282e+38]
+    // 4278190078 values computed.
+    // 3628470338 values (84.81%)  within 0.0 ULPs
+    //  649693884 values (15.19%)  within 0.5 ULPs
+    //      25856 values ( 0.00%)  within 1.0 ULPs
+    float x = bs::abs(a);
+    float x2 = bs::sqr(x);
+    float z = Zero<float>();
+
+    if( x < 0.5f)
     {
-      // Exhaustive test for: boost::dispatch::functor<bs::tag::asinh_, boost::simd::tag::sse4_2_>
-      //              versus:  float(boost::math::asinh(double)
-      //              With T: float
-      //            in range: [-3.40282e+38, 3.40282e+38]
-      // 4278190078 values computed.
-      // 3628470338 values (84.81%)  within 0.0 ULPs
-      //  649693884 values (15.19%)  within 0.5 ULPs
-      //      25856 values ( 0.00%)  within 1.0 ULPs
-      A0 x = bs::abs(a0);
-      A0 x2 = bs::sqr(x);
-      A0 z = Zero<A0>();
-
-      if( x < 0.5f)
-      {
-        z = horn<A0
-          , 0x3f800000
-          , 0xbe2aa9ad
-          , 0x3d9949b1
-          , 0xbd2ee581
-          , 0x3ca4d6e6
-          > (x2)*x;
-      }
-      else if (BOOST_UNLIKELY(x > Oneosqrteps<A0>()))
-      {
-        z = log(x)+Log_2<A0>();
-      }
-      else
-      {
-        z =  log(x+hypot(One<A0>(), x));
-      }
-      return bitwise_xor(z, bitofsign(a0));
+      z = horn<float
+        , 0x3f800000
+        , 0xbe2aa9ad
+        , 0x3d9949b1
+        , 0xbd2ee581
+        , 0x3ca4d6e6
+        > (x2)*x;
     }
-  };
+    else if (BOOST_UNLIKELY(x > Oneosqrteps<float>()))
+    {
+      z = log(x)+Log_2<float>();
+    }
+    else
+    {
+      z =  log(x+hypot(One<float>(), x));
+    }
+    return bitwise_xor(z, bitofsign(a));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( asinh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // std_ decorator
+  template < typename T>
+  BOOST_FORCEINLINE
+  T asinh_(BOOST_SIMD_SUPPORTS(cpu_)
+          , std_tag const &
+          , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const std_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::asinh(a0);
-    }
-  };
-
+    return std::asinh(a);
+  }
 
 } } }
 

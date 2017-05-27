@@ -11,41 +11,52 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ASEC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ASEC_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/pio_2.hpp>
+#include <boost/simd/detail/constant/pio_2lo.hpp>
 #include <boost/simd/function/acsc.hpp>
-#include <boost/simd/function/minus.hpp>
+#include <boost/simd/function/if_zero_else.hpp>
+#include <boost/simd/function/is_equal.hpp>
+#include <boost/simd/function/acsc.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( asec_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::double_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const A0& a0) const BOOST_NOEXCEPT
-    {
-      A0 tmp =  (Pio_2<A0>()-acsc(a0)) +  Constant<A0, 0x3c91a62633145c07ll>();
-      return if_zero_else(is_equal(a0, One<A0>()), tmp);
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD_IF( asec_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return (bs::Pio_2<A0>()-bs::acsc(a0));
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vasec_( pack<T,N> const& a, std::false_type const&) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    p_t tmp =  (Pio_2<p_t>()-acsc(a)) +  Pio_2lo<p_t>();
+    return if_zero_else(is_equal(a, One<p_t>()), tmp);
+  }
+
+  template<typename T,std::size_t N>
+  BOOST_FORCEINLINE
+  pack<float,N> vasec_(pack<T,N> const& a, std::true_type const&) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return (bs::Pio_2<p_t>()-bs::acsc(a));
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> asec_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vasec_(a,std::is_same<T, float>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> asec_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::asec, a);
+  }
 
 } } }
 

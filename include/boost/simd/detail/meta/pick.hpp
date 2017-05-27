@@ -1,12 +1,9 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2017 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-
 **/
 //==================================================================================================
 #ifndef BOOST_SIMD_DETAIL_META_PICK_HPP_INCLUDED
@@ -18,6 +15,9 @@ namespace boost { namespace simd { namespace detail
 {
   template<std::size_t N>
   using case_ = tt_::integral_constant<std::size_t, N>;
+
+  template<typename T> struct default_ : std::true_type {};
+  template<typename T> struct never_   : std::false_type {};
 
   template<typename T, template<class> class... Checkers> struct pick;
   template< std::size_t N, typename T, bool Checked, template<class> class... Checkers> struct pick_;

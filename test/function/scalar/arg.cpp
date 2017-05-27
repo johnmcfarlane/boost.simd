@@ -9,7 +9,6 @@
 //==================================================================================================
 #include <boost/simd/function/scalar/arg.hpp>
 #include <scalar_test.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/constant/mone.hpp>

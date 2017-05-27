@@ -12,48 +12,29 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_MAKE_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/as.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
+  BOOST_SIMD_MAKE_CALLABLE(make_, make_);
+
+  template<typename Target, typename... Args>
+  Target make(Args const&... args) BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_MAKE_TAG(ext, make_, boost::dispatch::abstract_<make_>);
+    return make_(as_<Target>(), args... );
   }
 
-  namespace ext
+  template<typename Target, typename Arg0>
+  Target make(Arg0 arg0) BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, make_)
+    return make_(as_<Target>(), arg0);
   }
 
-  namespace detail
+  template<typename Target, typename Arg0, typename... Args>
+  Target make(as_<Target> const& tgt, Arg0 arg0, Args const&... args) BOOST_NOEXCEPT
   {
-    BOOST_DISPATCH_CALLABLE_DEFINITION(tag::make_,make);
-  }
-
-  template<typename Target, typename Args> auto make(Args const& args)
-  BOOST_NOEXCEPT_DECLTYPE(detail::make(as_<Target>(), args ))
-  {
-    return detail::make(as_<Target>(), args );
-  }
-
-  template<typename Target, typename... Args> auto make(Args const&... args)
-  BOOST_NOEXCEPT_DECLTYPE(detail::make(as_<Target>(), args... ))
-  {
-    return detail::make(as_<Target>(), args... );
-  }
-
-  template<typename Target, typename... Args> auto make(Target const& tgt, Args const&... args)
-  BOOST_NOEXCEPT_DECLTYPE(detail::make(tgt,args... ))
-  {
-    static_assert ( boost::dispatch::detail::is_target<Target>::value
-                  , "boost::simd::make first parameter must be an instanciation of boost::simd::as_"
-                  );
-
-    return detail::make(tgt,args... );
+    return make_(tgt, arg0, args... );
   }
 } }
 

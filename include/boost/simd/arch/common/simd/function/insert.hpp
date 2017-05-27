@@ -1,70 +1,62 @@
 //==================================================================================================
-/*!
-  @file
-
-  @copyright 2016 NumScale SAS
+/**
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INSERT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INSERT_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/function/genmask.hpp>
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/aliasing.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
-#include <boost/simd/meta/hierarchy/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/function/genmask.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( insert_
-                          , (typename A0, typename Ext, typename A1, typename A2)
-                          , bd::cpu_
-                          , bs::pack_<bd::unspecified_<A0>,Ext>
-                          , bd::scalar_< bd::integer_<A1>>
-                          , bd::scalar_< bd::unspecified_<A2>>
-                          )
+  template< typename T, std::size_t N, typename X
+          , typename I, typename V
+          >
+  BOOST_FORCEINLINE void insert_( BOOST_SIMD_SUPPORTS(simd_)
+                                , pack<T,N,X>& dst, I const& i, V const& value
+                                ) BOOST_NOEXCEPT
   {
+    reinterpret_cast<detail::may_alias_t<T>*>(&dst.storage())[i] = value;
+  }
 
-    BOOST_FORCEINLINE void operator() ( A0 & a0, A1 const& a1, A2 const & a2) const BOOST_NOEXCEPT
-    {
-      reinterpret_cast<detail::may_alias_t<bd::scalar_of_t<A0>>*>(&a0.storage())[a1] = a2;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( insert_
-                          , (typename A0, typename Ext, typename A1, typename A2)
-                          , bd::cpu_
-                          , bs::pack_<bs::logical_<A0>,Ext>
-                          , bd::scalar_< bd::integer_<A1>>
-                          , bd::scalar_< bd::unspecified_<A2>>
-                          )
+  template< typename T, std::size_t N, typename X
+          , typename I, typename V
+          >
+  BOOST_FORCEINLINE void insert_impl( aggregate_storage const&
+                                    , pack<logical<T>,N,X>& dst, I const& i, V const& value
+                                    ) BOOST_NOEXCEPT
   {
-    static inline void do_( A0 & a0, A1 const& a1, A2 const & a2, aggregate_storage const&) BOOST_NOEXCEPT
-    {
-      A0::traits::at(a0,a1) = a2;
-    }
+    pack<logical<T>,N,X>::traits::at(dst,i) = value;
+  }
 
-    template<typename K>
-    static inline void do_( A0 & a0, A1 const& a1, A2 const & a2, K const&) BOOST_NOEXCEPT
-    {
-      using value_t = typename A0::value_type::value_type;
-      using ptr_t   = detail::may_alias_t<value_t>*;
-      reinterpret_cast<ptr_t>(&a0.storage())[a1] = genmask<value_t>(a2);
-    }
+  template< typename T, std::size_t N, typename X
+          , typename I, typename V
+          , typename K
+          >
+  BOOST_FORCEINLINE void insert_impl( K const&
+                                    , pack<logical<T>,N,X>& dst, I const& i, V const& value
+                                    ) BOOST_NOEXCEPT
+  {
+    reinterpret_cast<detail::may_alias_t<T>*>(&dst.storage())[i] = genmask(value, as_<T>());
+  }
 
-    BOOST_FORCEINLINE void operator() ( A0 & a0, A1 const& a1, A2 const & a2) const BOOST_NOEXCEPT
-    {
-      do_(a0,a1,a2, typename A0::storage_kind{});
-    }
-  };
+  template< typename T, std::size_t N, typename X
+          , typename I, typename V
+          >
+  BOOST_FORCEINLINE void insert_( BOOST_SIMD_SUPPORTS(simd_)
+                                , pack<logical<T>,N,X>& dst, I const& i, V const& value
+                                ) BOOST_NOEXCEPT
+  {
+    return insert_impl(typename pack<logical<T>,N,X>::storage_kind{},dst,i,value);
+  }
 } } }
 
 #endif

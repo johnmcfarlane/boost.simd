@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  Copyright 2016 NumScale SAS
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -9,108 +9,95 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 
+#include <boost/simd/config.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/meta/as_arithmetic.hpp>
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/function/combine.hpp>
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/nsm.hpp>
+#include <boost/simd/function/insert.hpp>
+#include <boost/simd/logical.hpp>
+#include <boost/simd/as.hpp>
+#include <initializer_list>
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
 #pragma warning(disable: 4244) // conversion and loss of data
 #endif
+
 #if defined(__GNUC__)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-braces"
 #endif
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = ::boost::dispatch;
-  namespace bs = ::boost::simd;
+  template<typename Pack, typename... N, typename Value>
+  BOOST_FORCEINLINE void splat_unroll(Pack& p, nsm::list<N...> const&, Value const& v)
+  {
+    (void)std::initializer_list<bool>{ (simd::insert<N::value>(p, v),true)... };
+  }
 
   //------------------------------------------------------------------------------------------------
-  // splat from a scalar to a pack
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename V)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unspecified_<V>>
-                          , bd::target_<bs::pack_<bd::unspecified_<Target>,bs::simd_emulation_>>
-                          )
+  // Arithmetic common splat
+  template<typename T, std::size_t N, typename X, typename Value>
+  BOOST_FORCEINLINE pack<T,N,X>
+  splat_impl(as_<pack<T,N,X>> const&,aggregate_storage const&, Value const& v) BOOST_NOEXCEPT
   {
-    using target_t  = typename Target::type;
-    using storage_t = typename target_t::storage_type;
-    using value_t   = typename storage_t::value_type;
+    typename pack<T,N,X>::storage_type::value_type s(v);
+    return simd::combine(s,s);
+  }
 
-    BOOST_FORCEINLINE target_t operator()(V const& v, Target const&) const
-    {
-      return do_(v, typename target_t::storage_kind{}, typename target_t::traits::static_range{} );
-    }
+  template<typename T, std::size_t N, typename X, typename K, typename Value>
+  BOOST_FORCEINLINE pack<T,N,X>
+  splat_impl(as_<pack<T,N,X>> const&,K const&, Value const& v) BOOST_NOEXCEPT
+  {
+    pack<T,N,X> that;
+    splat_unroll(that, nsm::range<int, 0, N>{}, v);
+    return that;
+  }
 
-    template<typename N, typename T>
-    BOOST_FORCEINLINE T const& value_(T const& t) const { return t; }
-
-    template<typename K, typename N>
-    BOOST_FORCEINLINE target_t do_(V const& v, K const&, nsm::list<N> const&) const
-    {
-      target_t that;
-      that[0] = value_t(v);
-      return that;
-    }
-
-    template<typename K, typename N0, typename N1, typename... N>
-    BOOST_FORCEINLINE target_t do_(V const& v, K const&, nsm::list<N0,N1,N...> const&) const
-    {
-      value_t s(v);
-      return {value_<N0>(s),value_<N1>(s),value_<N>(s)...};
-    }
-
-    template<typename N0, typename N1, typename... N> BOOST_FORCEINLINE
-    target_t do_(V const& v, aggregate_storage const&, nsm::list<N0,N1,N...> const&) const
-    {
-      typename storage_t::value_type s(v);
-      return combine(s,s);
-    }
-  };
+  template<typename T, std::size_t N, typename X, typename Value>
+  BOOST_FORCEINLINE pack<T,N,X> splat_( BOOST_SIMD_SUPPORTS(simd_)
+                                      , as_<pack<T,N,X>> const& t, Value const& v
+                                      ) BOOST_NOEXCEPT
+  {
+    return splat_impl(t, typename pack<T,N,X>::storage_kind{}, v);
+  }
 
   //------------------------------------------------------------------------------------------------
-  // splat from a scalar to a pack of logical
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename V, typename Ext)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unspecified_<V>>
-                          , bd::target_<bs::pack_<bs::logical_<Target>,Ext>>
-                          )
+  // Logical common splat
+  template<typename T, std::size_t N, typename X, typename Value>
+  BOOST_FORCEINLINE pack<logical<T>,N,X> splat_impl ( as_<pack<logical<T>,N,X>> const&
+                                                    , aggregate_storage const&, Value const& v
+                                                    ) BOOST_NOEXCEPT
   {
-    using target_t  = typename Target::type;
-    using storage_t = typename target_t::storage_type;
+    typename pack<logical<T>,N,X>::storage_type::value_type s(!!v);
+    return simd::combine(s,s);
+  }
 
-    BOOST_FORCEINLINE target_t operator()(V const& v, Target const&) const
-    {
-      return do_(v, typename target_t::storage_kind{}, typename target_t::traits::static_range{} );
-    }
+  template<typename K, typename T, std::size_t N, typename X, typename Value>
+  BOOST_FORCEINLINE pack<logical<T>,N,X>
+  splat_impl( as_<pack<logical<T>,N,X>> const&, K const&, Value const& v) BOOST_NOEXCEPT
+  {
+    pack<T,N,X> that;
+    splat_unroll(that, nsm::range<int, 0, N>{}, detail::genmask(v, as_<T>()) );
+    return simd::bitwise_cast<pack<logical<T>,N,X>>( that );
+  }
 
-    template<typename K, typename... N>
-    BOOST_FORCEINLINE target_t do_(V const& v, K const&, nsm::list<N...> const&) const
-    {
-      using base_t  = as_arithmetic_t<target_t>;
-      return bitwise_cast<target_t>( genmask<base_t>(v) );
-    }
-
-    template<typename... N>
-    BOOST_FORCEINLINE
-    target_t do_(V const& v, aggregate_storage const&, nsm::list<N...> const&) const
-    {
-      typename storage_t::value_type s(!!v);
-      return combine(s,s);
-    }
-  };
+  template<typename T, std::size_t N, typename X, typename Value>
+  BOOST_FORCEINLINE pack<logical<T>,N,X> splat_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                , as_<pack<logical<T>,N,X>> const& t, Value const& v
+                                                ) BOOST_NOEXCEPT
+  {
+    return splat_impl(t, typename pack<T,N,X>::storage_kind{}, v);
+  }
 } } }
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
+
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
 #endif
+
 #endif

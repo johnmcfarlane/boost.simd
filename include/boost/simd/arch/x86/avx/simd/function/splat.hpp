@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  Copyright 2016 NumScale SAS
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -9,114 +9,64 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_SPLAT_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/config.hpp>
+#include <boost/simd/detail/pack.hpp>
+#include <boost/simd/as.hpp>
 
-namespace boost { namespace simd { namespace ext
+#ifdef BOOST_MSVC
+# pragma warning(push)
+# pragma warning(disable: 4244) // conversion loss of data
+#endif
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = ::boost::dispatch;
-  namespace bs = ::boost::simd;
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of float
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value> >
-                          , bd::target_<bs::pack_<bd::single_<Target>,bs::avx_>>
-                          )
+  template<typename Value>
+  BOOST_FORCEINLINE pack<double,4> splat_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                          , as_<pack<double,4>> const&, Value const& v
+                                          ) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
+    return _mm256_set1_pd(static_cast<double>(v));
+  }
 
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_ps( static_cast<float>(v) );
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of double
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value> >
-                          , bd::target_<bs::pack_<bd::double_<Target>,bs::avx_>>
-                          )
+  template<typename T, typename Value>
+  BOOST_FORCEINLINE typename std::enable_if < std::is_integral<T>::value
+                                            , pack<T,4,avx_>
+                                            >::type
+  splat_(BOOST_SIMD_SUPPORTS(avx_), as_<pack<T,4,avx_>> const&, Value const& v) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
+    return _mm256_set1_epi64x(v);
+  }
 
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_pd( static_cast<double>(v) );
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of 8 bits integers
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value>>
-                          , bd::target_<bs::pack_<bd::ints8_<Target>,bs::avx_>>
-                          )
+  template<typename T, typename Value>
+  BOOST_FORCEINLINE typename std::enable_if < std::is_integral<T>::value
+                                            , pack<T,8,avx_>
+                                            >::type
+  splat_ ( BOOST_SIMD_SUPPORTS(avx_), as_<pack<T,8,avx_>> const&, Value const& v) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
+    return _mm256_set1_epi32(static_cast<T>(v));
+  }
 
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_epi8(v);
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of 16 bits integers
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value>>
-                          , bd::target_<bs::pack_<bd::ints16_<Target>,bs::avx_>>
-                          )
+  template<typename T, typename Value>
+  BOOST_FORCEINLINE typename std::enable_if < std::is_integral<T>::value
+                                            , pack<T,16,avx_>
+                                            >::type
+  splat_(BOOST_SIMD_SUPPORTS(avx_), as_<pack<T,16,avx_>> const&, Value const& v) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
+    return _mm256_set1_epi16(static_cast<T>(v));
+  }
 
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_epi16(v);
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of 32 bits integers
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value>>
-                          , bd::target_<bs::pack_<bd::ints32_<Target>,bs::avx_>>
-                          )
+  template<typename T, typename Value>
+  BOOST_FORCEINLINE typename std::enable_if < std::is_integral<T>::value
+                                            , pack<T,32,avx_>
+                                            >::type
+  splat_(BOOST_SIMD_SUPPORTS(avx_), as_<pack<T,32,avx_>> const&, Value const& v) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
-
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_epi32(v);
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // splat from a scalar into a pack of 64 bits integers
-  BOOST_DISPATCH_OVERLOAD ( splat_
-                          , (typename Target, typename Value)
-                          , bs::avx_
-                          , bd::scalar_<bd::unspecified_<Value>>
-                          , bd::target_<bs::pack_<bd::ints64_<Target>,bs::avx_>>
-                          )
-  {
-    using target = typename Target::type;
-
-    BOOST_FORCEINLINE target operator()(Value const& v, Target const&) const BOOST_NOEXCEPT
-    {
-      return _mm256_set1_epi64x(v);
-    }
-  };
+    return _mm256_set1_epi8(static_cast<T>(v));
+  }
 } } }
+
+#ifdef BOOST_MSVC
+# pragma warning(pop)
+#endif
 
 #endif

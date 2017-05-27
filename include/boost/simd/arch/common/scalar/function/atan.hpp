@@ -10,6 +10,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ATAN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ATAN_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/std.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/arch/common/detail/scalar/f_invtrig.hpp>
@@ -18,35 +19,29 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( atan_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T atan_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return detail::invtrig_base<A0,tag::radian_tag,tag::not_simd_type>::atan(a0);
-    }
-  };
+    return detail::invtrig_base<T,tag::radian_tag,tag::not_simd_type>::atan(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( atan_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T atan_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const&
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::atan(a0);
-    }
-  };
+    return std::atan(a);
+  }
+
 } } }
 
 

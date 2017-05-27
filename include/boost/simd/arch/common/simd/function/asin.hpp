@@ -44,6 +44,16 @@ namespace boost { namespace simd { namespace detail
     return map_to(simd::asin, a);
   }
 
+  //================================================================================================
+  // std_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> asin_( BOOST_SIMD_SUPPORTS(simd_)
+                   , std_tag const&
+                   , pack<T,N,X> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(std_(simd::asin), a);
+  }
 } } }
 
 #endif

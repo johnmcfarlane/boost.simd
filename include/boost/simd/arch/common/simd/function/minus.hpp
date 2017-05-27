@@ -138,7 +138,7 @@ namespace boost { namespace simd { namespace detail
                      ) BOOST_NOEXCEPT
   {
     using p_t =  pack<T2,M>;
-    return simd::minus(p_t(a), b);
+    return saturated_(simd::minus)(p_t(a), b);
   }
 
   // saturated mixed implementation pack < T1 > T2
@@ -153,7 +153,7 @@ namespace boost { namespace simd { namespace detail
                     ) BOOST_NOEXCEPT
   {
     using p_t =  pack<T1,N>;
-    return simd::minus(a, p_t(b));
+    return saturated_(simd::minus)(a, p_t(b));
   }
 
 

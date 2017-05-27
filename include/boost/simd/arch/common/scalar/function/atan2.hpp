@@ -10,7 +10,6 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ATAN2_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ATAN2_HPP_INCLUDED
-#include <boost/simd/function/raw.hpp>
 #include <boost/simd/function/std.hpp>
 
 #include <boost/simd/constant/nan.hpp>
@@ -34,67 +33,60 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( atan2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // -----------------------------------------------------------------------------------------------
+  // Pedantic case
+  template<typename T>
+  BOOST_FORCEINLINE T
+  atan2_(BOOST_SIMD_SUPPORTS(cpu_)
+        ,  pedantic_tag const &
+        , T a0
+        , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const pedantic_tag &,
-                                     A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      #ifndef BOOST_SIMD_NO_NANS
-      if (is_nan(a0) || is_nan(a1)) return Nan<A0>();
-      #endif
+#ifndef BOOST_SIMD_NO_NANS
+    if (is_nan(a0) || is_nan(a1)) return Nan<T>();
+#endif
 
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      if (is_inf(a0) && is_inf(a1))
-      {
-        a0 = copysign(One<A0>(), a0);
-        a1 = copysign(One<A0>(), a1);
-      }
-      #endif
-      A0 q = bs::abs(a0/a1);
-      A0 z = detail::invtrig_base<A0,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, rec(q));
-      A0 sgn = signnz(a0);
-      z = (is_positive(a1)? z: Pi<A0>()-z)*sgn;
-    return is_eqz(a0) ? if_else_zero(is_negative(a1), Pi<A0>()*sgn) : z;
+#ifndef BOOST_SIMD_NO_INFINITIES
+    if (is_inf(a0) && is_inf(a1))
+    {
+      a0 = copysign(One<T>(), a0);
+      a1 = copysign(One<T>(), a1);
     }
-  };
+#endif
+    T q = bs::abs(a0/a1);
+    T z = detail::invtrig_base<T,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, rec(q));
+    T sgn = signnz(a0);
+    z = (is_positive(a1)? z: Pi<T>()-z)*sgn;
+    return is_eqz(a0) ? if_else_zero(is_negative(a1), Pi<T>()*sgn) : z;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( atan2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // -----------------------------------------------------------------------------------------------
+  // std case
+  template<typename T>
+  BOOST_FORCEINLINE T
+  atan2_(BOOST_SIMD_SUPPORTS(cpu_)
+        ,  std_tag const &
+        , T a0
+        , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return std::atan2(a0, a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( atan2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return std::atan2(a0, a1);
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Regular case
+  template<typename T>
+  BOOST_FORCEINLINE T
+  atan2_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a0
+        , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      A0 q = bs::abs(a0/a1);
-      A0 z = detail::invtrig_base<A0,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, bs::rec(q));
-      return (is_positive(a1)? z: Pi<A0>()-z)*signnz(a0);
-    }
-  };
+    T q = bs::abs(a0/a1);
+    T z = detail::invtrig_base<T,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, bs::rec(q));
+    return (is_positive(a1)? z: Pi<T>()-z)*signnz(a0);
+  }
+
 } } }
 
 

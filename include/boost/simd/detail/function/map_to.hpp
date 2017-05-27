@@ -1,6 +1,6 @@
 //==================================================================================================
 /**
-  Copyright 2016 NumScale SAS
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
@@ -11,6 +11,7 @@
 
 #include <boost/simd/detail/diagnostic.hpp>
 #include <boost/simd/detail/meta/storage_kind.hpp>
+#include <boost/simd/detail/meta/value_type.hpp>
 #include <boost/simd/function/extract.hpp>
 #include <boost/simd/function/combine.hpp>
 #include <boost/simd/function/slice.hpp>
@@ -19,21 +20,39 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename Func, typename Pi, typename... Pn>
+  template<typename... Pn> struct first_pack;
+
+  template<typename P0> struct first_pack<P0>
+  {
+    using type = P0;
+  };
+
+  template<typename T, std::size_t N, typename X, typename... Pn>
+  struct first_pack< pack<T,N,X>, Pn...>
+  {
+    using type = pack<T,N,X>;
+  };
+
+  template<typename P0, typename... Pn>
+  struct first_pack< P0, Pn...> : first_pack<Pn...> {};
+
+  template<typename Func, typename... Pn>
   struct automapper
   {
+    using fp_t = typename first_pack<Pn...>::type;
+
     // Use the very first pack as reference
-    using traits              = typename Pi::traits;
+    using traits              = typename fp_t::traits;
 
     // We build the return pack as a pack of same cardinal but which type is the scalar return
     // type of functor applied to the input parameter value type.
-    using return_type         = decltype(Func()(value_type_t<Pi>(),value_type_t<Pn>()...));
-    using result_type         = typename Pi::template rebind<return_type>;
+    using return_type         = decltype(Func()(value_type_t<Pn>()...));
+    using result_type         = typename fp_t::template rebind<return_type>;
     using result_storage_type = typename result_type::storage_type;
     using result_traits       = typename result_type::traits;
 
     // We need to iterate over output type cardinal to fill it
-    using element_range       = nsm::range<std::size_t, 0, Pi::static_size>;
+    using element_range       = nsm::range<std::size_t, 0, fp_t::static_size>;
 
     // Constructing the output depends on the storage_kind of all the inputs
     struct storage_checker
@@ -119,41 +138,39 @@ namespace boost { namespace simd { namespace detail
 
     // ---------------------------------------------------------------------------------------------
     // Map dispatcher when both input and output are aggregates
-    BOOST_FORCEINLINE result_type map_( Pi const& p0, Pn const&... p ) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE result_type map_( Pn const&... p ) const BOOST_NOEXCEPT
     {
       BOOST_SIMD_DIAG("aggregation automap for: " << *this);
       Func f;
-      return combine( f( slice_low(p0), slice_low(p)...)
-                    , f( slice_high(p0), slice_high(p)...)
-                    );
+      return combine( f( slice_low(p)...), f( slice_high(p)...) );
     }
 
     template <typename... N>
     BOOST_FORCEINLINE result_type map_( nsm::bool_<true> const&
                                       , ::boost::simd::aggregate_storage const&
                                       , nsm::list<N...> const&
-                                      , Pi const& p0, Pn const&... pn
+                                      , Pn const&... pn
                                       ) const BOOST_NOEXCEPT
     {
-      return map_( p0, pn... );
+      return map_( pn... );
     }
 
     // ---------------------------------------------------------------------------------------------
     // Map operator()
-    BOOST_FORCEINLINE result_type operator()(Pi const& p0, Pn const&... pn) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE result_type operator()(Pn const&... pn) const BOOST_NOEXCEPT
     {
-      return map_( storage_kind{}, result_storage_kind{}, element_range{}, p0, pn... );
+      return map_( storage_kind{}, result_storage_kind{}, element_range{}, pn... );
     }
   };
 
   // -----------------------------------------------------------------------------------------------
   // map_to takes a callable object and a series of value that can be pack (or not) and
   // try to find the best way to implement it using the scalar version of the callable object
-  template<typename Function, typename P0, typename... Pn>
-  BOOST_FORCEINLINE typename automapper<Function,P0,Pn...>::result_type
-  map_to(Function const&, P0 const& p0, Pn const&... pn) BOOST_NOEXCEPT
+  template<typename Function, typename... Pn>
+  BOOST_FORCEINLINE typename automapper<Function,Pn...>::result_type
+  map_to(Function const&, Pn const&... pn) BOOST_NOEXCEPT
   {
-    return automapper<Function,P0,Pn...>()(p0, pn...);
+    return automapper<Function,Pn...>()(pn...);
   }
 } } }
 

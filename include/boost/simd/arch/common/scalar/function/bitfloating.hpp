@@ -18,41 +18,47 @@
 #include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( bitfloating_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
+
+  template<typename T> using btf_t =  boost::dispatch::as_floating_t<T>;
+
+  template<typename T
+           , typename = typename std::enable_if<std::is_integral<T>::value>::type
+           , typename = typename std::enable_if<sizeof(T) >= 4>
+  >
+  BOOST_FORCEINLINE
+  btf_t<T> sbitfloating_(T const& a
+                        , std::true_type const &
+                        ) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0 >= Zero<A0>() ?
-        bitwise_cast<result_t>(a0) :
-        bitwise_cast<result_t>(Signmask<A0>()-a0);
-    }
-  };
+    using result_t = bd::as_floating_t<T>;
+    return a >= Zero<T>() ?
+      bitwise_cast<result_t>(a) :
+      bitwise_cast<result_t>(Signmask<T>()-a);
+  }
 
-/////////////////////////////////////////////////////////////////////////////
-  // Implementation when type A0 is unsigned
-  /////////////////////////////////////////////////////////////////////////////
-
-
-  BOOST_DISPATCH_OVERLOAD ( bitfloating_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unsigned_<A0> >
-                          )
+  template<typename T
+           , typename = typename std::enable_if<sizeof(T) >= 4>
+>
+  BOOST_FORCEINLINE
+  btf_t<T> sbitfloating_( T a
+                        , std::false_type const &
+                        ) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_cast<result_t>(a0);
-    }
-  };
+    using result_t = bd::as_floating_t<T>;
+    return simd::bitwise_cast<result_t>(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  btf_t<T> bitfloating_( BOOST_SIMD_SUPPORTS(cpu_)
+                        , T a
+                        ) BOOST_NOEXCEPT
+  {
+    return sbitfloating_(a, std::is_signed<T>());
+  }
+
 } } }
 
 

@@ -10,48 +10,63 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITFLOATING_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITFLOATING_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_gez.hpp>
-#include <boost/simd/function/minus.hpp>
 #include <boost/simd/detail/dispatch/meta/as_floating.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(bitfloating_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      using result = bd::as_floating_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        A0 s = bitwise_cast<A0>(Signmask<result>());
-        return bitwise_cast<result>(if_else(is_gez(a0) , a0, s-a0));
-      }
-   };
+  // Native implementation
+  template<typename T, std::size_t N
+           , typename = typename std::enable_if<std::is_integral<T>::value>::type
+           , typename = typename std::enable_if<sizeof(T) >= 4>
+  >
+  BOOST_FORCEINLINE
+  btf_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
+                                , std::true_type const &
+                                ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    using pf_t = bd::as_floating_t<p_t>;
+    auto s = bitwise_cast<p_t>(Signmask<pf_t>());
+    return bitwise_cast<pf_t>(if_else(is_gez(a), a, s-a));
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(bitfloating_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::unsigned_<A0>, X>
-                          )
-   {
-      using result = bd::as_floating_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return simd::bitwise_cast<result>(a0);
-      }
-   };
+  template<typename T, std::size_t N
+           , typename = typename std::enable_if<sizeof(T) >= 4>
+  >
+  BOOST_FORCEINLINE
+  btf_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
+                                , std::false_type const &
+                                ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    using pf_t = bd::as_floating_t<p_t>;
+    return simd::bitwise_cast<pf_t>(a);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  btf_t<pack<T,N>> bitfloating_(BOOST_SIMD_SUPPORTS(simd_)
+                               , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vbitfloating_(a, std::is_signed<T>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  btf_t<pack<T,N>> bitfloating_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::bitfloating, a);
+  }
 
 } } }
 

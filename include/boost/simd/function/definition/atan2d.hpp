@@ -12,25 +12,13 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_ATAN2D_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, atan2d_, boost::dispatch::elementwise_<atan2d_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, atan2d_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::atan2d_,atan2d);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(atan2d_,atan2d);
 } }
 
 #endif
+
+

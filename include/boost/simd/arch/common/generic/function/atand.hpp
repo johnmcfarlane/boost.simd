@@ -8,13 +8,12 @@
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 */
 //==================================================================================================
-#ifndef BOOST_SIMD_ARCH_COMMON_GENERIC_FUNCTION_ASINPI_HPP_INCLUDED
-#define BOOST_SIMD_ARCH_COMMON_GENERIC_FUNCTION_ASINPI_HPP_INCLUDED
+#ifndef BOOST_SIMD_ARCH_COMMON_GENERIC_FUNCTION_ATAND_HPP_INCLUDED
+#define BOOST_SIMD_ARCH_COMMON_GENERIC_FUNCTION_ATAND_HPP_INCLUDED
 
 #include <boost/simd/detail/pack.hpp>
-#include <boost/simd/function/pedantic.hpp>
-#include <boost/simd/function/asin.hpp>
-#include <boost/simd/constant/invpi.hpp>
+#include <boost/simd/function/atan.hpp>
+#include <boost/simd/function/indeg.hpp>
 #include <boost/config.hpp>
 
 
@@ -22,10 +21,10 @@ namespace boost { namespace simd { namespace detail
 {
   template<typename T, typename Arch>
   BOOST_FORCEINLINE
-  T asinpi_(BOOST_SIMD_SUPPORTS(Arch)
+  T atand_(BOOST_SIMD_SUPPORTS(Arch)
                   , T const& a) BOOST_NOEXCEPT
   {
-    return Invpi<T>()*simd::asin(a);
+    return indeg(simd::atan(a));
   };
 
 } } }

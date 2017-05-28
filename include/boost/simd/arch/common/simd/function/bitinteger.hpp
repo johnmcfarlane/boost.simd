@@ -12,46 +12,29 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_BITINTEGER_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_positive.hpp>
 #include <boost/simd/function/minus.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(bitinteger_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, signed>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        result a00 = simd::bitwise_cast<result>(a0);
-        return if_else(bs::is_positive(a0), a00, Signmask<result>()-a00 );
-      }
-   };
-
-   BOOST_DISPATCH_OVERLOAD_IF(bitinteger_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, signed>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return simd::bitwise_cast<result>(a0);
-      }
-   };
+  template<typename T, std::size_t N
+          , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
+  >
+  BOOST_FORCEINLINE
+  btg_t<pack<T, N>> bitinteger_( BOOST_SIMD_SUPPORTS(simd_)
+                      , pack<T, N> a
+                      ) BOOST_NOEXCEPT
+  {
+    using result_t = btg_t<pack<T, N>>;
+    result_t a0 = simd::bitwise_cast<result_t>(a);
+    return if_else(bs::is_positive(a), a0, Signmask<result_t>()-a0 );
+  }
 
 } } }
 

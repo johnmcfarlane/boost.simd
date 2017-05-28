@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace detail
   pack<T,N> arg_(BOOST_SIMD_SUPPORTS(simd_)
                  , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    return if_else_zero(is_negative(a0),Pi<T>());
+    return if_else_zero(is_negative(a),Pi(as(a)));
   }
 
   // Emulated implementation
@@ -56,7 +56,7 @@ namespace boost { namespace simd { namespace detail
                    , pedantic_tag const&
                    , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {
-    T r = if_else_zero(is_negative(a),Pi<T>());
+    auto r = if_else_zero(is_negative(a),Pi(as(a)));
 #ifndef BOOST_SIMD_NO_NANS
     return if_allbits_else(is_nan(a),r);
 #else
@@ -76,3 +76,5 @@ namespace boost { namespace simd { namespace detail
    }
 
 } } }
+
+#endif

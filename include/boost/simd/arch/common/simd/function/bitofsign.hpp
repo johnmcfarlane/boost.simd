@@ -18,48 +18,38 @@
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/constant/zero.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(bitofsign_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::signed_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return bitwise_and(a0, bs::Signmask<A0>());
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vbitofsign_( pack<T,N> const& a, std::true_type const &) BOOST_NOEXCEPT
+  {
+    return bitwise_and(a, Signmask<pack<T,N>>());
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(bitofsign_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-     BOOST_FORCEINLINE A0 operator()(const A0&)const
-      {
-        return Zero<A0>();
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vbitofsign_( pack<T,N> const& , std::false_type const &) BOOST_NOEXCEPT
+  {
+    return Zero<pack<T,N>>();
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(bitofsign_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return bitwise_and(a0, bs::Mzero<A0>());
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> bitofsign_(BOOST_SIMD_SUPPORTS(simd_)
+              , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vbitofsign_(a, std::is_signed<T>()); ;
+  }
+
+ // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> bitofsign_(BOOST_SIMD_SUPPORTS(simd_)
+                                      , pack<T,N,simd_emulation_> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(simd::bitofsign, a);
+  }
 
 } } }
 

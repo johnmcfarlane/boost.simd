@@ -11,38 +11,36 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITOFSIGN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITOFSIGN_HPP_INCLUDED
 
-#include <boost/simd/constant/mzero.hpp>
+#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( bitofsign_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T sbitofsign_( T a, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_and(a0, Signmask<A0>());
-    }
-  };
+    return bitwise_and(a, Signmask<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( bitofsign_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T sbitofsign_( T , std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_and(a0, Mzero<A0>());
-    }
-  };
+    return Zero<T>();
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T bitofsign_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a) BOOST_NOEXCEPT
+  {
+    return sbitofsign_(a, std::is_signed<T>()); ;
+  }
+
 } } }
 
 

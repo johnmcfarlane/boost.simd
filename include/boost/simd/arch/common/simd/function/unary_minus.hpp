@@ -10,75 +10,107 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_UNARY_MINUS_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/constant/valmin.hpp>
+#include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/bitwise_xor.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_equal.hpp>
-#include <boost/simd/function/minus.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/constant/zero.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bs = boost::simd;
-  namespace bd = boost::dispatch;
 
-  BOOST_DISPATCH_OVERLOAD_IF( unary_minus_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            )
+  //================================================================================================
+  // regular case
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vum_(pack<T,N> a, detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bs::Zero<A0>() - a0;
-    }
-  };
+    return bitwise_xor(Mzero(as(a)),a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( unary_minus_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::floating_<A0>,X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vum_(pack<T,N> a, detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_xor(bs::Mzero<A0>(),a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( unary_minus_
-                          , (typename T, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::signed_<T>, X>
-                           )
-  {
-    BOOST_FORCEINLINE T operator()(const saturated_tag &, T const& a0) const BOOST_NOEXCEPT
-    {
-      return if_else(a0 == Valmin<T>(),Valmax<T>(),bs::unary_minus(a0));
-    }
-  };
+    return Zero(as(a)) - a;;
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( unary_minus_
-                          , (typename T, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bs::pack_<bd::unspecified_<T>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vum_(pack<T,N> a, detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(const saturated_tag &, T const& a) const BOOST_NOEXCEPT
-    {
-      return unary_minus(a);
-    }
-  };
+    return Zero(as(a)) - a;;
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> unary_minus_(BOOST_SIMD_SUPPORTS(simd_)
+                        , pack<T,N> a) BOOST_NOEXCEPT
+  {
+    return vum_(a, um_picker<T>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> unary_minus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                         , pack<T,N,simd_emulation_> const& a
+                                         ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::unary_minus, a);
+  }
+
+  //================================================================================================
+  // saturated_ decorator
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vums_(pack<T,N> a, detail::case_<0> const&) BOOST_NOEXCEPT
+  {
+    return bitwise_xor(Mzero(as(a)),a);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vums_(pack<T,N> a, detail::case_<1> const&) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T, N>;
+    return if_else(a == Valmin<p_t>(),Valmax<p_t>(),unary_minus(a));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vums_(pack<T,N> a, detail::case_<2> const&) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T, N>;
+    return if_else(a == Valmin<p_t>(),Valmax<p_t>(),unary_minus(a));
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> unary_minus_(BOOST_SIMD_SUPPORTS(simd_)
+                        , saturated_tag const &
+                        , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vums_(a,um_picker<T>{});
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> unary_minus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                         , saturated_tag const &
+                                         , pack<T,N,simd_emulation_> const& a
+                                         ) BOOST_NOEXCEPT
+  {
+    return map_to(saturated_(simd::unary_minus), a);
+  }
 
 } } }
 

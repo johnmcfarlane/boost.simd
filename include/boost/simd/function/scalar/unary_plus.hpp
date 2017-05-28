@@ -11,6 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SCALAR_UNARY_PLUS_HPP_INCLUDED
 
 #include <boost/simd/function/definition/unary_plus.hpp>
-#include <boost/simd/arch/common/scalar/function/unary_plus.hpp>
+#include <boost/simd/arch/common/generic/function/unary_plus.hpp>
 
 #endif

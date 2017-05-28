@@ -12,6 +12,6 @@
 
 #include <boost/simd/function/scalar/unary_plus.hpp>
 #include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/unary_plus.hpp>
+#include <boost/simd/arch/common/generic/function/unary_plus.hpp>
 
 #endif

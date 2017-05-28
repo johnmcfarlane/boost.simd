@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_UNARY_MINUS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, unary_minus_, boost::dispatch::elementwise_<unary_minus_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, unary_minus_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::unary_minus_,unary_minus);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(unary_minus_,unary_minus);
 } }
 
 #endif
+

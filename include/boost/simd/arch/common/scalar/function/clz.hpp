@@ -22,78 +22,84 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( clz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type64_<A0> >
-                          )
+  template<typename T> using ui_t =  boost::dispatch::as_integer_t<T, unsigned>;
+  template<typename T>  BOOST_FORCEINLINE
+  ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
+                      , T a0) BOOST_NOEXCEPT ;
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sclz_(T a0, detail::case_<0> const&) BOOST_NOEXCEPT //64bits
   {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      result_t t1 = bitwise_cast<result_t>(a0);
-      BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
+    using result_t = ui_t<T>;
+    result_t t1 = bitwise_cast<result_t>(a0);
+    BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
 
     #ifdef __GNUC__
       return __builtin_clzll(t1);
     #else
       return ffs(reversebits(t1))-1;
     #endif
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( clz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type32_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sclz_(T a0, detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
   {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      result_t t1 = bitwise_cast<result_t>(a0);
-      BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
+    using result_t = ui_t<T>;
+    result_t t1 = bitwise_cast<result_t>(a0);
+    BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
 
     #ifdef __GNUC__
       return __builtin_clz(t1);
     #else
       return ffs(reversebits(t1))-1;
     #endif
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( clz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type16_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sclz_(T a0, detail::case_<2> const&) BOOST_NOEXCEPT //16bits
   {
-    BOOST_FORCEINLINE  bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      using i_t = typename bd::as_integer_t<A0, unsigned>;
-      i_t t1 = bitwise_cast<i_t>(a0);
-      return clz(uint32_t(t1))-16;
-    }
-  };
+    using i_t = ui_t<T>;
+    i_t t1 = bitwise_cast<i_t>(a0);
+    return clz(uint32_t(t1))-16;
+  }
 
-
-  BOOST_DISPATCH_OVERLOAD ( clz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type8_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sclz_(T a0, detail::case_<3> const&) BOOST_NOEXCEPT //8bits
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      using i_t = typename bd::as_integer_t<A0, unsigned>;
+      using i_t = ui_t<T>;
       i_t t1 = bitwise_cast<i_t>(a0);
       return clz(uint32_t(t1))-24;
-    }
-  };
+  }
+
+  template < bool b > struct bool_ : std::integral_constant<bool, b>{ };
+
+  template < typename T > using is_ge64 = bool_<sizeof(T) >= 8>;
+  template < typename T > using is_ge32 = bool_<sizeof(T) >= 4>;
+  template < typename T > using is_ge16 = bool_<sizeof(T) >= 2>;
+  template < typename T > using is_ge8  = bool_<sizeof(T) >= 1>;
+   //================================================================================================
+  // clz picker
+  template<typename T>
+  using clz_picker = typename detail::pick< T
+                                          , is_ge64, is_ge32, is_ge16, is_ge8
+                                          >::type;
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0) BOOST_NOEXCEPT
+  {
+    return sclz_(a0, clz_picker<T>());
+  }
+
 } } }
 
 

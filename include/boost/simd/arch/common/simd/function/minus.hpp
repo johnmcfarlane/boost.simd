@@ -126,6 +126,20 @@ namespace boost { namespace simd { namespace detail
     return simd::minus(a, p_t(b));
   }
 
+  // mixed implementation T1 pack < T2 >
+  template<typename T1, typename T2, std::size_t M
+           , typename = typename std::enable_if<std::is_convertible<T1, T2>::value>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T2, M> minus_ ( BOOST_SIMD_SUPPORTS(simd_)
+                     , T1 a
+                     , pack<T2,M> const& b
+                     ) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T2,M>;
+    return saturated_(simd::minus)(p_t(a), b);
+  }
+
   // saturated mixed implementation T1 pack < T2 >
   template<typename T1, typename T2, std::size_t M
            , typename = typename std::enable_if<std::is_convertible<T1, T2>::value>::type

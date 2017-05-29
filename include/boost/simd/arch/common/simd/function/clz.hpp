@@ -10,9 +10,8 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CLZ_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CLZ_HPP_INCLUDED
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/dec.hpp>
@@ -20,25 +19,31 @@
 #include <boost/simd/function/reversebits.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(clz_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        result t =  bitwise_cast<result>(a0);
-        BOOST_ASSERT_MSG( assert_all(t), "clz not defined for 0" );
-        return bitwise_cast<result>(dec(bs::ffs(bs::reversebits(t))));
-      }
-   };
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T,N>> clz_(BOOST_SIMD_SUPPORTS(simd_)
+                      , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    using result_t = ui_t<pack<T,N>>;
+    result_t t =  bitwise_cast<result_t>(a);
+    BOOST_ASSERT_MSG( assert_all(t), "clz not defined for 0" );
+    return bitwise_cast<result_t>(dec(bs::ffs(bs::reversebits(t))));
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T,N,simd_emulation_>> clz_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                       , pack<T,N,simd_emulation_> const& a
+                                       ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::clz, a);
+  }
+
 
 } } }
 

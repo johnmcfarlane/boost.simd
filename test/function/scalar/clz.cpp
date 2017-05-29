@@ -29,7 +29,7 @@ STF_CASE_TPL (" clz real",  STF_IEEE_TYPES)
   using r_t = decltype(clz(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, bd::as_integer_t<T>);
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
   // specific values tests
 #ifndef BOOST_SIMD_NO_INVALIDS
@@ -48,7 +48,7 @@ STF_CASE_TPL (" clz signed_int",  STF_SIGNED_INTEGRAL_TYPES)
   using r_t = decltype(clz(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, bd::as_integer_t<T>);
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
   // specific values tests
   STF_EQUAL(clz(bs::One<T>()), r_t(sizeof(T)*8 -1));
@@ -64,7 +64,7 @@ STF_CASE_TPL (" clz signed_int",  STF_SIGNED_INTEGRAL_TYPES)
   using r_t = decltype(clz(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, bd::as_integer_t<T>);
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
   // specific values tests
   STF_EQUAL(clz(bs::One<T>()),  r_t(sizeof(T)*8-bs::One<r_t>()));

@@ -12,31 +12,29 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITWISE_ORNOT_HPP_INCLUDED
 
 #include <boost/simd/function/bitwise_or.hpp>
-#include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/complement.hpp>
 #include <boost/simd/detail/traits.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
-#include <boost/simd/detail/nsm.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF( bitwise_ornot_
-                            , (typename A0, typename A1)
-                            , (detail::same_sizeof<A0,A1>)
-                            , bd::cpu_
-                            , bd::scalar_< bd::arithmetic_<A0> >
-                            , bd::scalar_< bd::arithmetic_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T bitwise_ornot_(BOOST_SIMD_SUPPORTS(cpu_)
+                                 , T a, U b) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1
-                                    ) const BOOST_NOEXCEPT
-    {
-      return bitwise_or(a0, complement(a1));
-    }
-  };
+    static_assert ( sizeof(T) == sizeof(U)
+                  , "simd::bitwise_ornot - Arguments have incompatible size"
+                  );
+
+    return  bitwise_or(a, complement(b));
+  }
+
+  BOOST_FORCEINLINE bool bitwise_ornot_(BOOST_SIMD_SUPPORTS(cpu_)
+                                 , bool a, bool b) BOOST_NOEXCEPT
+  {
+    return a | !b;
+  }
+
 } } }
 
 #endif

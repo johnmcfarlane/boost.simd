@@ -9,29 +9,25 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITWISE_SELECT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_BITWISE_SELECT_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_andnot.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD_IF( bitwise_select_
-                            , (typename A0, typename A1)
-                            , (nsm::bool_<sizeof(A0)==sizeof(A1)>)
-                            , bd::cpu_
-                            , bd::scalar_<bd::arithmetic_<A0> >
-                            , bd::scalar_<bd::arithmetic_<A1> >
-                            , bd::scalar_<bd::arithmetic_<A1> >
-                            )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U bitwise_select_(BOOST_SIMD_SUPPORTS(cpu_)
+                                     , T a0
+                                     , U a1
+                                     , U a2) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()(A0 const& a0, A1 const& a1, A1 const& a2) const BOOST_NOEXCEPT
-    {
-      return bitwise_or(bitwise_and(a1, a0), bitwise_andnot(a2,a0));
-    }
-  };
+    static_assert ( sizeof(T) == sizeof(U)
+                  , "simd::bitwise_select - Arguments have incompatible size"
+                  );
+
+    return  bitwise_or(bitwise_and(a1, a0), bitwise_andnot(a2,a0));
+  }
+
 } } }
 
 

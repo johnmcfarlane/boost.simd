@@ -12,7 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_GENERIC_FUNCTION_ASECD_HPP_INCLUDED
 
 #include <boost/simd/detail/pack.hpp>
-#include <boost/simd/function/acsc.hpp>
+#include <boost/simd/function/asec.hpp>
 #include <boost/simd/function/indeg.hpp>
 #include <boost/config.hpp>
 
@@ -24,7 +24,7 @@ namespace boost { namespace simd { namespace detail
   T asecd_(BOOST_SIMD_SUPPORTS(Arch)
                   , T const& a) BOOST_NOEXCEPT
   {
-    return indeg(simd::acsc(a));
+    return indeg(simd::asec(a));
   };
 
 } } }

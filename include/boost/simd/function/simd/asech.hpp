@@ -12,6 +12,6 @@
 
 #include <boost/simd/function/scalar/asech.hpp>
 #include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/asech.hpp>
+#include <boost/simd/arch/common/generic/function/asech.hpp>
 
 #endif

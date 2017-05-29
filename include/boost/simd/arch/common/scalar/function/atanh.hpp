@@ -24,54 +24,47 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( atanh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T atanh_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      A0 absa0 = bs::abs(a0);
-      A0 t =  absa0+absa0;
-      A0 z1 = oneminus(absa0);
-      return bitwise_xor(bitofsign(a0),
-                         Half<A0>()*log1p((absa0 < Half<A0>())
-                                          ? fma(t, absa0/z1, t)
-                                          : t/z1)
-                        );
-    }
-  };
+    auto absa0 = bs::abs(a0);
+    auto t =  absa0+absa0;
+    auto z1 = oneminus(absa0);
+    return bitwise_xor(bitofsign(a0),
+                       Half(as(a0))*log1p((absa0 < Half(as(a0))
+                                           ? fma(t, absa0/z1, t)
+                                           : t/z1)
+                                         )
+                      );
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( atanh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                         )
+  //================================================================================================
+  // raw_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T atanh_(BOOST_SIMD_SUPPORTS(cpu_)
+          , raw_tag const&
+          , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0  a0) const BOOST_NOEXCEPT
-    {
-      return std::atanh(a0);
-    }
-  };
+    return  Half(as(a0))*log(inc(a0)/oneminus(a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( atanh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                         )
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T atanh_(BOOST_SIMD_SUPPORTS(cpu_)
+          , std_tag const&
+          , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const raw_tag &,  A0  a0) const BOOST_NOEXCEPT
-    {
-       return  Half<A0>()*log(inc(a0)/oneminus(a0));
-    }
-  };
+    return std::atanh(a0);
+  }
 
 } } }
 

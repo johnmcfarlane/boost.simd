@@ -40,101 +40,90 @@
 #include <cmath>
 #include <tuple>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( cbrt_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  BOOST_FORCEINLINE
+  double cbrt_(BOOST_SIMD_SUPPORTS(cpu_)
+               , double a0) BOOST_NOEXCEPT
   {
-
-
-    inline A0 operator() ( A0 a0) const BOOST_NOEXCEPT
+    double z =  bs::abs(a0);
+#ifndef BOOST_SIMD_NO_INFINITIES
+    if (z == bs::Inf<double>() || (z == 0)) return a0;
+#else
+    if (z == 0) return a0;
+#endif
+#ifndef BOOST_SIMD_NO_DENORMALS
+    double f = One<double>();
+    if (z < Smallestposval<double>())
     {
-      A0 z =  bs::abs(a0);
-    #ifndef BOOST_SIMD_NO_INFINITIES
-      if (z == bs::Inf<A0>() || (z == 0)) return a0;
-    #else
-      if (z == 0) return a0;
-    #endif
-    #ifndef BOOST_SIMD_NO_DENORMALS
-      A0 f = One<A0>();
-      if (z < Smallestposval<A0>())
-      {
-        z *= Twotonmb<A0>();
-        f  = Twotomnmbo_3<A0>();
-      }
-    #endif
-      const A0 CBRT2  = Constant< A0, 0x3ff428a2f98d728bll> ();
-      const A0 CBRT4  = Constant< A0, 0x3ff965fea53d6e3dll> ();
-      const A0 CBRT2I = Constant< A0, 0x3fe965fea53d6e3dll> ();
-      const A0 CBRT4I = Constant< A0, 0x3fe428a2f98d728bll> ();
-      using i_t = bd::as_integer_t<A0, signed>;
-      i_t e;
-      A0 x;
-      std::tie(x, e) = ifrexp(z);
-      x = horn<A0,
-               0x3fd9c0c12122a4fell,
-               0x3ff23d6ee505873all,
-               0xbfee8a4ca3ba37b8ll,
-               0x3fe17e1fc7e59d58ll,
-               0xbfc13c93386fdff6ll
-               > (x);
-      const auto flag = is_gez(e);
-      i_t e1 =  bs::abs(e);
-      i_t rem = e1;
-      e1 /= Three<i_t>();
-      rem -= e1*Three<i_t>();
-      e =  negate(e1, e);
-      const A0 cbrt2 = flag ? CBRT2 : CBRT2I;
-      const A0 cbrt4 = flag ? CBRT4 : CBRT4I;
-      A0 fact = (rem == One<i_t>()) ? cbrt2: One<A0>();
-      fact = (rem == Two<i_t>() ? cbrt4 : fact);
-      x = ldexp(x*fact, e);
-      x -= (x-z/sqr(x))*Third<A0>();
-      x -= (x-z/sqr(x))*Third<A0>(); //two newton passes
-    #ifndef BOOST_SIMD_NO_DENORMALS
-      return bitwise_or(x, bitofsign(a0))*f;
-    #else
-      return bitwise_or(x, bitofsign(a0));
-    #endif
+      z *= Twotonmb<double>();
+      f  = Twotomnmbo_3<double>();
     }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cbrt_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
+#endif
+    const double CBRT2  = Constant< double, 0x3ff428a2f98d728bll> ();
+    const double CBRT4  = Constant< double, 0x3ff965fea53d6e3dll> ();
+    const double CBRT2I = Constant< double, 0x3fe965fea53d6e3dll> ();
+    const double CBRT4I = Constant< double, 0x3fe428a2f98d728bll> ();
+    using i_t = bd::as_integer_t<double, signed>;
+    i_t e;
+    double x;
+    std::tie(x, e) = ifrexp(z);
+    x = horn<double,
+      0x3fd9c0c12122a4fell,
+      0x3ff23d6ee505873all,
+      0xbfee8a4ca3ba37b8ll,
+      0x3fe17e1fc7e59d58ll,
+      0xbfc13c93386fdff6ll
+      > (x);
+    const auto flag = is_gez(e);
+    i_t e1 =  bs::abs(e);
+    i_t rem = e1;
+    e1 /= Three<i_t>();
+    rem -= e1*Three<i_t>();
+    e =  negate(e1, e);
+    const double cbrt2 = flag ? CBRT2 : CBRT2I;
+    const double cbrt4 = flag ? CBRT4 : CBRT4I;
+    double fact = (rem == One<i_t>()) ? cbrt2: One<double>();
+    fact = (rem == Two<i_t>() ? cbrt4 : fact);
+    x = ldexp(x*fact, e);
+    x -= (x-z/sqr(x))*Third<double>();
+    x -= (x-z/sqr(x))*Third<double>(); //two newton passes
+#ifndef BOOST_SIMD_NO_DENORMALS
+    return bitwise_or(x, bitofsign(a0))*f;
+#else
+    return bitwise_or(x, bitofsign(a0));
+#endif
+  }
+
+  BOOST_FORCEINLINE
+  float cbrt_(BOOST_SIMD_SUPPORTS(cpu_)
+             , float a0) BOOST_NOEXCEPT
   {
-    inline A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      A0 z =  bs::abs(a0);
+      float z =  bs::abs(a0);
     #ifndef BOOST_SIMD_NO_INFINITIES
-      if (z == bs::Inf<A0>() || (z == 0)) return a0;
+      if (z == bs::Inf<float>() || (z == 0)) return a0;
     #else
       if  (z == 0) return a0;
     #endif
     #ifndef BOOST_SIMD_NO_DENORMALS
-      A0 f = One<A0>();
-      if (z < Smallestposval<A0>())
+      float f = One<float>();
+      if (z < Smallestposval<float>())
       {
-        z *= Twotonmb<A0>();
-        f = Twotomnmbo_3<A0>();
+        z *= Twotonmb<float>();
+        f = Twotomnmbo_3<float>();
       }
     #endif
-      const A0 CBRT2  = Constant< A0, 0x3fa14518> ();
-      const A0 CBRT4  = Constant< A0, 0x3fcb2ff5> ();
-      const A0 CBRT2I = Constant< A0, 0x3f4b2ff5> ();
-      const A0 CBRT4I = Constant< A0, 0x3f214518> ();
-      using i_t = bd::as_integer_t<A0, signed>;
+      const float CBRT2  = Constant< float, 0x3fa14518> ();
+      const float CBRT4  = Constant< float, 0x3fcb2ff5> ();
+      const float CBRT2I = Constant< float, 0x3f4b2ff5> ();
+      const float CBRT4I = Constant< float, 0x3f214518> ();
+      using i_t = bd::as_integer_t<float, signed>;
       i_t e;
-      A0 x;
+      float x;
       std::tie(x, e)= ifrexp(z);
-      x = horn<A0,
+      x = horn<float,
                0x3ece0609,
                0x3f91eb77,
                0xbf745265,
@@ -148,31 +137,30 @@ namespace boost { namespace simd { namespace ext
       rem -= e1*Three<i_t>();
       e =  negate(e1, e);
 
-      const A0 cbrt2 = flag ? CBRT2 : CBRT2I;
-      const A0 cbrt4 = flag ? CBRT4 : CBRT4I;
-      A0 fact = (rem ==  One<i_t>()) ? cbrt2 : One<A0>();
+      const float cbrt2 = flag ? CBRT2 : CBRT2I;
+      const float cbrt4 = flag ? CBRT4 : CBRT4I;
+      float fact = (rem ==  One<i_t>()) ? cbrt2 : One<float>();
       fact = (rem == Two<i_t>()) ? cbrt4 : fact;
       x = ldexp(x*fact, e);
-      x -= (x-z/sqr(x))*Third<A0>();
+      x -= (x-z/sqr(x))*Third<float>();
     #ifndef BOOST_SIMD_NO_DENORMALS
       return bitwise_or(x, bitofsign(a0))*f;
     #else
       return bitwise_or(x, bitofsign(a0));
     #endif
     }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cbrt_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cbrt_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const&
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0  a0) const BOOST_NOEXCEPT
-    {
-      return std::cbrt(a0);
-    }
-  };
+    return std::cbrt(a);
+  }
+
 } } }
 
 #endif

@@ -10,36 +10,26 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_AVERAGE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_AVERAGE_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( average_
-                          , (typename A0, typename A1)
-                          , bs::sse2_
-                          , bs::pack_<bd::uint8_<A0>, bs::sse_>
-                          , bs::pack_<bd::uint8_<A1>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<std::uint8_t,16,sse_> average_( BOOST_SIMD_SUPPORTS(sse2_)
+                                                    , pack<std::uint8_t,16,sse_> const& a0
+                                                    , pack<std::uint8_t,16,sse_> const& a1
+                                                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_avg_epu8(a0, a1);
-    }
-  };
+    return _mm_avg_epu8(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( average_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::uint16_<A0>, bs::sse_>
-                          , bs::pack_<bd::uint16_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<std::uint16_t,8,sse_> average_( BOOST_SIMD_SUPPORTS(sse2_)
+                                                    , pack<std::uint16_t,8,sse_> const& a0
+                                                    , pack<std::uint16_t,8,sse_> const& a1
+                                                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_avg_epu16(a0, a1);
-    }
-  };
+    return _mm_avg_epu16(a0, a1);
+  }
+
 } } }
 
 #endif

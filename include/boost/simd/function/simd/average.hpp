@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_AVERAGE_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/average.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/average.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)

@@ -20,37 +20,65 @@
 #include <boost/simd/function/shift_right.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( average_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  saverage_( pack<T,N> const & a0
+           , pack<T,N> const & a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-    {
-      return bitwise_and(a0, a1)+shift_right(bitwise_xor(a0, a1),1);
-    }
-  };
+    return fma(a0,Half(as(a0)),a1*Half(as(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( average_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  saverage_( pack<T,N> const & a0
+           , pack<T,N> const & a1, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-    {
-      return fma(a0,Half<A0>(),a1*Half<A0>());
-    }
-  };
+    return  bitwise_and(a0, a1)+shift_right(bitwise_xor(a0, a1),1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  average_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    return saverage_(a0, a1, std::is_floating_point<T>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  average_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , T const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return average_(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  average_(BOOST_SIMD_SUPPORTS(simd_)
+          , T const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return average_(p_t(a0), a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  average_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N,simd_emulation_> const & a0
+          , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(average, a0, a1);
+  }
+
+
 } } }
 
 

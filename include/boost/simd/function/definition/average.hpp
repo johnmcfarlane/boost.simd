@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_AVERAGE_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, average_, boost::dispatch::elementwise_<average_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, average_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::average_,average);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(average_,average);
 } }
 
 #endif
+

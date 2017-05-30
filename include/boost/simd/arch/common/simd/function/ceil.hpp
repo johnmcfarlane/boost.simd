@@ -9,40 +9,62 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 
+#include <boost/simd/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/trunc.hpp>
 #include <boost/simd/function/if_inc.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF( ceil_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vceil_( pack<T,N> const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      const A0 d0 = trunc(a0);
-      return if_inc(d0<a0,d0);
-    }
-  };
+    auto d0 = trunc(a0);
+    return if_inc(d0<a0,d0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::integer_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vceil_( pack<T,N> const& a0, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return a0;
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> ceil_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return vceil_(a0, std::is_floating_point<T>());
+  }
+
+ // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> ceil_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pedantic_tag const&
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::ceil, a);
+  }
+
+  //================================================================================================
+  // std decorator
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto ceil_(BOOST_SIMD_SUPPORTS(simd_)
+            , std_tag const&
+            , pack<T,N> const& a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to(std_(simd::ceil), a0)
+  )
+
+
 } } }
 
 #endif

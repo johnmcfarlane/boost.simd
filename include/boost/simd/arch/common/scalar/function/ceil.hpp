@@ -11,83 +11,50 @@
 
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/function/std.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  //------------------------------------------------------------------------------------------------
-  // Integer cases are no-op
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  BOOST_FORCEINLINE
+  float ceil_(BOOST_SIMD_SUPPORTS(cpu_)
+             , float a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()(const std_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // FP cases
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
     #ifdef BOOST_SIMD_HAS_FLOORF
       return ::ceilf(a0);
     #else
-      return std::ceil(a0);
+      return std::ceil(a);
     #endif
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
+  BOOST_FORCEINLINE
+  double ceil_(BOOST_SIMD_SUPPORTS(cpu_)
+              , double a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::ceil(a0);
-    }
-  };
+    return std::ceil(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+ template<typename T
+          , typename = typename std::enable_if<std::is_integral<T>::value>::type
+ >
+ BOOST_FORCEINLINE
+  T ceil_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const std_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::ceil(a0);
-    }
-  };
+    return a;
+  }
+
+  //std_ decorator
+  template<typename T >
+  BOOST_FORCEINLINE
+  auto ceil_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const &
+         , T a) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    std::ceil(a)
+  )
+
 } } }
 
 #endif

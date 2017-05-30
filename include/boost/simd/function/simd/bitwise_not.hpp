@@ -11,6 +11,5 @@
 #define BOOST_SIMD_FUNCTION_SIMD_BITWISE_NOT_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/bitwise_not.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 
 #endif

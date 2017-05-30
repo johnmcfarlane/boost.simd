@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_ACOSD_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/acosd.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/generic/function/acosd.hpp>
 
 #endif

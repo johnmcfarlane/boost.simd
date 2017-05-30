@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_ACSCPI_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/acscpi.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/generic/function/acscpi.hpp>
 
 #endif

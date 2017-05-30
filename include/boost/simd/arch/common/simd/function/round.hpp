@@ -10,7 +10,7 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROUND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROUND_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/pack.hpp>
 
 #include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/constant/half.hpp>
@@ -34,80 +34,126 @@
 #include <boost/simd/function/splat.hpp>
 #include <boost/mpl/equal_to.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD(round_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return a0;
-      }
-   };
+  // one parameter round
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0, std::true_type const &) BOOST_NOEXCEPT
+  {
+    auto v = bs::abs(a0);
+    auto c = bs::ceil(v);
+    return if_else(v > Maxflint(as(a0)), a0, copysign(if_dec(c-Half(as(a0)) > v, c), a0));
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(round_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        const A0 v = bs::abs(a0);
-        const A0 c = bs::ceil(v);
-        return if_else(v > Maxflint<A0>(), a0, copysign(if_dec(c-Half<A0>() > v, c), a0));
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0, std::false_type const &) BOOST_NOEXCEPT
+  {
+    return a0;
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(round_
-                             , (typename A0, typename A1, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::single_<A0>, X>
-                             , bs::pack_<bd::integer_<A1>, X>
-                             )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-      {
-        A0 fac = tenpower(a1);
-        A0 tmp1 = round(a0*fac)/fac;
-        return if_else(is_ltz(a1), round(tmp1), tmp1);
-      }
-   };
 
-   BOOST_DISPATCH_OVERLOAD(round_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bd::scalar_<bd::unsigned_<A1>>
-                          )
-   {
-     BOOST_FORCEINLINE A0 operator()(A0 const & a0,  A1 const & a1) const
-      {
-        using itype_t = bd::as_integer_t<A0, unsigned>;
-        return round(a0, splat<itype_t>(a1));
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> round_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return vround_(a0, std::is_floating_point<T>());
+  }
 
-   BOOST_DISPATCH_OVERLOAD(round_
-                          , (typename A0, typename X, typename A1)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bd::scalar_<bd::integer_<A1>>
-                          )
-   {
-     BOOST_FORCEINLINE A0 operator()(A0 const & a0,  A1 const & a1) const
-      {
-        using itype_t = bd::as_integer_t<A0>;
-        return round(a0, splat<itype_t>(a1));
-      }
-   };
+ // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> round_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::round, a);
+  }
+
+  //std_ decorator
+  template<typename T, std::size_t N >
+  BOOST_FORCEINLINE
+  auto round_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const &
+         , pack<T, N> const &a) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to(std::round, a)
+  )
+  //================================================================================================
+  // two parameters round
+  // scalar signed iT
+  template<typename T, typename iT, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0
+                   , iT const& a1
+                   , std::true_type const &) BOOST_NOEXCEPT
+  {
+    auto fac = tenpower(a1);
+    auto tmp1 = round(a0*fac)/fac;
+    return if_else(is_ltz(a1), round(tmp1), tmp1);
+  }
+
+  // scalar unsigned iT
+  template<typename T, typename iT, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0
+                   , iT const& a1
+                   , std::false_type const &) BOOST_NOEXCEPT
+  {
+    auto fac = tenpower(a1);
+    return round(a0*fac)/fac;
+  }
+
+ // pack signed iT
+  template<typename T, typename iT, std::size_t N
+           , typename = typename std::enable_if<std::is_integral<iT>::value>::type
+           , typename = typename std::enable_if<sizeof(T) == sizeof(iT)>::type
+  >
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0
+                   , pack<iT,N> const& a1
+                   , std::true_type const & ) BOOST_NOEXCEPT
+  {
+    return vround_(a0, a1, std::is_signed<iT>());
+  }
+
+ // pack unsigned iT
+  template<typename T, typename iT, std::size_t N
+           , typename = typename std::enable_if<std::is_integral<iT>::value>::type
+           , typename = typename std::enable_if<sizeof(T) == sizeof(iT)>::type
+           >
+  BOOST_FORCEINLINE
+  pack<T,N> vround_( pack<T,N> const& a0
+                   , pack<iT,N> const& a1
+                   , std::false_type const &) BOOST_NOEXCEPT
+  {
+    auto fac = tenpower(a1);
+    return round(a0*fac)/fac;
+  }
+
+
+  template<typename T,typename iT, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> round_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a0
+                 , iT const& a1 ) BOOST_NOEXCEPT
+  {
+    return vround_(a0, a1, std::is_signed<iT>());
+  }
+
+  // Emulated implementation
+  template<typename T, typename T1, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> round_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a0
+                                  , pack<T1,N,simd_emulation_> const& a1
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::round, a0, a1);
+  }
+
 } } }
 
 #endif

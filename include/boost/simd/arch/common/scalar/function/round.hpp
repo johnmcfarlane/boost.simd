@@ -24,111 +24,81 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
   namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+  //================================================================================================
+  // one parameter round
 
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
+  template < typename T >
+  BOOST_FORCEINLINE
+  T sround_(T a0, std::true_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      const A0 v = bs::abs(a0);
-      if (!(v <=  Maxflint<A0>())) return a0;
-      A0 c =  bs::ceil(v);
-      return bs::copysign(if_dec(c-Half<A0>() > v, c), a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      const A0 v = simd::abs(a0);
-      if (!(v <=  Maxflint<A0>())) return a0;
-      A0 c =  boost::simd::ceil(v);
-      return copysign(if_dec(c-Half<A0>() > v, c), a0);
-    }
-  };
+    T v = bs::abs(a0);
+    if (!(v <= Maxflint<T>())) return a0;
+    T c =  bs::ceil(v);
+    return bs::copysign(if_dec(c-Half<T>() > v, c), a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                         )
+  template < typename T >
+  BOOST_FORCEINLINE
+  T sround_(T a, std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &
-                                    ,  A0  a0) const BOOST_NOEXCEPT
-    {
-      return std::round(a0);
-    }
-  };
+    return a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                         )
+  template < typename T >
+  BOOST_FORCEINLINE
+  T round_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &
-                                    ,  A0  a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return sround_(a, std::is_floating_point<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::int_<A1> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-       using i_t = bd::as_integer_t<A0>;
-       A0 fac = tenpower(i_t(a1));
-       A0 x = a0*fac;
-       A0 z = bs::round(x)/fac;
-       return is_ltz(a1) ? std::round(z) : z;
-    }
-  };
+  //std_ decorator
+  template<typename T >
+  BOOST_FORCEINLINE
+  auto round_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const &
+         , T a) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    std::round(a)
+  )
 
-   BOOST_DISPATCH_OVERLOAD ( round_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::uint_<A1> >
-                          )
+  //================================================================================================
+  // two parameters round
+
+  template < typename T, typename iT>
+  BOOST_FORCEINLINE
+  T sround_(T a0, iT a1, std::true_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-       using i_t = bd::as_integer_t<A0>;
-       A0 fac = tenpower(i_t(a1));
-       A0 x = a0*fac;
-       return  bs::round(x)/fac;
-    }
-  };
+    using i_t = bd::as_integer_t<T>;
+    T fac = tenpower(i_t(a1));
+    T x = a0*fac;
+    T z = bs::round(x)/fac;
+    return is_ltz(a1) ? std::round(z) : z;
+  }
+
+  template < typename T, typename iT >
+  BOOST_FORCEINLINE
+  T sround_(T a0, iT a1, std::false_type) BOOST_NOEXCEPT
+  {
+    using i_t = bd::as_integer_t<T>;
+    T fac = tenpower(i_t(a1));
+    T x = a0*fac;
+    return  bs::round(x)/fac;
+  }
+
+  template < typename T, typename iT
+             , typename = typename std::enable_if<std::is_integral<iT>::value>::type
+             >
+  BOOST_FORCEINLINE
+  T round_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0, iT a1) BOOST_NOEXCEPT
+  {
+    return sround_(a0, a1, std::is_signed<iT>());
+  }
+
 } } }
 
 #endif

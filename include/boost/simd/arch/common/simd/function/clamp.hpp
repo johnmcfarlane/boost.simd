@@ -19,42 +19,131 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( clamp_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& x
+                  , pack<T,N> const& lo
+                  , pack<T,N> const& hi) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator() ( A0 const& x, A0 const& lo, A0 const& hi) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
-      return bs::min(bs::max(x, lo), hi);
-    }
-  };
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
+    return bs::min(bs::max(x, lo), hi);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( clamp_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> clamp_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                   , pack<T,N,simd_emulation_> const& x
+                                   , pack<T,N,simd_emulation_> const& lo
+                                   , pack<T,N,simd_emulation_> const& hi
+                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator() (pedantic_tag const&
-                  , A0 const& x, A0 const& lo, A0 const& hi) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
-      return if_else(x < lo, lo, if_else(hi < x, hi, x));
-    }
-  };
+    return map_to(simd::clamp, x, lo, hi);
+  }
+
+  //================================================================================================
+  // pedantic_ decorator
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pedantic_tag const &
+                  , pack<T,N> const& x
+                  , pack<T,N> const& lo
+                  , pack<T,N> const& hi) BOOST_NOEXCEPT
+  {
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
+    return if_else(x < lo, lo, if_else(hi < x, hi, x));
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> clamp_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                   , pedantic_tag const &
+                                   , pack<T,N,simd_emulation_> const& x
+                                   , pack<T,N,simd_emulation_> const& lo
+                                   , pack<T,N,simd_emulation_> const& hi
+                                   ) BOOST_NOEXCEPT
+  {
+    return map_to(pedantic_(simd::clamp), x, lo, hi);
+  }
+
+  // mixed implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& x
+                  , T const& lo
+                  , T const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(is_less_equal(lo, hi), "lo is not less or equal to hi");
+    return bs::min(bs::max(x, p_t(lo)), p_t(hi));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , T const& x
+                  , pack<T,N> const& lo
+                  , T const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, p_t(hi))), "lo is not less or equal to hi");
+    return bs::min(bs::max(p_t(x), lo), p_t(hi));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , T const& x
+                  , T const& lo
+                  , pack<T,N> const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(p_t(lo), hi)), "lo is not less or equal to hi");
+    return bs::min(bs::max(p_t(x), p_t(lo)), hi);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , T const& x
+                  , pack<T,N> const& lo
+                  , pack<T,N> const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
+    return bs::min(bs::max(p_t(x), lo), hi);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& x
+                  ,T const& lo
+                  , pack<T,N> const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(p_t(lo), hi)), "lo is not less or equal to hi");
+    return bs::min(bs::max(x, p_t(lo)), hi);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> clamp_(BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& x
+                  , pack<T,N> const& lo
+                  , T const& hi) BOOST_NOEXCEPT
+  {
+    using p_t =  pack<T,N>;
+    BOOST_ASSERT_MSG(assert_all(is_less_equal(lo, hi)), "lo is not less or equal to hi");
+    return bs::min(bs::max(x, lo), p_t(hi));
+  }
 
 } } }
 

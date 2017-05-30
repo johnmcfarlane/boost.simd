@@ -17,42 +17,29 @@
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( clamp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T clamp_(BOOST_SIMD_SUPPORTS(cpu_)
+                            , T const& v
+                            , T const& lo
+                            , T const& hi
+                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator() ( A0 v, A0 lo, A0 hi) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(lo <= hi, "lo is not less or equal to hi");
-      return (v < lo) ? lo : (hi < v) ? hi : v;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( clamp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          )
+    BOOST_ASSERT_MSG(lo <= hi, "lo is not less or equal to hi");
+    return (v < lo) ? lo : (hi < v) ? hi : v;
+  }
+  template<typename T>
+  BOOST_FORCEINLINE T clamp_(BOOST_SIMD_SUPPORTS(cpu_)
+                            , pedantic_tag const &
+                            , T const& v
+                            , T const& lo
+                            , T const& hi
+                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    A0 operator() ( pedantic_tag const &
-                  , A0 v, A0 lo, A0 hi) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(lo <=  hi, "lo is not less or equal to hi");
-      return (v < lo) ? lo : (hi < v) ? hi : v;
-    }
-  };
+    BOOST_ASSERT_MSG(lo <= hi, "lo is not less or equal to hi");
+    return (v < lo) ? lo : (hi < v) ? hi : v;
+  }
 
 } } }
 

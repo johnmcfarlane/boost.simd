@@ -20,16 +20,11 @@
 #include <boost/simd/constant/valmin.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/saturated.hpp>
-#include <boost/simd/detail/meta/pick.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
-  //================================================================================================
-  // um picker
-  template<typename T>
-  using um_picker = typename detail::pick< T
-                                          , tt_::is_floating_point, tt_::is_signed, tt_::is_unsigned
-                                          >::type;
+
   //================================================================================================
   // regular case
   template<typename T>
@@ -42,19 +37,19 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   // saturated_ decorator
   template<typename T>
-  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<0> const&) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<0> const&) BOOST_NOEXCEPT //floating
   {
     return -a;
   }
 
   template<typename T>
-  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<1> const&) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<1> const&) BOOST_NOEXCEPT // signed
   {
      return a == Valmin<T>() ? Valmax<T>() : -a;
   }
 
   template<typename T>
-  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<2> const&) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T sunary_minus_(T a, detail::case_<2> const&) BOOST_NOEXCEPT //unsigned
   {
     return Zero<T>();
   }
@@ -63,7 +58,7 @@ namespace boost { namespace simd { namespace detail
                                   ,  saturated_tag const &
                                   , T a) BOOST_NOEXCEPT
   {
-    return sunary_minus_(a, um_picker<T>{});
+    return sunary_minus_(a, fsu_picker<T>{});
   }
 
 } } }

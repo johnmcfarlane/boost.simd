@@ -21,6 +21,7 @@
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/constant/zero.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -53,7 +54,7 @@ namespace boost { namespace simd { namespace detail
   pack<T,N> unary_minus_(BOOST_SIMD_SUPPORTS(simd_)
                         , pack<T,N> a) BOOST_NOEXCEPT
   {
-    return vum_(a, um_picker<T>());
+    return vum_(a, fsu_picker<T>());
   }
 
   // Emulated implementation
@@ -98,7 +99,7 @@ namespace boost { namespace simd { namespace detail
                         , saturated_tag const &
                         , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    return vums_(a,um_picker<T>{});
+    return vums_(a,fsu_picker<T>{});
   }
 
   // Emulated implementation

@@ -13,6 +13,7 @@
 #include <boost/simd/function/max.hpp>
 #include <boost/simd/meta/cardinal_of.hpp>
 #include <simd_test.hpp>
+#include <boost/simd/constant/bitincrement.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/constant/mone.hpp>
@@ -28,7 +29,7 @@ void test(Env& runtime)
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;
   using p_t = bs::pack<T, N>;
-  using iT =  bd::as_integer_t<T>;
+  using iT =  bd::as_integer_t<T, unsigned>;
   using i_t=  bs::pack<iT, N>;
 
   T a1[N];
@@ -65,14 +66,14 @@ STF_CASE_TPL (" ctz real",  STF_IEEE_TYPES)
   using bs::ctz;
   using r_t = decltype(ctz(T()));
   // return type conformity test
-  STF_EXPR_IS(ctz(T()), bd::as_integer_t<T>);
+  STF_EXPR_IS(ctz(T()), (bd::as_integer_t<T, unsigned>));
 
   // specific values tests
 #ifndef BOOST_SIMD_NO_INVALIDS
   STF_EQUAL(ctz(bs::Inf<T>()), r_t(bs::Nbmantissabits<T>()));
   STF_EQUAL(ctz(bs::Minf<T>()), r_t(bs::Nbmantissabits<T>()));
 #endif
-  STF_EQUAL(ctz(bs::Zero<T>()), r_t(sizeof(T)*8));
+  STF_EQUAL(ctz(bs::Bitincrement<T>()), r_t(0));
   STF_EQUAL(ctz(bs::Signmask<T>()), r_t(sizeof(T)*8-1));
 } // end of test for real_
 
@@ -109,7 +110,7 @@ STF_CASE_TPL(" ctz unsigned_integer", STF_UNSIGNED_INTEGRAL_TYPES )
   using r_t = decltype(ctz(p_t()));
 
   // return type conformity test
-  STF_EXPR_IS(ctz(p_t()), bd::as_integer_t<p_t>);
+  STF_EXPR_IS(ctz(p_t()), (bd::as_integer_t<p_t, unsigned>));
 
   // specific values tests
   for(std::size_t j=0; j< sizeof(T)*CHAR_BIT; j++)

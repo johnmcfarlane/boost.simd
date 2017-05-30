@@ -23,13 +23,14 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
+#include <boost/simd/detail/meta/size_picker.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename T> using ui_t =  boost::dispatch::as_integer_t<T, unsigned>;
   template<typename T>  BOOST_FORCEINLINE
   ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
-                      , T a0) BOOST_NOEXCEPT ;
+              , T a0) BOOST_NOEXCEPT ;
 
   template<typename T>
   BOOST_FORCEINLINE
@@ -79,25 +80,12 @@ namespace boost { namespace simd { namespace detail
       return clz(uint32_t(t1))-24;
   }
 
-  template < bool b > struct bool_ : std::integral_constant<bool, b>{ };
-
-  template < typename T > using is_ge64 = bool_<sizeof(T) >= 8>;
-  template < typename T > using is_ge32 = bool_<sizeof(T) >= 4>;
-  template < typename T > using is_ge16 = bool_<sizeof(T) >= 2>;
-  template < typename T > using is_ge8  = bool_<sizeof(T) >= 1>;
-   //================================================================================================
-  // clz picker
-  template<typename T>
-  using clz_picker = typename detail::pick< T
-                                          , is_ge64, is_ge32, is_ge16, is_ge8
-                                          >::type;
-
   template<typename T>
   BOOST_FORCEINLINE
   ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0) BOOST_NOEXCEPT
   {
-    return sclz_(a0, clz_picker<T>());
+    return sclz_(a0, size_picker<T>());
   }
 
 } } }

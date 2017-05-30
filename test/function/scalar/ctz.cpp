@@ -10,6 +10,7 @@
 #include <boost/simd/function/scalar/ctz.hpp>
 #include <scalar_test.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/constant/bitincrement.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/constant/mone.hpp>
@@ -26,14 +27,14 @@ STF_CASE_TPL (" ctz real",  STF_IEEE_TYPES)
   using bs::ctz;
   using r_t = decltype(ctz(T()));
   // return type conformity test
-  STF_EXPR_IS(ctz(T()), bd::as_integer_t<T>);
+  STF_EXPR_IS(ctz(T()), (bd::as_integer_t<T, unsigned>));
 
   // specific values tests
 #ifndef BOOST_SIMD_NO_INVALIDS
   STF_EQUAL(ctz(bs::Inf<T>()), r_t(bs::Nbmantissabits<T>()));
   STF_EQUAL(ctz(bs::Minf<T>()), r_t(bs::Nbmantissabits<T>()));
 #endif
-  STF_EQUAL(ctz(bs::Zero<T>()), r_t(sizeof(T)*8));
+  STF_EQUAL(ctz(bs::Bitincrement<T>()), r_t(0));
   STF_EQUAL(ctz(bs::Signmask<T>()), r_t(sizeof(T)*8-1));
 } // end of test for real_
 

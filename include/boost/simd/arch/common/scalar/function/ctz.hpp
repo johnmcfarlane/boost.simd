@@ -25,61 +25,71 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/size_picker.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( ctz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type64_<A0> >
-                          )
-  {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const
-    {
-      result_t that = bitwise_cast<result_t>(a0);
-      if(!that) return result_t(64);
+  template<typename T>  BOOST_FORCEINLINE
+  ui_t<T> ctz_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0) BOOST_NOEXCEPT ;
 
-    #if defined __GNUC__
-      return __builtin_ctzll(that);
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sctz_(T a0, detail::case_<0> const&) BOOST_NOEXCEPT //64bits
+  {
+    using result_t = ui_t<T>;
+    result_t t1 = bitwise_cast<result_t>(a0);
+    BOOST_ASSERT_MSG( t1, "ctz not defined for 0" );
+
+    #ifdef __GNUC__
+      return __builtin_ctzll(t1);
     #else
-      return ffs(that)-1;
+      return ffs(t1)-1;
     #endif
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ctz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::type32_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sctz_(T a0, detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
   {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const
-    {
-      result_t that = bitwise_cast<result_t>(a0);
-      if(!that) return result_t(32);
+    using result_t = ui_t<T>;
+    result_t t1 = bitwise_cast<result_t>(a0);
+    BOOST_ASSERT_MSG( t1, "ctz not defined for 0" );
 
-    #if defined __GNUC__
-      return __builtin_ctz(that);
+    #ifdef __GNUC__
+      return __builtin_ctz(t1);
     #else
-      return ffs(that)-1;
+      return ffs(t1)-1;
     #endif
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ctz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sctz_(T a0, detail::case_<2> const&) BOOST_NOEXCEPT //16bits
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const
-    {
-      return ctz(uint32_t(a0));
-    }
-  };
+    using i_t = ui_t<T>;
+    i_t t1 = bitwise_cast<i_t>(a0);
+    return ctz(uint32_t(t1));
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sctz_(T a0, detail::case_<3> const&) BOOST_NOEXCEPT //8bits
+ {
+      using i_t = ui_t<T>;
+      i_t t1 = bitwise_cast<i_t>(a0);
+      return ctz(uint32_t(t1));
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> ctz_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0) BOOST_NOEXCEPT
+  {
+    return sctz_(a0, size_picker<T>());
+  }
+
 } } }
 
 

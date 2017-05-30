@@ -16,6 +16,7 @@
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/detail/constant/maxleftshift.hpp>
 #include <boost/simd/constant/mzero.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -49,7 +50,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N> abs_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    return vabs_(a,abs_picker<T>{});
+    return vabs_(a,fsu_picker<T>{});
   }
 
   // Emulated implementation
@@ -89,7 +90,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<T,N> abs_ (BOOST_SIMD_SUPPORTS(simd_), saturated_tag const&, pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    return svabs_(a,abs_picker<T>{});
+    return svabs_(a,fsu_picker<T>{});
   }
 
   // Emulated implementation

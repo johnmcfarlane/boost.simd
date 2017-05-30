@@ -17,7 +17,7 @@
 #include <boost/simd/function/dec.hpp>
 #include <boost/simd/function/ffs.hpp>
 #include <boost/simd/function/reversebits.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

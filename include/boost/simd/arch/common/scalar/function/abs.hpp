@@ -24,15 +24,10 @@
 #include <boost/config.hpp>
 #include <type_traits>
 #include <cmath>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
-  //================================================================================================
-  // abs picker
-  template<typename T>
-  using abs_picker = typename detail::pick< T
-                                          , tt_::is_floating_point, tt_::is_signed, tt_::is_unsigned
-                                          >::type;
 
   //================================================================================================
   // regular cases
@@ -60,7 +55,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T>
   BOOST_FORCEINLINE T abs_(BOOST_SIMD_SUPPORTS(cpu_), T const& a) BOOST_NOEXCEPT
   {
-    return reg_abs_(a, abs_picker<T>{});
+    return reg_abs_(a, fsu_picker<T>{});
   }
 
   //================================================================================================
@@ -83,7 +78,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T>
   BOOST_FORCEINLINE T abs_(BOOST_SIMD_SUPPORTS(cpu_), std_tag const&, T const& a) BOOST_NOEXCEPT
   {
-    return std_abs_(a, abs_picker<T>{});
+    return std_abs_(a, fsu_picker<T>{});
   }
 
   //================================================================================================
@@ -106,7 +101,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T>
   BOOST_FORCEINLINE T abs_( BOOST_SIMD_SUPPORTS(cpu_), saturated_tag const&, T const& a) BOOST_NOEXCEPT
   {
-    return sabs_(a, abs_picker<T>{});
+    return sabs_(a, fsu_picker<T>{});
   }
 } } }
 

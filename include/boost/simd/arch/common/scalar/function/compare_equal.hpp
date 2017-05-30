@@ -9,25 +9,19 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_COMPARE_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_COMPARE_EQUAL_HPP_INCLUDED
 
-#include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( compare_equal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          )
+  template< typename T>
+  BOOST_FORCEINLINE bool compare_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , T const& a0
+                                        , T const& a1
+                                        ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-    {
-      return a0 == a1;
-    }
-  };
+    return  a0 == a1;
+  }
+
 } } }
 
 

@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_COMPARE_LESS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, compare_less_, boost::dispatch::abstract_<compare_less_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, compare_less_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::compare_less_,compare_less);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(compare_less_,compare_less);
 } }
 
 #endif

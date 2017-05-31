@@ -28,7 +28,7 @@ namespace boost { namespace simd
 
     @par Decorators
 
-    - std_ for floating entries call std::ceil
+    - std_ for std::ceil (and so returns double for integral typed entries)
 
     @see  floor, round, nearbyint, trunc, iceil
 

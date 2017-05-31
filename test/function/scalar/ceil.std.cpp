@@ -17,15 +17,16 @@
 
 namespace bs = boost::simd;
 
-STF_CASE_TPL( "Check return type from std(ceil)", STF_NUMERIC_TYPES)
+STF_CASE_TPL( "Check return type from std(ceil)", STF_INTEGRAL_TYPES)
 {
   using bs::ceil;
-  STF_TYPE_IS(decltype(bs::std_(ceil)(T())), T);
+  STF_TYPE_IS(decltype(bs::std_(ceil)(T())), double);
 }
 
 STF_CASE_TPL( "Check std(ceil) behavior on IEEE types",  STF_IEEE_TYPES)
 {
   using bs::ceil;
+  STF_TYPE_IS(decltype(bs::std_(ceil)(T())), T);
 
   STF_EQUAL(bs::std_(ceil)(T(2.5)), T(3));
   STF_EQUAL(bs::std_(ceil)(T(1.6)), T(2));

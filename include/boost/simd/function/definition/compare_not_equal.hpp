@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_COMPARE_NOT_EQUAL_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext,compare_not_equal_,boost::dispatch::abstract_<compare_not_equal_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, compare_not_equal_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::compare_not_equal_,compare_not_equal);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(compare_not_equal_,compare_not_equal);
 } }
 
 #endif

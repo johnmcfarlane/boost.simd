@@ -9,25 +9,21 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_ALL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_ALL_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/pack.hpp>
 #include <boost/simd/function/genmask.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( all_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::type16_<A0>, bs::sse_>
-                         )
+  template< typename T, std::size_t N
+            , typename = typename std::enable_if<sizeof(T) == 2>::type
+            >
+  BOOST_FORCEINLINE bool alll_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<T,N, sse_> const& a0
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_movemask_epi8(genmask(a0)) == 0xFFFF;
-    }
-  };
+    return _mm_movemask_epi8(genmask(a0)) == 0xFFFF;
+  }
+
 } } }
 
 #endif

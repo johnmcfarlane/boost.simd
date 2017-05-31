@@ -19,49 +19,42 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( copysign_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  scopysign_( T a0
+            , T a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return saturated_(abs)(a0)*signnz(a1);
-    }
-  };
+    return bitwise_or(bitofsign(a1), bitwise_notand(Signmask(as(a0)), a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( copysign_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  scopysign_( T a0
+            , T a1, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return bitwise_or(bitofsign(a1), bitwise_notand(Signmask<A0>(), a0));
-    }
-  };
+    return saturated_(abs)(a0)*signnz(a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( copysign_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                                    )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  copysign_(BOOST_SIMD_SUPPORTS(cpu_)
+           , T a0
+           , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return std::copysign(a0, a1);
-    }
-  };
+    return scopysign_(a0, a1, std::is_floating_point<T>());
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  copysign_(BOOST_SIMD_SUPPORTS(cpu_)
+           ,  std_tag const &
+           , T a0
+           , T a1) BOOST_NOEXCEPT
+  {
+    return std::copysign(a0, a1);
+  }
 
 } } }
 

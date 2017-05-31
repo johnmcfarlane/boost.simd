@@ -48,12 +48,12 @@ namespace boost { namespace simd { namespace detail
   //std_ decorator
   template<typename T >
   BOOST_FORCEINLINE
-  auto ceil_(BOOST_SIMD_SUPPORTS(cpu_)
+  T ceil_(BOOST_SIMD_SUPPORTS(cpu_)
          , std_tag const &
-         , T a) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    std::ceil(a)
-  )
+         , T a) BOOST_NOEXCEPT
+  {
+   return  T(std::ceil(a));
+  }
 
 } } }
 

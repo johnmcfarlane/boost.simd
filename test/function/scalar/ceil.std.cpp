@@ -20,7 +20,7 @@ namespace bs = boost::simd;
 STF_CASE_TPL( "Check return type from std(ceil)", STF_INTEGRAL_TYPES)
 {
   using bs::ceil;
-  STF_TYPE_IS(decltype(bs::std_(ceil)(T())), double);
+  STF_TYPE_IS(decltype(bs::std_(ceil)(T())), T);
 }
 
 STF_CASE_TPL( "Check std(ceil) behavior on IEEE types",  STF_IEEE_TYPES)

@@ -9,26 +9,22 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_COMPARE_GREATER_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_COMPARE_GREATER_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/compare_less.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( compare_greater_
-                          , (typename X, typename A0)
-                          , bd::cpu_
-                          , bs::pack_<bd::fundamental_<A0>, X>
-                          , bs::pack_<bd::fundamental_<A0>, X>
-                          )
+  template< typename T, std::size_t N >
+  BOOST_FORCEINLINE
+  bool compare_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
+                           , pack<T,N> const& a0
+                           , pack<T,N> const& a1
+                           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return compare_less(a1, a0);
-    }
-  };
+    return compare_less(a1,a0);
+  }
+
 } } }
 
 #endif

@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_COMPARE_GREATER_EQUAL_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/compare_greater_equal.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/compare_greater_equal.hpp>
 
 #endif

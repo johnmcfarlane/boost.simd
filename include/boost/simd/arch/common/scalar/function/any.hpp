@@ -14,44 +14,31 @@
 #include <boost/simd/logical.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( any_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<logical_<A0> >
-                          )
+  template< typename T >
+  BOOST_FORCEINLINE
+  logical<T> any_(BOOST_SIMD_SUPPORTS(cpu_)
+                 , T  a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return is_nez(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( any_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
+  template< typename T >
+  BOOST_FORCEINLINE
+  logical<T> any_(BOOST_SIMD_SUPPORTS(cpu_)
+        , logical<T>  a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0);
-    }
-  };
+    return a0;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( any_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::bool_<A0> >
-                          )
+  BOOST_FORCEINLINE
+  bool any_(BOOST_SIMD_SUPPORTS(cpu_)
+           , bool a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return a0;
+  }
+
 } } }
 
 

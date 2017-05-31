@@ -15,49 +15,44 @@
 #include <boost/simd/function/hmsb.hpp>
 #include <boost/simd/function/splatted.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF( any_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::fundamental_<A0>, X>
-                            )
+  template< typename T, std::size_t N >
+  BOOST_FORCEINLINE bool vany_ ( pack<T,N> const& a0
+                               , aggregate_storage const &
+                               ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool do_(const A0& a0, aggregate_storage const&) const BOOST_NOEXCEPT
-    {
-      return any(slice_high(a0)) || any(slice_low(a0));
-    }
+    auto const any0 = any(slice_high(a0));
+    auto const any1 = any(slice_low(a0) );
+    return  any0 || any1;
+  }
 
-    template<typename K>
-    BOOST_FORCEINLINE bool do_(const A0& a0, K const&) const BOOST_NOEXCEPT
-    {
-      return hmsb(genmask(a0)).any();
-    }
-
-    BOOST_FORCEINLINE bool operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      return do_(a0, typename A0::storage_kind{});
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF( any_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::splatted_tag
-                            , bs::pack_<bd::fundamental_<A0>, X>
-                            )
+  template< typename T, std::size_t N, typename K>
+  BOOST_FORCEINLINE bool vany_ ( pack<T,N> const& a0
+                               , K const
+                               ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE as_logical_t<A0>
-    operator()(bs::splatted_tag const&, const A0& a0) const BOOST_NOEXCEPT
-    {
-      return as_logical_t<A0>(any(a0));
-    }
-  };
+    return hmsb(genmask(a0)).any();
+  }
+
+  template< typename T, std::size_t N >
+  BOOST_FORCEINLINE bool any_ ( BOOST_SIMD_SUPPORTS(simd_)
+                              , pack<T,N> const& a0
+                              ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return vany_(a0, typename p_t::storage_kind{});
+  }
+
+  template< typename T, std::size_t N >
+  BOOST_FORCEINLINE auto any_ ( BOOST_SIMD_SUPPORTS(simd_)
+                              , splatted_tag const&
+                              , pack<T,N> const& a0
+                              ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    (as_logical_t<pack<T, N>>(any(a0)))
+  )
+
 } } }
 
 #endif

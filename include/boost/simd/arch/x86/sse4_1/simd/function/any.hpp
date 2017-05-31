@@ -15,35 +15,37 @@
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( any_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                         )
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool vany_ (pack<T,N,sse_> const& a0
+             , std::false_type const &
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_testnzc_si128(a0, Allbits<A0>());
-    }
-  };
+    return  _mm_testnzc_si128(a0, Allbits(as(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( any_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::floating_<A0>, bs::sse_>
-                         )
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool vany_ (pack<T,N,sse_> const& a0
+             , std::true_type const &
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0>;
-      return _mm_testnzc_si128(bitwise_cast<iA0>(a0), Butsign<iA0>());
-    }
-  };
+    using p_t  = pack<T,N,sse_>;
+    using ip_t = bd::as_integer_t<p_t>;
+    return _mm_testnzc_si128(bitwise_cast<ip_t>(a0), Butsign<ip_t>());
+  }
+
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool any_ (BOOST_SIMD_SUPPORTS(sse4_1_)
+            , pack<T,N,sse_> const& a0
+            ) BOOST_NOEXCEPT
+  {
+    return vany_(a0, std::is_floating_point<T>());
+  }
 
 } } }
 

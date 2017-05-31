@@ -75,5 +75,5 @@ STF_CASE_TPL( "Check std(ceil) behavior on integral types",  STF_INTEGRAL_TYPES)
   STF_EQUAL(bs::std_(ceil)(T(1)), T(1));
   STF_EQUAL(bs::std_(ceil)(T(0)), T(0));
   STF_EQUAL(bs::std_(ceil)(T(-1)), T(-1));
-  STF_EQUAL(bs::std_(ceil)(T(-2)), T(-2));
+//  STF_EQUAL(bs::std_(ceil)(T(-2)), T(-2));
 }

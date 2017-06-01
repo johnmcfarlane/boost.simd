@@ -10,70 +10,53 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
-
+#include <type_traits>
+#include <boost/simd/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( is_equal_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  bs::as_logical_t<pack<double,2,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<double,2,sse_> const& a0
+                                            , pack<double,2,sse_> const& a1
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpeq_pd(a0,a1);
-    }
-  };
+    return _mm_cmpeq_pd(a0,a1);
+  }
 
-BOOST_DISPATCH_OVERLOAD ( is_equal_
-                        , (typename A0)
-                        , bs::sse2_
-                        , bs::pack_<bd::ints8_<A0>,bs::sse_>
-                        , bs::pack_<bd::ints8_<A0>,bs::sse_>
-                        )
+  template<typename T>
+  BOOST_FORCEINLINE
+  bs::as_logical_t<pack<T,16,sse_>> is_equal_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                                              , pack<T,16,sse_> const& a0
+                                              , pack<T,16,sse_> const& a1
+                                              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpeq_epi8(a0,a1);
-    }
-  };
+    return _mm_cmpeq_epi8(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_equal_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints16_<A0>,bs::sse_>
-                          , bs::pack_<bd::ints16_<A0>,bs::sse_>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  bs::as_logical_t<pack<T,8,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<T,8,sse_> const& a0
+                                            , pack<T,8,sse_> const& a1
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpeq_epi16(a0,a1);
-    }
-  };
+    return _mm_cmpeq_epi16(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_equal_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints32_<A0>,bs::sse_>
-                          , bs::pack_<bd::ints32_<A0>,bs::sse_>
-                          )
+  template< typename T
+          , typename = typename std::enable_if<std::is_integral<T>::value>::type
+          >
+  BOOST_FORCEINLINE
+  bs::as_logical_t<pack<T,4,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<T,4,sse_> const& a0
+                                            , pack<T,4,sse_> const& a1
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpeq_epi32(a0,a1);
-    }
-  };
+    return _mm_cmpeq_epi32(a0,a1);
+  }
+
 } } }
 
 #endif

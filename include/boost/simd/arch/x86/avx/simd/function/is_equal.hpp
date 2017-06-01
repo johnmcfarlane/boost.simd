@@ -9,69 +9,44 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <type_traits>
+#include <boost/simd/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  BOOST_FORCEINLINE pack<double,4,avx_> plus_( BOOST_SIMD_SUPPORTS(avx_)
+                                             , pack<double,4,avx_> const& a0
+                                             , pack<double,4,avx_> const& a1
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmp_pd(a0,a1,CMP_EQ_OQ);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_equal_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
-   {
-      using result =  bs::as_logical_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmp_pd(a0,a1, _CMP_EQ_OQ);
-      }
-   };
+  BOOST_FORCEINLINE pack<float,8,avx_> plus_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                             , pack<float,8,avx_> const& a0
+                                             , pack<float,8,avx_> const& a1
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmp_ps(a0,a1,_CMP_EQ_OQ);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_equal_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
-   {
-      using result =  bs::as_logical_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmp_ps(a0,a1, _CMP_EQ_OQ);
-      }
-   };
+  BOOST_FORCEINLINE pack<double,2,avx_> plus_( BOOST_SIMD_SUPPORTS(avx_)
+                                             , pack<double,2,avx_> const& a0
+                                             , pack<double,2,avx_> const& a1
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm_cmp_pd(a0,a1,CMP_EQ_OQ);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_equal_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          )
-   {
-      using result =  bs::as_logical_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm_cmp_pd(a0,a1, _CMP_EQ_OQ);
-      }
-   };
+  BOOST_FORCEINLINE pack<float,4,avx_> plus_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                             , pack<float,4,avx_> const& a0
+                                             , pack<float,4,avx_> const& a1
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm_cmp_ps(a0,a1,_CMP_EQ_OQ);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_equal_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          )
-   {
-      using result =  bs::as_logical_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return _mm_cmp_ps(a0,a1, _CMP_EQ_OQ);
-      }
-   };
 } } }
 
 #endif

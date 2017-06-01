@@ -1153,6 +1153,8 @@ namespace nsm
 
   template<typename T> struct always_true : std::true_type {};
   template<typename T> struct always_false: std::false_type {};
+  template<typename T> struct is_bool : std::is_same<T, bool>{};
+
 
   template<typename T>
   struct sizeof_ : type_traits::integral_constant <std::size_t, sizeof(T)> {};

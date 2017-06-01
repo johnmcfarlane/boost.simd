@@ -16,6 +16,7 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -26,7 +27,7 @@ namespace boost { namespace simd { namespace detail
   T cos_(BOOST_SIMD_SUPPORTS(cpu_)
          , T const& a) BOOST_NOEXCEPT
   {
-    return detail::trig_base<T,tag::radian_tag,tag::not_simd_type>::cosa(a);
+    return detail::trig_base<T,tag::radian_tag,is_pack_t<T>>::cosa(a);
   }
 
   //================================================================================================
@@ -36,7 +37,7 @@ namespace boost { namespace simd { namespace detail
   T cos_(BOOST_SIMD_SUPPORTS(cpu_)
          , std_tag const&
          , T const& a) BOOST_NOEXCEPT
-  {
+   {
     return std::cos(a);
   }
 
@@ -48,7 +49,7 @@ namespace boost { namespace simd { namespace detail
          , restricted_tag const&
          , T const& a) BOOST_NOEXCEPT
   {
-     return detail::trig_base<T,tag::radian_tag,tag::not_simd_type,tag::clipped_pio4_tag>::cosa(a);
+     return detail::trig_base<T,tag::radian_tag,is_pack_t<T>,tag::clipped_pio4_tag>::cosa(a);
   }
 
   //================================================================================================
@@ -59,7 +60,7 @@ namespace boost { namespace simd { namespace detail
         , T const& a
         , Tag const& ) BOOST_NOEXCEPT
   {
-     return detail::trig_base<T,tag::radian_tag,tag::not_simd_type,Tag>::cosa(a);
+    return detail::trig_base<T,tag::radian_tag,is_pack_t<T>,Tag>::cosa(a);
   }
 
 } } }

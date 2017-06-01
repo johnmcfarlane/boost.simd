@@ -32,6 +32,7 @@
 #include <boost/simd/function/signnz.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -56,7 +57,7 @@ namespace boost { namespace simd { namespace detail
     }
 #endif
     T q = bs::abs(a0/a1);
-    T z = detail::invtrig_base<T,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, rec(q));
+    T z = detail::invtrig_base<T,tag::radian_tag, is_pack_t<T>>::kernel_atan(q, rec(q));
     T sgn = signnz(a0);
     z = (is_positive(a1)? z: Pi<T>()-z)*sgn;
     return is_eqz(a0) ? if_else_zero(is_negative(a1), Pi<T>()*sgn) : z;
@@ -83,7 +84,7 @@ namespace boost { namespace simd { namespace detail
         , T a1) BOOST_NOEXCEPT
   {
     T q = bs::abs(a0/a1);
-    T z = detail::invtrig_base<T,tag::radian_tag, tag::not_simd_type>::kernel_atan(q, bs::rec(q));
+    T z = detail::invtrig_base<T,tag::radian_tag, is_pack_t<T>>::kernel_atan(q, bs::rec(q));
     return (is_positive(a1)? z: Pi<T>()-z)*signnz(a0);
   }
 

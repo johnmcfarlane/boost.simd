@@ -17,6 +17,7 @@
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -30,7 +31,7 @@ namespace boost { namespace simd { namespace detail
                 , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return detail::trig_base<p_t,tag::radian_tag,tag::simd_type,tag::big_tag>::cosa(a);
+    return detail::trig_base<p_t,tag::radian_tag,is_pack_t<p_t>,tag::big_tag>::cosa(a);
   }
 
   // Emulated implementation
@@ -51,7 +52,7 @@ namespace boost { namespace simd { namespace detail
                   , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return detail::trig_base<p_t, tag::radian_tag,tag::simd_type,tag::clipped_pio4_tag>::cosa(a);
+    return detail::trig_base<p_t, tag::radian_tag,is_pack_t<p_t>,tag::clipped_pio4_tag>::cosa(a);
   }
 
   // std_ decorator
@@ -72,7 +73,7 @@ namespace boost { namespace simd { namespace detail
                 , Tag const&) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return detail::trig_base<p_t, tag::radian_tag,tag::simd_type,Tag>::cosa(a);
+    return detail::trig_base<p_t, tag::radian_tag, std::true_type,Tag>::cosa(a);
 
   }
 } } }

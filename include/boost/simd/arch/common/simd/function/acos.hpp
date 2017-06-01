@@ -20,6 +20,7 @@
 #include <boost/simd/arch/common/detail/simd/d_invtrig.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -51,7 +52,7 @@ namespace boost { namespace simd { namespace detail
     //          4 values (100.00%)  within 128.0 ULPs in range [9.999996424e-01, 9.999998212e-01]. Example: 9.999996424e-01 returns 8.456707001e-04 instead of 8.457279764e-04
     //          1 values (100.00%)  within 256.0 ULPs in range [9.999999404e-01, 9.999999404e-01]. Example: 9.999999404e-01 returns 3.452301025e-04 instead of 3.452669771e-04
     using p_t = pack<T,N>;
-    return Pio_2<p_t>()-invtrig_base<p_t,tag::radian_tag,tag::simd_type>::asin(a);
+    return Pio_2<p_t>()-invtrig_base<p_t,tag::radian_tag,is_pack_t<p_t>>::asin(a);
   }
 
   // Emulated implementation
@@ -84,7 +85,7 @@ namespace boost { namespace simd { namespace detail
     //1968259973 values (92.38%)  within 0.0 ULPs
     // 162446459 values (7.62%) within 0.5 ULPs in range [-9.999999404e-01, 9.999996424e-01]. Example: -9.999999404e-01 returns 3.141247511e+00 instead of 1.570796251e+00
     using p_t = pack<T,N>;
-    return invtrig_base<p_t,tag::radian_tag,tag::simd_type>::acos(a);
+    return invtrig_base<p_t,tag::radian_tag,is_pack_t<p_t>>::acos(a);
   }
 
   // Emulated implementation

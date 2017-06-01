@@ -17,6 +17,7 @@
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -30,7 +31,7 @@ namespace boost { namespace simd { namespace detail
                  , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return invtrig_base<p_t,tag::radian_tag,tag::simd_type>::atan(a);
+    return invtrig_base<p_t,tag::radian_tag,is_pack_t<p_t>>::atan(a);
   }
 
   // Emulated implementation

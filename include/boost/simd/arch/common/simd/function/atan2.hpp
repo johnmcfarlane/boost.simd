@@ -25,6 +25,7 @@
 #include <boost/simd/function/minus.hpp>
 #include <boost/simd/function/negatenz.hpp>
 #include <boost/simd/function/rec.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 #ifndef BOOST_SIMD_NO_INFINITIES
 #include <boost/simd/constant/one.hpp>
@@ -51,7 +52,7 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t =  pack<T, N>;
     p_t q = bs::abs(a0/a1);
-    p_t z = detail::invtrig_base<p_t,tag::radian_tag, tag::simd_type>::kernel_atan(q, rec(q));
+    p_t z = detail::invtrig_base<p_t,tag::radian_tag, is_pack_t<p_t>>::kernel_atan(q, rec(q));
     return bs::if_else(bs::is_positive(a1), z, bs::Pi<p_t>()-z)* signnz(a0);
   }
 
@@ -72,7 +73,7 @@ namespace boost { namespace simd { namespace detail
     a10 =  bs::if_else(test1, bs::copysign(One<p_t>(), a10), a10);
 #endif
     p_t q = bs::abs(a00/a10);
-    p_t z = detail::invtrig_base<p_t,tag::radian_tag, tag::simd_type>::kernel_atan(q, rec(q));
+    p_t z = detail::invtrig_base<p_t,tag::radian_tag, is_pack_t<p_t>>::kernel_atan(q, rec(q));
     //p_t z = atan(abs(a0/a1));  // case a1 > 0,  a0 > 0
     p_t sgn = signnz(a0);
     z = bs::if_else(bs::is_positive(a10), z, bs::Pi<p_t>()-z)*sgn;

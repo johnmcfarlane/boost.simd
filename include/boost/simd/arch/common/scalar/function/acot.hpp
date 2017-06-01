@@ -17,6 +17,7 @@
 #include <boost/simd/arch/common/detail/scalar/d_invtrig.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -25,7 +26,7 @@ namespace boost { namespace simd { namespace detail
   T acot_(BOOST_SIMD_SUPPORTS(cpu_)
          , T const& a) BOOST_NOEXCEPT
   {
-    return detail::invtrig_base<T,tag::radian_tag,tag::not_simd_type>::acot(a);
+    return detail::invtrig_base<T,tag::radian_tag,is_pack_t<T>>::acot(a);
   }
 
 } } }

@@ -11,70 +11,83 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_COSPI_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_COSPI_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/arch/common/detail/simd/trigo.hpp>
 #include <boost/simd/function/restricted.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/mone.hpp>
+#include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_odd.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( cospi_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vcospi_(pack<T,N> const& a
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::simd_type,tag::big_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( cospi_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+    using p_t = pack<T,N>;
+    return detail::trig_base<p_t,tag::pi_tag,is_pack_t<p_t>>::cosa(a);
+  }
+
+  template<typename T, std::size_t N,
+           typename = typename  std::enable_if< std::is_signed<T>::value>
+  >
+  BOOST_FORCEINLINE
+  pack<T,N> vcospi_( pack<T,N> const& a
+           , std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::simd_type,tag::clipped_pio4_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cospi_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          , bd::scalar_ < bd::unspecified_<A1>>
-                          )
+    using p_t = pack<T,N>;
+    return if_else(bs::is_odd(a), Mone<p_t>(), One<p_t>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> cospi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::simd_type,A1>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( cospi_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+    return vcospi_(a, std::is_floating_point<T>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> cospi_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                 , pack<T,N,simd_emulation_> const& a
+                                 ) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return bs::if_else(bs::is_odd(a0),Mone<result_t>(),One<result_t>());
-    }
-  };
+    return map_to(simd::cospi, a);
+  }
+
+  // restricted_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> cospi_( BOOST_SIMD_SUPPORTS(simd_)
+                  , restricted_tag const&
+                  , pack<T,N,X> const& a) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return detail::trig_base<p_t, tag::pi_tag,is_pack_t<p_t>,tag::clipped_pio4_tag>::cosa(a);
+  }
+
+  // other tags
+  template<typename T, std::size_t N, typename X, typename Tag>
+  BOOST_FORCEINLINE
+  pack<T,N> cospi_( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                , Tag const&) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return detail::trig_base<p_t, tag::pi_tag, is_pack_t<p_t>,Tag>::cosa(a);
+
+  }
+
 } } }
 
 

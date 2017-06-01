@@ -1,4 +1,4 @@
-y//==================================================================================================
+//==================================================================================================
 /*!
   @file
 
@@ -13,7 +13,7 @@ y//=============================================================================
 
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/acsc.hpp>
-#include <boost/simd/function/rec.hpp>
+#include <boost/simd/function/indeg.hpp>
 #include <boost/config.hpp>
 
 

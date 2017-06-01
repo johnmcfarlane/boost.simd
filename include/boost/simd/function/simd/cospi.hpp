@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_COSPI_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/cospi.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/cospi.hpp>
 
 #endif

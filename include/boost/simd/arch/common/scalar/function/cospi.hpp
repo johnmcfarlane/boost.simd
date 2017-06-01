@@ -20,58 +20,60 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( cospi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T scospi_( T const& a
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::not_simd_type,tag::big_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cospi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return detail::trig_base<T,tag::pi_tag,is_pack_t<T>>::cosa(a);
+  }
+
+  template<typename T,
+           typename = typename std::enable_if<tt_::is_signed<T>::value>
+  >
+  BOOST_FORCEINLINE
+  T scospi_( T const& a
+           , std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::not_simd_type,tag::clipped_pio4_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cospi_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_ < bd::unspecified_<A1> >
-                          )
+    return (bs::is_odd(a)?Mone<T>():One<T>());
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::pi_tag,tag::not_simd_type,A1>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cospi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+    return scospi_(a, std::is_floating_point<T>());
+  }
+
+  //================================================================================================
+  // restricted_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , restricted_tag const&
+         , T const& a) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return(bs::is_odd(a0)?Mone<result_t>():One<result_t>());
-    }
-  };
+    return detail::trig_base<T,tag::pi_tag,is_pack_t<T>,tag::clipped_pio4_tag>::cosa(a);
+  }
+
+  //================================================================================================
+  // other_ tags
+  template<typename T, typename Tag>
+  BOOST_FORCEINLINE
+  T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a
+         , Tag const& ) BOOST_NOEXCEPT
+  {
+    return detail::trig_base<T,tag::pi_tag,is_pack_t<T>,Tag>::cosa(a);
+  }
+
 } } }
 
 

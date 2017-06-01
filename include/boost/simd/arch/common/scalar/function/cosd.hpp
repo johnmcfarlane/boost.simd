@@ -16,46 +16,42 @@
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( cosd_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cosd_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::degree_tag,tag::not_simd_type,tag::big_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cosd_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return detail::trig_base<T,tag::degree_tag,is_pack_t<T>>::cosa(a);
+  }
+
+  //================================================================================================
+  // restricted_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cosd_(BOOST_SIMD_SUPPORTS(cpu_)
+         , restricted_tag const&
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::degree_tag,tag::not_simd_type,tag::clipped_pio4_tag>::cosa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cosd_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_<bd::unspecified_<A1>>
-                          )
+    return detail::trig_base<T,tag::degree_tag,is_pack_t<T>,tag::clipped_pio4_tag>::cosa(a);
+  }
+
+  //================================================================================================
+  // other_ tags
+  template<typename T, typename Tag>
+  BOOST_FORCEINLINE
+  T cosd_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a
+         , Tag const& ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0,  A1 const &) const BOOST_NOEXCEPT
-    {
-      return detail::trig_base<A0,tag::degree_tag,tag::not_simd_type,tag::big_tag>::cosa(a0);
-    }
-  };
+    return detail::trig_base<T,tag::degree_tag,is_pack_t<T>,Tag>::cosa(a);
+  }
+
 } } }
 
 

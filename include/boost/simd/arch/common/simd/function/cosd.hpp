@@ -64,7 +64,6 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t = pack<T,N>;
     return detail::trig_base<p_t, tag::degree_tag, is_pack_t<p_t>,Tag>::cosa(a);
-
   }
 
 } } }

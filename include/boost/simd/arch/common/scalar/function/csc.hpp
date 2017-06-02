@@ -17,45 +17,40 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( csc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T csc_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return csc(a0, tag::big_);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( csc_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_ < bd::unspecified_<A1> >
-                          )
+    return rec(sin(a));
+  }
+
+  //================================================================================================
+  // restricted_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T csc_(BOOST_SIMD_SUPPORTS(cpu_)
+        , restricted_tag const&
+        , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return rec(sin(a0, A1()));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( csc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return rec(restricted_(sin)(a));
+  }
+
+  //================================================================================================
+  // other_ tags
+  template<typename T, typename Tag>
+  BOOST_FORCEINLINE
+  T csc_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T const& a
+        , Tag const& ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 a0) const BOOST_NOEXCEPT
-    {
-      return rec(restricted_(sin)(a0));
-    }
-  };
+    return rec(sin(a, Tag()));
+  }
+
 } } }
 
 

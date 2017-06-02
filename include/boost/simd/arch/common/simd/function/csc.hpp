@@ -17,47 +17,50 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( csc_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+  //================================================================================================
+  // regular (no decorator)
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> csc_(BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return csc(a0, tag::big_);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD( csc_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          , bd::scalar_ < bd::unspecified_<A1>>
-                          )
+    return rec(sin(a));
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> csc_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                 , pack<T,N,simd_emulation_> const& a
+                                 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return rec(sin(a0, A1()));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( csc_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+    return map_to(simd::csc, a);
+  }
+
+  // restricted_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> csc_( BOOST_SIMD_SUPPORTS(simd_)
+                  , restricted_tag const&
+                  , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return rec(restricted_(sin)(a0));
-    }
-  };
+    return  rec(restricted_(sin)(a));
+  }
+
+  // other tags
+  template<typename T, std::size_t N, typename X, typename Tag>
+  BOOST_FORCEINLINE
+  pack<T,N> csc_( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                , Tag const&) BOOST_NOEXCEPT
+  {
+    return  rec(sin(a, Tag()));
+  }
+
 } } }
 
 

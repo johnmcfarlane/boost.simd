@@ -28,26 +28,25 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   template<typename T>
   BOOST_FORCEINLINE
-  T scospi_( T const& a
+  T scospi_( T a
            , std::true_type const &) BOOST_NOEXCEPT
   {
     return detail::trig_base<T,tag::pi_tag,is_pack_t<T>>::cosa(a);
   }
 
-  template<typename T,
-           typename = typename std::enable_if<tt_::is_signed<T>::value>
-  >
+  template<typename T >
   BOOST_FORCEINLINE
-  T scospi_( T const& a
+  T scospi_( T a
            , std::false_type) BOOST_NOEXCEPT
   {
+    static_assert(tt_::is_signed<T>::value, "cospi can't be called on unsigned integral types");
     return (bs::is_odd(a)?Mone<T>():One<T>());
   }
 
   template<typename T>
   BOOST_FORCEINLINE
   T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
-         , T const& a) BOOST_NOEXCEPT
+         , T a) BOOST_NOEXCEPT
   {
     return scospi_(a, std::is_floating_point<T>());
   }
@@ -58,7 +57,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
          , restricted_tag const&
-         , T const& a) BOOST_NOEXCEPT
+         , T a) BOOST_NOEXCEPT
   {
     return detail::trig_base<T,tag::pi_tag,is_pack_t<T>,tag::clipped_pio4_tag>::cosa(a);
   }
@@ -68,7 +67,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T, typename Tag>
   BOOST_FORCEINLINE
   T cospi_(BOOST_SIMD_SUPPORTS(cpu_)
-         , T const& a
+         , T a
          , Tag const& ) BOOST_NOEXCEPT
   {
     return detail::trig_base<T,tag::pi_tag,is_pack_t<T>,Tag>::cosa(a);

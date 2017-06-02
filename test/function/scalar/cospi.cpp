@@ -72,23 +72,6 @@ STF_CASE_TPL (" cospi restricted",  STF_IEEE_TYPES)
   STF_ULP_EQUAL(bs::restricted_(cospi)(bs::Zero<T>()), bs::One<r_t>(), 0.5);
 }
 
-STF_CASE_TPL (" cospi unsigned",  STF_UNSIGNED_INTEGRAL_TYPES)
-{
-  namespace bs = boost::simd;
-  namespace bd = boost::dispatch;
-
-  using bs::cospi;
-  using r_t = decltype(cospi(T()));
-  using result_t = bd::as_floating_t<T>;
-
-  // return type conformity test
-  STF_TYPE_IS(r_t, result_t);
-
-  // specific values tests
-  STF_ULP_EQUAL(cospi(bs::One<T>()), bs::Mone<r_t>(), 0.5);
-  STF_ULP_EQUAL(cospi(bs::Zero<T>()), bs::One<r_t>(), 0.5);
-} // end of test for unsigned_int_
-
 STF_CASE_TPL (" cospi signed",  STF_SIGNED_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
@@ -96,7 +79,7 @@ STF_CASE_TPL (" cospi signed",  STF_SIGNED_INTEGRAL_TYPES)
 
   using bs::cospi;
   using r_t = decltype(cospi(T()));
-  using result_t = bd::as_floating_t<T>;
+  using result_t = T;
 
   // return type conformity test
   STF_TYPE_IS(r_t, result_t);

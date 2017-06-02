@@ -21,35 +21,18 @@
 #include <boost/simd/function/exp.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/std.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( cosh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cosh_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0  a0) const BOOST_NOEXCEPT
-    {
-      return std::cosh(a0);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( cosh_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
       //////////////////////////////////////////////////////////////////////////////
       // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
       // respectively computed
@@ -57,14 +40,24 @@ namespace boost { namespace simd { namespace ext
       // *  in the second     cosh is (e/2)*e (avoiding undue overflow)
       // Threshold is Maxlog - Log_2
       //////////////////////////////////////////////////////////////////////////////
-      A0 x = bs::abs(a0);
-      auto test1 = (x > Maxlog<A0>()-Log_2<A0>());
-      A0 fac =test1 ? Half<A0>() : One<A0>();
-      A0 tmp = exp(x*fac);
-      A0 tmp1 = Half<A0>()*tmp;
+      T x = bs::abs(a0);
+      auto test1 = (x > Maxlog<T>()-Log_2<T>());
+      T fac =test1 ? Half<T>() : One<T>();
+      T tmp = exp(x*fac);
+      T tmp1 = Half<T>()*tmp;
       return test1 ?tmp1*tmp : bs::average(tmp, rec(tmp));
-    }
-  };
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cosh_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const&
+         , T a) BOOST_NOEXCEPT
+  {
+    return std::cosh(a);
+  }
 
 } } }
 

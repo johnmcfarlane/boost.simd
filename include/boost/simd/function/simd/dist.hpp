@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_DIST_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/dist.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/dist.hpp>
 
 #endif

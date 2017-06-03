@@ -12,40 +12,72 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_DIST_HPP_INCLUDED
 
 #include <boost/simd/function/abs.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/constant/zero.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( dist_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  sdist_( T a0
+        , T a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0>a1) ? a0-a1 : a1-a0;
-    }
-  };
+     return bs::abs(a0 - a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( dist_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  sdist_( T a0
+        , T a1, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return bs::abs(a0 - a1);
-    }
-  };
+    return (a0>a1) ? a0-a1 : a1-a0;
+  }
+  template<typename T>
+  BOOST_FORCEINLINE T
+  dist_(BOOST_SIMD_SUPPORTS(cpu_)
+       , T a0
+       , T a1) BOOST_NOEXCEPT
+  {
+    return sdist_(a0, a1, std::is_floating_point<T>());
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Saturated cases
+
+  template<typename T> BOOST_FORCEINLINE
+  T sdist_( T a, T& b
+          , detail::case_<0> const& ) BOOST_NOEXCEPT// IEEE case
+  {
+    return dist(a, b);
+  }
+
+  template<typename T> BOOST_FORCEINLINE // signed integral case
+  T sdist_ ( T  a, T  b
+           , detail::case_<1> const&
+           ) BOOST_NOEXCEPT
+  {
+    auto tmp = dist(a, b);
+    return tmp < Zero(as(a)) ? Valmax(as(a)) : tmp;
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T sdist_( T a, T& b
+          , detail::case_<2> const& ) BOOST_NOEXCEPT // unsigned integral case
+  {
+    return dist(a, b);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T dist_(BOOST_SIMD_SUPPORTS(cpu_)
+         , saturated_tag const&
+         , T  a
+         , T  b) BOOST_NOEXCEPT
+  {
+    return sdist_ ( a ,b, fsu_picker<T>());
+   }
+
 } } }
-
-#include <boost/simd/arch/common/scalar/function/dist_s.hpp>
 
 #endif

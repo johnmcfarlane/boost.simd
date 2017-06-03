@@ -19,9 +19,9 @@
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/detail/function/map_to.hpp>
-#include <boost/simd/detail/meta/pick.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -80,12 +80,7 @@ namespace boost { namespace simd { namespace detail
                                     , saturated_tag const&, pack<T,N> const& a, pack<T,N> const& b
                                     ) BOOST_NOEXCEPT
   {
-    return splus_ ( a, b
-                  , typename detail::pick < T , tt_::is_floating_point
-                                              , tt_::is_signed
-                                              , tt_::is_unsigned
-                                          >::type{}
-                  );
+    return splus_ ( a, b, fsu_picker<T>());
   }
 
   // Emulated implementation

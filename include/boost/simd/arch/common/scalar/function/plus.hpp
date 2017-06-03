@@ -12,7 +12,7 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/function/saturate.hpp>
-#include <boost/simd/detail/meta/pick.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 
@@ -85,10 +85,7 @@ namespace boost { namespace simd { namespace detail
   T plus_(BOOST_SIMD_SUPPORTS(cpu_), saturated_tag const&, T const& a, T const& b) BOOST_NOEXCEPT
   {
     return splus_ ( a ,b
-                  , typename detail::pick <T, tt_::is_floating_point
-                                            , tt_::is_signed
-                                            , tt_::is_unsigned
-                                          >::type{}
+                  , fsu_picker<T>()
                   , tt_::integral_constant<bool,(sizeof(T) >= 4)>{}
                   );
   }

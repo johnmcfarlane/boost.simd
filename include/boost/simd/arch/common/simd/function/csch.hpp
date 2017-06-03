@@ -11,27 +11,33 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CSCH_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CSCH_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/sinh.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( csch_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::unspecified_<A0>, X>
-                          )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> csch_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return rec(bs::sinh(a0));
-    }
-  };
+    return rec(bs::sinh(a0));
+  }
+
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> csch_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::csch, a);
+  }
+
 } } }
 
 

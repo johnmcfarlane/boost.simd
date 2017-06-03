@@ -11,6 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CSCPI_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CSCPI_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/restricted.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/constant/nan.hpp>
@@ -19,50 +20,52 @@
 #include <boost/simd/function/is_flint.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/sinpi.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( cscpi_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+  // regular (no decorator)
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> cscpi_(BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return cscpi(a0, tag::big_);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cscpi_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          , bd::scalar_ < bd::unspecified_<A1>>
-                          )
+    return cscpi(a, tag::big_);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> cscpi_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                 , pack<T,N,simd_emulation_> const& a
+                                 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return if_nan_else(is_nez(a0)&&is_flint(a0), rec(sinpi(a0, A1())));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( cscpi_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+    return map_to(simd::cscpi, a);
+  }
+
+  // restricted_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> cscpi_( BOOST_SIMD_SUPPORTS(simd_)
+                  , restricted_tag const&
+                  , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return rec(restricted_(sinpi)(a0));
-    }
-  };
+    return rec(restricted_(sinpi)(a));
+  }
+
+  // other tags
+  template<typename T, std::size_t N, typename X, typename Tag>
+  BOOST_FORCEINLINE
+  pack<T,N> cscpi_( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                , Tag const&) BOOST_NOEXCEPT
+  {
+    return if_nan_else(is_nez(a)&&is_flint(a), rec(sinpi(a, Tag())));
+  }
+
 } } }
 
 

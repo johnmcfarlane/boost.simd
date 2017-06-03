@@ -19,48 +19,43 @@
 #include <boost/simd/function/is_flint.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/sinpi.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( cscpi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+ //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cscpi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return cscpi(a0, tag::big_);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cscpi_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_ < bd::unspecified_<A1> >
-                          )
+    return cscpi(a, tag::big_);
+  }
+
+  //================================================================================================
+  // restricted_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T cscpi_(BOOST_SIMD_SUPPORTS(cpu_)
+         , restricted_tag const&
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 const&) const BOOST_NOEXCEPT
-    {
-      return if_nan_else(is_nez(a0)&&is_flint(a0), rec(sinpi(a0, A1())));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( cscpi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::restricted_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return rec(restricted_(sinpi)(a));
+  }
+
+  //================================================================================================
+  // other_ tags
+  template<typename T, typename Tag>
+  BOOST_FORCEINLINE
+  T cscpi_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T const& a
+        , Tag const& ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const restricted_tag &,  A0 a0) const BOOST_NOEXCEPT
-    {
-      return rec(restricted_(sinpi)(a0));
-    }
-  };
+    return if_nan_else(is_nez(a)&&is_flint(a), rec(sinpi(a, Tag())));
+  }
+
 } } }
 
 

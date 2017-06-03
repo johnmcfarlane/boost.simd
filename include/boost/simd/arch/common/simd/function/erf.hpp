@@ -10,6 +10,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ERF_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ERF_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/arch/common/detail/generic/erf_kernel.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/pi.hpp>
@@ -39,60 +40,57 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( erf_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::double_<A0>, X>
-                          )
+  //================================================================================================
+  // regular (no decorator)
+
+  // Native implementation
+  template< std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<double,N,X> erf_(BOOST_SIMD_SUPPORTS(simd_)
+                   , pack<double,N,X> const& a0) BOOST_NOEXCEPT
   {
-    A0 operator() (const A0& a0) const BOOST_NOEXCEPT
+    using p_t = pack<double,N,X>;
+    p_t x =  bs::abs(a0);
+    p_t xx =  bs::sqr(x);
+    p_t lim1 = p_t(0.65);
+    p_t lim2 = p_t(2.2);
+    auto test1 = bs::is_less(x, lim1);
+    p_t r1 = bs::Zero<p_t>();
+    std::size_t nb = bs::nbtrue(test1);
+
+    if(nb > 0)
     {
-     A0 x =  bs::abs(a0);
-      A0 xx =  bs::sqr(x);
-      A0 lim1 = A0(0.65);
-      A0 lim2 = A0(2.2);
-      auto test1 = bs::is_less(x, lim1);
-      A0 r1 = bs::Zero<A0>();
-      std::size_t nb = bs::nbtrue(test1);
-
-      if(nb > 0)
-      {
-        r1 = a0*detail::erf_kernel<A0>::erf1(xx);
-        if(nb >= A0::static_size) return r1;
-      }
-      auto test2 = bs::is_less(x, lim2);
-      auto test3 = bs::logical_andnot(test2, test1);
-
-      std::size_t nb1 = bs::nbtrue(test3);
-      A0 ex = bs::exp(-xx);
-      if(nb1 > 0)
-      {
-        A0 z = oneminus(ex*detail::erf_kernel<A0>::erfc2(x));
-        A0 r2 = bs::if_neg(is_ltz(a0), z);
-        r1 = bs::if_else(test1, r1, r2);
-        nb += nb1;
-        if(nb >= A0::static_size) return r1;
-      }
-      A0 z = bs::if_neg( bs::is_ltz(a0)
-                       , bs::oneminus(ex*detail::erf_kernel<A0>::erfc3(x))
-                       );
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      z = bs::if_else(bs::is_inf(a0), bs::sign(a0), z);
-      #endif
-      return bs::if_else(test2, r1, z);
+      r1 = a0*detail::erf_kernel<p_t>::erf1(xx);
+      if(nb >= p_t::static_size) return r1;
     }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( erf_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::single_<A0>, X>
-                          )
+    auto test2 = bs::is_less(x, lim2);
+    auto test3 = bs::logical_andnot(test2, test1);
+
+    std::size_t nb1 = bs::nbtrue(test3);
+    p_t ex = bs::exp(-xx);
+    if(nb1 > 0)
+    {
+      p_t z = oneminus(ex*detail::erf_kernel<p_t>::erfc2(x));
+      p_t r2 = bs::if_neg(is_ltz(a0), z);
+      r1 = bs::if_else(test1, r1, r2);
+      nb += nb1;
+      if(nb >= p_t::static_size) return r1;
+    }
+    p_t z = bs::if_neg( bs::is_ltz(a0)
+                      , bs::oneminus(ex*detail::erf_kernel<p_t>::erfc3(x))
+                      );
+#ifndef BOOST_SIMD_NO_INFINITIES
+    z = bs::if_else(bs::is_inf(a0), bs::sign(a0), z);
+#endif
+    return bs::if_else(test2, r1, z);
+  }
+
+  template< std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<float,N,X> erf_(BOOST_SIMD_SUPPORTS(simd_)
+                   , pack<float,N,X> const& a0) BOOST_NOEXCEPT
   {
     //Exhaustive test for: boost::dispatch::functor<boost::simd::tag::erf_, boost::simd::sse4_2_>
     //             versus: raw_erf
@@ -112,30 +110,57 @@ namespace boost { namespace simd { namespace ext
     //       144 values (0.00%) within 64.0 ULPs  in range [-7.796264136e-41, 7.796264136e-41]. Example: -7.796264136e-41 returns -8.797071499e-41 instead of -8.797211629e-41
     //        50 values (0.00%) within 128.0 ULPs in range [-3.892947264e-41, 3.892947264e-41]. Example: -3.892947264e-41 returns -4.392650296e-41 instead of -4.392790426e-41
     //        10 values (0.00%) within 256.0 ULPs in range [-1.290736015e-41, 1.290736015e-41]. Example: -1.290736015e-41 returns -1.456369494e-41 instead of -1.456509624e-41
-    A0 operator() (const A0& a0) const BOOST_NOEXCEPT
+    using p_t = pack<float,N, X>;
+    p_t x =  bs::abs(a0);
+    p_t r1 = bs::Zero<p_t>();
+    auto test1 = bs::is_less(x, Ratio<p_t, 2, 3>());
+    std::size_t nb = bs::nbtrue(test1);
+    if(nb > 0)
     {
-      A0 x =  bs::abs(a0);
-      A0 r1 = bs::Zero<A0>();
-      auto test1 = bs::is_less(x, Ratio<A0, 2, 3>());
-      std::size_t nb = bs::nbtrue(test1);
-      if(nb > 0)
-      {
-        r1 =  a0*detail::erf_kernel<A0>::erf1(sqr(x));
-        if(nb >= A0::static_size)
-          return r1;
-      }
-      A0 z = x/inc(x);
-      z-= A0(0.4);
-      A0 r2 =   oneminus(exp(-sqr(x))*detail::erf_kernel<A0>::erfc2(z));
-      r2 = bs::if_neg(is_ltz(a0), r2);
-      r1 = if_else(test1, r1, r2);
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      r1 = bs::if_else(bs::is_inf(a0), bs::sign(a0), r1);
-      #endif
-      return r1;
+      r1 =  a0*detail::erf_kernel<p_t>::erf1(sqr(x));
+      if(nb >= p_t::static_size)
+        return r1;
     }
-  };
+    p_t z = x/inc(x);
+    z-= p_t(0.4);
+    p_t r2 =   oneminus(exp(-sqr(x))*detail::erf_kernel<p_t>::erfc2(z));
+    r2 = bs::if_neg(is_ltz(a0), r2);
+    r1 = if_else(test1, r1, r2);
+#ifndef BOOST_SIMD_NO_INFINITIES
+    r1 = bs::if_else(bs::is_inf(a0), bs::sign(a0), r1);
+#endif
+    return r1;
+  }
 
+  // Emulated implementation only double/float
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<double,N,simd_emulation_> erf_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                      , pack<double,N,simd_emulation_> const& a
+                                      ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::erf, a);
+  }
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<float,N,simd_emulation_> erf_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                     , pack<float,N,simd_emulation_> const& a
+                                     ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::erf, a);
+  }
+
+   // std decorator
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> erf_ ( BOOST_SIMD_SUPPORTS(simd_)
+                 , std_tag const&
+                 , pack<T,N> const& a
+                 ) BOOST_NOEXCEPT
+  {
+    return map_to(std_(simd::erf), a);
+  }
 } } }
 
 

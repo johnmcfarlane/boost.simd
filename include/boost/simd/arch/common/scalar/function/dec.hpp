@@ -9,26 +9,46 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_DEC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_DEC_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/function/minus.hpp>
+#include <boost/simd/constant/one.hpp>
+#include <boost/simd/constant/valmin.hpp>
+#include <boost/simd/function/is_not_equal.hpp>
+#include <boost/simd/function/saturated.hpp>
+#include <boost/simd/function/if_dec.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( dec_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT_IF_EXPR(a0-A0(1))
-    {
-      return a0-A0(1);
-    }
-  };
-} } }
 
-#include <boost/simd/arch/common/scalar/function/dec_s.hpp>
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T dec_(BOOST_SIMD_SUPPORTS(cpu_), T const& a) BOOST_NOEXCEPT
+  {
+    return a-One<T>();
+  }
+
+  //================================================================================================
+  // saturated_ decorator
+  template<typename T> BOOST_FORCEINLINE T sdec_( T a
+                                                , std::true_type const&) BOOST_NOEXCEPT
+  {
+    return dec(a);
+  }
+
+  template<typename T> BOOST_FORCEINLINE T sdec_( T a
+                                                , std::false_type const&) BOOST_NOEXCEPT
+  {
+    return if_dec(is_not_equal(a, Valmin(as(a))), a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T dec_( BOOST_SIMD_SUPPORTS(cpu_)
+                          , saturated_tag const&, T a) BOOST_NOEXCEPT
+  {
+    return sdec_(a, std::is_floating_point<T>{});
+  }
+
+} } }
 
 #endif

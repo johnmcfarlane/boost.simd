@@ -11,24 +11,20 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_DOT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_DOT_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/function/conj.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( dot_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  dot_(BOOST_SIMD_SUPPORTS(cpu_)
+      , T a0
+      , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return a0*a1;
-    }
-  };
+    return a0*conj(a1);
+  }
+
 } } }
 
 

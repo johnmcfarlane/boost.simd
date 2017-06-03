@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_DOT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, dot_, boost::dispatch::abstract_<dot_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, dot_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::dot_,dot);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(dot_,dot);
 } }
 
 #endif
+

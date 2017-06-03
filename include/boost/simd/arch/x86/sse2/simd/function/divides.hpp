@@ -22,7 +22,7 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  BOOST_FORCEINLINE pack<double,2,sse_> bitwise_and_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<double,2,sse_> divides( BOOST_SIMD_SUPPORTS(sse2_)
                                                     , pack<double,2,sse_> const& a0
                                                     , pack<double,2,sse_> const& a1
                                                     ) BOOST_NOEXCEPT

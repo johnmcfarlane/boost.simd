@@ -15,7 +15,7 @@
 
 namespace boost { namespace simd
 {
-  BOOST_SIMD_MAKE_CALLABLE(greater_equal_,greater_equal);
+  BOOST_SIMD_MAKE_CALLABLE(compare_greater_equal_,compare_greater_equal);
 } }
 
 #endif

@@ -14,13 +14,14 @@
 namespace boost { namespace simd { namespace detail
 {
  template< typename T>
-  BOOST_FORCEINLINE bool compare_greater_ ( BOOST_SIMD_SUPPORTS(cpu_)
-                                        , T  a0
-                                        , T  a1
-                                        ) BOOST_NOEXCEPT
-  {
-    return  !(a0 < a1);
-  }
+  BOOST_FORCEINLINE
+ bool compare_greater_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                             , T  a0
+                             , T  a1
+                             ) BOOST_NOEXCEPT
+ {
+   return  !(a0 < a1);
+ }
 
 } } }
 

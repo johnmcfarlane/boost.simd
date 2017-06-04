@@ -11,27 +11,24 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_EXP10_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_EXP10_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/arch/common/detail/scalar/exponential.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( exp10_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T exp10_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::exponential<A0,bs::tag::exp10_,tag::not_simd_type>::expa(a0);
-    }
-  };
+    return detail::exponential<T,bs::tag::exp10_,is_pack_t<T>>::expa(a);
+  }
+
 } } }
 
 

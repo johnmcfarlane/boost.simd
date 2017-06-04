@@ -16,6 +16,7 @@
 #include <boost/simd/constant/mindenormal.hpp>
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/constant/nbmantissabits.hpp>
+#include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/exponent.hpp>
@@ -23,47 +24,44 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( eps_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+ //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T seps_( T a
+                           , std::true_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( A0 ) const BOOST_NOEXCEPT
-    {
-      return static_cast<A0>(1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( eps_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      const A0 a = bs::abs(a0);
-
-            if (is_invalid(a))  return Nan<A0>();
+    a = bs::abs(a);
+    if (is_invalid(a))  return Nan<T>();
 #ifndef BOOST_SIMD_NO_DENORMALS
-      else  if (a < std::numeric_limits<A0>::min()) return Mindenormal<A0>();
+    else  if (a < std::numeric_limits<T>::min()) return Mindenormal<T>();
 #endif
-      else
-      {
-        using i_t = bd::as_integer_t<A0, unsigned>;
+    else
+    {
+      using i_t = bd::as_integer_t<T, unsigned>;
 
-        i_t e1 = exponent(a)-Nbmantissabits<A0>();
-        return bitwise_cast<A0>(bitwise_cast<i_t>(A0(1))+(e1 << Nbmantissabits<A0>()));
-      }
+      i_t e1 = exponent(a)-Nbmantissabits<T>();
+      return bitwise_cast<T>(bitwise_cast<i_t>(T(1))+(e1 << Nbmantissabits<T>()));
     }
-  };
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T seps_( T
+                           , std::false_type const&) BOOST_NOEXCEPT
+  {
+    return One<T>();
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T eps_( BOOST_SIMD_SUPPORTS(cpu_)
+                          , T a) BOOST_NOEXCEPT
+  {
+    return seps_(a, std::is_floating_point<T>{});
+  }
+
 } } }
 
 

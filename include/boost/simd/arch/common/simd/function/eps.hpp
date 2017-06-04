@@ -22,49 +22,57 @@
 #include <boost/simd/constant/nbmantissabits.hpp>
 #include <boost/simd/constant/smallestposval.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  // Native implementation
 
-  BOOST_DISPATCH_OVERLOAD ( eps_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::integer_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> veps_( pack<T,N> const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 const&) const BOOST_NOEXCEPT
-    {
-      return A0(1);
-    }
-  };
+    using p_t = pack<T,N>;
+    using ip_t = bd::as_integer_t<p_t>;
+    using sp_t = typename p_t::value_type;
 
-  BOOST_DISPATCH_OVERLOAD_IF ( eps_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_< bd::floating_<A0>, X>
-                             )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a00) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0>;
-      using sA0 = typename A0::value_type;
-
-      A0    a = boost::simd::abs(a00);
-      auto e1 = exponent(a)-Nbmantissabits<A0>();
-      A0    e =  bitwise_cast<A0>(bitwise_cast<iA0>(A0(1))+(shift_left(e1,Nbmantissabits<sA0>())));
+    p_t  a = boost::simd::abs(a0);
+    auto e1 = exponent(a)-Nbmantissabits<p_t>();
+    p_t  e =  bitwise_cast<p_t>(bitwise_cast<ip_t>(p_t(1))+(shift_left(e1,Nbmantissabits<sp_t>())));
 
 #ifndef BOOST_SIMD_NO_DENORMALS
-      return if_plus( is_invalid(a)
-                    , if_else(a < Smallestposval<A0>(), Mindenormal<A0>(), e)
-                    , Nan<A0>()
-                    );
+    return if_plus( is_invalid(a)
+                  , if_else(a < Smallestposval<p_t>(), Mindenormal<p_t>(), e)
+                  , Nan<p_t>()
+                  );
 #else
-      return if_nan_else(is_invalid(a), e);
+    return if_nan_else(is_invalid(a), e);
 #endif
-    }
-  };
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> veps_( pack<T,N> const& a0, std::false_type const &) BOOST_NOEXCEPT
+  {
+    return One(as(a0));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> eps_(BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return veps_(a0, std::is_floating_point<T>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> eps_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                 , pack<T,N,simd_emulation_> const& a
+                                 ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::eps, a);
+  }
+
 } } }
 
 #endif

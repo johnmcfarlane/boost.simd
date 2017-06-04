@@ -10,17 +10,9 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DEFINITION_EPS_HPP_INCLUDED
-
 #include <boost/simd/config.hpp>
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/definition/eps.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-
-namespace boost { namespace simd
-{
-  using detail::eps;
-
-} }
 
 #endif
 

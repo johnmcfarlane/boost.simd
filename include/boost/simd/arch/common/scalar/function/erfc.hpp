@@ -33,86 +33,77 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( erfc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  BOOST_FORCEINLINE
+  double erfc_(BOOST_SIMD_SUPPORTS(cpu_)
+              , double x) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if(is_nan(x)) return x;
+#endif
+    double y =  bs::abs(x);
+    if (y <= Ratio<double, 15, 32>()) // 0.46875
     {
-      A0 x =  bs::abs(a0);
-      A0 r1 = Zero<A0>();
-      A0 z =  x/inc(x);
-      if (x < Ratio<A0, 2, 3>())
-      {
-        r1 = detail::erf_kernel<A0>::erfc3(z);
-      }
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      else if (BOOST_UNLIKELY(x == Inf<A0>()))
-      {
-        r1 = Zero<A0>();
-      }
-      #endif
-      else
-      {
-       z-= 0.4f;
-       r1 = exp(-sqr(x))*detail::erf_kernel<A0>::erfc2(z);
-      }
-      return (a0 < 0.0f) ? 2.0f-r1 : r1;
+      double res = detail::erf_kernel1<double>::erf1(x, y);
+      res =  oneminus(res);
+      return res;
     }
-  };
-  BOOST_DISPATCH_OVERLOAD ( erfc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
+    else if (y <= Ratio<double, 4>())
+    {
+      double res = detail::erf_kernel1<double>::erf2(x, y);
+      res =    detail::erf_kernel1<double>::finalize2(res, y);
+      if (is_ltz(x)) res = Two<double>()-res;
+      return res;
+    }
+    else if  (y <= 26.543)
+    {
+      double res = detail::erf_kernel1<double>::erf3(x, y);
+      res =    detail::erf_kernel1<double>::finalize2(res, y);
+      if (is_ltz(x)) res = Two<double>()-res;
+      return res;
+    }
+    else return (is_ltz(x)) ? Two<double>() : Zero<double>();
+  }
+
+  BOOST_FORCEINLINE
+  float erfc_(BOOST_SIMD_SUPPORTS(cpu_)
+            , float a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 x) const BOOST_NOEXCEPT
+    float x =  bs::abs(a0);
+    float r1 = Zero<float>();
+    float z =  x/inc(x);
+    if (x < Ratio<float, 2, 3>())
     {
-      #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_nan(x)) return x;
-      #endif
-      A0 y =  bs::abs(x);
-      if (y <= Ratio<A0, 15, 32>()) // 0.46875
-      {
-        A0 res = detail::erf_kernel1<A0>::erf1(x, y);
-        res =  oneminus(res);
-        return res;
-      }
-      else if (y <= Ratio<A0, 4>())
-      {
-        A0 res = detail::erf_kernel1<A0>::erf2(x, y);
-        res =    detail::erf_kernel1<A0>::finalize2(res, y);
-        if (is_ltz(x)) res = Two<A0>()-res;
-        return res;
-      }
-      else if  (y <= 26.543)
-      {
-        A0 res = detail::erf_kernel1<A0>::erf3(x, y);
-        res =    detail::erf_kernel1<A0>::finalize2(res, y);
-        if (is_ltz(x)) res = Two<A0>()-res;
-        return res;
-      }
-      else return (is_ltz(x)) ? Two<A0>() : Zero<A0>();
+      r1 = detail::erf_kernel<float>::erfc3(z);
     }
-  };
-  BOOST_DISPATCH_OVERLOAD ( erfc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+#ifndef BOOST_SIMD_NO_INFINITIES
+    else if (BOOST_UNLIKELY(x == Inf<float>()))
+    {
+      r1 = Zero<float>();
+    }
+#endif
+    else
+    {
+      z-= 0.4f;
+      r1 = exp(-sqr(x))*detail::erf_kernel<float>::erfc2(z);
+    }
+    return (a0 < 0.0f) ? 2.0f-r1 : r1;
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T erfc_(BOOST_SIMD_SUPPORTS(cpu_)
+        , std_tag const&
+        , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::erfc(a0);
-    }
-  };
+    return std::erfc(a);
+  }
+
 } } }
 
 

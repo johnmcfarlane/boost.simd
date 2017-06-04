@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_ERFC_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, erfc_, boost::dispatch::elementwise_<erfc_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, erfc_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::erfc_,erfc);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(erfc_,erfc);
 } }
 
 #endif
+

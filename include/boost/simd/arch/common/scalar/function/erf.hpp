@@ -100,7 +100,7 @@ namespace boost { namespace simd { namespace detail
   // std_ decorator
   template<typename T>
   BOOST_FORCEINLINE
-  T cos_(BOOST_SIMD_SUPPORTS(cpu_)
+  T erf_(BOOST_SIMD_SUPPORTS(cpu_)
         , std_tag const&
         , T const& a) BOOST_NOEXCEPT
   {

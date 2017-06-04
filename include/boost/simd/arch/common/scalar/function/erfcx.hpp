@@ -36,72 +36,63 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( erfcx_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::double_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  BOOST_FORCEINLINE
+  double erfcx_(BOOST_SIMD_SUPPORTS(cpu_)
+             , double x) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 x) const BOOST_NOEXCEPT
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if(is_nan(x)) return x;
+#endif
+    double y =  bs::abs(x);
+    if (y <= Ratio<double, 15, 32>()) // 0.46875
     {
-      #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_nan(x)) return x;
-      #endif
-      A0 y =  bs::abs(x);
-      if (y <= Ratio<A0, 15, 32>()) // 0.46875
-      {
-        A0 ysq;
-        A0 res = detail::erf_kernel1<A0>::erf1(x, y, ysq);
-        return oneminus(res)*exp(ysq);
-      }
-      else if (y <= 4)
-      {
-        A0 res = detail::erf_kernel1<A0>::erf2(x, y);
-        if (is_ltz(x))
-        {
-          detail::erf_kernel1<A0>::finalize3(res, x);
-        }
-         return res;
-      }
-      else
-      {
-        A0 res = detail::erf_kernel1<A0>::erf3(x, y);
-        if (is_ltz(x))
-        {
-          detail::erf_kernel1<A0>::finalize3(res, x);
-        }
-        return res;
-      }
+      double ysq;
+      double res = detail::erf_kernel1<double>::erf1(x, y, ysq);
+      return oneminus(res)*exp(ysq);
     }
-  };
+    else if (y <= 4)
+    {
+      double res = detail::erf_kernel1<double>::erf2(x, y);
+      if (is_ltz(x))
+      {
+        detail::erf_kernel1<double>::finalize3(res, x);
+      }
+      return res;
+    }
+    else
+    {
+      double res = detail::erf_kernel1<double>::erf3(x, y);
+      if (is_ltz(x))
+      {
+        detail::erf_kernel1<double>::finalize3(res, x);
+      }
+      return res;
+    }
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( erfcx_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::single_<A0> >
-                          )
+  BOOST_FORCEINLINE
+  float erfcx_(BOOST_SIMD_SUPPORTS(cpu_)
+              , float a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
+#ifndef BOOST_SIMD_NO_INFINITIES
+    if(a0 == Inf<float>()) return Zero<float>();
+    if(is_nan(a0)) return a0;
+#endif
+    if (a0 < Ratio<float, 2, 3>())
     {
-      #ifndef BOOST_SIMD_NO_INFINITIES
-      if(a0 == Inf<A0>()) return Zero<A0>();
-      if(is_nan(a0)) return a0;
-      #endif
-      if (a0 < Ratio<A0, 2, 3>())
-      {
-        return expx2(a0)*erfc(a0);
-      }
-      else
-      {
-        A0 z =  a0/inc(a0) - Ratio<A0, 2, 5>();
-        return detail::erf_kernel<A0>::erfc2(z);
-      }
+      return expx2(a0)*erfc(a0);
     }
-  };
+    else
+    {
+      float z =  a0/inc(a0) - Ratio<float, 2, 5>();
+      return detail::erf_kernel<float>::erfc2(z);
+    }
+  }
+
 } } }
 
 

@@ -9,28 +9,49 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_EXP_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_EXP_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/arch/common/detail/simd/exponential.hpp>
 #include <cmath>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  //================================================================================================
+  // regular (no decorator)
 
-  BOOST_DISPATCH_OVERLOAD_IF( exp_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_< bd::floating_<A0>, X>
-                            )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> exp_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return detail::exponential<A0,bs::tag::exp_,tag::simd_type>::expa(a0);
-    }
-  };
+    using p_t = pack<T,N>;
+    return detail::exponential<p_t,bs::tag::exp_,is_pack_t<p_t>>::expa(a);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> exp_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::exp, a);
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> exp_( BOOST_SIMD_SUPPORTS(simd_)
+                   , std_tag const&
+                   , pack<T,N,X> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(std_(simd::exp), a);
+  }
+
 } } }
 
 #endif

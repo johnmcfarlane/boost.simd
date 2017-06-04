@@ -12,41 +12,38 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_EXP_HPP_INCLUDED
 #include <boost/simd/function/std.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/arch/common/detail/scalar/exponential.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>
 #include <boost/simd/function/std.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T exp_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a) BOOST_NOEXCEPT
+  {
+    return detail::exponential<T,bs::tag::exp_,is_pack_t<T>>::expa(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( exp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T exp_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const&
+         , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      return detail::exponential<A0,bs::tag::exp_,tag::not_simd_type>::expa(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( exp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::exp(a0);
-    }
-  };
+    return std::exp(a);
+  }
+
 } } }
 
 

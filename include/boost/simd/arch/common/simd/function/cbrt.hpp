@@ -49,12 +49,12 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename T, std::size_t N>
+  template<std::size_t N, typename X>
   BOOST_FORCEINLINE
-  pack<T,N> vcbrt_( pack<T,N> const& a0
-                  , std::true_type const&) BOOST_NOEXCEPT //T == float
+  pack<float,N, X> cbrt_( BOOST_SIMD_SUPPORTS(simd_)
+                        , pack<float,N, X> const& a0) BOOST_NOEXCEPT
   {
-    using p_t = pack<T, N>;
+    using p_t = pack<float, N>;
     p_t z =  bs::abs(a0);
     using int_type =  bd::as_integer_t<p_t, signed>;
 #ifndef BOOST_SIMD_NO_DENORMALS
@@ -99,12 +99,12 @@ namespace boost { namespace simd { namespace detail
 #endif
   }
 
-  template<typename T, std::size_t N>
+  template<std::size_t N, typename X>
   BOOST_FORCEINLINE
-  pack<T,N> vcbrt_( pack<T,N> const& a0
-                  , std::false_type const&) BOOST_NOEXCEPT //T == double
+  pack<double,N, X> cbrt_( BOOST_SIMD_SUPPORTS(simd_)
+                         , pack<double,N, X> const& a0) BOOST_NOEXCEPT
   {
-    using p_t = pack<T, N>;
+    using p_t = pack<double, N>;
     using int_type =  bd::as_integer_t<p_t, signed>;
     p_t z =  bs::abs(a0);
 #ifndef BOOST_SIMD_NO_DENORMALS
@@ -150,21 +150,20 @@ namespace boost { namespace simd { namespace detail
 #endif
   }
 
-  // Native implementation
-  template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  pack<T,N> cbrt_(BOOST_SIMD_SUPPORTS(simd_)
-                  , pack<T,N> const& a) BOOST_NOEXCEPT
-  {
-    return vcbrt_(a, std::is_same<T, float>());
-  }
-
   // Emulated implementation
-  template<typename T, std::size_t N>
+  template< std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,simd_emulation_> cbrt_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                   , pack<T,N,simd_emulation_> const& a
-                                   ) BOOST_NOEXCEPT
+  pack<double,N,simd_emulation_> cbrt_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                       , pack<double,N,simd_emulation_> const& a
+                                       ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::cbrt, a);
+  }
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<float,N,simd_emulation_> cbrt_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                      , pack<float,N,simd_emulation_> const& a
+                                      ) BOOST_NOEXCEPT
   {
     return map_to(simd::cbrt, a);
   }
@@ -175,7 +174,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<T,N,X> cbrt_( BOOST_SIMD_SUPPORTS(simd_)
                    , std_tag const&
-                   , T const& a) BOOST_NOEXCEPT
+                   , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {
     return map_to(std::cbrt, a);
   }

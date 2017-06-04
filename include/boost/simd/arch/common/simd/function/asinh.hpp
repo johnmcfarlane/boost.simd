@@ -47,11 +47,12 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   // regular (no decorator)
 
-  template<typename T, std::size_t N>
+  template<std::size_t N, typename X>
   BOOST_FORCEINLINE
-  pack<T,N> vasinh_( pack<T,N> const& a, std::true_type const&) BOOST_NOEXCEPT
+  pack<float,N, X> asinh_( BOOST_SIMD_SUPPORTS(simd_)
+                   , pack<float,N, X> const& a) BOOST_NOEXCEPT
   {
-    using p_t = pack<T, N>;
+    using p_t = pack<float, N>;
     // Exhaustive test for: boost::dispatch::functor<bs::tag::asinh_, bs::tag::sse4_2_>
     //              versus: float(boost::math::asinh(double)
     //              With T: bs::native<float, bs::tag::sse_, void>
@@ -87,11 +88,12 @@ namespace boost { namespace simd { namespace detail
 #endif
   }
 
-  template<typename T, std::size_t N>
+  template<std::size_t N, typename X>
   BOOST_FORCEINLINE
-  pack<T,N> vasinh_( pack<T,N> const& a, std::false_type const&) BOOST_NOEXCEPT
+  pack<double,N, X> asinh_( BOOST_SIMD_SUPPORTS(simd_)
+                   , pack<double,N, X> const& a) BOOST_NOEXCEPT
   {
-    using p_t = pack<T, N>;
+    using p_t = pack<double, N>;
     p_t x =  bs::abs(a);
     auto test = is_greater(x,Oneosqrteps<p_t>());
     p_t z = if_else(test,dec(x), x+sqr(x)/bs::inc(hypot(One<p_t>(), x)));
@@ -102,21 +104,20 @@ namespace boost { namespace simd { namespace detail
     return bitwise_xor(bitofsign(a), z);
   }
 
-  // Native implementation
-  template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  pack<T,N> asinh_(BOOST_SIMD_SUPPORTS(simd_)
-                  , pack<T,N> const& a) BOOST_NOEXCEPT
-  {
-    return vasinh_(a, std::is_same<T, float>());
-  }
-
   // Emulated implementation
-  template<typename T, std::size_t N>
+  template<std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,simd_emulation_> asinh_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                   , pack<T,N,simd_emulation_> const& a
-                                   ) BOOST_NOEXCEPT
+  pack<float,N,simd_emulation_> asinh_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                       , pack<float,N,simd_emulation_> const& a
+                                       ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::asinh, a);
+  }
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<double,N,simd_emulation_> asinh_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                        , pack<double,N,simd_emulation_> const& a
+                                        ) BOOST_NOEXCEPT
   {
     return map_to(simd::asinh, a);
   }

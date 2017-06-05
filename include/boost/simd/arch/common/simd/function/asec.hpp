@@ -25,7 +25,7 @@ namespace boost { namespace simd { namespace detail
   template<std::size_t N, typename X >
   BOOST_FORCEINLINE
   pack<double,N,X> asec_(BOOST_SIMD_SUPPORTS(simd_)
-                        , pack<double,N,X> const& a, std::false_type const&) BOOST_NOEXCEPT
+                        , pack<double,N,X> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<double,N,X>;
     p_t tmp =  (Pio_2<p_t>()-acsc(a)) +  Pio_2lo<p_t>();
@@ -35,20 +35,12 @@ namespace boost { namespace simd { namespace detail
   template<std::size_t N, typename X>
   BOOST_FORCEINLINE
   pack<float,N,X> asec_(BOOST_SIMD_SUPPORTS(simd_)
-                       , pack<float,N,X> const& a, std::true_type const&) BOOST_NOEXCEPT
+                       , pack<float,N,X> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<float,N,X>;
     return (bs::Pio_2<p_t>()-bs::acsc(a));
   }
 
-  // Native implementation
-  template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  pack<T,N> asec_(BOOST_SIMD_SUPPORTS(simd_)
-                  , pack<T,N> const& a) BOOST_NOEXCEPT
-  {
-    return vasec_(a,std::is_same<T, float>());
-  }
 
   // Emulated implementation
   template<std::size_t N>
@@ -67,6 +59,7 @@ namespace boost { namespace simd { namespace detail
                                   ) BOOST_NOEXCEPT
   {
     return map_to(simd::asec, a);
+  }
 
 } } }
 

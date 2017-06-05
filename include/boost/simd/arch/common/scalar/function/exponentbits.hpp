@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
     {
-      return bitwise_and((2*Maxexponent<A0>()+1)<<Nbmantissabits<A0>(), a0);
+      return bitwise_and((2*simd::Maxexponent<A0>()+1)<<Nbmantissabits<A0>(), a0);
     }
   };
 } } }

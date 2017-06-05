@@ -10,7 +10,6 @@
 #define BOOST_SIMD_ARCH_COMMON_GENERIC_CONSTANT_NBMANTISSABITS_HPP_INCLUDED
 
 #include <boost/simd/detail/meta/value_type.hpp>
-#include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/as.hpp>
 #include <type_traits>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>

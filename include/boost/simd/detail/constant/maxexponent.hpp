@@ -14,7 +14,6 @@
 #include <boost/simd/config.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/meta/value_type.hpp>
-#include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/as.hpp>
 #include <type_traits>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>

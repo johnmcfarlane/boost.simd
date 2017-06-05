@@ -12,15 +12,17 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_EXPONENT_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/constant/maxexponent.hpp>
 #include <boost/simd/constant/nbmantissabits.hpp>
 #include <boost/simd/constant/zero.hpp>
-#include <boost/simd/function/exponentbits.hpp>
 #include <boost/simd/function/if_minus.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
+#include <boost/simd/function/bitwise_and.hpp>
+
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 #ifndef BOOST_SIMD_NO_INVALIDS
 #include <boost/simd/function/if_zero_else.hpp>
@@ -32,51 +34,65 @@
 #endif
 
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(exponent_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, signed>;
-     BOOST_FORCEINLINE result operator()(A0 const&) const
-      {
-        return Zero<result>();
-      }
-   };
+  //================================================================================================
+  // regular (no decorator)
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<si_t<T>, N> vexponent_(pack<T,N> const& a0
+                            , std::true_type const &) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    using r_t = pack<si_t<T>, N>;
+    //computes exponent bits
+    using sint_type = si_t<T>;
+    const sint_type me = Maxexponent<T>();
+    const sint_type nmb = Nbmantissabits<T>();
+    const r_t Mask =r_t((2*me+1)<<nmb);
+    r_t exponentbits = bitwise_and(Mask, a0);
 
-   BOOST_DISPATCH_OVERLOAD_IF(exponent_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, signed>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        using s_type = bd::scalar_of_t<A0>;
-        const int nmb= int(Nbmantissabits<s_type>());
-        result x = shr(exponentbits(a0), nmb);
-        // workaround for ICC 14.0.3, tested on AVX
-        #if defined(__INTEL_COMPILER) && defined(BOOST_SIMD_HAS_AVX_SUPPORT) && !defined(BOOST_SIMD_HAS_AVX2_SUPPORT)
-        x = x - if_else(a0, Maxexponent<A0>(), Zero<result>());
-        #else
-        x = if_minus(a0, x, Maxexponent<A0>());
-        #endif
-        #ifndef BOOST_SIMD_NO_INVALIDS
-        return if_zero_else( is_invalid(a0), x );
-        #else
-        return x;
-        #endif
-      }
-   };
+    r_t x = shr(exponentbits, nmb);
+    // workaround for ICC 14.0.3, tested on AVX
+#if defined(__INTEL_COMPILER) && defined(BOOST_SIMD_HAS_AVX_SUPPORT) && !defined(BOOST_SIMD_HAS_AVX2_SUPPORT)
+    x = x - if_else(a0, Maxexponent<p_t>(), Zero<r_t>());
+#else
+    x = if_minus(a0, x, Maxexponent<p_t>());
+#endif
+#ifndef BOOST_SIMD_NO_INVALIDS
+    return if_zero_else( is_invalid(a0), x );
+#else
+    return x;
+#endif
+  }
 
+  template<typename T, std::size_t N >
+  BOOST_FORCEINLINE
+  pack<si_t<T>, N> vexponent_( pack<T,N> const& a
+                       , std::false_type) BOOST_NOEXCEPT
+  {
+    return Zero<pack<si_t<T>, N>>();
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<si_t<T>, N>  exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+                            , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vexponent_(a, std::is_floating_point<T>());
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<si_t<T>,N,X> exponent_( BOOST_SIMD_SUPPORTS(simd_)
+                   , std_tag const&
+                   , pack<T,N,X> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(std_(simd::exponent), a);
+  }
 } } }
 
 #endif

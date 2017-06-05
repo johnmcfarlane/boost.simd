@@ -13,60 +13,61 @@
 
 #include <boost/simd/detail/constant/maxexponent.hpp>
 #include <boost/simd/constant/nbmantissabits.hpp>
-#include <boost/simd/function/exponentbits.hpp>
+//#include <boost/simd/function/exponentbits.hpp>
 #include <boost/simd/function/if_else_zero.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
+#include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( exponent_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  si_t<T> sexponent_( T a0
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() ( A0) const BOOST_NOEXCEPT
-    {
-      return result_t(0);
-    }
-  };
+    using r_t = si_t<T>;
+    if (is_invalid(a0) || is_eqz(a0)) return r_t(0);
+    const int nmb = int(Nbmantissabits<T>());
+    auto exponentbits = bitwise_and((2*Maxexponent<T>()+1)<<Nbmantissabits<T>(), a0);
+    const r_t x = shr(exponentbits, nmb);
+    return x-if_else_zero(a0, Maxexponent<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( exponent_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  si_t<T> sexponent_( T
+                    , std::false_type) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (is_invalid(a0) || is_eqz(a0)) return result_t(0);
-      const int nmb = int(Nbmantissabits<A0>());
-      const result_t x = shr(exponentbits(a0), nmb);
-      return x-if_else_zero(a0, Maxexponent<A0>());
-    }
-  };
+    return Zero<si_t<T>>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( exponent_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+                   , T a) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() (std_tag const &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::ilogb(a0);
-    }
-  };
+    return sexponent_(a, std::is_floating_point<T>());
+  }
+
+ //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+                   , std_tag const&
+                   , T a) BOOST_NOEXCEPT
+  {
+    return  std::ilogb(a);
+  }
+
 } } }
 
 #endif

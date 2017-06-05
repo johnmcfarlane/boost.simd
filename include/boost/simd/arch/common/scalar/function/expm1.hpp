@@ -12,6 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_EXPM1_HPP_INCLUDED
 #include <boost/simd/function/std.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #ifndef BOOST_SIMD_NO_INVALIDS
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/function/is_nan.hpp>
@@ -28,40 +29,36 @@
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/meta/is_pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( expm1_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T expm1_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      using sA0 = bd::scalar_of_t<A0>;
-    #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_nan(a0)) return Nan<A0>();
-    #endif
-      if((a0 < Logeps<A0>())) return Mone<A0>();
-      if((a0 > Maxlog<A0>())) return  Inf<A0>();
-      return detail::expm1_kernel<A0, sA0>::expm1(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( expm1_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if(is_nan(a0)) return Nan<T>();
+#endif
+    if((a0 < Logeps<T>())) return Mone<T>();
+    if((a0 > Maxlog<T>())) return  Inf<T>();
+    return detail::expm1_kernel<T, T>::expm1(a0);
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T expm1_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const&
+         , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::expm1(a0);
-    }
-  };
+    return std::expm1(a);
+  }
+
 } } }
 
 

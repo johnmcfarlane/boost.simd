@@ -13,25 +13,20 @@
 
 #include <boost/simd/function/exp.hpp>
 #include <boost/simd/function/rec.hpp>
-#include <boost/simd/function/unary_minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( exprecneg_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+ //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T exprecneg_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return exp(-rec(a0));
-    }
-  };
+    return exp(-rec(a));
+  }
+
 } } }
 
 

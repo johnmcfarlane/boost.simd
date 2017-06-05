@@ -8,6 +8,7 @@
 */
 //==================================================================================================
 #include <boost/simd/function/scalar/exprecnegc.hpp>
+#include <boost/simd/function/scalar/oneminus.hpp>
 #include <scalar_test.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>

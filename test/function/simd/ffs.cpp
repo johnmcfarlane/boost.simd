@@ -29,7 +29,7 @@ void test(Env& runtime)
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;
   using p_t = bs::pack<T, N>;
-  using iT =  bd::as_integer_t<T>;
+  using iT =  bd::as_integer_t<T,unsigned>;
   using pi_t = bs::pack<iT, N>;
 
   namespace bs = boost::simd;
@@ -73,7 +73,7 @@ STF_CASE_TPL (" ffs real",  STF_IEEE_TYPES)
   using p_t = bs::pack<T>;
   using r_t = decltype(ffs(p_t()));
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t,unsigned>));
 
 
   // specific values tests
@@ -96,7 +96,7 @@ STF_CASE_TPL (" ffs signed_int",  STF_SIGNED_INTEGRAL_TYPES)
   using r_t = decltype(ffs(p_t()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t,unsigned>));
 
   // specific values tests
   STF_EQUAL(ffs(bs::One<p_t>()), bs::One<r_t>());
@@ -114,7 +114,7 @@ STF_CASE_TPL (" ffs unsigned_int",  STF_UNSIGNED_INTEGRAL_TYPES)
   using r_t = decltype(ffs(p_t()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t,unsigned>));
 
   // specific values tests
   STF_EQUAL(ffs(bs::One<p_t>()), bs::One<r_t>());

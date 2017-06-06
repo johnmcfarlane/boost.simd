@@ -27,7 +27,7 @@ STF_CASE_TPL (" ffs real",  STF_IEEE_TYPES)
   using bs::ffs;
   using r_t = decltype(ffs(T()));
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<T>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
 
   // specific values tests
@@ -49,7 +49,7 @@ STF_CASE_TPL (" ffs signed_int",  STF_SIGNED_INTEGRAL_TYPES)
   using r_t = decltype(ffs(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<T>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
   // specific values tests
   STF_EQUAL(ffs(bs::One<T>()), bs::One<r_t>());
@@ -66,7 +66,7 @@ STF_CASE_TPL (" ffs unsigned_int",  STF_UNSIGNED_INTEGRAL_TYPES)
   using r_t = decltype(ffs(T()));
 
   // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<T>));
+  STF_TYPE_IS(r_t, (bd::as_integer_t<T,unsigned>));
 
   // specific values tests
   STF_EQUAL(ffs(bs::One<T>()), bs::One<r_t>());

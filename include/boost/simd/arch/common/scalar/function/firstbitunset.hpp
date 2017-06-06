@@ -16,34 +16,38 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( firstbitunset_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T >
+  BOOST_FORCEINLINE
+  ui_t<T> sfirstbitunset_( T a0
+           , std::false_type) BOOST_NOEXCEPT
   {
-    bd::as_integer_t<A0, unsigned> operator() ( A0 a0) const
-    {
-      return ~a0 & (a0+One<A0>());
-    }
-  };
+    using result_t = ui_t<T>;
+      return ~a0 & (a0+One<result_t>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( firstbitunset_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> sfirstbitunset_( T a0
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, unsigned>;
-    result_t operator() ( A0 a0) const
-    {
-      return firstbitunset(bitwise_cast<result_t>(a0));
-    }
-  };
+    using result_t = ui_t<T>;
+    return sfirstbitunset_(bitwise_cast<result_t>(a0) , std::false_type());
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  ui_t<T> firstbitunset_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a) BOOST_NOEXCEPT
+  {
+    return sfirstbitunset_(a, std::is_floating_point<T>());
+  }
+
 } } }
 
 

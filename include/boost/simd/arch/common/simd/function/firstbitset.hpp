@@ -12,30 +12,35 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_FIRSTBITSET_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/complement.hpp>
 #include <boost/simd/function/inc.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD(firstbitset_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, unsigned>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return bitwise_and(inc(complement(bitwise_cast<result>(a0))), a0);
-      }
-   };
+ // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<ui_t<T>,N> firstbitset_(BOOST_SIMD_SUPPORTS(simd_)
+                      , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    using result_t = pack<ui_t<T>,N>;
+    return bitwise_and(inc(complement(bitwise_cast<result_t>(a0))), a0);
+  }
+
+//   // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<ui_t<T>,N,simd_emulation_> firstbitset_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                               , pack<T,N,simd_emulation_> const& a
+                                               ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::firstbitset, a);
+  }
 
 } } }
 

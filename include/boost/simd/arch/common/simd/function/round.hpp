@@ -10,9 +10,8 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROUND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROUND_HPP_INCLUDED
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/constant/half.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/ceil.hpp>

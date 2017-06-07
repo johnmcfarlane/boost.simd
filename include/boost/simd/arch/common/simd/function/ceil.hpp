@@ -10,7 +10,8 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 
 #include <boost/simd/pack.hpp>
-#include <boost/simd/detail/overload.hpp>
+
+//#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/trunc.hpp>
 #include <boost/simd/function/if_inc.hpp>
 #include <type_traits>

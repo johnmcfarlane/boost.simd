@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ATAN2_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ATAN2_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/arch/common/detail/simd/f_invtrig.hpp>
 #include <boost/simd/arch/common/detail/simd/d_invtrig.hpp>
 #include <boost/simd/arch/common/detail/tags.hpp>

@@ -10,40 +10,50 @@
 #define BOOST_SIMD_ARCH_X86_XOP_SIMD_FUNCTION_FMA_HPP_INCLUDED
 
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/meta/size_picker.hpp>
 
 #if BOOST_HW_SIMD_X86_AMD_XOP
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( fma_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE pack<std::int32_t,4,sse_> xfma_( pack<std::int32_t,4,sse_> const& a0
+                                                   , pack<std::int32_t,4,sse_> const& a1
+                                                   , pack<std::int32_t,4,sse_> const& a2
+                                                   , std::true_type const &
+                                                   ) BOOST_NOEXCEPT //32 bits
   {
-      BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-      {
-        return _mm_macc_epi16(a0, a1, a2);
-      }
-  };
+    return _mm_macc_epi32(a0, a1, a2);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( fma_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE pack<std::int16_t,8,sse_> xfma_( pack<std::int16_t,8,sse_> const& a0
+                                                   , pack<std::int16_t,8,sse_> const& a1
+                                                   , pack<std::int16_t,8,sse_> const& a2
+                                                   , std::false_type const &
+                                                   ) BOOST_NOEXCEPT //16 bits
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-    {
-      return _mm_macc_epi32(a0, a1, a2);
-    }
-  };
+    return  _mm_macc_epi16(a0, a1, a2);
+  }
+  template < typename T>
+  BOOST_FORCEINLINE pack<std::uint32_t,4,sse_> xfma_( pack<std::uint32_t,4,sse_> const& a0
+                                                    , pack<std::uint32_t,4,sse_> const& a1
+                                                    , pack<std::uint32_t,4,sse_> const& a2
+                                                    , std::true_type const &
+                                                    ) BOOST_NOEXCEPT //32 bits
+  {
+    return _mm_macc_epi32(a0, a1, a2);
+  }
+
+  template < typename T>
+  BOOST_FORCEINLINE pack<std::uint16_t,8,sse_> xfma_( pack<std::uint16_t,8,sse_> const& a0
+                                                    , pack<std::uint16_t,8,sse_> const& a1
+                                                    , pack<std::uint16_t,8,sse_> const& a2
+                                                    , std::false_type const &
+                                                    ) BOOST_NOEXCEPT //16 bits
+  {
+    return  _mm_macc_epi16(a0, a1, a2);
+  }
+
 } } }
 #endif
 

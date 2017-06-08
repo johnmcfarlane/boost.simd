@@ -111,6 +111,7 @@ namespace boost { namespace simd { namespace detail
     using pu_t =  bd::as_integer_t<p_t, unsigned>;
     return bitwise_cast<p_t>(fma(bitwise_cast<pu_t>(a0), bitwise_cast<pu_t>(a1), bitwise_cast<pu_t>(a2)));
   }
+
   template<typename T, std::size_t N, typename X>
   BOOST_FORCEINLINE pack<T,N,X>
   pifma_( pack<T,N,X> const & a0
@@ -132,6 +133,167 @@ namespace boost { namespace simd { namespace detail
     return pifma_(a0, a1, a2, std::is_signed<T>());
   }
 
+  //mixed calls two packs
+  // no decorator
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , U a0
+      , pack<T,N> const & a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, a2);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const & a0
+      , U a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(a0, p_t(a1), a2);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N>
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const & a0
+      , pack<T,N> const & a1
+      , U a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, p_t(a2));
+  }
+
+  //mixed calls one packs
+  // no decorator
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value &&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const & a0
+      , U a1
+      , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, a2);
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value&&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , U a0
+      , V a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(a0, p_t(a1), a2);
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value&&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , U a0
+      , pack<T,N> const & a1
+      , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, p_t(a2));
+  }
+
+  //mixed calls two packs
+  // pedantic_ decorator
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , U a0
+      , pack<T,N> const & a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, a2);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N> const & a0
+      , U a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(a0, p_t(a1), a2);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N>
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N> const & a0
+      , pack<T,N> const & a1
+      , U a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, p_t(a2));
+  }
+
+  //mixed calls one packs
+  // pedantic_ decorator
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value &&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N> const & a0
+      , U a1
+      , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, a2);
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value&&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , U a0
+      , V a1
+      , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(a0, p_t(a1), a2);
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value&&
+                          std::is_convertible<V, T>::value, pack<T,N>>::type
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , U a0
+      , pack<T,N> const & a1
+      , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return fma(p_t(a0), a1, p_t(a2));
+  }
 } } }
 
 

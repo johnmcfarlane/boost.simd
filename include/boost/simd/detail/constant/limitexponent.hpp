@@ -64,7 +64,7 @@ namespace boost { namespace simd {
     }
 
     template<typename Type, typename Arch>
-    BOOST_FORCEINLINE Type limitexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
+    BOOST_FORCEINLINE bd::as_integer_t<Type> limitexponent_ ( BOOST_SIMD_SUPPORTS(Arch)
                                    , as_<Type> const& tgt
                                    ) BOOST_NOEXCEPT
     {

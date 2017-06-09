@@ -14,18 +14,18 @@
 namespace boost { namespace simd { namespace detail
 {
 
- BOOST_FORCEINLINE pack<double,4,avx_> bitwise_and_( BOOST_SIMD_SUPPORTS(avx_)
-                                                    , pack<double,4,avx_> const& a0
-                                                    , pack<double,4,avx_> const& a1
-                                                    ) BOOST_NOEXCEPT
-  {
-    return _mm256_div_pd(a0,a1);
-  }
+ BOOST_FORCEINLINE pack<double,4,avx_> divides_( BOOST_SIMD_SUPPORTS(avx_)
+                                               , pack<double,4,avx_> const& a0
+                                               , pack<double,4,avx_> const& a1
+                                               ) BOOST_NOEXCEPT
+ {
+   return _mm256_div_pd(a0,a1);
+ }
 
-  BOOST_FORCEINLINE pack<float,8,avx_> bitwise_and_ ( BOOST_SIMD_SUPPORTS(avx_)
-                                                    , pack<float,8,avx_> const& a0
-                                                    , pack<float,8,avx_> const& a1
-                                                    ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE pack<float,8,avx_> divides_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                                , pack<float,8,avx_> const& a0
+                                                , pack<float,8,avx_> const& a1
+                                                ) BOOST_NOEXCEPT
   {
     return _mm256_div_ps(a0,a1);
   }

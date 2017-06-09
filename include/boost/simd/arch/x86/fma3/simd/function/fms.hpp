@@ -12,66 +12,85 @@
 #include <boost/simd/detail/overload.hpp>
 
 #if BOOST_HW_SIMD_X86_FMA3
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          )
+  BOOST_FORCEINLINE pack<double,2,sse_> fms_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<double,2,sse_> const& a0
+                                            , pack<double,2,sse_> const& a1
+                                            , pack<double,2,sse_> const& a2
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-    {
-      return _mm_fmsub_ps(a0, a1, a2);
-    }
-  };
+    return _mm_fmsub_pd(a0, a1, a2);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          )
+  BOOST_FORCEINLINE pack<float,4,sse_> fms_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , pack<float,4,sse_> const& a0
+                                            , pack<float,4,sse_> const& a1
+                                            , pack<float,4,sse_> const& a2
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-    {
-      return _mm_fmsub_pd(a0, a1, a2);
-    }
-  };
+    return _mm_fmsub_ps(a0, a1, a2);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
+   BOOST_FORCEINLINE pack<double,4,avx_> fms_( BOOST_SIMD_SUPPORTS(avx_)
+                                            , pack<double,4,avx_> const& a0
+                                            , pack<double,4,avx_> const& a1
+                                            , pack<double,4,avx_> const& a2
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-    {
-      return _mm256_fmsub_ps(a0, a1, a2);
-    }
-  };
+    return _mm256_fmsub_pd(a0, a1, a2);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
+  BOOST_FORCEINLINE pack<float,8,avx_> fms_( BOOST_SIMD_SUPPORTS(avx_)
+                                            , pack<float,8,avx_> const& a0
+                                            , pack<float,8,avx_> const& a1
+                                            , pack<float,8,avx_> const& a2
+                                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1, const A0& a2) const BOOST_NOEXCEPT
-    {
-      return _mm256_fmsub_pd(a0, a1, a2);
-    }
-  };
+    return _mm256_fmsub_ps(a0, a1, a2);
+  }
+
+  // pedantic
+  BOOST_FORCEINLINE pack<double,2,sse_> fms_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , const pedantic_tag &
+                                            , pack<double,2,sse_> const& a0
+                                            , pack<double,2,sse_> const& a1
+                                            , pack<double,2,sse_> const& a2
+                                            ) BOOST_NOEXCEPT
+  {
+    return _mm_fmsub_pd(a0, a1, a2);
+  }
+
+  BOOST_FORCEINLINE pack<float,4,sse_> fms_( BOOST_SIMD_SUPPORTS(sse2_)
+                                            , const pedantic_tag &
+                                            , pack<float,4,sse_> const& a0
+                                            , pack<float,4,sse_> const& a1
+                                            , pack<float,4,sse_> const& a2
+                                            ) BOOST_NOEXCEPT
+  {
+    return _mm_fmsub_ps(a0, a1, a2);
+  }
+
+   BOOST_FORCEINLINE pack<double,4,avx_> fms_( BOOST_SIMD_SUPPORTS(avx_)
+                                            , const pedantic_tag &
+                                            , pack<double,4,avx_> const& a0
+                                            , pack<double,4,avx_> const& a1
+                                            , pack<double,4,avx_> const& a2
+                                            ) BOOST_NOEXCEPT
+  {
+    return _mm256_fmsub_pd(a0, a1, a2);
+  }
+
+  BOOST_FORCEINLINE pack<float,8,avx_> fms_( BOOST_SIMD_SUPPORTS(avx_)
+                                            , const pedantic_tag &
+                                            , pack<float,8,avx_> const& a0
+                                            , pack<float,8,avx_> const& a1
+                                            , pack<float,8,avx_> const& a2
+                                            ) BOOST_NOEXCEPT
+  {
+    return _mm256_fmsub_ps(a0, a1, a2);
+  }
+
 } } }
 #endif
 

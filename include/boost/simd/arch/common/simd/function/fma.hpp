@@ -294,6 +294,22 @@ namespace boost { namespace simd { namespace detail
     using p_t = pack<T,N>;
     return fma(p_t(a0), a1, p_t(a2));
   }
+
+  //==========================================================================
+  //std decorator
+  template<typename T
+           , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
+  >
+  BOOST_FORCEINLINE T
+  fma_(BOOST_SIMD_SUPPORTS(simd_)
+      , std_tag const&
+      , T a0
+      , T a1
+      , T a2 ) BOOST_NOEXCEPT
+  {
+    return map_to(std_(fma), a0, a1, a2);
+  }
+
 } } }
 
 

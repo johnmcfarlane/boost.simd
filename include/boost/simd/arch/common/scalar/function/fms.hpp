@@ -12,45 +12,50 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_FMS_HPP_INCLUDED
 
 #include <boost/simd/function/fma.hpp>
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  //==========================================================================
+  //regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE T
+  fms_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , T a1
+          , T a2 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-      A0 operator() ( A0 a0, A0 a1, A0 a2) const BOOST_NOEXCEPT
-    {
-      return minus(multiplies(a0, a1), a2);
-    }
-  };
+    return a0*a1-a2;
+  }
 
-
-  BOOST_DISPATCH_OVERLOAD ( fms_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+   //==========================================================================
+  //std decorator
+  template<typename T
+           , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
+  >
+  BOOST_FORCEINLINE T
+  fms_(BOOST_SIMD_SUPPORTS(cpu_)
+      , std_tag const&
+      , T a0
+      , T a1
+      , T a2 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-      A0 operator() (pedantic_tag const &, A0 a0, A0 a1, A0 a2) const BOOST_NOEXCEPT
-    {
-      return pedantic_(fma)(a0, a1, A0(-a2));
-    }
-  };
+    return std::fma(a0, a1, -a2);
+  }
+
+  //==========================================================================
+  //pedantic decorator
+  template<typename T>
+  BOOST_FORCEINLINE T
+  fms_(BOOST_SIMD_SUPPORTS(cpu_)
+      , pedantic_tag const&
+          , T a0
+          , T a1
+          , T a2 ) BOOST_NOEXCEPT
+  {
+    return pedantic_(fma)(a0, a1, T(-a2));
+  }
+
 
 } } }
 

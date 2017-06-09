@@ -42,7 +42,7 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   BOOST_FORCEINLINE
   double erfcx_(BOOST_SIMD_SUPPORTS(cpu_)
-             , double x) BOOST_NOEXCEPT
+               , double x) BOOST_NOEXCEPT
   {
 #ifndef BOOST_SIMD_NO_INVALIDS
     if(is_nan(x)) return x;

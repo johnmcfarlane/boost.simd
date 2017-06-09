@@ -51,6 +51,8 @@ namespace boost { namespace simd { namespace detail
     return exp(u)*exp(u1);
   }
 
+  //================================================================================================
+  // two parameter
   template<typename T>
   BOOST_FORCEINLINE
   T expx2_(BOOST_SIMD_SUPPORTS(cpu_)

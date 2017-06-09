@@ -112,7 +112,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N>
-  expx2(BOOST_SIMD_SUPPORTS(simd_)
+  expx2_(BOOST_SIMD_SUPPORTS(simd_)
           , pack<T,N> const & a0
           , T const & a1) BOOST_NOEXCEPT
   {
@@ -122,7 +122,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N>
-  expx2(BOOST_SIMD_SUPPORTS(simd_)
+  expx2_(BOOST_SIMD_SUPPORTS(simd_)
           , T const & a0
           , pack<T,N> const & a1) BOOST_NOEXCEPT
   {

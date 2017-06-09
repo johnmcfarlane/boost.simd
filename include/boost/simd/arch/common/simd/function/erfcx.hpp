@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
   template< std::size_t N, typename X>
   BOOST_FORCEINLINE
   pack<double,N,X> erfcx_(BOOST_SIMD_SUPPORTS(simd_)
-                   , pack<double,N,X> const& x) BOOST_NOEXCEPT
+                         , pack<double,N,X> const& x) BOOST_NOEXCEPT
   {
     using p_t = pack<double,N,X>;
     p_t y =  bs::abs(x);
@@ -85,7 +85,7 @@ namespace boost { namespace simd { namespace detail
   template< std::size_t N, typename X>
   BOOST_FORCEINLINE
   pack<float,N,X> erfcx_(BOOST_SIMD_SUPPORTS(simd_)
-                   , pack<float,N,X> const& a0) BOOST_NOEXCEPT
+                        , pack<float,N,X> const& a0) BOOST_NOEXCEPT
   {
     using p_t = pack<float,N,X>;
     auto test1 = bs::is_less(a0,  Ratio<p_t, 2, 3>());
@@ -111,8 +111,8 @@ namespace boost { namespace simd { namespace detail
   template<std::size_t N>
   BOOST_FORCEINLINE
   pack<double,N,simd_emulation_> erfcx_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                      , pack<double,N,simd_emulation_> const& a
-                                      ) BOOST_NOEXCEPT
+                                        , pack<double,N,simd_emulation_> const& a
+                                        ) BOOST_NOEXCEPT
   {
     return map_to(simd::erfcx, a);
   }
@@ -120,8 +120,8 @@ namespace boost { namespace simd { namespace detail
   template<std::size_t N>
   BOOST_FORCEINLINE
   pack<float,N,simd_emulation_> erfcx_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                     , pack<float,N,simd_emulation_> const& a
-                                     ) BOOST_NOEXCEPT
+                                       , pack<float,N,simd_emulation_> const& a
+                                       ) BOOST_NOEXCEPT
   {
     return map_to(simd::erfcx, a);
   }

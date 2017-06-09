@@ -12,10 +12,6 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_FNMA_HPP_INCLUDED
 
 #include <boost/simd/function/fma.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/unary_minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail

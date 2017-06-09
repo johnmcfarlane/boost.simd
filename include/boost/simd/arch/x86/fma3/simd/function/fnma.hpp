@@ -14,7 +14,7 @@
 #if BOOST_HW_SIMD_X86_FMA3
 namespace boost { namespace simd { namespace detail
 {
-  BOOST_FORCEINLINE pack<double,2,sse_> fnms_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<double,2,sse_> fnma_( BOOST_SIMD_SUPPORTS(sse2_)
                                             , pack<double,2,sse_> const& a0
                                             , pack<double,2,sse_> const& a1
                                             , pack<double,2,sse_> const& a2
@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
     return _mm_fnmsub_pd(a0, a1, a2);
   }
 
-  BOOST_FORCEINLINE pack<float,4,sse_> fnms_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<float,4,sse_> fnma_( BOOST_SIMD_SUPPORTS(sse2_)
                                             , pack<float,4,sse_> const& a0
                                             , pack<float,4,sse_> const& a1
                                             , pack<float,4,sse_> const& a2
@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace detail
     return _mm_fnmsub_ps(a0, a1, a2);
   }
 
-   BOOST_FORCEINLINE pack<double,4,avx_> fnms_( BOOST_SIMD_SUPPORTS(avx_)
+   BOOST_FORCEINLINE pack<double,4,avx_> fnma_( BOOST_SIMD_SUPPORTS(avx_)
                                             , pack<double,4,avx_> const& a0
                                             , pack<double,4,avx_> const& a1
                                             , pack<double,4,avx_> const& a2
@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace detail
     return _mm256_fnmsub_pd(a0, a1, a2);
   }
 
-  BOOST_FORCEINLINE pack<float,8,avx_> fnms_( BOOST_SIMD_SUPPORTS(avx_)
+  BOOST_FORCEINLINE pack<float,8,avx_> fnma_( BOOST_SIMD_SUPPORTS(avx_)
                                             , pack<float,8,avx_> const& a0
                                             , pack<float,8,avx_> const& a1
                                             , pack<float,8,avx_> const& a2
@@ -51,7 +51,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   // pedantic
-  BOOST_FORCEINLINE pack<double,2,sse_> fnms_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<double,2,sse_> fnma_( BOOST_SIMD_SUPPORTS(sse2_)
                                             , const pedantic_tag &
                                             , pack<double,2,sse_> const& a0
                                             , pack<double,2,sse_> const& a1
@@ -61,7 +61,7 @@ namespace boost { namespace simd { namespace detail
     return _mm_fnmsub_pd(a0, a1, a2);
   }
 
-  BOOST_FORCEINLINE pack<float,4,sse_> fnms_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<float,4,sse_> fnma_( BOOST_SIMD_SUPPORTS(sse2_)
                                             , const pedantic_tag &
                                             , pack<float,4,sse_> const& a0
                                             , pack<float,4,sse_> const& a1
@@ -71,7 +71,7 @@ namespace boost { namespace simd { namespace detail
     return _mm_fnmsub_ps(a0, a1, a2);
   }
 
-   BOOST_FORCEINLINE pack<double,4,avx_> fnms_( BOOST_SIMD_SUPPORTS(avx_)
+   BOOST_FORCEINLINE pack<double,4,avx_> fnma_( BOOST_SIMD_SUPPORTS(avx_)
                                             , const pedantic_tag &
                                             , pack<double,4,avx_> const& a0
                                             , pack<double,4,avx_> const& a1
@@ -81,7 +81,7 @@ namespace boost { namespace simd { namespace detail
     return _mm256_fnmsub_pd(a0, a1, a2);
   }
 
-  BOOST_FORCEINLINE pack<float,8,avx_> fnms_( BOOST_SIMD_SUPPORTS(avx_)
+  BOOST_FORCEINLINE pack<float,8,avx_> fnma_( BOOST_SIMD_SUPPORTS(avx_)
                                             , const pedantic_tag &
                                             , pack<float,8,avx_> const& a0
                                             , pack<float,8,avx_> const& a1

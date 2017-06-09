@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_FNMS_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, fnms_, boost::dispatch::elementwise_<fnms_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, fnms_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::fnms_,fnms);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(fnms_,fnms);
 } }
 
 #endif
+

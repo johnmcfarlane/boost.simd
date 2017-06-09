@@ -12,45 +12,34 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_FNMS_HPP_INCLUDED
 
 #include <boost/simd/function/fms.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/unary_minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( fnms_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+ //==========================================================================
+  //regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE T
+  fnms_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , T a1
+          , T a2 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-      A0 operator() ( A0 a0, A0 a1, A0 a2) const BOOST_NOEXCEPT
-    {
-      return a2-multiplies(a0, a1);
-    }
-  };
+    return -a0*a1+a2;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( fnms_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  //==========================================================================
+  //pedantic decorator
+  template<typename T>
+  BOOST_FORCEINLINE T
+  fnms_(BOOST_SIMD_SUPPORTS(cpu_)
+      , pedantic_tag const&
+          , T a0
+          , T a1
+          , T a2 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-      A0 operator() (pedantic_tag const &, A0 a0, A0 a1, A0 a2) const BOOST_NOEXCEPT
-    {
-      return A0(-pedantic_(fms)(a0, a1, a2));
-    }
-  };
+    return -pedantic_(fms)(a0, a1, a2);
+  }
 
 } } }
 

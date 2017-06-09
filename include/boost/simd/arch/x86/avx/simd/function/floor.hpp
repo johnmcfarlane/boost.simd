@@ -11,34 +11,22 @@
 
 #include <boost/simd/detail/overload.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  BOOST_FORCEINLINE pack<float,8,avx_> floor_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                             , pack<float,8,avx_> const& a0
+                                             ) BOOST_NOEXCEPT
+  {
+    return _mm256_round_ps(a0, _MM_FROUND_FLOOR);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( floor_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return _mm256_round_pd(a0, _MM_FROUND_FLOOR);
-      }
-   };
+  BOOST_FORCEINLINE pack<double,4,avx_> floor_ ( BOOST_SIMD_SUPPORTS(avx_)
+                                              , pack<double,4,avx_> const& a0
+                                              ) BOOST_NOEXCEPT
+  {
+    return _mm256_round_pd(a0, _MM_FROUND_FLOOR);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( floor_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return _mm256_round_ps(a0, _MM_FROUND_FLOOR);
-      }
-   };
 } } }
 
 #endif

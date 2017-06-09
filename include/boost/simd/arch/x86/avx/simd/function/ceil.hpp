@@ -9,22 +9,22 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_CEIL_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE pack<float,8,avx_> ceil_ ( BOOST_SIMD_SUPPORTS(avx_)
                                              , pack<float,8,avx_> const& a0
                                              ) BOOST_NOEXCEPT
   {
-    return mm256_round_ps(a0, _MM_FROUND_CEIL);
+    return _m256_round_ps(a0, _MM_FROUND_CEIL);
   }
 
   BOOST_FORCEINLINE pack<double,4,avx_> ceil_ ( BOOST_SIMD_SUPPORTS(avx_)
                                               , pack<double,4,avx_> const& a0
                                               ) BOOST_NOEXCEPT
   {
-    return mm256_round_pd(a0, _MM_FROUND_CEIL);
+    return _mm256_round_pd(a0, _MM_FROUND_CEIL);
   }
 
 } } }

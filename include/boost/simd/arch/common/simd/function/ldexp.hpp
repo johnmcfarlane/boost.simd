@@ -25,7 +25,7 @@
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/shift_left.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 #ifndef BOOST_SIMD_NO_DENORMALS
 #include <boost/simd/detail/constant/minexponent.hpp>
@@ -34,197 +34,206 @@
 #include <boost/simd/function/is_less.hpp>
 #endif
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   // a0 a1 integers
-   BOOST_DISPATCH_OVERLOAD(ldexp_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          , bs::pack_<bd::integer_<A1>, X>
-                          )
-   {
-     BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-     {
-       return rshl(a0, a1);
-     }
-   };
-
-  BOOST_DISPATCH_OVERLOAD(ldexp_
-                         , (typename A0, typename A1, typename X)
-                         , bd::cpu_
-                         , bs::pack_<bd::integer_<A0>, X>
-                         , bd::scalar_<bd::integer_<A1>>
-                         )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vldexp_( pack<T,N> const & a0
+                   , pack<U,N> const & a1
+                   , std::false_type const &
+                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0, A1  a1) const BOOST_NOEXCEPT
-    {
-      using sA0 = bd::scalar_of_t<A0>;
-      using iA0 = bd::as_integer_t<sA0>;
-      return rshl(a0, iA0(a1));
-    }
-  };
+    return  rshl(a0, a1);
+  }
 
-  // a0 floating
-  BOOST_DISPATCH_OVERLOAD(ldexp_
-                         , (typename A0, typename A1, typename X, typename Y)
-                         , bd::cpu_
-                         , bs::pedantic_tag
-                         , bs::pack_<bd::floating_<A0>, X>
-                         , bs::pack_<bd::integer_<A1>, Y>
-                         )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vldexp_( pack<T,N> const & a0
+                   , pack<U,N> const & a1
+                   , std::true_type const &
+                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const pedantic_tag &
-                                   ,  const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0>;
-      using sA0 = bd::scalar_of_t<A0>;
-      iA0 e = a1;
-      A0 f = One<A0>();
+    using p_t =  pack<T,N>;
+    using pi_t = si_t<pack<T,N>>;
+    pi_t ik =  a1+Maxexponent<p_t>();
+    ik = shift_left(ik, Nbmantissabits<T>());
+    return a0*bitwise_cast<p_t>(ik);
+  }
+
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                            , pack<T,N> const & a0
+                            , pack<U,N> const & a1
+                            ) BOOST_NOEXCEPT
+  {
+    return vldexp_(a0, pack_cast<si_t<T>>(a1), std::is_floating_point<T>());
+  }
+
+//--------------------------------------------------------------------------------------------------------
+
+  // pedantic
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vpldexp_( pack<T,N> const & a0
+                    , si_t<pack<T,N>> const & a1
+                    , std::false_type const &
+                    ) BOOST_NOEXCEPT
+  {
+    return  rshl(a0, a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> vpldexp_( pack<T,N> const & a0
+                    , si_t<pack<T,N>> const & a1
+                    , std::true_type const &
+                    ) BOOST_NOEXCEPT
+  {
+      using pi_t = pack<si_t<T>,N>;
+      using p_t = pack<T, N>;
+      pi_t e = a1;
+      p_t f = One<p_t>();
 #ifndef BOOST_SIMD_NO_DENORMALS
-      auto denormal =  is_less(e, Minexponent<A0>());
-      e = if_minus(denormal, e, Minexponent<A0>());
-      f = if_else(denormal, Smallestposval<A0>(), One<A0>());
+      auto denormal = is_less(e, Minexponent<p_t>());
+      e = if_minus(denormal, e, Minexponent<p_t>());
+      f = if_else(denormal, Smallestposval<p_t>(), One<p_t>());
 #endif
-      auto test = is_equal(e, Limitexponent<A0>());
+      auto test = is_equal(e, Limitexponent<p_t>());
       f = if_inc(test, f);
       e = if_dec(test, e);
-      e += Maxexponent<A0>();
-      e = shift_left(e, Nbmantissabits<sA0>());
-      return a0*bitwise_cast<A0>(e)*f;
-    }
-  };
+      e += Maxexponent<p_t>();
+      e = shift_left(e, Nbmantissabits<T>());
+      return a0*bitwise_cast<p_t>(e)*f;
 
-   BOOST_DISPATCH_OVERLOAD(ldexp_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bd::scalar_<bd::integer_<A1>>
-                          )
-   {
-     BOOST_FORCEINLINE A0 operator()(const pedantic_tag &
-                                    ,  const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-     {
-       using iA0 = bd::as_integer_t<A0>;
-       using sA0 =  bd::scalar_of_t<A0>;
-       using siA0 = bd::scalar_of_t<iA0>;
-       siA0 e = a1;
-       A0 f = One<A0>();
+  }
+
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                                    , pedantic_tag const &
+                                    , pack<T,N> const & a0
+                                    , pack<U,N> const & a1
+                                    ) BOOST_NOEXCEPT
+  {
+    return vpldexp_(a0, pack_cast<si_t<T>>(a1), std::is_floating_point<T>());
+  }
+
+
+  //========================================================================================================================
+  // mixed calls
+  // regular
+  template<typename T, std::size_t N,  typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vldexp_( pack<T,N> const & a0
+                   , U a1
+                   ,  std::false_type const &
+                   ) BOOST_NOEXCEPT
+  {
+    return  rshl(a0, a1);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vldexp_( pack<T,N> const & a0
+                   , U a1
+                   ,  std::true_type const &
+                   ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    auto ik =  a1+Maxexponent<T>();
+    ik = shift_left(ik, Nbmantissabits<T>());
+    return a0*p_t(bitwise_cast<T>(ik));
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                            , pack<T,N> const & a0
+                            , U a1
+                            ) BOOST_NOEXCEPT
+  {
+    return vldexp_(a0, a1, std::is_floating_point<T>());
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                            , T a0
+                            , pack<U,N> const & a1
+                            ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return ldexp-(p_t(a0), a1,std::is_floating_point<T>());
+  }
+
+  //========================================================================================================================
+  // mixed calls
+  // pedantic
+  template<typename T, std::size_t N,  typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vpldexp_( pack<T,N> const & a0
+                   , U a1
+                   ,  std::false_type const &
+                   ) BOOST_NOEXCEPT
+  {
+    return  rshl(a0, a1);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> vpldexp_( pack<T,N> const & a0
+                   , U a1
+                   ,  std::true_type const &
+                   ) BOOST_NOEXCEPT
+  {
+    using si_t = si_t<T>;
+    using p_t = pack<T, N>;
+    auto e = a1;
+    p_t f = One<p_t>();
 #ifndef BOOST_SIMD_NO_DENORMALS
-       auto denormal =  is_less(e, Minexponent<siA0>());
-       e = if_minus(denormal, e, Minexponent<siA0>());
-       f = if_else(denormal, Smallestposval<A0>(), One<A0>());
+    auto denormal =  is_less(e, Minexponent<si_t>());
+    e = if_minus(denormal, e, Minexponent<si_t>());
+    f = if_else(denormal, Smallestposval<p_t>(), One<p_t>());
 #endif
-       if (is_equal(e, Limitexponent<siA0>()))
-       {
-         f+= One<sA0>();
-         e-= One<siA0>();
-       }
-       e += Maxexponent<sA0>();
-       e = shift_left(e, Nbmantissabits<sA0>());
-       return a0*(bitwise_cast<sA0>(e)*f);
-     }
-   };
-
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename A1, typename X, typename Y)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::integer_<A1>, Y>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const A0& a0, const A1& a1) const BOOST_NOEXCEPT
+    if (is_equal(e, Limitexponent<si_t>()))
     {
-      using i_t = bd::as_integer_t<A0>;
-      using sA0 = bd::scalar_of_t<A0>;
-      i_t ik =  a1+Maxexponent<A0>();
-      ik = shift_left(ik, Nbmantissabits<sA0>());
-      return a0*bitwise_cast<A0>(ik);
+      f+= One<T>();
+      e-= One<U>();
     }
-  };
+    e += Maxexponent<T>();
+    e = shift_left(e, Nbmantissabits<T>());
+    return a0*(bitwise_cast<T>(e)*f);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bd::scalar_<bd::integer_<A1>>
-                          )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                  , pedantic_tag const &
+                  , pack<T,N> const & a0
+                  , U a1
+                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const A0& a0,  A1 a1) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0>;
-      using sA0 =  bd::scalar_of_t<A0>;
-      using siA0 = bd::scalar_of_t<iA0>;
-      siA0 ik =  a1+Maxexponent<sA0>();
-      ik = shift_left(ik, Nbmantissabits<sA0>());
-      return a0*A0(bitwise_cast<sA0>(ik));
-    }
-  };
+    return vldexp_(a0, a1, std::is_floating_point<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                  , pedantic_tag const &
+                  , T a0
+                  , pack<U,N> const & a1
+                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
-      return ldexp(a0, toint(a1));
-    }
-  };
+    using p_t = pack<T,N>;
+    return ldexp_(p_t(a0), a1, std::is_floating_point<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , boost::simd::pedantic_tag
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  //emulation
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                            , pack<T,N,simd_emulation_> const & a0
+                            , pack<U,N,simd_emulation_> const & a1
+                            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const pedantic_tag &
-                                    , const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
-      return pedantic_(ldexp)(a0, toint(a1));
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_<bd::single_<A0>, X>
-                          , bd::scalar_<bd::single_<A1>>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( const pedantic_tag &
-                                    , const A0& a0, const A1& a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
-      return pedantic_(ldexp)(a0, toint(a1));
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( ldexp_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_<bd::double_<A0>, X>
-                          , bd::scalar_<bd::double_<A1>>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( const pedantic_tag &
-                                    , const A0& a0, const A1& a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
-      return pedantic_(ldexp)(a0, toint(a1));
-    }
-  };
+    return map_to(ldexp, a0, a1);
+  }
 
 } } }
 

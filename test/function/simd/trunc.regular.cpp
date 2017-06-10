@@ -77,4 +77,5 @@ STF_CASE_TPL( "Check trunc behavior on IEEE limit cases", STF_IEEE_TYPES)
   STF_EQUAL(trunc(Maxflint<bs::pack<T>>()+1), Maxflint<bs::pack<T>>()+1 );
   STF_EQUAL(trunc(Maxflint<bs::pack<T>>()  ), Maxflint<bs::pack<T>>()   );
   STF_EQUAL(trunc(Maxflint<bs::pack<T>>()-1), Maxflint<bs::pack<T>>()-1 );
+  STF_EQUAL(trunc(Maxflint<bs::pack<T>>()-10),Maxflint<bs::pack<T>>()-10);
 }

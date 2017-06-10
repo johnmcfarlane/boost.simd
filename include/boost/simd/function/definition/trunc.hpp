@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_TRUNC_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, trunc_, boost::dispatch::elementwise_<trunc_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, trunc_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::trunc_,trunc);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(trunc_,trunc);
 } }
 
 #endif
+

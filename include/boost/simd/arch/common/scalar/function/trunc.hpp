@@ -9,99 +9,78 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_TRUNC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_TRUNC_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/constant/maxflint.hpp>
+#include <boost/simd/function/pack_cast.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/raw.hpp>
 #include <boost/simd/function/std.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  //------------------------------------------------------------------------------------------------
-  // Integer cases are no-op
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T strunc_( T const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return  bs::abs(a0) < Maxflint<T>() ? raw_(trunc)(a0) : a0;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T strunc_( T const& a0, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const raw_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return a0;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T trunc_(BOOST_SIMD_SUPPORTS(cpu_)
+                 , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const std_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return strunc_(a0, std::is_floating_point<T>());
+  }
 
-  //------------------------------------------------------------------------------------------------
-  // FP cases
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()(const raw_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return static_cast<A0>(static_cast<bd::as_integer_t<A0>>(a0));
-    }
-  };
+  //================================================================================================
+  // std decorator
+  template<typename T
+           ,   typename = typename std::enable_if<is_floating_point<T>::value>::type>
+  BOOST_FORCEINLINE
+  auto trunc_(BOOST_SIMD_SUPPORTS(cpu_)
+            , std_tag const&
+            , T const& a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    std::trunc(a0)
+  )
 
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  //================================================================================================
+  // raw  decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T srtrunc_( T const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::trunc(a0);
-    }
-  };
+     return T(si_t<T>(a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( trunc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T srtrunc_( T const& a0, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return bs::abs(a0) < Maxflint<A0>() ? raw_(trunc)(a0) : a0;
-    }
-  };
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T trunc_(BOOST_SIMD_SUPPORTS(cpu_)
+                 , raw_tag const &
+                 , T const& a0) BOOST_NOEXCEPT
+  {
+    return srtrunc_(a0, std::is_floating_point<T>());
+  }
+
 } } }
 
 #endif

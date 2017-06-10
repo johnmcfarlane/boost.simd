@@ -17,7 +17,7 @@
 
 namespace bs = boost::simd;
 
-STF_CASE_TPL( "Check return type from std_(trunc)", STF_NUMERIC_TYPES)
+STF_CASE_TPL( "Check return type from std_(trunc)", STF_IEEE_TYPES)
 {
   using bs::trunc;
   using bs::std_;
@@ -41,7 +41,7 @@ STF_CASE_TPL( "Check std_(trunc) behavior on IEEE types",  STF_IEEE_TYPES)
   STF_EQUAL(std_(trunc)(T(-2.5)), T(-2));
 }
 
-STF_CASE_TPL( "Check std_(trunc) behavior on limit cases", STF_NUMERIC_TYPES)
+STF_CASE_TPL( "Check std_(trunc) behavior on limit cases", STF_IEEE_TYPES)
 {
   using bs::trunc;
   using bs::std_;
@@ -71,14 +71,3 @@ STF_CASE_TPL( "Check std_(trunc) behavior on IEEE limit cases", STF_IEEE_TYPES)
   STF_EQUAL(std_(trunc)(Maxflint<T>()-1) , Maxflint<T>()-1);
 }
 
-STF_CASE_TPL( "Check std_(trunc) behavior on integral types",  STF_INTEGRAL_TYPES)
-{
-  using bs::trunc;
-  using bs::std_;
-
-  STF_EQUAL(std_(trunc)(T(2)), T(2));
-  STF_EQUAL(std_(trunc)(T(1)), T(1));
-  STF_EQUAL(std_(trunc)(T(0)), T(0));
-  STF_EQUAL(std_(trunc)(T(-1)), T(-1));
-  STF_EQUAL(std_(trunc)(T(-2)), T(-2));
-}

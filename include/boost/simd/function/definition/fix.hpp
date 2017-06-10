@@ -13,16 +13,10 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/definition/trunc.hpp>
-#include <boost/simd/detail/dispatch.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using fix_ = trunc_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::fix_,fix);
+  auto fix = trunc;
 } }
 
 #endif

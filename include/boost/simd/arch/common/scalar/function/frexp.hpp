@@ -9,71 +9,62 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_FREXP_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_FREXP_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/function/tofloat.hpp>
 #include <boost/simd/function/ifrexp.hpp>
+#include <boost/simd/function/tofloat.hpp>
 #include <boost/config.hpp>
 #include <utility>
 #include <cmath>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( frexp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+ // regular case
+  template<typename T>
+  BOOST_FORCEINLINE std::pair<T, T>
+  frexp_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      auto that = ifrexp(a0);
-      return {that.first, tofloat(that.second)};
-    }
-  };
+    using p_t = std::pair<T, si_t<T>>;
+    p_t that = ifrexp(a0);
+    return {that.first, T(that.second)};
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( frexp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , boost::simd::pedantic_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // pedantic case
+  template<typename T>
+  BOOST_FORCEINLINE std::pair<T, T>
+  frexp_(BOOST_SIMD_SUPPORTS(cpu_)
+        , pedantic_tag const &
+        , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const pedantic_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      auto that = pedantic_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
-    }
-  };
+    using p_t = std::pair<T, si_t<T>>;
+    p_t that = pedantic_(ifrexp)(a0);
+    return {that.first, T(that.second)};
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( frexp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , boost::simd::raw_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // raw case
+  template<typename T>
+  BOOST_FORCEINLINE std::pair<T, T>
+  frexp_(BOOST_SIMD_SUPPORTS(cpu_)
+        , raw_tag const &
+        , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const raw_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      auto that = raw_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
-    }
-  };
+    using p_t = std::pair<T, si_t<T>>;
+    p_t  that = raw_(ifrexp)(a0);
+    return {that.first, T(that.second)};
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( frexp_
-                          , (typename A0)
-                          , bd::cpu_
-                          , boost::simd::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // std case
+  template<typename T>
+  BOOST_FORCEINLINE std::pair<T, T>
+  frexp_(BOOST_SIMD_SUPPORTS(cpu_)
+        , std_tag const &
+        , T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE std::pair<A0,A0> operator()(const std_tag &, A0 a0 ) const BOOST_NOEXCEPT
-    {
-      auto that = std_(simd::ifrexp)(a0);
-      return {that.first, tofloat(that.second)};
-    }
-  };
+    using p_t = std::pair<T, si_t<T>>;
+    p_t that =std_(ifrexp)(a0);
+    return {that.first, T(that.second)};
+  }
+
 } } }
 
 #endif

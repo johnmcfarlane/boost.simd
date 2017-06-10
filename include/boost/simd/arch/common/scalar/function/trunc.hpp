@@ -26,6 +26,8 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   T strunc_( T const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
+    // this is incorrect for double < Maxflint < T >  and > Valmax < int32_t >
+    // TODO if architectures dont provide
     return  bs::abs(a0) < Maxflint<T>() ? raw_(trunc)(a0) : a0;
   }
 

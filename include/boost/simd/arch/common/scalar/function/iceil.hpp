@@ -13,37 +13,34 @@
 
 #include <boost/simd/function/ceil.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( iceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+ template<typename T>
+ BOOST_FORCEINLINE auto
+ siceil_( T a0, std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+ (
+   /*saturated_*/(toint)(bs::ceil(a0))
+ )
 
-  BOOST_DISPATCH_OVERLOAD ( iceil_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  siceil_( T, std::false_type const & a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return bs::saturated_(toint)(bs::ceil(a0));
-    }
-  };
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  iceil_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    siceil_(a0, std::is_floating_point<T>())
+  )
+
 } } }
 
 

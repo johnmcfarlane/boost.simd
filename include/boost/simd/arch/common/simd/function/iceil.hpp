@@ -11,41 +11,48 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ICEIL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ICEIL_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/ceil.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( iceil_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  viceil_( pack<T,N> const & a0
+         , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    /*simd::saturated_*/(toint)(bs::ceil(a0))
+  )
 
-  BOOST_DISPATCH_OVERLOAD_IF ( iceil_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  viceil_( pack<T,N> const & a0
+         , std::false_type const & ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return bs::saturated_(toint)(bs::ceil(a0));
-    }
-  };
+    return a0;
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  iceil_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N> const & a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    viceil_(a0, std::is_floating_point<T>())
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  iceil_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N,simd_emulation_> const & a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to(iceil, a0)
+  )
+
 } } }
 
 

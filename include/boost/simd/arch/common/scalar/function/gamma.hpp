@@ -28,94 +28,89 @@
 #include <boost/simd/function/is_ltz.hpp>
 #include <boost/simd/function/sinpi.hpp>
 #include <boost/simd/function/stirling.hpp>
+#include <type_traits>
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  using bs::std_tag;
-  BOOST_DISPATCH_OVERLOAD ( gamma_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  BOOST_FORCEINLINE bool inftest_(float a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 a0) const BOOST_NOEXCEPT
-    {
-      if (is_eqz(a0)) return copysign(Inf<A0>(), a0);
-      #ifndef BOOST_SIMD_NO_INVALIDS
-      if( is_nan(a0) || (a0 == Minf<A0>()) ) return Nan<A0>();
-      if (a0 == Inf<A0>()) return a0;
-      #endif
+    return a0 > 35.4f;
+  }
+  BOOST_FORCEINLINE bool inftest_(double a0) BOOST_NOEXCEPT
+  {
+    return a0 > 171.624;
+  }
 
-      A0 x = a0;
-      if (inftest(a0)) return Inf<A0>();
-      A0 q = bs::abs(x);
-      if(x < A0(-33.0))
-      {
+  template<typename T
+           , typename =  typename std::enable_if<std::is_floating_point<T>::value>::type
+  >
+  BOOST_FORCEINLINE
+  T gamma_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0) BOOST_NOEXCEPT
+  {
+    if (is_eqz(a0)) return copysign(Inf<T>(), a0);
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if( is_nan(a0) || (a0 == Minf<T>()) ) return Nan<T>();
+    if (a0 == Inf<T>()) return a0;
+#endif
+
+    T x = a0;
+    if (inftest_(a0)) return Inf<T>();
+    T q = bs::abs(x);
+    if(x < T(-33.0))
+    {
 //        return std::tgamma(a0);
-        A0 st = stirling(q);
-        A0 p =  floor(q);
-        auto iseven =  is_even((int32_t)p);
-        if (p == q) return Nan<A0>();
-        A0 z = q - p;
-        if( z > Half<A0>() )
-        {
-          p += One<A0>();
-          z = q - p;
-        }
-        z = q*sinpi(z);
-        if( is_eqz(z) ) return Nan<A0>();
-        st = Pi<A0>()/(bs::abs(z)*st);
-        return iseven  ? -st : st;
-      }
-      A0 z = One<A0>();
-      while( x >= Three<A0>() )
+      T st = stirling(q);
+      T p =  floor(q);
+      auto iseven =  is_even(std::int32_t(p));
+      if (p == q) return Nan<T>();
+      T z = q - p;
+      if( z > Half<T>() )
       {
-        x -= One<A0>();
-        z *= x;
+        p += One<T>();
+        z = q - p;
       }
-      while( is_ltz(x) )
-      {
-        z /= x;
-        x += One<A0>();
-      }
-      while( x < Two<A0>() )
-      {
-        if( is_eqz(x)) return Nan<A0>();
-        z /= x;
-        x +=  One<A0>();
-      }
-      if( x == Two<A0>() ) return(z);
-      x -= Two<A0>();
-      return z*detail::gamma_kernel<A0>::gamma1(x);
+      z = q*sinpi(z);
+      if( is_eqz(z) ) return Nan<T>();
+      st = Pi<T>()/(bs::abs(z)*st);
+      return iseven  ? -st : st;
     }
-  private:
-    static BOOST_FORCEINLINE bool inftest(const float a0)
+    T z = One<T>();
+    while( x >= Three<T>() )
     {
-      return a0 > 35.4f;
+      x -= One<T>();
+      z *= x;
     }
-    static BOOST_FORCEINLINE bool inftest(const double a0)
+    while( is_ltz(x) )
     {
-      return a0 > 171.624;
+      z /= x;
+      x += One<T>();
     }
+    while( x < Two<T>() )
+    {
+      if( is_eqz(x)) return Nan<T>();
+      z /= x;
+      x +=  One<T>();
+    }
+    if( x == Two<T>() ) return(z);
+    x -= Two<T>();
+    return z*detail::gamma_kernel<T>::gamma1(x);
+  }
 
-  };
-  BOOST_DISPATCH_OVERLOAD ( gamma_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // std_ decorator
+  template<typename T
+           , typename =  typename std::enable_if<std::is_floating_point<T>::value >::type
+  >
+  BOOST_FORCEINLINE
+  T acot_(BOOST_SIMD_SUPPORTS(cpu_)
+         , std_tag const &
+         , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::tgamma(a0);
-    }
-  };
+    return std::tgamma(a);
+  }
+
 } } }
 
 

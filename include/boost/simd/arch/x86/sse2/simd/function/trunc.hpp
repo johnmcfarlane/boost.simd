@@ -13,7 +13,7 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  BOOST_FORCEINLINE pack<double,2> acos_( BOOST_SIMD_SUPPORTS(sse2_)
+  BOOST_FORCEINLINE pack<double,2> trunc_( BOOST_SIMD_SUPPORTS(sse2_)
                                         , pack<double,2> const& a0
                                         ) BOOST_NOEXCEPT
   {

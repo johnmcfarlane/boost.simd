@@ -32,7 +32,7 @@ void test(Env& runtime)
   T a1[N], b[N];
   for(std::size_t i = 0; i < N; ++i)
   {
-    a1[i] = (i%2) ? T(i) : T(-i);
+    a1[i] = ((i%2) ? T(i) : T(-i))/3;
     b[i] = bs::frac(a1[i]) ;
   }
   p_t aa1(&a1[0], &a1[0]+N);

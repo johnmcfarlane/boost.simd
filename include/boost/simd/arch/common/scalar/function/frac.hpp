@@ -13,36 +13,32 @@
 
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/trunc.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( frac_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 ) const BOOST_NOEXCEPT
-    {
-      return Zero<A0>();
-    }
-  };
+ template<typename T>
+ BOOST_FORCEINLINE T
+ sfrac_( T a0, std::true_type const &) BOOST_NOEXCEPT
+ {
+    return a0-simd::trunc(a0);
+ }
 
-  BOOST_DISPATCH_OVERLOAD ( frac_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  sfrac_( T, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0-bs::trunc(a0);
-    }
-  };
+    return  Zero<T>();
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  frac_(BOOST_SIMD_SUPPORTS(cpu_)
+       , T a0) BOOST_NOEXCEPT
+  {
+    return sfrac_(a0, std::is_floating_point<T>());
+  }
+
 } } }
 
 

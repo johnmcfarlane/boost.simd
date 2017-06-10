@@ -89,7 +89,7 @@ namespace boost { namespace simd { namespace detail
                     , std::true_type const &
                     ) BOOST_NOEXCEPT
   {
-      using pi_t = pack<si_t<T>,N>;
+      using pi_t = si_t<pack<T,N>>;
       using p_t = pack<T, N>;
       pi_t e = a1;
       p_t f = One<p_t>();
@@ -227,12 +227,24 @@ namespace boost { namespace simd { namespace detail
 
   //emulation
   template<typename T, typename U, std::size_t N>
-  BOOST_FORCEINLINE pack<T,N,simd_emulation_> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
-                            , pack<T,N,simd_emulation_> const & a0
-                            , pack<U,N,simd_emulation_> const & a1
-                            ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N,simd_emulation_> const & a0
+        , pack<U,N,simd_emulation_> const & a1
+        ) BOOST_NOEXCEPT
   {
     return map_to(ldexp, a0, a1);
+  }
+
+  //std decorator
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N> ldexp_( BOOST_SIMD_SUPPORTS(simd_)
+                                    , std_tag const &
+                                    , pack<T,N> const & a0
+                                    , pack<U,N> const & a1
+                                    ) BOOST_NOEXCEPT
+  {
+    return map_to(std_(ldexp), a0, a1);
   }
 
 } } }

@@ -97,9 +97,9 @@ namespace boost { namespace simd { namespace detail
 
   }
 
-   // Native implementation
+  // Native implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE pack<ui_t<T>,N> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
+  BOOST_FORCEINLINE ui_t<pack<T,N>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
                                          , pack<T,N> const& a
                                          ) BOOST_NOEXCEPT
   {
@@ -108,9 +108,9 @@ namespace boost { namespace simd { namespace detail
 
   // Emulated implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE pack<ui_t<T>,N,simd_emulation_> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                                   , pack<T,N,simd_emulation_> const& a
-                                                   ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE ui_t<pack<T,N,simd_emulation_>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                                         , pack<T,N,simd_emulation_> const& a
+                                                         ) BOOST_NOEXCEPT
   {
     return map_to(simd::ffs, a);
   }

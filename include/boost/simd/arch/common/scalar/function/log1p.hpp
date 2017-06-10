@@ -35,6 +35,7 @@
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/constant/minf.hpp>
+#include <boost/simd/constant/mone.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 namespace boost { namespace simd { namespace ext

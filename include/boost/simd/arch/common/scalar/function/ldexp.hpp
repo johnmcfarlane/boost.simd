@@ -144,6 +144,18 @@ namespace boost { namespace simd { namespace detail
     return spldexp_(a0, a1, std::is_floating_point<T>(), std::is_floating_point<U>());
   }
 
+  //std decorator
+  template<typename T, typename U,
+           typename =  typename std::enable_if < std::is_floating_point<T>::value &&
+                                std::is_integral<U>::value>::type>
+  BOOST_FORCEINLINE T ldexp_( BOOST_SIMD_SUPPORTS(cpu_)
+                            , std_tag const &
+                            , T a0, U a1
+                            ) BOOST_NOEXCEPT
+  {
+    return std::ldexp(a0, a1);
+  }
+
 } } }
 
 

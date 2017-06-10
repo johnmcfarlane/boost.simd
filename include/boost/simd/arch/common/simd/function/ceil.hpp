@@ -47,7 +47,6 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
   pack<T,N,simd_emulation_> ceil_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                  , pedantic_tag const&
                                   , pack<T,N,simd_emulation_> const& a
                                   ) BOOST_NOEXCEPT
   {

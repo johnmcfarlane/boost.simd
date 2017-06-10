@@ -39,7 +39,7 @@
 #include <boost/simd/function/minus.hpp>
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/function/plus.hpp>
-//#include <boost/simd/function/rem.hpp>
+//#include <boost/simd/function/rem.hpp>//TODO
 #include <boost/simd/function/shift_left.hpp>
 #include <boost/simd/function/shift_right.hpp>
 #include <boost/simd/function/splat.hpp>

@@ -23,6 +23,7 @@
 
 namespace boost { namespace simd { namespace detail
 {
+  namespace bs = boost::simd;
   // Native implementation
   template<typename T, std::size_t N
            , typename = typename std::enable_if<bs::is_bitwise_logical_t<pack<T, N>>::value>::type>

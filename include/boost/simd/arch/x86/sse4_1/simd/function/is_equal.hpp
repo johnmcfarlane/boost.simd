@@ -17,7 +17,7 @@
 namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE
-  bs::as_logical_t<pack<std::uint64_t,2,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse4_1_)
+  simd::as_logical_t<pack<std::uint64_t,2,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse4_1_)
                                                         , pack<std::uint64_t,2,sse_> const& a0
                                                         , pack<std::uint64_t,2,sse_> const& a1
                                                         ) BOOST_NOEXCEPT
@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   BOOST_FORCEINLINE
-  bs::as_logical_t<pack<std::int64_t,2,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse4_1_)
+  simd::as_logical_t<pack<std::int64_t,2,sse_>> is_equal_( BOOST_SIMD_SUPPORTS(sse4_1_)
                                                        , pack<std::int64_t,2,sse_> const& a0
                                                        , pack<std::int64_t,2,sse_> const& a1
                                                        ) BOOST_NOEXCEPT

@@ -35,7 +35,7 @@ STF_CASE_TPL("ldexp std", STF_IEEE_TYPES)
   using bs::ldexp;
 
   using iT = bd::as_integer_t<T>;
-  using r_t = decltype(ldexp(T(), iT()));
+  using r_t = decltype(bs::std_(ldexp)(T(), iT()));
 
   // return type conformity test
   STF_TYPE_IS(r_t, T);

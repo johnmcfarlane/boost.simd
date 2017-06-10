@@ -11,6 +11,7 @@
 #include <boost/simd/function/std.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/minf.hpp>
+#include <boost/simd/constant/nan.hpp>
 #include <simd_test.hpp>
 #include <boost/simd/constant/exp_1.hpp>
 

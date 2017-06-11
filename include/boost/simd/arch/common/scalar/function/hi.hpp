@@ -17,23 +17,16 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
 #include <boost/config.hpp>
-namespace boost { namespace simd { namespace ext
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( hi_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE ui_t<T> hi_(BOOST_SIMD_SUPPORTS(cpu_)
+                               , T const& a) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0,unsigned>;
-
-    BOOST_FORCEINLINE result_t operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return lo( shr(a0, sizeof(result_t)*(CHAR_BIT/2)));
-    }
-  };
-
+    return lo( shr(a, sizeof( ui_t<T>)*(CHAR_BIT/2)));
+  }
 
 } } }
 

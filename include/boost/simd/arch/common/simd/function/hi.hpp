@@ -14,6 +14,7 @@
 #include <boost/simd/function/interleave_odd.hpp>
 #include <boost/simd/function/lo.hpp>
 #include <boost/simd/function/shr.hpp>
+#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
@@ -21,46 +22,53 @@
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/detail/predef.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <boost/simd/detail/nsm.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( hi_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_< bd::type8_<A0>, X>
-                             )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T, N>> vhi_(pack<T,N> const& a0
+                       , std::true_type const &) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0,unsigned>;
-    using s_t = bd::scalar_of_t<result_t>;
+    using s_t = ui_t<T>;
+    s_t half_bits = sizeof(s_t)*(CHAR_BIT/2);
+    return lo( shr(a0, half_bits) );
 
-    BOOST_FORCEINLINE result_t operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      const s_t half_bits = sizeof(s_t)*(CHAR_BIT/2);
-      return lo( shr(a0, half_bits) );
-    }
-  };
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( hi_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_< bd::arithmetic_<A0>, X>
-                             )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T, N>> vhi_(pack<T,N> const& a0
+                       , std::false_type const &) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0,unsigned>;
+    using result_t = ui_t<pack < T, N>>;
     using down_t = bd::downgrade_t<result_t>;
+#if BOOST_ENDIAN_BIG_BYTE
+    return bitwise_cast<result_t>(interleave_even(Zero<down_t>(), bitwise_cast<down_t>(a0)));
+#else
+    return bitwise_cast<result_t>(interleave_odd(bitwise_cast<down_t>(a0), Zero<down_t>()));
+#endif
+  }
 
-    BOOST_FORCEINLINE result_t operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      #if BOOST_ENDIAN_BIG_BYTE
-      return bitwise_cast<result_t>(interleave_even(Zero<down_t>(), bitwise_cast<down_t>(a0)));
-      #else
-      return bitwise_cast<result_t>(interleave_odd(bitwise_cast<down_t>(a0), Zero<down_t>()));
-      #endif
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T, N>> hi_(BOOST_SIMD_SUPPORTS(cpu_)
+                      , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return vhi_(a, nsm::bool_< sizeof(T)== 1>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  ui_t<pack<T, N, simd_emulation_>>
+  hi_(BOOST_SIMD_SUPPORTS(cpu_)
+     , pack<T,N, simd_emulation_> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(simd::hi, a);
+  }
+
 } } }
 
 

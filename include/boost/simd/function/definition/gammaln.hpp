@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_GAMMALN_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, gammaln_, boost::dispatch::elementwise_<gammaln_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, gammaln_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::gammaln_,gammaln);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(gammaln_,gammaln);
 } }
 
 #endif

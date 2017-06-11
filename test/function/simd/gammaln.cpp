@@ -45,9 +45,9 @@ void limit_test(Env& runtime)
   STF_ULP_EQUAL(gammaln(bs::Two<p_t>()), bs::Zero<p_t>(), 0);
   STF_ULP_EQUAL(gammaln(bs::Mzero<p_t>()),         bs::Inf<p_t>(), 0);
 
-  STF_ULP_EQUAL(gammaln(bs::Halfeps<p_t>()),       p_t( bs::std_(gammaln)(bs::Halfeps<p_t>())), 1);
-  STF_ULP_EQUAL(gammaln(bs::Eps<p_t>()),           p_t(bs::std_(gammaln)(bs::Eps<p_t>())), 0.5);
-  STF_ULP_EQUAL(gammaln(bs::Half<p_t>()),          p_t(bs::std_(gammaln)(bs::Half<p_t>())), 0.5);
+  STF_ULP_EQUAL(gammaln(bs::Halfeps<p_t>()),       p_t( bs::std_(gammaln)(bs::Halfeps<T>())), 1);
+  STF_ULP_EQUAL(gammaln(bs::Eps<p_t>()),           p_t(bs::std_(gammaln)(bs::Eps<T>())), 0.5);
+  STF_ULP_EQUAL(gammaln(bs::Half<p_t>()),          p_t(bs::std_(gammaln)(bs::Half<T>())), 0.5);
   STF_ULP_EQUAL(gammaln(p_t(1.5)),                 p_t(bs::std_(gammaln)(T(1.5))), 1.5);
   STF_ULP_EQUAL(gammaln(p_t(2.5)),                 p_t(bs::std_(gammaln)(T(2.5))), 0.5);
   STF_ULP_EQUAL(gammaln(p_t(13)) ,                 p_t(bs::std_(gammaln)(T(13))), 0.5);

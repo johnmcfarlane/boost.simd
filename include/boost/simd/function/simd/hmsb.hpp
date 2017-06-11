@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_HMSB_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/hmsb.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/hmsb.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)

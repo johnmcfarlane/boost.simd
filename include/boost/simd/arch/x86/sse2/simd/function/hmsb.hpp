@@ -10,52 +10,48 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_HMSB_HPP_INCLUDED
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/genmask.hpp>
 #include <boost/simd/detail/bitset.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bs =  boost::simd;
-  namespace bd =  boost::dispatch;
+  namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::type8_<A0>, bs::sse_>
-                         )
+  template < typename T>
+  BOOST_FORCEINLINE
+  bs::bitset<16> hmsb_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                      , pack<T,16,sse_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<16> operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_movemask_epi8(a0);
-    }
-  };
+    return _mm_movemask_epi8(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  bs::bitset<2> hmsb_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                      , pack<double,2,sse_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<4> operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_movemask_ps(bitwise_cast<bd::as_floating_t<A0>>(a0));
-    }
-  };
+    return _mm_movemask_pd(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::type64_<A0>, bs::sse_>
-                         )
+  template < typename T, std::size_t N,
+             typename = typename std::enable_if<std::is_integral<T>::value && (sizeof(T) > 2)>::type
+  >
+  BOOST_FORCEINLINE
+  bs::bitset<N> hmsb_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                      , pack<T,N,sse_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<2> operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_movemask_pd(bitwise_cast<bd::as_floating_t<A0>>(a0));
-    }
-  };
+   using p_t = pack<T,N,sse_>;
+    return hmsb(bitwise_cast<f_t<p_t>>(a0));
+  }
+
+
 } } }
 
 #endif

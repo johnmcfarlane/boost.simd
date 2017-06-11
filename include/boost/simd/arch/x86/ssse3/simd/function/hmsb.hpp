@@ -9,31 +9,27 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSSE3_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSSE3_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/bitset.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bs =  boost::simd;
-  namespace bd =  boost::dispatch;
+  namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::ssse3_
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE
+  bs::bitset<8> hmsb_( BOOST_SIMD_SUPPORTS(ssse3_)
+                          , pack<T,8,sse_> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<8> operator()(const A0 & a0) const BOOST_NOEXCEPT
-    {
-      using s8type = typename A0::template retype<int8_t, 16>;
-      s8type mask = { 0x01,0x03,0x05,0x07,0x09,0x0B,0x0D,0x0F
+    using s8type =  pack<std::int8_t,16,sse_>;
+    s8type mask = { 0x01,0x03,0x05,0x07,0x09,0x0B,0x0D,0x0F
                     ,-128,-128,-128,-128,-128,-128,-128,-128
-                    };
+    };
+    return _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(a0), mask));
+  }
 
-      return _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(a0), mask));
-    }
-  };
 } } }
 
 #endif

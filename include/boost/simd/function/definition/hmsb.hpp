@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_HMSB_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, hmsb_, boost::dispatch::elementwise_<hmsb_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, hmsb_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::hmsb_,hmsb);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(hmsb_,hmsb);
 } }
 
 #endif

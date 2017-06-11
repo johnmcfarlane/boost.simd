@@ -11,26 +11,19 @@
 
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/detail/bitset.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE simd::bitset<1> hmsb_(BOOST_SIMD_SUPPORTS(cpu_)
+                                         , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<1> operator()(A0 a0) const BOOST_NOEXCEPT
-    {
-      return {bitwise_and(Signmask<bd::as_integer_t<A0>>(), a0) != 0};
-    }
-  };
+    return {bitwise_and(Signmask<i_t<T>>(), a0) != 0};
+  }
+
 } } }
 
 #endif

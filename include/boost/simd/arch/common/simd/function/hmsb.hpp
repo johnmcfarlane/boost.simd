@@ -14,57 +14,55 @@
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/function/extract.hpp>
 #include <boost/simd/constant/signmask.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/simd/detail/bitset.hpp>
 #include <cstddef>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
+
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD(hmsb_
-                        , (typename A0, typename X)
-                        , bd::cpu_
-                        , bs::pack_<bd::arithmetic_<A0>, X>
-                        )
+  template<typename A0, typename I, typename R> BOOST_FORCEINLINE
+  void piece(const A0& a0, R& r) BOOST_NOEXCEPT
   {
-    using result_t = bs::bitset<cardinal_of<A0>::value>;
+    r.set ( I::value
+          , bs::bitwise_and ( bs::Signmask<i_t<typename A0::value_type>>()
+                            , bs::extract<I::value>(a0)
+                            ) != 0
+          );
+  }
 
-    template<typename I> BOOST_FORCEINLINE void piece(const A0& a0, result_t& r) const BOOST_NOEXCEPT
-    {
-      r.set ( I::value
-            , bs::bitwise_and ( bs::Signmask<bd::as_integer_t<typename A0::value_type>>()
-                              , bs::extract<I::value>(a0)
-                              ) != 0
-            );
-    }
-
-    template<typename... N>
-    BOOST_FORCEINLINE void do_(const A0& a0, result_t& r, nsm::list<N...> const&) const BOOST_NOEXCEPT
-    {
-      (void)(std::initializer_list<bool>{(piece<N>(a0,r),true)...});
-    }
-
-    BOOST_FORCEINLINE result_t operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      result_t r;
-      do_(a0,r,typename A0::traits::element_range());
-      return r;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bs::logical_<A0>, X>
-                          )
+  template<typename A0, typename... N>
+  BOOST_FORCEINLINE void vhmsb_(const A0& a0
+                               , bs::bitset<cardinal_of<A0>::value> & r
+                               , nsm::list<N...> const&)  BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<cardinal_of<A0>::value> operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bs::hmsb(bs::genmask(a0));
-    }
-  };
+    (void)(std::initializer_list<bool>{(piece<A0,N>(a0,r),true)...});
+  }
+
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bs::bitset<N> hmsb_(BOOST_SIMD_SUPPORTS(cpu_)
+                        , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+     bs::bitset<N> r;
+     vhmsb_(a0,r,typename p_t::traits::element_range());
+     return r;
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bs::bitset<N> hmsb_(BOOST_SIMD_SUPPORTS(cpu_)
+                     , bs::as_logical_t<pack<T, N>> const & a0
+                     )
+  {
+    return bs::hmsb(bs::genmask(a0));
+  }
+
 } } }
 
 #endif

@@ -10,6 +10,7 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_HYPOT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_HYPOT_HPP_INCLUDED
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 
 #include <boost/simd/meta/hierarchy/simd.hpp>
@@ -37,56 +38,104 @@
 #include <boost/simd/constant/inf.hpp>
 #endif
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(hypot_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()(const pedantic_tag &,
-                                      const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        using iA0 = bd::as_integer_t<A0>;
-        A0 r =  bs::abs(a0);
-        A0 i =  bs::abs(a1);
-        iA0 e =  exponent(bs::max(i, r));
-        e = bs::min(bs::max(e,Minexponent<A0>()),Maxexponentm1<A0>());
-        A0 res =  pedantic_(ldexp)(sqrt(sqr(pedantic_(ldexp)(r, -e))
-                                        +sqr(pedantic_(ldexp)(i, -e))), e);
-
-        #ifndef BOOST_SIMD_NO_INVALIDS
-        auto test = logical_or(logical_and(is_nan(a0), is_inf(a1)),
-                              logical_and(is_nan(a1), is_inf(a0)));
-        auto v = if_else(test, Inf<A0>(), res);
-        return v;
-        #else
-        return res;
-        #endif
-      }
-   };
-
-  BOOST_DISPATCH_OVERLOAD_IF ( hypot_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
+      return simd::sqrt(simd::fma(a0, a0, sqr(a1)));
+  }
 
-    BOOST_FORCEINLINE A0 operator() (A0 const& a0, A0 const& a1
-                                    ) const BOOST_NOEXCEPT
-    {
-      return boost::simd::sqrt(bs::fma(a0, a0, sqr(a1)));
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+          , pedantic_tag const &
+          , pack<T,N> const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    auto r =  bs::abs(a0);
+    auto i =  bs::abs(a1);
+    auto e =  exponent(bs::max(i, r));
+    e = bs::min(bs::max(e,Minexponent<p_t>()),Maxexponentm1<p_t>());
+    auto res =  pedantic_(ldexp)(sqrt(sqr(pedantic_(ldexp)(r, -e))
+                                      +sqr(pedantic_(ldexp)(i, -e))), e);
+
+#ifndef BOOST_SIMD_NO_INVALIDS
+    auto test = logical_or(logical_and(is_nan(a0), is_inf(a1)),
+                           logical_and(is_nan(a1), is_inf(a0)));
+    auto v = if_else(test, Inf<p_t>(), res);
+    return v;
+#else
+    return res;
+#endif
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , std_tag const &
+        , pack<T,N> const & a0
+        , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(std_(hypot), a0, a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N> const & a0
+        , T const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return hypot_(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , T const & a0
+        , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return hypot_(p_t(a0), a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , pedantic_tag const &
+        , pack<T,N> const & a0
+        , T const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return hypot_(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , pedantic_tag const &
+        , T const & a0
+        , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return hypot_(p_t(a0), a1);
+  }
+
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  hypot_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N,simd_emulation_> const & a0
+        , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(hypot, a0, a1);
+  }
+
 } } }
 
 #endif

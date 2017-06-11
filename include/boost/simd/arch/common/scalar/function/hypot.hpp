@@ -33,65 +33,46 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( hypot_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_<bd::floating_<A0> >
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  hypot_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , T a1) BOOST_NOEXCEPT
   {
+    return simd::sqrt(simd::fma(a0, a0, sqr(a1)));
+  }
 
-    BOOST_FORCEINLINE A0 operator() (const pedantic_tag &,
-                                     A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      using i_t = bd::as_integer_t<A0>;
+  template<typename T>
+  BOOST_FORCEINLINE T
+  hypot_(BOOST_SIMD_SUPPORTS(cpu_)
+        , pedantic_tag const &
+        , T a0
+        , T a1) BOOST_NOEXCEPT
+  {
       #ifndef BOOST_SIMD_NO_INVALIDS
-      if (is_nan(a0) && is_inf(a1)) return Inf<A0>();
-      if (is_inf(a0) && is_nan(a1)) return Inf<A0>();
+      if (is_nan(a0) && is_inf(a1)) return Inf<T>();
+      if (is_inf(a0) && is_nan(a1)) return Inf<T>();
       #endif
-      A0 r =  bs::abs(a0);
-      A0 i =  bs::abs(a1);
-      i_t e =  exponent(bs::max(i, r));
-      e = bs::min(bs::max(e,Minexponent<A0>()),Maxexponentm1<A0>());
+      auto r =  bs::abs(a0);
+      auto i =  bs::abs(a1);
+      auto e =  exponent(bs::max(i, r));
+      e = bs::min(bs::max(e,Minexponent<T>()),Maxexponentm1<T>());
       return bs::pedantic_(ldexp)(sqrt(sqr(bs::pedantic_(ldexp)(r, -e))
                                        +sqr(bs::pedantic_(ldexp)(i, -e))), e);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( hypot_
-                          , (typename A0)
-                          , bd::cpu_
-                          , boost::simd::std_tag
-                          , bd::scalar_<bd::floating_<A0> >
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  hypot_(BOOST_SIMD_SUPPORTS(cpu_)
+        , std_tag const &
+        , T a0
+        , T a1) BOOST_NOEXCEPT
   {
+    return std::hypot(a0, a1);
+  }
 
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0 a0, A0 a1
-                                    ) const BOOST_NOEXCEPT
-    {
-      return std::hypot(a0, a1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( hypot_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
-  {
-
-    BOOST_FORCEINLINE A0 operator() ( A0  a0, A0  a1
-                                    ) const BOOST_NOEXCEPT
-    {
-      return boost::simd::sqrt(bs::fma(a0, a0, sqr(a1)));
-    }
-  };
 } } }
 
 

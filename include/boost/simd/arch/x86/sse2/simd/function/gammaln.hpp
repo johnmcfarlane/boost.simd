@@ -9,24 +9,19 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_GAMMALN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_GAMMALN_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/gammaln.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( gammaln_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                         )
+  namespace bs = boost::simd;
+  BOOST_FORCEINLINE pack<double,2> gammaln_( BOOST_SIMD_SUPPORTS(sse2_)
+                                           , pack<double,2> const& a0
+                                           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      return {bs::gammaln(a0[0]), bs::gammaln(a0[1])};
-
-    }
-  };
+    using result_t = pack<double,2>;
+    return result_t(bs::gammaln(double(a0[0])),  bs::gammaln(double(a0[1])));
+  }
 
 } } }
 

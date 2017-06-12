@@ -50,15 +50,25 @@ namespace boost { namespace simd { namespace detail
 
   //==========================================================================
   //emulation
-//   template<typename C, typename T, std::size_t N>
-//   BOOST_FORCEINLINE pack<T,N,simd_emulation_>
-//   if_else_(BOOST_SIMD_SUPPORTS(simd_)
-//           , pack<C,N,simd_emulation_> const & a0
-//           , pack<T,N,simd_emulation_> const & a1
-//           , pack<T,N,simd_emulation_> const & a2) BOOST_NOEXCEPT
-//   {
-//     return map_to(if_else, a0, a1, a2);
-//   }
+  template<typename C, typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<C,N,simd_emulation_> const & a0
+          , pack<T,N,simd_emulation_> const & a1
+          , pack<T,N,simd_emulation_> const & a2) BOOST_NOEXCEPT
+  {
+    return map_to(if_else, a0, a1, a2);
+   }
+
+  template<typename C, typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<logical<C>,N,simd_emulation_> const & a0
+          , pack<T,N,simd_emulation_> const & a1
+          , pack<T,N,simd_emulation_> const & a2) BOOST_NOEXCEPT
+  {
+    return map_to(if_else, a0, a1, a2);
+   }
 
   //mixed calls two packs
   template<typename T, std::size_t N, typename U>

@@ -21,18 +21,18 @@
 namespace boost { namespace simd { namespace detail
 {
 
- template<typename T, typename U, typename V>
+  template<typename T, typename U, typename V,
+           typename = typename std::enable_if<std::is_fundamental<T>::value&&
+                                              std::is_fundamental<U>::value&&
+                                              std::is_fundamental<V>::value>::type
+  >
   BOOST_FORCEINLINE U
   if_else_(BOOST_SIMD_SUPPORTS(cpu_)
           , T cond
           , U a1
           , V a2 ) BOOST_NOEXCEPT
   {
-#ifdef BOOST_SIMD_BRANCH_FREE_IF_ELSE
-    return bitwise_select(genmask(cond), a1, U(a2));
-#else
     return cond ? a1 : U(a2);
-#endif
   }
 
 } } }

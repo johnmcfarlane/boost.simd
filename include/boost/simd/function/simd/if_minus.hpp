@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IF_MINUS_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/if_minus.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/if_minus.hpp>
 
 #endif

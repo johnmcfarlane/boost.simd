@@ -12,25 +12,36 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IF_MINUS_HPP_INCLUDED
 
 #include <boost/simd/function/is_nez.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_minus_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::unspecified_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  template<typename T, typename U, typename V,
+           typename = typename std::enable_if<std::is_fundamental<T>::value&&
+                                              std::is_fundamental<U>::value&&
+                                              std::is_fundamental<V>::value>::type
+  >
+  BOOST_FORCEINLINE U if_minus_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , T  a0
+                             , U  a1
+                             , V  a2) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() (const A0 & a0, A1 a1, A1 a2) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0) ? (a1-a2) : a1;
-    }
-  };
+    return is_nez(a0) ? (a1-U(a2)) : a1;
+  }
+
+  template<typename T, typename U, typename V,
+           typename = typename std::enable_if<std::is_fundamental<T>::value&&
+                                              std::is_fundamental<U>::value&&
+                                              std::is_fundamental<V>::value>::type
+  >
+  BOOST_FORCEINLINE U if_minus_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , logical<T> const& a0
+                             , U  a1
+                             , V  a2) BOOST_NOEXCEPT
+  {
+    return  a0 ? (a1-U(a2)) : a1;
+  }
+
 } } }
 
 

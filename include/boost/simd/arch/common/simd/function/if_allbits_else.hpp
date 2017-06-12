@@ -21,7 +21,7 @@
 namespace boost { namespace simd { namespace detail
 {
   //================================================================================================
-  // regular (no decorator)
+  // regular
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
   pack<U,N> vif_allbits_else_( pack<T,N> const& a0
@@ -45,9 +45,8 @@ namespace boost { namespace simd { namespace detail
                             , pack<U,N> const& a1 ) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return vif_allbits_else_(a0, a1//, simd::is_bitwise_logical<p_t>());
-                            , nsm::and_<simd::is_bitwise_logical<p_t>
-                                       , nsm::bool_<sizeof(T) == sizeof(U)> >());
+    return vif_allbits_else_(a0, a1, nsm::and_<simd::is_bitwise_logical<p_t>
+                                              , nsm::bool_<sizeof(T) == sizeof(U)> >());
   }
 
   // Emulated implementation

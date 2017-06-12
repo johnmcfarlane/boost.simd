@@ -20,8 +20,8 @@ namespace boost { namespace simd { namespace detail
 {
   template<typename T, typename U>
   BOOST_FORCEINLINE U if_else_allbits_(BOOST_SIMD_SUPPORTS(cpu_)
-                                      , T const& a0
-                                      , U const& a1) BOOST_NOEXCEPT
+                                      , T a0
+                                      , U a1) BOOST_NOEXCEPT
   {
     return  is_nez(a0) ? a1 : Allbits<U>();
   }
@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T, typename U>
   BOOST_FORCEINLINE U if_else_allbits_(BOOST_SIMD_SUPPORTS(cpu_)
                                       , logical<T> const& a0
-                                      , U const& a1) BOOST_NOEXCEPT
+                                      , U a1) BOOST_NOEXCEPT
   {
     return  a0 ? a1: Allbits<U>();
   }

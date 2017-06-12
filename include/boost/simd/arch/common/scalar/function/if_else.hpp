@@ -22,7 +22,7 @@ namespace boost { namespace simd { namespace detail
 {
 
  template<typename T, typename U, typename V>
-  BOOST_FORCEINLINE T
+  BOOST_FORCEINLINE U
   if_else_(BOOST_SIMD_SUPPORTS(cpu_)
           , T cond
           , U a1

@@ -20,7 +20,3 @@ namespace boost { namespace simd
 } }
 
 #endif
-
-#include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#

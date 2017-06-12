@@ -11,25 +11,28 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IF_INC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IF_INC_HPP_INCLUDED
 
-#include <boost/simd/constant/one.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/function/inc.hpp>
+#include <boost/simd/function/is_nez.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_inc_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U if_inc_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , T a0
+                             , U a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return a0 ? a1+One<A1>() : a1;
-    }
-  };
+    return  is_nez(a0) ? inc(a1) : a1;
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U if_inc_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , logical<T> const& a0
+                             , U a1) BOOST_NOEXCEPT
+  {
+    return  a0 ? inc(a1) : a1;
+  }
+
 } } }
 
 

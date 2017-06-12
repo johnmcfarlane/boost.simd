@@ -12,22 +12,23 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IF_DEC_HPP_INCLUDED
 
 #include <boost/simd/function/dec.hpp>
+#include <boost/simd/function/is_nez.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
   template<typename T, typename U>
   BOOST_FORCEINLINE U if_dec_(BOOST_SIMD_SUPPORTS(cpu_)
-                                      , T const& a0
-                                      , U const& a1) BOOST_NOEXCEPT
+                             , T  a0
+                             , U  a1) BOOST_NOEXCEPT
   {
     return  is_nez(a0) ? dec(a1) : a1;
   }
 
   template<typename T, typename U>
   BOOST_FORCEINLINE U if_dec_(BOOST_SIMD_SUPPORTS(cpu_)
-                                      , logical<T> const& a0
-                                      , U const& a1) BOOST_NOEXCEPT
+                             , logical<T> const& a0
+                             , U  a1) BOOST_NOEXCEPT
   {
     return  a0 ? dec(a1) : a1;
   }

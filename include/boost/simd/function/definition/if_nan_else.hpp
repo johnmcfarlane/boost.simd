@@ -13,16 +13,11 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/definition/if_allbits_else.hpp>
-#include <boost/simd/detail/dispatch.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using if_nan_else_ = if_allbits_else_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::if_nan_else_,if_nan_else);
+  auto  if_nan_else = if_allbits_else;
 } }
 
 #endif
+

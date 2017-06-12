@@ -11,6 +11,5 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IF_ELSE_NAN_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/if_else_nan.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 
 #endif

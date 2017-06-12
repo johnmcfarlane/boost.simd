@@ -81,3 +81,4 @@ STF_CASE_TPL("Check if_else on pack of logical" , STF_NUMERIC_TYPES)
   testl<T, N/2>(runtime);
   testl<T, N*2>(runtime);
 }
+

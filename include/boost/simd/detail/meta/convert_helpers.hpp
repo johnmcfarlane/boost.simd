@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T> using ui_t =  boost::dispatch::as_integer_t<T, unsigned>;
   template<typename T> using si_t =  boost::dispatch::as_integer_t<T, signed>;
   template<typename T> using  i_t =  boost::dispatch::as_integer_t<T>;
-  template<typename T> using  f_t =  boost::dispatch::as_floating<T>;
+  template<typename T> using  f_t =  boost::dispatch::as_floating_t<T>;
 } } }
 
 #endif

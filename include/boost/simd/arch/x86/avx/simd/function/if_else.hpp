@@ -9,60 +9,59 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 
+#include <boost/simd/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/simd/meta/cardinal_of.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/genmask.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  template < typename T>
+  BOOST_FORCEINLINE
+  pack<float,8,avx_>
+  if_else_( BOOST_SIMD_SUPPORTS(avx_)
+          , pack<logical<T>,8,avx_> const& a0
+          , pack<float,8,avx_> const& a1
+          , pack<float,8,avx_> const& a2
+          ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<float,8,avx_>;
+    return _mm256_blendv_ps(a2, a1, bitwise_cast<p_t>(genmask(a0)));
+  }
 
-   BOOST_DISPATCH_OVERLOAD( if_else_
-                          , (typename A0, typename A1)
-                          , bs::avx_
-                          , bs::pack_<logical_<A0>, bs::avx_>
-                          , bs::pack_<bd::single_<A1>, bs::avx_>
-                          , bs::pack_<bd::single_<A1>, bs::avx_>
-                          )
-   {
-     BOOST_FORCEINLINE A1 operator()(A0 const& a0,A1 const& a1,A1 const& a2) const
-     {
-       return _mm256_blendv_ps(a2, a1, bitwise_cast<A1>(genmask(a0)));
-     }
-   };
+  template < typename T>
+  BOOST_FORCEINLINE
+  pack<double,4,avx_>
+  if_else_( BOOST_SIMD_SUPPORTS(avx_)
+          , pack<logical<T>,4,avx_> const& a0
+          , pack<double,4,avx_> const& a1
+          , pack<double,4,avx_> const& a2
+          ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<double,4,avx_>;
+    return _mm256_blendv_pd(a2, a1, bitwise_cast<p_t>(genmask(a0)));
+  }
 
-   BOOST_DISPATCH_OVERLOAD( if_else_
-                          , (typename A0, typename A1)
-                          , bs::avx_
-                          , bs::pack_<logical_<A0>, bs::avx_>
-                          , bs::pack_<bd::double_<A1>, bs::avx_>
-                          , bs::pack_<bd::double_<A1>, bs::avx_>
-                          )
-   {
-     BOOST_FORCEINLINE A1 operator()(A0 const& a0,A1 const& a1,A1 const& a2) const
-     {
-       return _mm256_blendv_pd(a2, a1, bitwise_cast<A1>(genmask(a0)));
-     }
-   };
+  template < typename T, typename U, std::size_t N,
+  typename =  typename std::enable_if<std::is_integral<U>::value
+                                      &&(N <= 8)>
+  >
+  BOOST_FORCEINLINE
+  pack<U,N,sse_>
+  if_else_( BOOST_SIMD_SUPPORTS(avx_)
+          , pack<logical<T>,N,avx_> const& a0
+          , pack<U,N,avx_> const& a1
+          , pack<U,N,avx_> const& a2
+          ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<U,N,avx_>;
+    using pf_t = f_t<p_t>;
+    return bitwise_cast<p_t>(if_else(a0, bitwise_cast<pf_t>(a1), bitwise_cast<pf_t>(a2)));
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF ( if_else_
-                              , (typename A0, typename A1)
-                              , (nsm::bool_<bs::cardinal_of<A0>::value <= 8>)
-                              , bs::avx_
-                              , bs::pack_<logical_<A0>, bs::avx_>
-                              , bs::pack_<bd::integer_<A1>, bs::avx_>
-                              , bs::pack_<bd::integer_<A1>, bs::avx_>
-                              )
-   {
-     BOOST_FORCEINLINE A1 operator()(A0 const& a0,A1 const& a1,A1 const& a2) const
-     {
-        using f_t= bd::as_floating_t<A1>;
-        return bitwise_cast<A1>(if_else(a0, bitwise_cast<f_t>(a1), bitwise_cast<f_t>(a2)));
-     }
-   };
 } } }
 
 #endif

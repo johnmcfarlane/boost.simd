@@ -11,50 +11,129 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 
+#include <boost/simd/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_andnot.hpp>
 #include <boost/simd/function/genmask.hpp>
+#include <boost/simd/function/pack_cast.hpp>
 #include <boost/simd/function/is_nez.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD_IF( if_else_
-                            , (typename A0,typename A1,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>,X>
-                            , bs::pack_<bd::fundamental_<A1>,X>
-                            , bs::pack_<bd::fundamental_<A1>,X>
-                            )
-
+  //==========================================================================
+  //regular
+  template<typename C, typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+           , pack<C,N> const & a0
+           , pack<T,N> const & a1
+           , pack<T,N> const & a2) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()(const A0& a0, const A1& a1, const A1& a2) const BOOST_NOEXCEPT
-    {
-      auto m = genmask(a0);
-      return bitwise_or(bitwise_and(a1,m), bitwise_andnot(a2,m));
-    }
-  };
+    return if_else(is_nez(a0), a1, a2);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( if_else_
-                            , (typename A0,typename A1,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            , bs::pack_<bd::fundamental_<A1>,X>
-                            , bs::pack_<bd::fundamental_<A1>,X>
-                            )
+  template<typename C, typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<logical<C>,N> const & a0
+          , pack<T,N> const & a1
+          , pack<T,N> const & a2) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()(const A0& a0, const A1& a1, const A1&a2) const BOOST_NOEXCEPT
-    {
-      return if_else(is_nez(a0), a1, a2);
-    }
-  };
+    auto m = genmask(a0);
+    return bitwise_or(bitwise_and(a1,m), bitwise_andnot(a2,m));
+  }
+
+  //==========================================================================
+  //emulation
+//   template<typename C, typename T, std::size_t N>
+//   BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+//   if_else_(BOOST_SIMD_SUPPORTS(simd_)
+//           , pack<C,N,simd_emulation_> const & a0
+//           , pack<T,N,simd_emulation_> const & a1
+//           , pack<T,N,simd_emulation_> const & a2) BOOST_NOEXCEPT
+//   {
+//     return map_to(if_else, a0, a1, a2);
+//   }
+
+  //mixed calls two packs
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, T>::value, pack<T,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , U a0
+          , pack<T,N> const & a1
+          , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    return a0 ? a1 : a2;
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<U, V>::value, pack<V,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , U a1
+          , pack<V,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<V,N>;
+    return if_else(a0, p_t(a1), a2);
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<V, U>::value, pack<U,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , pack<U,N> const & a1
+          , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<U,N>;
+    return if_else(a0, a1, p_t(a2));
+  }
+
+  //mixed calls one packs
+  // no decorator
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<V, U>::value, pack<U,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , U a1
+          , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<U,N>;
+    return if_else(a0, p_t(a1), p_t(a2));
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<V, T>::value, pack<T,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , U a0
+          , V a1
+          , pack<T,N> const & a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return a0 ? p_t(a1) : a2;
+  }
+
+  template<typename T, std::size_t N, typename U, typename V>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_convertible<V, T>::value, pack<T,N>>::type
+  if_else_(BOOST_SIMD_SUPPORTS(simd_)
+          , U a0
+          , pack<T,N> const & a1
+          , V a2) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    return a0 ? a1 : p_t(a2);
+  }
+
 } } }
 
 #endif

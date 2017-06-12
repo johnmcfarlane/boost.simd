@@ -15,54 +15,26 @@
 #include <boost/simd/function/bitwise_select.hpp>
 #include <boost/simd/function/genmask.hpp>
 #endif
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/hierarchy.hpp>
+
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_else_
-                          , (typename COND, typename T, typename F)
-                          , bd::cpu_
-                          , bd::scalar_<bd::fundamental_<COND>>
-                          , bd::scalar_<bd::fundamental_<T>>
-                          , bd::scalar_<bd::fundamental_<F>>
-                          )
-  {
-    BOOST_FORCEINLINE T operator()( COND cond
-                                  , T t
-                                  , F  f
-                                  ) const BOOST_NOEXCEPT
-    {
-    #ifdef BOOST_SIMD_BRANCH_FREE_IF_ELSE
-      return bitwise_select(genmask(cond), t, f);
-    #else
-      return cond ? t : T(f);
-    #endif
-    }
-  };
 
-    BOOST_DISPATCH_OVERLOAD ( if_else_
-                          , (typename COND, typename T, typename F)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unspecified_<COND>>
-                          , bd::scalar_<bd::fundamental_<T>>
-                          , bd::scalar_<bd::fundamental_<F>>
-                          )
+ template<typename T, typename U, typename V>
+  BOOST_FORCEINLINE T
+  if_else_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T cond
+          , U a1
+          , V a2 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()( COND cond
-                                  , T t
-                                  , F  f
-                                  ) const BOOST_NOEXCEPT
-    {
-    #ifdef BOOST_SIMD_BRANCH_FREE_IF_ELSE
-      return bitwise_select(genmask(cond), t, f);
-    #else
-      return cond ? t : T(f);
-    #endif
-    }
-  };
+#ifdef BOOST_SIMD_BRANCH_FREE_IF_ELSE
+    return bitwise_select(genmask(cond), a1, U(a2));
+#else
+    return cond ? a1 : U(a2);
+#endif
+  }
+
 } } }
 
 

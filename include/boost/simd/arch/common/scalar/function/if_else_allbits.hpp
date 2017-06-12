@@ -14,37 +14,26 @@
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_else_allbits_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U if_else_allbits_(BOOST_SIMD_SUPPORTS(cpu_)
+                                      , T const& a0
+                                      , U const& a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return a0 ? a1 : Allbits<A1>();
-    }
-  };
+    return  is_nez(a0) ? a1 : Allbits<U>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( if_else_allbits_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U if_else_allbits_(BOOST_SIMD_SUPPORTS(cpu_)
+                                      , logical<T> const& a0
+                                      , U const& a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0) ? a1 : Allbits<A1>();
-    }
-  };
+    return  a0 ? a1: Allbits<U>();
+  }
+
 } } }
 
 

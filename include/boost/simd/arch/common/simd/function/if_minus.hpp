@@ -13,9 +13,7 @@
 
 #include <boost/simd/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/if_else_zero.hpp>
-#include <boost/simd/function/minus.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -52,7 +50,7 @@ namespace boost { namespace simd { namespace detail
           , pack<T,N> const & a1
           , pack<T,N> const & a2) BOOST_NOEXCEPT
   {
-    return a0 ? a1 : a1-a2;
+    return a0 ?  a1-a2 : a1;
   }
 
   template<typename T, std::size_t N, typename U, typename V>
@@ -103,7 +101,7 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t = pack<T,N>;
     auto pa1 = p_t(a1);
-    return a0 ? pa1 : pa1-a2;
+    return a0 ? pa1-a2 : pa1;
   }
 
   template<typename T, std::size_t N, typename U, typename V>
@@ -115,7 +113,7 @@ namespace boost { namespace simd { namespace detail
           , V a2) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return a0 ? a1 :a1- p_t(a2);
+    return a0 ? a1- p_t(a2): a1;
   }
 } } }
 

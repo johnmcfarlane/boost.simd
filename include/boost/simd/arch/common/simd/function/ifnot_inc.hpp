@@ -12,7 +12,7 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/ifnot_minus.hpp>
+#include <boost/simd/function/ifnot_plus.hpp>
 #include <boost/simd/function/genmaskc.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/logical.hpp>
@@ -24,7 +24,7 @@ namespace boost { namespace simd { namespace detail
   pack<U,N> vifnot_inc_( pack<T,N> const& a0
                        , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    return a1 + bitwise_cast<pack<U,N>>(genmaskc(a0));
+    return a1 - bitwise_cast<pack<U,N>>(genmaskc(a0));
   }
 
   template<typename T, typename U, std::size_t N>
@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace detail
   pack<U,N> vifnot_inc_( pack<T,N> const& a0
                        , pack<U,N> const& a1, std::false_type const &) BOOST_NOEXCEPT
   {
-    return ifnot_minus(a0, a1, One(as(a1)));
+    return ifnot_plus(a0, a1, One(as(a1)));
   }
 
   template<typename T, typename U, std::size_t N>

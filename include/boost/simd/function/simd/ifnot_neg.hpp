@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IFNOT_NEG_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/ifnot_neg.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/ifnot_neg.hpp>
 
 #endif

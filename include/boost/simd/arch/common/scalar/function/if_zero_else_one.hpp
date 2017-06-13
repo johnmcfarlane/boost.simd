@@ -13,62 +13,32 @@
 
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/zero.hpp>
-#include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_one_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          )
+  //TODO add a template parameter to choose the return type
+  template<typename T>
+  BOOST_FORCEINLINE T if_zero_else_one_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , T  a0) BOOST_NOEXCEPT
   {
-    using result_t = typename A0::value_type;
-    BOOST_FORCEINLINE result_t operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return a0 ? Zero<result_t>() : One<result_t>();
-    }
-  };
+     return  T(a0 == Zero<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_one_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T if_zero_else_one_(BOOST_SIMD_SUPPORTS(cpu_)
+                             , logical<T> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return  A0(a0 == boost::simd::Zero<A0>());
-    }
-  };
+    return  a0 ? One<T>() : Zero<T>();
+  }
 
-//   BOOST_DISPATCH_OVERLOAD ( if_zero_else_one_
-//                           , (typename A0)
-//                           , bd::cpu_
-//                           , bd::scalar_< bd::fundamental_<A0> >
-//                           )
-//   {
-//     BOOST_FORCEINLINE A0 operator() ( A0  a0) const BOOST_NOEXCEPT
-//     {
-//       return  a0 ? Zero<A0>() : One<A0>();
-//     }
-//   };
-
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_one_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
+  BOOST_FORCEINLINE bool if_zero_else_one__(BOOST_SIMD_SUPPORTS(cpu_)
+                                          , bool  a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return !a0;
-    }
-  };
+    return !a0;
+  }
+
 } } }
 
 

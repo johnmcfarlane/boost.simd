@@ -21,17 +21,24 @@ namespace boost { namespace simd { namespace detail
   //TODO add a template parameter to choose the return type
   template<typename T>
   BOOST_FORCEINLINE T if_one_else_zero_(BOOST_SIMD_SUPPORTS(cpu_)
-                             , T  a0) BOOST_NOEXCEPT
+                                       , T  a0) BOOST_NOEXCEPT
   {
     return   T(a0 != Zero<T>());
   }
 
   template<typename T>
   BOOST_FORCEINLINE T if_one_else_zero_(BOOST_SIMD_SUPPORTS(cpu_)
-                             , logical<T> const& a0) BOOST_NOEXCEPT
+                                       , logical<T> const& a0) BOOST_NOEXCEPT
   {
     return  a0 ? One<T>() : Zero<T>();
   }
+
+  BOOST_FORCEINLINE bool if_one_else_zero_(BOOST_SIMD_SUPPORTS(cpu_)
+                                          , bool  a0) BOOST_NOEXCEPT
+  {
+    return  a0;
+  }
+
 
 } } }
 

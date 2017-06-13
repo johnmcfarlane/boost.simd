@@ -14,7 +14,6 @@
 #include <boost/simd/function/if_else_zero.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/meta/as_arithmetic.hpp>
-#include <boost/simd/logical.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -36,7 +35,7 @@ namespace boost { namespace simd { namespace detail
     map_to(simd::if_one_else_zero, a0)
   )
 
-    } } }
+} } }
 
 #endif
 

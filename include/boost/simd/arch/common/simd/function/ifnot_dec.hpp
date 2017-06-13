@@ -9,65 +9,75 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IFNOT_DEC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IFNOT_DEC_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/ifnot_minus.hpp>
 #include <boost/simd/function/genmaskc.hpp>
 #include <boost/simd/constant/one.hpp>
+#include <boost/simd/logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  BOOST_DISPATCH_OVERLOAD_IF( ifnot_dec_
-                            , (typename A0, typename A1, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>, X>
-                            , bs::pack_<bd::integer_<A1>, X>
-                            )
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N> vifnot_dec_( pack<T,N> const& a0
+                       , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()(const A0& a0, const A1& a1) const BOOST_NOEXCEPT
-    {
-      return do_(a0,a1,is_bitwise_logical_t<A0>{});
-    }
+    return a1 + bitwise_cast<pack<U,N>>(genmaskc(a0));
+  }
 
-    BOOST_FORCEINLINE A1 do_(const A0& a0, const A1& a1, tt::true_type const&) const BOOST_NOEXCEPT
-    {
-      return a1 + bitwise_cast<A1>(genmaskc(a0));
-    }
-
-    BOOST_FORCEINLINE A1 do_(const A0& a0, const A1& a1, tt::false_type const&) const BOOST_NOEXCEPT
-    {
-      return ifnot_minus(a0, a1, One<A1>());
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF( ifnot_dec_
-                            , (typename A0, typename A1, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>, X>
-                            , bs::pack_<bd::arithmetic_<A1>, X>
-                            )
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N> vifnot_dec_( pack<T,N> const& a0
+                       , pack<U,N> const& a1, std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-    {
-      return ifnot_minus(a0, a1, One<A1>());
-    }
-  };
+    return ifnot_minus(a0, a1, One(as(a1)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( ifnot_dec_
-                            , (typename A0, typename A1, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>, X>
-                            , bs::pack_<bd::arithmetic_<A1>, X>
-                            )
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N> ifnot_dec_(BOOST_SIMD_SUPPORTS(simd_)
+                      , pack<T,N> const& a0
+                      , pack<U,N> const& a1 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-    {
-      return ifnot_minus(a0, a1, One<A1>());
-    }
-  };
+    using p_t = pack<T, N>;
+    using test1_t = nsm::and_<simd::is_bitwise_logical<p_t>, nsm::bool_<sizeof(T) == sizeof(U)>>;
+    using test_t = nsm::and_< test1_t, typename std::is_integral<T> ::type>;
+    return vifnot_dec_(a0, a1, test_t());
+  }
+
+  // Emulated implementation
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N,simd_emulation_> ifnot_dec_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                       , pack<T,N,simd_emulation_> const& a0
+                                       , pack<U,N,simd_emulation_> const& a1
+                                       ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::ifnot_dec, a0, a1);
+  }
+
+  //mixed
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N>
+  ifnot_dec_(BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N> const & a0
+            , U  a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<U, N>;
+    return ifnot_dec_(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE pack<T,N>
+  ifnot_dec_(BOOST_SIMD_SUPPORTS(simd_)
+            , T  a0
+            , pack<U,N> const & a1) BOOST_NOEXCEPT
+  {
+    return a0 ? a1 : dec(a1);
+  }
+
 } } }
 
 #endif

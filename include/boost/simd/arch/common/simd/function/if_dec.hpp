@@ -75,7 +75,7 @@ namespace boost { namespace simd { namespace detail
          , T  a0
          , pack<U,N> const & a1) BOOST_NOEXCEPT
   {
-    return a0 ? a1 : dec(a1);
+    return a0 ? dec(a1) : a1;
   }
 
 } } }

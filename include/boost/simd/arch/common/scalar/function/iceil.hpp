@@ -15,7 +15,6 @@
 #include <boost/simd/function/toint.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
-#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

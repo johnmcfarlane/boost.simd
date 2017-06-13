@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IFNOT_PLUS_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/ifnot_plus.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/ifnot_plus.hpp>
 
 #endif

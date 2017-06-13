@@ -20,7 +20,6 @@ namespace boost { namespace simd { namespace detail
 
   //================================================================================================
   // regular case
-  // Native implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE pair_t<pack < T, N>>
   frexp_(BOOST_SIMD_SUPPORTS(simd_)

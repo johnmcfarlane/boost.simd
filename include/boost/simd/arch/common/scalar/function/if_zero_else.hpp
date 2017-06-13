@@ -17,47 +17,31 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          , bd::scalar_< bd::unspecified_<A1> >
-                          )
+ template<typename T, typename U>
+  BOOST_FORCEINLINE U if_zero_else_(BOOST_SIMD_SUPPORTS(cpu_)
+                                      , T  a0
+                                      , U  a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1 const& a1) const BOOST_NOEXCEPT
-    {
-      return is_eqz(a0) ? a1 : Zero<A1>();
-    }
-  };
+    return  is_eqz(a0) ? a1 : Zero<U>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE U if_zero_else_(BOOST_SIMD_SUPPORTS(cpu_)
+                                      , logical<T> const & a0
+                                      , U a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A1 operator() ( A0 a0, A1  a1) const BOOST_NOEXCEPT
-    {
-      return a0 ? Zero<A1>() : a1;
-    }
-  };
+    return  a0 ? Zero<U>() : a1;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( if_zero_else_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
+  BOOST_FORCEINLINE bool if_zero_else_(BOOST_SIMD_SUPPORTS(cpu_)
+                                      , bool a0
+                                      , bool a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0 a0, A0  a1) const BOOST_NOEXCEPT
-    {
-      return a0 ? false : a1;
-    }
-  };
+    return  a0 ? false : a1;
+  }
+
 } } }
 
 

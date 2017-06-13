@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_IF_ZERO_ELSE_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, if_zero_else_, boost::dispatch::elementwise_<if_zero_else_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, if_zero_else_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::if_zero_else_,if_zero_else);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(if_zero_else_,if_zero_else);
 } }
 
 #endif

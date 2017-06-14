@@ -9,53 +9,47 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INC_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/function/if_inc.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
 
-  BOOST_DISPATCH_OVERLOAD ( inc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T inc_(BOOST_SIMD_SUPPORTS(cpu_), T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0) const BOOST_NOEXCEPT_IF_EXPR(a0+A0(1))
-    {
-      return a0+A0(1);
-    }
-  };
+    return a+One<T>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( inc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
+  //================================================================================================
+  // saturated_ incorator
+  template<typename T> BOOST_FORCEINLINE
+  T s_inc_( T a
+          , std::true_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return if_inc(a0 != Valmax<A0>(),a0);
-    }
-  };
+    return inc(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( inc_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T> BOOST_FORCEINLINE
+  T s_inc_( T a
+          , std::false_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0+A0(1);
-    }
-  };
+    return if_inc(is_not_equal(a, Valmax(as(a))), a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  inc_( BOOST_SIMD_SUPPORTS(cpu_)
+      , saturated_tag const&, T a) BOOST_NOEXCEPT
+  {
+    return s_inc_(a, std::is_floating_point<T>{});
+  }
+
+
 } } }
 
 #endif

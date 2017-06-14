@@ -10,7 +10,6 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_DEC_HPP_INCLUDED
 
 #include <boost/simd/detail/pack.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/constant/valmin.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/is_not_equal.hpp>

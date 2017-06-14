@@ -21,64 +21,55 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( ilogb_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  // floating point
+  template<typename T> BOOST_FORCEINLINE
+  i_t<T> silogb_( T a0, std::true_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return static_cast<A0>(bs::ilogb(static_cast<bd::as_floating_t<A0>>(a0)));
-    }
-  };
+    return is_inf(a0) ? Valmax<si_t<T>>() : exponent(a0);
+  }
 
-
-  BOOST_DISPATCH_OVERLOAD ( ilogb_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // integral
+  template<typename T> BOOST_FORCEINLINE
+  i_t<T> silogb_( T a0, std::false_type const&) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() (const std_tag &, A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return std::ilogb(a0);
-    }
-  };
+    return simd::ilogb(f_t<T>(a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( ilogb_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() (const pedantic_tag &, A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return std::ilogb(a0);
-    }
-  };
+  template<typename T> BOOST_FORCEINLINE
+  auto ilogb_( BOOST_SIMD_SUPPORTS(cpu_)
+             , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    silogb_(a0, std::is_floating_point<T>())
+  )
 
-  BOOST_DISPATCH_OVERLOAD ( ilogb_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() (A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return is_inf(a0) ? Valmax<result_t>() : exponent(a0);
-    }
-  };
+  // std decorator
+  template<typename T,
+           typename = typename std::enable_if<std::is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE
+  auto ilogb_( BOOST_SIMD_SUPPORTS(cpu_)
+             , std_tag const &
+             , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    std::ilogb(a0)
+  )
+
+  // pedantic decorator
+  template<typename T,
+           typename = typename std::enable_if<std::is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE
+  auto ilogb_( BOOST_SIMD_SUPPORTS(cpu_)
+             , pedantic_tag const &
+             , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    std::ilogb(a0)
+  )
+
 
 } } }
 

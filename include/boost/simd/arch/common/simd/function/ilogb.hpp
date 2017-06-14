@@ -12,7 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ILOGB_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/exponent.hpp>
 #include <boost/simd/function/group.hpp>
@@ -24,87 +24,86 @@
 #include <boost/simd/function/std.hpp>
 #include <boost/simd/function/tofloat.hpp>
 #include <boost/simd/constant/valmax.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
+#include <boost/simd/function/pack_cast.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <cmath>
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF(ilogb_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
-  {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return if_else(is_inf(a0), Valmax<result_t>(), exponent(a0));
-    }
-  };
+   // regular
+  template<typename T, std::size_t N>
+   BOOST_FORCEINLINE i_t<pack<T,N>>
+   silogb_( pack<T,N> const & a0, std::true_type const &) BOOST_NOEXCEPT //floating
+   {
+   return if_else(is_inf(a0), Valmax<i_t<pack<T,N>>>(), exponent(a0));
+   }
 
-  BOOST_DISPATCH_OVERLOAD(ilogb_
-                         , (typename A0, typename X)
-                         , bd::cpu_
-                         , bs::pedantic_tag
-                         , bs::pack_<bd::floating_<A0>, X>
-                         )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE i_t<pack<T,N>>
+  ssilogb_( pack<T,N> const & a0, std::true_type const &) BOOST_NOEXCEPT //large integral
   {
-    using result_t = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE result_t operator()(const pedantic_tag &
-                                         ,  const A0& a0) const BOOST_NOEXCEPT
-    {
-      result_t fp_ilogbnan(FP_ILOGBNAN);
-      result_t fp_ilogb0(FP_ILOGB0);
-      return if_else(is_nan(a0), fp_ilogbnan,
-                            if_else(is_eqz(a0), fp_ilogb0
-                                   , bs::ilogb(a0)));
-    }
-  };
+      return bitwise_cast<i_t<pack<T,N>>>(ilogb(pack_cast<f_t<T>>(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF(ilogb_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::integer_<A0>, X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE i_t<pack<T,N>>
+  ssilogb_( pack<T,N> const & a0, std::false_type const &) BOOST_NOEXCEPT //small integral 1 or 2 split
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_cast<A0>(ilogb(tofloat(a0)));
-    }
-  };
+    auto s0 = split(a0);
+    return bitwise_cast<i_t<pack<T,N>>>(group(ilogb(s0[0]), ilogb(s0[1])));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( ilogb_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::ints16_<A0>, X>
-                             )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE i_t<pack<T,N>>
+  silogb_( pack<T,N> const & a0, std::false_type const &) BOOST_NOEXCEPT //integral
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0)
-    {
-      auto s0 = split(a0);
-      return bitwise_cast<A0>(group(ilogb(s0[0]), ilogb(s0[1])));
-    }
-  };
+    return ssilogb_(a0, nsm::bool_<sizeof(T) >= 4>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( ilogb_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::ints8_<A0>, X>
-                             )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE i_t<pack<T,N>>
+  ilogb_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N> const & a0) BOOST_NOEXCEPT
   {
-    using result = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0)
-    {
-      auto s0 = split(a0);
-      return bitwise_cast<A0>(group(ilogb(s0[0]), ilogb(s0[1])));
-    }
-  };
+    return silogb_(a0, std::is_floating_point<T>());
+  }
+
+  // emulation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE i_t<pack<T,N,simd_emulation_>>
+  ilog2_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N,simd_emulation_> const & a0) BOOST_NOEXCEPT
+  {
+    return map_to(simd::ilogb, a0);
+  }
+
+  //pedantic
+  template<typename T, std::size_t N,
+           typename = typename std::enable_if<std::is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE i_t<pack<T,N>>
+  ilogb_(BOOST_SIMD_SUPPORTS(simd_)
+        , pedantic_tag const &
+        , pack<T,N> const & a0) BOOST_NOEXCEPT
+  {
+    using result_t = i_t<pack<T,N>>;
+    result_t fp_ilogbnan(FP_ILOGBNAN);
+    result_t fp_ilogb0(FP_ILOGB0);
+    return if_else(is_nan(a0), fp_ilogbnan,
+                   if_else(is_eqz(a0), fp_ilogb0
+                          , simd::ilogb(a0)));
+  }
+
+  //std
+  template<typename T, std::size_t N,
+           typename = typename std::enable_if<std::is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  ilogb_(BOOST_SIMD_SUPPORTS(simd_)
+        , std_tag const &
+        , pack<T,N> const & a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to(std_(ilogb), a0)
+  )
+
 } } }
 
 #endif

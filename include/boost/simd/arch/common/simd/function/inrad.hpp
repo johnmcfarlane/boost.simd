@@ -13,25 +13,33 @@
 
 #include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/constant/deginrad.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( inrad_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
+  // Native implementation
+  template<typename T, std::size_t N
+           , typename =  typename std::enable_if<is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  inrad_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N> const& a) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    a*Deginrad(as(a))
+  )
+
+  // Emulated implementation
+    template<typename T, std::size_t N
+           , typename =  typename std::enable_if<is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  inrad_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return a0*Deginrad<A0>();
-    }
-  };
+    return map_to(simd::inrad, a);
+  }
+
 } } }
 
 

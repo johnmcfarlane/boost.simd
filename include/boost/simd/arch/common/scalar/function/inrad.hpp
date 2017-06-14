@@ -11,26 +11,21 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INRAD_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INRAD_HPP_INCLUDED
 
-#include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/constant/deginrad.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( inrad_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T,
+           typename =  typename std::enable_if<is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE T inrad_(BOOST_SIMD_SUPPORTS(cpu_)
+                            , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0*Deginrad<A0>();
-    }
-  };
+     return a*Deginrad<T>();
+  }
+
 } } }
 
 

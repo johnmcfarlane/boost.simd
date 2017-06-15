@@ -23,7 +23,7 @@
 #include <boost/simd/detail/constant/pow2mask.hpp>
 #include <boost/simd/constant/two.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
 
   BOOST_FORCEINLINE pack<double,4,avx_> ldexp__( BOOST_SIMD_SUPPORTS(avx_)
@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
     using p_t = pack<double,4,avx_>;
-    A0 oddv = fma(a1+Maxexponent<double>(), Two<double>(), (1 << (Nbexponentbits<double>()+1)) + 1);
+    p_t oddv = fma(a1+Maxexponent<double>(), Two<double>(), (1 << (Nbexponentbits<double>()+1)) + 1);
     return a0*shift_left(bitwise_and(Pow2mask<p_t>(), oddv), Nbexponentbits<double>());
   }
 

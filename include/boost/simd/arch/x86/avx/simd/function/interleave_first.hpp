@@ -32,10 +32,10 @@ namespace boost { namespace simd { namespace detail
 
     // 0x20 is SCR1[0:127]|SRC2[0:127] according to Intel AVX manual
     // The result of unpack_*_pd puts parts in the proper pairs beforehand
-    return  bitwise_cast<A0>(f_t( _mm256_permute2f128_pd( _mm256_unpacklo_pd(b0,b1)
-                                                        , _mm256_unpackhi_pd(b0,b1)
-                                                        , 0x20
-                                                        )
+    return  bitwise_cast<p_t>(fp_t( _mm256_permute2f128_pd( _mm256_unpacklo_pd(b0,b1)
+                                                          , _mm256_unpackhi_pd(b0,b1)
+                                                          , 0x20
+                                                          )
                                 )
                             );
   }
@@ -69,8 +69,8 @@ namespace boost { namespace simd { namespace detail
                     , pack<T,16,avx_> const& a1
                     ) BOOST_NOEXCEPT
   {
-    auto s0 = slice(a0);
-    auto s1 = slice(a1);
+    auto x0 = slice(a0);
+    auto x1 = slice(a1);
     return  combine ( interleave_first(x0,y0)
                     , interleave_first(slide<4>(x0), slide<4>(y0))
                     );
@@ -83,8 +83,8 @@ namespace boost { namespace simd { namespace detail
                     , pack<T,32,avx_> const& a1
                     ) BOOST_NOEXCEPT
   {
-    auto s0 = slice(a0);
-    auto s1 = slice(a1);
+    auto x0 = slice(a0);
+    auto x1 = slice(a1);
     return  combine ( interleave_first(x0,y0)
                     , interleave_first(slide<8>(x0), slide<8>(y0))
                     );

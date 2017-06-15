@@ -9,77 +9,71 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INTERLEAVE_FIRST_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INTERLEAVE_FIRST_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/meta/size_picker.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( interleave_first_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<double,2,sse_> interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                                        , pack<double,2,sse_> const& a0
+                                        , pack<double,2,sse_> const& a1
+                                        ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_unpacklo_pd(a0, a1);
-    }
-  };
+    return _mm_unpacklo_pd(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_first_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints8_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints8_<A0>, bs::sse_>
-                         )
+  template < class T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+                                   , pack<T,N,sse_> const& a1
+                                   , case_<0> const &
+                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_unpacklo_epi8(a0,a1);
-    }
-  };
+    return _mm_unpacklo_epi64(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_first_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
-                         )
+  template < class T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+                                   , pack<T,N,sse_> const& a1
+                                   , case_<1> const &
+                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_unpacklo_epi16(a0,a1);
-    }
-  };
+    return _mm_unpacklo_epi32(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_first_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                         )
+  template < class T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+                                   , pack<T,N,sse_> const& a1
+                                   , case_<2> const &
+                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_unpacklo_epi32(a0,a1);
-    }
-  };
+    return _mm_unpacklo_epi16(a0,a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_first_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::ints64_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints64_<A0>, bs::sse_>
-                         )
+  template < class T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+                                   , pack<T,N,sse_> const& a1
+                                   , case_<3> const &
+                                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_unpacklo_epi64(a0,a1);
-    }
-  };
+    return _mm_unpacklo_epi8(a0,a1);
+  }
+
+  template < typename T, std::size_t N
+            , typename =  typename std::enable_if<std::is_integral<T>::value>
+  >
+  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+                                   , pack<T,N,sse_> const& a1
+                                   ) BOOST_NOEXCEPT
+
+  {
+    return vi_interleave_first_(a0, a1, size_picker<T>());
+  }
+
 } } }
 
 #endif

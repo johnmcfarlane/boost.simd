@@ -9,6 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INTERLEAVE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INTERLEAVE_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/interleave_first.hpp>
 #include <boost/simd/function/interleave_second.hpp>

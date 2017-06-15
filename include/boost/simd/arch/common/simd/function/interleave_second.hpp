@@ -9,24 +9,16 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INTERLEAVE_SECOND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INTERLEAVE_SECOND_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/extract.hpp>
 #include <boost/simd/function/combine.hpp>
 #include <boost/simd/function/slide.hpp>
 #include <boost/simd/function/interleave_first.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-
-  BOOST_DISPATCH_OVERLOAD ( interleave_second_
-                          , (typename T, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          )
+  template<typename T> struct v_is
   {
     template<typename N, typename V>
     static BOOST_FORCEINLINE
@@ -72,6 +64,19 @@ namespace boost { namespace simd { namespace ext
                 );
     }
   };
+
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE pack<T,N,X>
+  interleave_second_(BOOST_SIMD_SUPPORTS(simd_)
+                     , pack<T,N,X> const & x
+                     , pack<T,N,X> const & y) BOOST_NOEXCEPT
+  {
+    using stk_t = typename pack<T,N,X>::traits::storage_kind;
+    return v_is<pack<T,N,X>>::do_( x, y, stk_t{}
+                                 , nsm::range<std::size_t, 0, N>{}
+                                 );
+  }
+
 } } }
 
 #endif

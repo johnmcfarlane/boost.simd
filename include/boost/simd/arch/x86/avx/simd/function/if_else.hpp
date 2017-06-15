@@ -9,7 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/simd/meta/cardinal_of.hpp>

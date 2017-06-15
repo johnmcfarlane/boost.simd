@@ -11,7 +11,7 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/saturated.hpp>
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_EQUAL_HPP_INCLUDED
 #include <type_traits>
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
 namespace boost { namespace simd { namespace detail

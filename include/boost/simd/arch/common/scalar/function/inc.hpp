@@ -11,6 +11,7 @@
 
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/function/if_inc.hpp>
+#include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
 

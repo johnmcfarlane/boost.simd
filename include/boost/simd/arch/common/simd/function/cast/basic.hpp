@@ -15,6 +15,8 @@
 #include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/function/combine.hpp>
 #include <boost/simd/function/slice.hpp>
+#include <boost/simd/function/slice_low.hpp>
+#include <boost/simd/function/slice_high.hpp>
 #include <type_traits>
 
 namespace boost { namespace simd { namespace ext

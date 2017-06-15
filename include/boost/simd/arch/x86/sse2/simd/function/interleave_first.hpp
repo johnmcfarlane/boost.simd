@@ -9,7 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INTERLEAVE_FIRST_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INTERLEAVE_FIRST_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/meta/size_picker.hpp>
 
 namespace boost { namespace simd { namespace detail

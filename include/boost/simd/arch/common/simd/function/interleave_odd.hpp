@@ -22,14 +22,14 @@ namespace boost { namespace simd { namespace detail
     static BOOST_FORCEINLINE
     typename V::value_type value(V const& x, V const&, tt::true_type const&)
     {
-      return bs::extract<2*(N::value/2)+1>(x);
+      return simd::extract<2*(N::value/2)+1>(x);
     }
 
     template< typename N, typename V>
     static BOOST_FORCEINLINE
     typename V::value_type value(V const&, V const& y, tt::false_type const&)
     {
-      return bs::extract<2*(N::value/2)+1>(y);
+      return simd::extract<2*(N::value/2)+1>(y);
     }
 
     template< typename K, typename... N> static  BOOST_FORCEINLINE

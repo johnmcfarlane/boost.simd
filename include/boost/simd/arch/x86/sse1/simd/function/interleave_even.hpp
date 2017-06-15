@@ -9,7 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_INTERLEAVE_EVEN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_INTERLEAVE_EVEN_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

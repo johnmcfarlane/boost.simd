@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_IF_ELSE_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/genmask.hpp>

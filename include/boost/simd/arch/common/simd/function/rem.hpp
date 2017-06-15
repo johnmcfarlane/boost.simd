@@ -15,7 +15,7 @@
 #include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/div.hpp>
 #include <boost/simd/function/fix.hpp>
-#include <boost/simd/function/fnms.hpp>
+//#include <boost/simd/function/fnms.hpp>
 #include <boost/simd/function/if_nan_else.hpp>
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/is_nez.hpp>
@@ -115,7 +115,8 @@ namespace boost { namespace simd { namespace ext
       BOOST_FORCEINLINE A0 operator()( bd::functor<bs::tag::fix_> const&
                                      , const A0& a0, const A0& a1) const BOOST_NOEXCEPT
       {
-        return  fnms(div(fix, a0,a1), a1, a0);
+//        return  fnms(div(fix, a0,a1), a1, a0);
+      return a0-div(fix, a0, a1)* a1;
       }
    };
 
@@ -129,15 +130,16 @@ namespace boost { namespace simd { namespace ext
    {
       BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1) const BOOST_NOEXCEPT
       {
-        return  fnms(div(fix, a0,a1), a1, a0);
+//        return  fnms(div(fix, a0,a1), a1, a0);
+      return a0-div(fix, a0, a1)* a1;
       }
    };
 } } }
 
 // Other flavors of rem
-#include <boost/simd/arch/common/simd/function/remround.hpp>
-#include <boost/simd/arch/common/simd/function/remnearbyint.hpp>
-#include <boost/simd/arch/common/simd/function/remfloor.hpp>
-#include <boost/simd/arch/common/simd/function/remceil.hpp>
+// #include <boost/simd/arch/common/simd/function/remround.hpp>
+// #include <boost/simd/arch/common/simd/function/remnearbyint.hpp>
+// #include <boost/simd/arch/common/simd/function/remfloor.hpp>
+// #include <boost/simd/arch/common/simd/function/remceil.hpp>
 
 #endif

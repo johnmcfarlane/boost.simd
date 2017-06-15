@@ -14,7 +14,7 @@
 
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/function/div.hpp>
-#include <boost/simd/function/fnms.hpp>
+//#include <boost/simd/function/fnms.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/is_finite.hpp>
 #include <boost/simd/function/is_inf.hpp>
@@ -49,7 +49,8 @@ namespace boost { namespace simd { namespace ext
                                     , A0 a0, A0 a1) const BOOST_NOEXCEPT
     {
       if (is_nez(a1)&&is_eqz(a0)) return a0;
-      return fnms(div(fix, a0, a1), a1, a0);
+//      return fnms(div(fix, a0, a1), a1, a0);
+      return a0-div(fix, a0, a1)* a1;
     }
   };
 
@@ -78,7 +79,9 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
     {
-      return fnms(a1, div(fix, a0, a1), a0);
+      //     return fnms(a1, div(fix, a0, a1), a0);
+      return a0-div(fix, a0, a1)* a1;
+
     }
   };
 
@@ -109,7 +112,9 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE A0 operator() (bd::functor<bs::tag::fix_> const&
                                     , A0 a0, A0 a1) const BOOST_NOEXCEPT
     {
-      return fnms(a1, div(fix, a0, a1), a0);
+      //     return fnms(a1, div(fix, a0, a1), a0);
+      return a0-div(fix, a0, a1)* a1;
+
     }
   };
   BOOST_DISPATCH_OVERLOAD ( rem_
@@ -128,9 +133,9 @@ namespace boost { namespace simd { namespace ext
 } } }
 
 // Other flavors of rem
-#include <boost/simd/arch/common/scalar/function/remround.hpp>
-#include <boost/simd/arch/common/scalar/function/remnearbyint.hpp>
-#include <boost/simd/arch/common/scalar/function/remfloor.hpp>
-#include <boost/simd/arch/common/scalar/function/remceil.hpp>
+// #include <boost/simd/arch/common/scalar/function/remround.hpp>
+// #include <boost/simd/arch/common/scalar/function/remnearbyint.hpp>
+// #include <boost/simd/arch/common/scalar/function/remfloor.hpp>
+// #include <boost/simd/arch/common/scalar/function/remceil.hpp>
 
 #endif

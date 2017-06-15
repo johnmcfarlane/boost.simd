@@ -62,33 +62,33 @@ namespace boost { namespace simd { namespace detail
                              );
   }
 
-  template < typename T>
-  pack<T,16,avx_>
-  interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                    , pack<T,16,avx_> const& a0
-                    , pack<T,16,avx_> const& a1
-                    ) BOOST_NOEXCEPT
-  {
-    auto x0 = slice(a0);
-    auto x1 = slice(a1);
-    return  combine ( interleave_first(x0,y0)
-                    , interleave_first(slide<4>(x0), slide<4>(y0))
-                    );
-  }
+//   template < typename T>
+//   pack<T,16,avx_>
+//   interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
+//                     , pack<T,16,avx_> const& a0
+//                     , pack<T,16,avx_> const& a1
+//                     ) BOOST_NOEXCEPT
+//   {
+//     auto x0 = slice(a0);
+//     auto x1 = slice(a1);
+//     return  combine ( interleave_first(x0,y0)
+//                     , interleave_first(slide<4>(x0), slide<4>(y0))
+//                     );
+//   }
 
-  template < typename T>
-  pack<T,32,avx_>
-  interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                    , pack<T,32,avx_> const& a0
-                    , pack<T,32,avx_> const& a1
-                    ) BOOST_NOEXCEPT
-  {
-    auto x0 = slice(a0);
-    auto x1 = slice(a1);
-    return  combine ( interleave_first(x0,y0)
-                    , interleave_first(slide<8>(x0), slide<8>(y0))
-                    );
-  }
+//   template < typename T>
+//   pack<T,32,avx_>
+//   interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
+//                     , pack<T,32,avx_> const& a0
+//                     , pack<T,32,avx_> const& a1
+//                     ) BOOST_NOEXCEPT
+//   {
+//     auto x0 = slice(a0);
+//     auto x1 = slice(a1);
+//     return  combine ( interleave_first(x0,y0)
+//                     , interleave_first(slide<8>(x0), slide<8>(y0))
+//                     );
+//   }
 
 } } }
 

@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_FMA_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_FMA_HPP_INCLUDED
 
-#include <boost/simd/pack.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/group.hpp>

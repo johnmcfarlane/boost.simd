@@ -9,66 +9,71 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_INTERLEAVE_ODD_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_INTERLEAVE_ODD_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( interleave_odd_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::type64_<A0>, bs::avx_>
-                          , bs::pack_<bd::type64_<A0>, bs::avx_>
-                         )
+  template < typename T>
+  pack<T,4,avx_>
+  interleave_odd_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                  , pack<T,4,avx_> const& a0
+                  , pack<T,4,avx_> const& a1
+                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      using f_t = bd::as_floating_t<A0>;
-      return  bitwise_cast<A0>(f_t( _mm256_unpackhi_pd( bitwise_cast<f_t>(a0)
-                                                  , bitwise_cast<f_t>(a1)
-                                                  )
+    using p_t = pack<T,4,avx_>;
+    using fp_t = f_t<p_t>;
+    return  bitwise_cast<p_t>(fp_t( _mm256_unpackhi_pd( bitwise_cast<fp_t>(a0)
+                                                      , bitwise_cast<fp_t>(a1)
+                                                      )
                                   )
-                              );
-    }
-  };
+                             );
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_odd_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::type32_<A0>, bs::avx_>
-                          , bs::pack_<bd::type32_<A0>, bs::avx_>
-                         )
+  template < typename T>
+  pack<T,8,avx_>
+  interleave_odd_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                  , pack<T,8,avx_> const& a0
+                  , pack<T,8,avx_> const& a1
+                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      using f_t = bd::as_floating_t<A0>;
-      auto b0 = bitwise_cast<f_t>(a0);
-      auto b1 = bitwise_cast<f_t>(a1);
-      return  bitwise_cast<A0>(f_t( _mm256_unpackhi_ps( _mm256_shuffle_ps(b0, b0, _MM_SHUFFLE(3,1,2,0))
-                                                  , _mm256_shuffle_ps(b1, b1, _MM_SHUFFLE(3,1,2,0))
-                                                  )
-                                  )
-                              );
-    }
-  };
+    using p_t = pack<T,8,avx_>;
+    using fp_t = f_t<p_t>;
+    auto b0 = bitwise_cast<fp_t>(a0);
+    auto b1 = bitwise_cast<fp_t>(a1);
+    return  bitwise_cast<p_t>(f_t( _mm256_unpackhi_ps( _mm256_shuffle_ps(b0, b0, _MM_SHUFFLE(3,1,2,0))
+                                                     , _mm256_shuffle_ps(b1, b1, _MM_SHUFFLE(3,1,2,0))
+                                                     )
+                                 )
+                             );
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( interleave_odd_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                         )
+  template < typename T>
+  pack<T,16,avx_>
+  interleave_odd_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                  , pack<T,16,avx_> const& a0
+                  , pack<T,16,avx_> const& a1
+                  ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const A0 & a0, const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      auto s0 = slice(a0);
-      auto s1 = slice(a1);
-      return  combine(interleave_odd(s0[0],s1[0]), interleave_odd(s0[1],s1[1]));
-    }
-  };
+    auto s0 = slice(a0);
+    auto s1 = slice(a1);
+    return  combine(interleave_odd(s0[0],s1[0]), interleave_odd(s0[1],s1[1]));
+  }
+
+  template < typename T>
+  pack<T,32,avx_>
+  interleave_odd_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                  , pack<T,32,avx_> const& a0
+                  , pack<T,32,avx_> const& a1
+                  ) BOOST_NOEXCEPT
+  {
+    auto s0 = slice(a0);
+    auto s1 = slice(a1);
+    return  combine(interleave_odd(s0[0],s1[0]), interleave_odd(s0[1],s1[1]));
+  }
+
 } } }
 
 #endif

@@ -9,72 +9,61 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_HMSB_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/slice.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/simd/detail/bitset.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
   namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::type32_<A0>, bs::avx_>
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE
+  bs::bitset<32> hmsb_ ( BOOST_SIMD_SUPPORTS(avx_)
+                      , pack<T,32,avx_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<8> operator()(A0 const& a0) const
-    {
-      return _mm256_movemask_ps(bitwise_cast<bd::as_floating_t<A0>>(a0));
-    }
-  };
+    auto h = _mm_movemask_epi8(slice_high(a0));
+    auto l = _mm_movemask_epi8(slice_low (a0));
+    return l | (h << 16);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::type64_<A0>, bs::avx_>
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE
+  bs::bitset<16> hmsb_ ( BOOST_SIMD_SUPPORTS(avx_)
+                      , pack<T,16,avx_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<4> operator()(A0 const& a0) const
-    {
-      return _mm256_movemask_pd(bitwise_cast<bd::as_floating_t<A0>>(a0));
-    }
-  };
+    using s8type = typename pack<T,16,avx_>::template retype<int8_t, 16>;
+    s8type mask = {1,3,5,7,9,11,13,15,-128,-128,-128,-128,-128,-128,-128,-128};
 
-  BOOST_DISPATCH_OVERLOAD ( hmsb_
-                          , (typename A0)
-                          , bs::avx_
-                          , bs::pack_<bd::ints8_<A0>, bs::avx_>
-                          )
+    auto l = _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(slice_low(a0)), mask));
+    auto h = _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(slice_high(a0)), mask));
+
+    return l | (h << 8);
+  }
+
+  BOOST_FORCEINLINE
+  bs::bitset<4> hmsb_ ( BOOST_SIMD_SUPPORTS(avx_)
+                      , pack<double,4,avx_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<32> operator()(A0 const& a0) const
-    {
-      auto h = _mm_movemask_epi8(slice_high(a0));
-      auto l = _mm_movemask_epi8(slice_low (a0));
-      return l | (h << 16);
-    }
-  };
+    return _mm256_movemask_pd(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD( hmsb_
-                      , (typename A0)
-                      , bs::avx_
-                      , bs::pack_<bd::ints16_<A0>, bs::avx_>
-                      )
+  BOOST_FORCEINLINE
+  bs::bitset<8> hmsb_ ( BOOST_SIMD_SUPPORTS(avx_)
+                      , pack<T,8,avx_> const& a0
+                      ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::bitset<16> operator()(A0 const& a0) const
-    {
-      using s8type = typename A0::template retype<int8_t, 16>;
-      s8type mask = {1,3,5,7,9,11,13,15,-128,-128,-128,-128,-128,-128,-128,-128};
+   using p_t = pack<T,8,avx_>;
+    return hmsb(bitwise_cast<f_t<p_t>>(a0));
+  }
 
-      auto l = _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(slice_low(a0)), mask));
-      auto h = _mm_movemask_epi8(_mm_shuffle_epi8(bitwise_cast<s8type>(slice_high(a0)), mask));
-
-      return l | (h << 8);
-    }
-  };
 } } }
 
 #endif

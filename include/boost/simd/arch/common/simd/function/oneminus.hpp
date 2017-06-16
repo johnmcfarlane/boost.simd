@@ -9,29 +9,88 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ONEMINUS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ONEMINUS_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/min.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( oneminus_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
+  //================================================================================================
+  // regular cases
+   // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  oneminus_(BOOST_SIMD_SUPPORTS(simd_)
+           , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return minus(One<A0>(), a0);
-    }
-  };
+    return One(as(a))-a;
+  }
+
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  oneminus_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N,simd_emulation_> const& a
+            ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::oneminus, a);
+  }
+
+//================================================================================================
+  // saturated_ decorator
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  svoneminus_(pack<T,N> a
+             , case_<0> const&) BOOST_NOEXCEPT //floating
+  {
+    // saturated oneminus on real values is merely oneminus
+    return oneminus(a);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  svoneminus_(pack<T,N> a
+             , case_<1> const&) BOOST_NOEXCEPT// signed integral
+  {
+    // saturated oneminus on  integral values takes care of Valmin
+    return if_else((a<= Valmin(as(a))+One(as(a))), oneminus(a), Valmax(as(a)));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  svoneminus_(pack<T,N> a
+             , case_<2> const&) BOOST_NOEXCEPT// unsigned integral
+  {
+    // saturated oneminus on unsigned  integral is 0 except for 0
+    return  One(as(a))-simd::min(a, One(as(a)));
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N>
+  oneminus_ (BOOST_SIMD_SUPPORTS(simd_)
+            , saturated_tag const&, pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    return svoneminus_(a, fsu_picker<T>());
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  oneminus_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , saturated_tag const&
+            , pack<T,N,simd_emulation_> const& a
+            ) BOOST_NOEXCEPT
+  {
+    return map_to(saturated_(simd::oneminus), a);
+  }
+
 } } }
 
-#include <boost/simd/arch/common/simd/function/oneminus_s.hpp>
 
 #endif

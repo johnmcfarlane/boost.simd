@@ -10,27 +10,52 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ONEMINUS_HPP_INCLUDED
 
 #include <boost/simd/constant/one.hpp>
-#include <boost/simd/function/min.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/constant/valmax.hpp>
+#include <boost/simd/constant/valmin.hpp>
+#include <boost/simd/function/saturated.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( oneminus_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T oneminus_(BOOST_SIMD_SUPPORTS(cpu_), T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return minus(One<A0>(), a0);
-    }
-  };
-} } }
+    return One<T>()-a; ;
+  }
 
-#include <boost/simd/arch/common/scalar/function/oneminus_s.hpp>
+  //================================================================================================
+  // saturated_ decorator
+  template<typename T> BOOST_FORCEINLINE
+  T soneminus_(T a
+              , case_<0> const&) BOOST_NOEXCEPT //float
+  {
+    return One<T>()-a; ;
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T soneminus_(T a
+              , case_<1> const&) BOOST_NOEXCEPT //signed int
+  {
+    return (a <= Valmin<T>()+One<T>()) ? Valmax<T>() : One<T>()-a;
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T soneminus_(T a,
+               case_<2> const&) BOOST_NOEXCEPT // unsigned int
+  {
+    return !a;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T oneminus_( BOOST_SIMD_SUPPORTS(cpu_)
+                               , saturated_tag const&
+                               , T const& a) BOOST_NOEXCEPT
+  {
+    return soneminus_(a, fsu_picker<T>{});
+  }
+} } }
 
 #endif

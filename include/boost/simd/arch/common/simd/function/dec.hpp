@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace detail
   }
 
 
-//================================================================================================
+  //================================================================================================
   // saturated_ decorator
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N> svdec_(pack<T,N> a

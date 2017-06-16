@@ -40,7 +40,7 @@ void test(Env& runtime)
   STF_EQUAL(bs::oneminus(aa1), bb);
 }
 
-STF_CASE_TPL("Check oneminus saturated on pack" , STF_NUMERIC_TYPES)
+STF_CASE_TPL("Check oneminus  on pack" , STF_NUMERIC_TYPES)
 {
   static const std::size_t N = bs::pack<T>::static_size;
 
@@ -48,34 +48,6 @@ STF_CASE_TPL("Check oneminus saturated on pack" , STF_NUMERIC_TYPES)
   test<T, N/2>(runtime);
   test<T, N*2>(runtime);
 }
-
-template <typename T, std::size_t N, typename Env>
-void tests(Env& runtime)
-{
-  using p_t = bs::pack<T, N>;
-
-  T a1[N], b[N];
-  for(std::size_t i = 0; i < N; ++i)
-  {
-    a1[i] = (i%2) ? T(i) : T(-i);
-    b[i] = bs::saturated_(bs::oneminus)(a1[i]) ;
-  }
-
-  p_t aa1(&a1[0], &a1[0]+N);
-  p_t bb (&b[0], &b[0]+N);
-
-  STF_EQUAL(bs::saturated_(bs::oneminus)(aa1), bb);
-}
-
-STF_CASE_TPL("Check oneminus on pack" , STF_NUMERIC_TYPES)
-{
-  static const std::size_t N = bs::pack<T>::static_size;
-
-  tests<T, N>(runtime);
-  tests<T, N/2>(runtime);
-  tests<T, N*2>(runtime);
-}
-
 
 
 STF_CASE_TPL (" oneminus signed_int",  STF_SIGNED_INTEGRAL_TYPES)

@@ -11,23 +11,15 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_DEINTERLEAVE_FIRST_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_DEINTERLEAVE_FIRST_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/combine.hpp>
 #include <boost/simd/function/extract.hpp>
 #include <boost/simd/function/make.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-
-  BOOST_DISPATCH_OVERLOAD ( deinterleave_first_
-                          , (typename T, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          )
+  template<typename T> struct v_df
   {
     static_assert ( T::static_size >= 2
                   , "deinterleave_first requires at least two elements"
@@ -46,14 +38,20 @@ namespace boost { namespace simd { namespace ext
                       , deinterleave_first(y.storage()[0],y.storage()[1])
                       );
     }
-
-    BOOST_FORCEINLINE T operator()(T const& x, T const& y) const BOOST_NOEXCEPT
-    {
-      return do_(x,y, typename T::traits::storage_kind{}
-                    , nsm::range<std::size_t, 0, T::static_size/2>{}
-                );
-    }
   };
+
+  template<typename T, std::size_t N, typename X>
+ BOOST_FORCEINLINE pack<T,N,X>
+  deinterleave_first_(BOOST_SIMD_SUPPORTS(simd_)
+                     , pack<T,N,X> const & x
+                     , pack<T,N,X> const & y) BOOST_NOEXCEPT
+  {
+    using stk_t = typename pack<T,N,X>::traits::storage_kind;
+    return v_df<pack<T,N,X>>::do_( x, y, stk_t{}
+                                 , nsm::range<std::size_t, 0, N/2>{}
+                                 );
+  }
+
 } } }
 
 #endif

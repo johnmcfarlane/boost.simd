@@ -25,7 +25,7 @@ namespace boost { namespace simd { namespace detail
 
   template < class T, std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+  pack<T,N,sse_> vi_interleave_first_ ( pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    , case_<0> const &
                                    ) BOOST_NOEXCEPT
@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace detail
 
   template < class T, std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+  pack<T,N,sse_> vi_interleave_first_ ( pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    , case_<1> const &
                                    ) BOOST_NOEXCEPT
@@ -45,7 +45,7 @@ namespace boost { namespace simd { namespace detail
 
   template < class T, std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+  pack<T,N,sse_> vi_interleave_first_ ( pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    , case_<2> const &
                                    ) BOOST_NOEXCEPT
@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace detail
 
   template < class T, std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+  pack<T,N,sse_> vi_interleave_first_ ( pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    , case_<3> const &
                                    ) BOOST_NOEXCEPT
@@ -66,7 +66,8 @@ namespace boost { namespace simd { namespace detail
   template < typename T, std::size_t N
             , typename =  typename std::enable_if<std::is_integral<T>::value>
   >
-  pack<T,N,sse_> interleave_first_ ( pack<T,N,sse_> const& a0
+  pack<T,N,sse_> interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                                   ,  pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    ) BOOST_NOEXCEPT
 

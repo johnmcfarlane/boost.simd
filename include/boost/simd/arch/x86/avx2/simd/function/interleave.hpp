@@ -19,49 +19,49 @@ namespace boost { namespace simd { namespace detail
   namespace bs =  boost::simd;
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,32,avx_> get_low(pack<T,32,avx_> const& a0, pack<T,32,avx_> const& a1, nsm::size_t<32> const& ) const
+  BOOST_FORCEINLINE pack<T,32,avx_> get_low(pack<T,32,avx_> const& a0, pack<T,32,avx_> const& a1, nsm::size_t<32> const& )
   {
     return _mm256_unpacklo_epi8(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,16,avx_> get_low(pack<T,16,avx_> const& a0, pack<T,16,avx_> const& a1, nsm::size_t<16> const& ) const
+  BOOST_FORCEINLINE pack<T,16,avx_> get_low(pack<T,16,avx_> const& a0, pack<T,16,avx_> const& a1, nsm::size_t<16> const& )
   {
     return _mm256_unpacklo_epi16(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,N,avx_> get_low(pack<T,N,avx_> const& a0, pack<T,N,avx_> const& a1, nsm::size_t< 8> const& ) const
+  BOOST_FORCEINLINE pack<T,N,avx_> get_low(pack<T,N,avx_> const& a0, pack<T,N,avx_> const& a1, nsm::size_t< 8> const& )
   {
     return _mm256_unpacklo_epi32(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,4,avx_> get_low(pack<T,4,avx_> const& a0, pack<T,4,avx_> const& a1, nsm::size_t< 4> const& ) const
+  BOOST_FORCEINLINE pack<T,4,avx_> get_low(pack<T,4,avx_> const& a0, pack<T,4,avx_> const& a1, nsm::size_t< 4> const& )
   {
     return _mm256_unpacklo_epi64(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,32,avx_> get_high(pack<T,32,avx_> const& a0, pack<T,32,avx_> const& a1, nsm::size_t<32> const& ) const
+  BOOST_FORCEINLINE pack<T,32,avx_> get_high(pack<T,32,avx_> const& a0, pack<T,32,avx_> const& a1, nsm::size_t<32> const& )
   {
     return _mm256_unpackhi_epi8(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,16,avx_> get_high(pack<T,16,avx_> const& a0, pack<T,16,avx_> const& a1, nsm::size_t<16> const& ) const
+  BOOST_FORCEINLINE pack<T,16,avx_> get_high(pack<T,16,avx_> const& a0, pack<T,16,avx_> const& a1, nsm::size_t<16> const& )
   {
     return _mm256_unpackhi_epi16(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,8,avx_> get_high(pack<T,8,avx_> const& a0, pack<T,8,avx_> const& a1, nsm::size_t< 8> const& ) const
+  BOOST_FORCEINLINE pack<T,8,avx_> get_high(pack<T,8,avx_> const& a0, pack<T,8,avx_> const& a1, nsm::size_t< 8> const& )
   {
     return _mm256_unpackhi_epi32(a0, a1);
   }
 
   template< typename T>
-  BOOST_FORCEINLINE pack<T,4,avx_> get_high(pack<T,4,avx_> const& a0, pack<T,4,avx_> const& a1, nsm::size_t< 4> const& ) const
+  BOOST_FORCEINLINE pack<T,4,avx_> get_high(pack<T,4,avx_> const& a0, pack<T,4,avx_> const& a1, nsm::size_t< 4> const& )
   {
     return _mm256_unpackhi_epi64(a0, a1);
   }

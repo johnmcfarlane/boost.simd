@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_DEINTERLEAVE_HPP_INCLUDED
 
 #include <boost/simd/function/definition/deinterleave.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/deinterleave.hpp>
 #include <boost/simd/arch/common/simd/function/shuffle/deinterleave.hpp>
 

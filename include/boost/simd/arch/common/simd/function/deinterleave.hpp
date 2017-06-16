@@ -9,33 +9,28 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_DEINTERLEAVE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_DEINTERLEAVE_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/deinterleave_first.hpp>
 #include <boost/simd/function/deinterleave_second.hpp>
 #include <array>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( deinterleave_
-                          , (typename T, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          , bs::pack_< bd::unspecified_<T>, X >
-                          )
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE  std::array<pack<T,N,X>,2>
+  deinterleave_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N,X> const & x
+          , pack<T,N,X> const & y) BOOST_NOEXCEPT
   {
-    static_assert ( T::static_size >= 2
-                  , "deinterleave_first requires at least two elements"
+    static_assert ( N >= 2
+                  , "deinterleave requires at least two elements"
                   );
+    std::array<pack<T,N,X>,2> that{{ deinterleave_first(x,y), deinterleave_second(x,y) }};
+    return that;
 
-    BOOST_FORCEINLINE std::array<T,2> operator()(T const& x, T const& y) const BOOST_NOEXCEPT
-    {
-      std::array<T,2> that{{ deinterleave_first(x,y), deinterleave_second(x,y) }};
-      return that;
-    }
-  };
+  }
+
 } } }
 
 #endif

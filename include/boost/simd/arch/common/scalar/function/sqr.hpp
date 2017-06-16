@@ -14,63 +14,46 @@
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/sqr.hpp>
 #include <boost/simd/function/saturated.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( sqr_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_< bd::int_<A0> >
-                          )
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE
+  T sqr_(BOOST_SIMD_SUPPORTS(cpu_)
+        , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &,  A0 a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(abs)(a0) > Sqrtvalmax<A0>() ? Valmax<A0>() : sqr(a0);
-    }
-  };
+    return a*a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( sqr_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_< bd::uint_<A0> >
-                          )
+  //================================================================================================
+  // saturated_ decorator
+  template<typename T>
+  BOOST_FORCEINLINE
+  T ssqr_(T a0
+         , std::false_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0 > Sqrtvalmax<A0>() ? Valmax<A0>() : sqr(a0);
-    }
-  };
+    return saturated_(abs)(a0) > Sqrtvalmax<T>() ? Valmax<T>() : sqr(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( sqr_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T ssqr_(T a0
+         , std::true_type const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const saturated_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return sqr(a0);
-    }
-  };
+    return sqr(a0);
+  }
 
-   BOOST_DISPATCH_OVERLOAD ( sqr_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T sqr_( BOOST_SIMD_SUPPORTS(cpu_)
+                          , saturated_tag const&
+                          , T const& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return a0*a0;
-    }
-  };
+    return ssqr_(a, std::is_floating_point<T>());
+  }
+
 } } }
 
 #endif

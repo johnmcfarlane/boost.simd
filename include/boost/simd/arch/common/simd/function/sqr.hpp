@@ -9,89 +9,88 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SQR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SQR_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/sqrtvalmax.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/function/abs.hpp>
-#include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_greater.hpp>
-#include <boost/simd/function/sqr.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 #ifdef USE_UBSAN
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/meta/as_unsigned.hpp>
 #endif
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF ( sqr_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  sqr_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return bs::multiplies(a0, a0);
-    }
-  };
+    return a0*a0;
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF(sqr_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::saturated_tag
-                            , bs::pack_<bd::int_<A0>, X>
-                            )
+ // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  sqr_ ( BOOST_SIMD_SUPPORTS(simd_)
+       , pack<T,N,simd_emulation_> const& a
+       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &,  const A0& a0
-                                   ) const BOOST_NOEXCEPT
-    {
-      // workaround for UBSan
+    return map_to(simd::sqr, a);
+  }
+
+  //================================================================================================
+  // saturated_ decorator
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  svsqr_( pack<T,N> a0
+        , std::false_type const&) BOOST_NOEXCEPT //integral
+  {
+    using p_t =  pack<T,N>;
+    // workaround for UBSan
 #ifdef USE_UBSAN
-      using utype = bs::as_unsigned_t<A0>;
-      return if_else(is_greater(saturated_(abs)(a0), bs::Sqrtvalmax<A0>()),
-                     bs::Valmax<A0>(), bitwise_cast<A0>(sqr(bitwise_cast<utype>(a0))));
+    using u_t =  ui_t<p_t>;
+    return if_else(is_greater(saturated_(abs)(a0), bs::Sqrtvalmax<p_t>()),
+                   bs::Valmax<p_t>(), bitwise_cast<p_t>(sqr(bitwise_cast<u_t>(a0))));
 #else
-      return if_else(is_greater(saturated_(abs)(a0), bs::Sqrtvalmax<A0>()),
-                     bs::Valmax<A0>(), sqr(a0));
+    return if_else(is_greater(saturated_(abs)(a0), bs::Sqrtvalmax<p_t>()),
+                   bs::Valmax<p_t>(), sqr(a0));
 #endif
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF(sqr_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::saturated_tag
-                            , bs::pack_<bd::uint_<A0>, X>
-                            )
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  svsqr_(pack<T,N> a0
+        , std::true_type const&) BOOST_NOEXCEPT //floating
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &,  const A0& a0
-                                   ) const BOOST_NOEXCEPT
-    {
-      return if_else(is_greater(a0, bs::Sqrtvalmax<A0>()),
-                     bs::Valmax<A0>(), sqr(a0));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF(sqr_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::saturated_tag
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
+    return sqr(a0);
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  sqr_(BOOST_SIMD_SUPPORTS(simd_)
+      , saturated_tag const &
+      , pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const saturated_tag &,  const A0& a0
-                                   ) const BOOST_NOEXCEPT
-    {
-      return sqr(a0);
-    }
-  };
+    return svsqr_(a0, std::is_floating_point<T>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  sqr_ ( BOOST_SIMD_SUPPORTS(simd_)
+       , saturated_tag const&
+       , pack<T,N,simd_emulation_> const& a
+       ) BOOST_NOEXCEPT
+  {
+    return map_to(saturated_(simd::sqr), a);
+  }
 
 } } }
 

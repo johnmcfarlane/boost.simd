@@ -17,7 +17,7 @@
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/zero.hpp>
 
-STF_CASE_TPL (" bs::saturated_(bs::multiplies) signed_int",  STF_SIGNED_INTEGRAL_TYPES)
+STF_CASE_TPL (" bs::saturated_(bs::multiplies) signed_int", STF_SIGNED_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;
@@ -36,7 +36,7 @@ STF_CASE_TPL (" bs::saturated_(bs::multiplies) signed_int",  STF_SIGNED_INTEGRAL
   STF_EQUAL(bs::saturated_(bs::multiplies)(bs::Valmax<T>(),bs::One<T>()), bs::Valmax<T>());
   STF_EQUAL(bs::saturated_(bs::multiplies)(bs::Valmin<T>(),bs::Mone<T>()), bs::Valmax<T>());
   STF_EQUAL(bs::saturated_(bs::multiplies)(bs::Zero<T>(), bs::Zero<T>()), bs::Zero<T>());
-} // end of test for signed_int_
+ } // end of test for signed_int_
 
 STF_CASE_TPL (" bs::saturated_(bs::multiplies)unsigned_int",  STF_UNSIGNED_INTEGRAL_TYPES)
 {

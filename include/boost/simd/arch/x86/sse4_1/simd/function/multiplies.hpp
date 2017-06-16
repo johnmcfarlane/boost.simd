@@ -13,23 +13,18 @@
 #include <boost/simd/detail/overload.hpp>
 
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( multiplies_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
-                         )
-  {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_mullo_epi32(a0, a1);
-    }
-  };
+  template < typename T>
+ BOOST_FORCEINLINE
+ typename std::enable_if < std::is_integral<T>::value, pack<float,4,sse_>>::type
+ multiplies_( BOOST_SIMD_SUPPORTS(sse4_1_)
+            , pack<T,4,sse_> const& a0
+            , pack<T,4,sse_> const& a1
+            ) BOOST_NOEXCEPT
+ {
+   return _mm_mullo_epi32(a0, a1);
+ }
 
 } } }
 

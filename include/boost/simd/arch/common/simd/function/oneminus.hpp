@@ -57,7 +57,7 @@ namespace boost { namespace simd { namespace detail
              , case_<1> const&) BOOST_NOEXCEPT// signed integral
   {
     // saturated oneminus on  integral values takes care of Valmin
-    return if_else((a<= Valmin(as(a))+One(as(a))), oneminus(a), Valmax(as(a)));
+    return if_else((a<= Valmin(as(a))+One(as(a))), Valmax(as(a)), oneminus(a));
   }
 
   template<typename T, std::size_t N>

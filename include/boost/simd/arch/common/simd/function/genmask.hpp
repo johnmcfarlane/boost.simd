@@ -13,6 +13,7 @@
 #include <boost/simd/meta/as_arithmetic.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/constant/allbits.hpp>
+#include <boost/simd/meta/is_bitwise_logical.hpp>
 
 namespace boost { namespace simd { namespace ext
 {

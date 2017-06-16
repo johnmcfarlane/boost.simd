@@ -14,10 +14,8 @@
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/constant/valmin.hpp>
-#include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/bitwise_xor.hpp>
 #include <boost/simd/function/if_else.hpp>
-#include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/constant/zero.hpp>

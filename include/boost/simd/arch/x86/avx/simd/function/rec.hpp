@@ -9,18 +9,19 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_REC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_REC_HPP_INCLUDED
 
+#include <boost/simd/arch/x86/avx/simd/function/rec_raw.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/raw.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/constant/mzero.hpp>
+#include <boost/simd/constant/smallestposval.hpp>
 #include <boost/simd/function/refine_rec.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitofsign.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_inf.hpp>
-#include <boost/simd/arch/x86/avx/simd/function/rec_raw.hpp>
 
 namespace boost { namespace simd { namespace ext
 {

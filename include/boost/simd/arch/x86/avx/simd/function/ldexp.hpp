@@ -14,7 +14,6 @@
 
 #include <boost/config.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/function/fma.hpp>
 #include <boost/simd/function/is_flint.hpp>
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/shift_left.hpp>
@@ -33,7 +32,7 @@ namespace boost { namespace simd { namespace detail
   {
     BOOST_ASSERT_MSG(assert_all(is_flint(a1)||is_invalid(a1)), "parameter is not a flint nor invalid");
     using p_t = pack<double,4,avx_>;
-    p_t oddv = fma(a1+Maxexponent<double>(), Two<double>(), (1 << (Nbexponentbits<double>()+1)) + 1);
+    p_t oddv = (a1+Maxexponent<double>()*Two<double>()+ (1 << (Nbexponentbits<double>()+1)) + 1);
     return a0*shift_left(bitwise_and(Pow2mask<p_t>(), oddv), Nbexponentbits<double>());
   }
 

@@ -44,7 +44,7 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t = pack<T, N>;
     return vif_zero_else_(a0, a1, nsm::and_<simd::is_bitwise_logical<p_t>
-                                              , nsm::bool_<sizeof(T) == sizeof(U)> >());
+                         , nsm::bool_<sizeof(T) == sizeof(U)> >());
   }
 
   // Emulated implementation

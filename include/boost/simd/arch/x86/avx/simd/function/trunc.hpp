@@ -17,7 +17,7 @@ namespace boost { namespace simd { namespace detail
                                               , pack<float,8,avx_> const& a0
                                               ) BOOST_NOEXCEPT
   {
-    return _m256_round_ps(a0, _MM_FROUND_TO_ZERO);
+    return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
   }
 
   BOOST_FORCEINLINE pack<double,4,avx_> trunc_ ( BOOST_SIMD_SUPPORTS(avx_)

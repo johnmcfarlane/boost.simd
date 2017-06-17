@@ -139,7 +139,7 @@ namespace boost { namespace simd { namespace detail
                    ) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    auto ik =  a1+Maxexponent<T>();
+    auto ik =  si_t<T>(a1)+Maxexponent<T>();
     ik = shift_left(ik, Nbmantissabits<T>());
     return a0*p_t(bitwise_cast<T>(ik));
   }
@@ -160,7 +160,7 @@ namespace boost { namespace simd { namespace detail
                             ) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    return ldexp-(p_t(a0), a1,std::is_floating_point<T>());
+    return ldexp_(p_t(a0), a1,std::is_floating_point<T>());
   }
 
   //========================================================================================================================

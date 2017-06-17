@@ -11,46 +11,56 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_DENORMAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_DENORMAL_HPP_INCLUDED
 
-#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/smallestposval.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/is_less.hpp>
 #include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/constant/false.hpp>
-#include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_denormal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
-  {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE  result  operator() ( A0 ) const BOOST_NOEXCEPT
-    {
-      return False<result>();
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( is_denormal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE  bs::as_logical_t<A0> operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return logical_and(is_nez(a0), is_less(bs::abs(a0), Smallestposval<A0>()));
-    }
-  };
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_denormal_ ( pack<T,N> const& a0
+                      , std::true_type const &
+                      ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    logical_and(is_nez(a0), is_less(bs::abs(a0), Smallestposval(as(a0))))
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_denormal_ ( pack<T,N> const&
+                      , std::false_type const &
+                      ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    ( False<pack<T,N>>())
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_denormal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                    , pack<T,N> const& a
+                    ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_denormal_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_denormal_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_denormal, a)
+  )
+
 } } }
 
 

@@ -12,45 +12,52 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_EVEN_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
-#include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/half.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/is_flint.hpp>
-#include <boost/simd/function/multiplies.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_even_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_eqz(bitwise_and(a0, One<A0>()));
-      }
-   };
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_even_ ( pack<T,N> const& a0
+                  , std::true_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_flint(a0*Half(as(a0)))
+  )
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_even_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_flint(a0*Half<A0>());
-      }
-   };
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_even_ ( pack<T,N> const& a0
+                  , std::false_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_eqz(bitwise_and(a0, One(as(a0))))
+  )
+
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_even_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_even_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_even_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N,simd_emulation_> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_even, a)
+  )
 
 } } }
 #endif

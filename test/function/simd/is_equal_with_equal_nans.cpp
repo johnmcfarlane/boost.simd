@@ -41,6 +41,6 @@ STF_CASE_TPL("Check is_equal_with_equal_nans on pack" , STF_NUMERIC_TYPES)
   using p_t = bs::pack<T>;
   static const std::size_t N = bs::cardinal_of<p_t>::value;
   test<T, N>(runtime);
-  test<T, N/2>(runtime);
-  test<T, N*2>(runtime);
+//   test<T, N/2>(runtime);
+//   test<T, N*2>(runtime);
 }

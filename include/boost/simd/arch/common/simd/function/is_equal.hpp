@@ -62,6 +62,31 @@ namespace boost { namespace simd { namespace detail
     return bitwise_cast<logi_t>(bitwise_not(bitwise_xor(cast_t(a), bitwise_cast<cast_t>(b))));
   }
 
+ // Native mixed implementation
+  template< typename T, std::size_t N, typename U
+          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  is_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N> const& a
+            , U b
+            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_equal, a, pack<T,N>(b))
+  )
+
+  template< typename T, std::size_t N, typename U
+          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  is_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , U a
+            , pack<T,N> const& b
+            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_equal, pack<T,N>(a), b)
+  )
+
   // Emulated implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
@@ -72,6 +97,31 @@ namespace boost { namespace simd { namespace detail
   {
     return map_to( simd::is_equal, a, b);
   }
+
+  // Emulated mixed implementation
+  template< typename T, std::size_t N, typename U
+          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  is_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N,simd_emulation_> const& a
+            , U b
+            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_equal, a, pack<T,N,simd_emulation_>(b))
+  )
+
+  template< typename T, std::size_t N, typename U
+          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+  >
+  BOOST_FORCEINLINE auto
+  is_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , U a
+            , pack<T,N,simd_emulation_> const& b
+            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_equal, pack<T,N,simd_emulation_>(a), b)
+  )
 
 } } }
 

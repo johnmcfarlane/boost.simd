@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
+//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
       return _mm_srai_epi16(a0, a1);
     }
   };
@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
+//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
       return _mm_srli_epi16(a0, a1);
     }
   };
@@ -69,7 +69,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE A0 operator() ( const A0 & a0
                                     , const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
+//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
       return _mm_srli_epi32(a0, int(a1));
     }
   };
@@ -84,7 +84,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE A0 operator() ( const A0 & a0
                                     , const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
+      //        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2: a shift is out of range");
       return _mm_srai_epi32(a0, int(a1));
     }
   };
@@ -98,7 +98,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 int64: a shift is out of range");
+      //        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 int64: a shift is out of range");
       A0 that = _mm_srli_epi64(a0, int(a1));
       A0 mask = _mm_srli_epi64(Allbits<A0>(), int(a1));
       return bitwise_ornot(that, if_else_allbits(is_ltz(a0), mask));
@@ -114,7 +114,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 uint64: a shift is out of range");
+      //        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 uint64: a shift is out of range");
       return _mm_srli_epi64(a0, int(a1));
     }
   };
@@ -128,7 +128,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 int8: a shift is out of range");
+      //        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 int8: a shift is out of range");
       auto s = split(a0);
       return bitwise_cast<A0>(group(shift_right(s[0], a1), shift_right(s[1], a1)));
     }
@@ -143,7 +143,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()( const A0 & a0, const A1 & a1 ) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 uint8: a shift is out of range");
+      //        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right sse2 uint8: a shift is out of range");
       using gen_t = typename A0::template retype<std::int16_t,A0::static_size/2>;
       A0 const Mask1 = bitwise_cast<A0>(gen_t(0x00ff));
       A0 const Mask2 = bitwise_cast<A0>(gen_t(0xff00));

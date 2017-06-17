@@ -54,8 +54,8 @@ STF_CASE_TPL("Check shift_left on pack with integral shift" , STF_INTEGRAL_TYPES
   static const std::size_t N = bs::pack<T>::static_size;
 
   test<T, N>(runtime);
-  test<T, N/2>(runtime);
-  test<T, N*2>(runtime);
+//   test<T, N/2>(runtime);
+//   test<T, N*2>(runtime);
 }
 
 template <typename T, int N, typename Env>

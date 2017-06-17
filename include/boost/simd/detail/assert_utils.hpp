@@ -16,6 +16,7 @@
 #include <boost/simd/detail/nsm.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd
 {
@@ -45,7 +46,7 @@ namespace boost { namespace simd
   }
 
   template<typename A0, typename A1>
-  BOOST_FORCEINLINE bool assert_good_shift( A1 const& t, tt::true_type const&)
+  BOOST_FORCEINLINE bool assert_good_shift( A1 const& t, std::true_type const&)
   {
     for(std::size_t i = 0; i != cardinal_of<A0>::value; ++i)
     {
@@ -61,7 +62,7 @@ namespace boost { namespace simd
   }
 
   template<typename A0, typename A1>
-  BOOST_FORCEINLINE bool assert_good_shift( A1 const& t, tt::false_type const&)
+  BOOST_FORCEINLINE bool assert_good_shift( A1 const& t, std::false_type const&)
   {
     for(std::size_t i = 0; i != cardinal_of<A0>::value; ++i)
     {
@@ -79,7 +80,8 @@ namespace boost { namespace simd
   template<typename A0, typename A1>
   BOOST_FORCEINLINE bool assert_good_shift( A1 const& t )
   {
-    return assert_good_shift<A0>(t, typename tt::is_unsigned<dispatch::scalar_of_t<A1>>::type{});
+    using sA1 = dispatch::scalar_of_t<A1>;
+    return assert_good_shift<A0>(t, typename std::is_unsigned<sA1>::type{});
   }
 
 } }

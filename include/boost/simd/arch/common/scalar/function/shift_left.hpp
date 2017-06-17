@@ -12,42 +12,36 @@
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( shift_left_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<T>::value, T>::type
+  shift_left_( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                          , T v, int s
+                          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using itype = bd::as_integer_t<A0, signed>;
-      return bitwise_cast<A0>(shift_left(bitwise_cast<itype>(a0),bd::as_integer_t<A0>(a1)));
-    }
-  };
+//    BOOST_ASSERT_MSG(assert_good_shift<T>(s), "shift_left : shift is out of range");
+    return v << s;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( shift_left_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  BOOST_FORCEINLINE double shift_left_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                                , double v, int s
+                                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG( assert_good_shift<A0>(a1)
-                      , "shift_left: a shift is out of range"
-                      );
+    return bitwise_cast<double>(shift_left( bitwise_cast<std::uint64_t>(v),s));
+  }
 
-      return a0 << bd::as_integer_t<A0>(a1);
-    }
-  };
+  BOOST_FORCEINLINE float  shift_left_ ( BOOST_SIMD_SUPPORTS(boost::dispatch::cpu_)
+                                , float v, int s
+                                ) BOOST_NOEXCEPT
+  {
+    return bitwise_cast<float>(shift_left( bitwise_cast<std::uint32_t>(v),s));
+  }
+
 } } }
 
 #endif

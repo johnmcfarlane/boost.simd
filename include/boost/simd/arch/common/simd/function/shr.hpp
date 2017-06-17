@@ -32,7 +32,7 @@ namespace boost { namespace simd { namespace detail
     using type = pack<typename std::make_unsigned<T>::type,N>;
     using p_t  = pack<T,N>;
 
-    BOOST_ASSERT_MSG(assert_good_shift<p_t>(s), "shr : shift is out of range");
+    //        BOOST_ASSERT_MSG(assert_good_shift<p_t>(s), "shr : shift is out of range");
     return bitwise_cast<p_t>(shift_right(bitwise_cast<type>(v), s));
   }
 

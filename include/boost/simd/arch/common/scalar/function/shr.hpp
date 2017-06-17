@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SHR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_SHR_HPP_INCLUDED
 
-#include <boost/simd/detail/pack.hpp>
+//#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/assert.hpp>
@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace detail
                           ) BOOST_NOEXCEPT
   {
     using type = typename std::make_unsigned<T>::type;
-    BOOST_ASSERT_MSG(assert_good_shift<T>(s), "shr : shift is out of range");
+    //        BOOST_ASSERT_MSG(assert_good_shift<T>(s), "shr : shift is out of range");
     return type(v) >> s;
   }
 

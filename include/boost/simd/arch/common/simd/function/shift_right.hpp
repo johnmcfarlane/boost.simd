@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace ext
   {
     BOOST_FORCEINLINE A0 operator()(const A0& a0, const A1& a1) const BOOST_NOEXCEPT
     {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right: a shift is out of range");
+//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_right: a shift is out of range");
       return bitwise_cast<A0> ( shift_right( bitwise_cast<bd::as_integer_t<A0, signed>>(a0)
                                           , bd::as_integer_t<A0>(a1)
                                           )
@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace ext
       BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
       {
         using ntype =  bd::as_integer_t<A0, signed>;
-        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shr: a shift is out of range");
+        //       BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shr: a shift is out of range");
         return bitwise_cast<A0>( shift_right(bitwise_cast<ntype>(a0), a1));
       }
    };

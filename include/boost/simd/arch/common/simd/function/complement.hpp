@@ -24,14 +24,14 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<T,N> complement_ (BOOST_SIMD_SUPPORTS(simd_), pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    return bitwise_xor(bs::Allbits(as(a0)), a0);
+    return bitwise_xor(simd::Allbits(as(a0)), a0);
   }
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
   auto complement_ (BOOST_SIMD_SUPPORTS(simd_), pack<logical<T>,N> const& a0) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    logical_xor(bs::True(as(a0)), a0)
+    logical_xor(simd::True(as(a0)), a0)
   )
 
   // Emulated implementation

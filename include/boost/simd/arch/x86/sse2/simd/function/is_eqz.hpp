@@ -12,32 +12,30 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_EQZ_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/shuffle.hpp>
 #include <boost/simd/detail/dispatch/meta/downgrade.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_eqz_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
-  {
-    using result =  bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      using base = bd::downgrade_t<A0>;
 
-      const base tmp1 = boost::simd::bitwise_cast<base>(is_eqz(bs::bitwise_cast<base>(a0)));
-      const base tmp2 = shuffle<1,0,3,2>(tmp1);
-      return bs::bitwise_cast<result>(bitwise_and(tmp1, tmp2));
-    }
-  };
+  BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+  is_eqz_ ( BOOST_SIMD_SUPPORTS(sse2_)
+          , pack<std::int64_t,2,sse_> const& a
+          ) BOOST_NOEXCEPT
+  {
+    using p_t = pack<std::int64_t,2,sse_>;
+    using l_t = as_logical_t<p_t>;
+    using d_t = pack<std::int32_t,4,sse_>;
+
+    const d_t tmp1 = simd::bitwise_cast<d_t>(is_eqz(bs::bitwise_cast<d_t>(a)));
+    const d_t tmp2 = shuffle<1,0,3,2>(tmp1);
+    return bs::bitwise_cast<l_t>(bitwise_and(tmp1, tmp2));
+  }
+
 
 } } }
 

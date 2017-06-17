@@ -9,42 +9,45 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_EQZ_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_EQZ_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/logical_not.hpp>
 #include <boost/simd/constant/zero.hpp>
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/traits.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_eqz_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_equal(a, Zero(as(a)))
+  )
 
-  BOOST_DISPATCH_OVERLOAD_IF( is_eqz_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  is_eqz_ ( BOOST_SIMD_SUPPORTS(simd_)
+          , as_logical_t<pack<T,N>> const& a0
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return is_equal(a0, Zero<A0>());
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD_IF( is_eqz_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>,X>
-                            )
-  {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return logical_not(a0);
-    }
-  };
+    return logical_not(a0);
+  }
+
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_eqz_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_eqz, a)
+  )
+
 } } }
 
 #endif

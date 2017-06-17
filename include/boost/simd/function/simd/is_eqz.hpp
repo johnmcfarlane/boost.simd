@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IS_EQZ_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/is_eqz.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/is_eqz.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)

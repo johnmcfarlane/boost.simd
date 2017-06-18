@@ -11,7 +11,7 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IS_GREATER_EQUAL_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/is_greater_equal.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
+#include <boost/simd/arch/common/simd/function/is_greater_equal.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)
 #  if BOOST_HW_SIMD_X86_OR_AMD >= BOOST_HW_SIMD_X86_SSE_VERSION

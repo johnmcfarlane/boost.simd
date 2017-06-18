@@ -25,27 +25,27 @@ namespace boost { namespace simd { namespace detail
     map_to( simd::is_greater, a, b)
   )
 
- // mixed implementation
-  template< typename T, std::size_t N, typename X, typename U
-          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+  // mixed implementation
+ template< typename T, std::size_t N, typename X, typename U
+           , typename =  std::enable_if<std::is_convertible<U, T>::value>
   >
   BOOST_FORCEINLINE auto
   is_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
-            , pack<T,N,X> const& a
-            , U b
-            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+              , pack<T,N,X> const& a
+              , U b
+              ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     map_to( simd::is_greater, a, pack<T,N,X>(b))
   )
 
   template< typename T, std::size_t N, typename X, typename U
-          , typename =  std::enable_if<std::is_convertible<U, T>::value>
+            , typename =  std::enable_if<std::is_convertible<U, T>::value>
   >
   BOOST_FORCEINLINE auto
   is_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
-            , U a
-            , pack<T,N,X> const& b
-            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+              , U a
+              , pack<T,N,X> const& b
+              ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     map_to( simd::is_greater, pack<T,N,X>(a), b)
   )

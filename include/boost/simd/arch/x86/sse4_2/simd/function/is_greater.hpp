@@ -18,7 +18,7 @@ namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE
   as_logical_t<pack<std::int64_t,2,sse_>>
-  is_greater_ ( BOOST_SIMD_SUPPORTS(sse1_)
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse4_2_)
               , pack<std::int64_t,2,sse_> const& a0
               , pack<std::int64_t,2,sse_> const& a1
               ) BOOST_NOEXCEPT

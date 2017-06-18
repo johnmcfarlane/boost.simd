@@ -9,29 +9,21 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_IS_GREATER_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_IS_GREATER_EQUAL_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/function/is_greater.hpp>
-#include <boost/simd/function/logical_not.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
+  template < typename T>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T,N,avx_>>
+  is_greater_equal_ ( BOOST_SIMD_SUPPORTS(avx2_)
+                    , pack<std::int8_t,32,avx_> const& a0
+                    ) BOOST_NOEXCEPT
+  {
+     return !(a1 > a0);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_equal_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return !(a1 > a0);
-      }
-   };
 } } }
 
 #endif

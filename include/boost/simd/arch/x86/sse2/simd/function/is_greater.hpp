@@ -83,26 +83,26 @@ namespace boost { namespace simd { namespace detail
                                        , logical_and(is_equal(ah,bh)
                                                     , is_greater(al,bl))
                                        )
-                           );
+                            );
   }
 
-  template < typename T, std::size_t N
-             , typename = typename std::enable_if<std::is_unsigned<T>::value>
-  >
+  template < typename T, std::size_t N >
   BOOST_FORCEINLINE
-  as_logical_t<pack<T,N,sse_>>
+  typename std::enable_if<std::is_unsigned<T>::value
+                          , as_logical_t<pack<T,N,sse_>>
+  >::type
   is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
               , pack<T,N,sse_> const& a0
               , pack<T,N,sse_> const& a1
               ) BOOST_NOEXCEPT
   {
-      using s_t = si_t<pack<T,N,sse_>>;
-      s_t sm = Signmask<s_t>();
-      using r_t = as_logical_t<pack<T,N,sse_>>;
-      return  bitwise_cast<r_t>( is_greater(bitwise_cast<s_t>(a0) - sm,
-                                            bitwise_cast<s_t>(a1) - sm
-                                           )
-                               );
+    using s_t = si_t<pack<T,N,sse_>>;
+    s_t sm = Signmask<s_t>();
+    using r_t = as_logical_t<pack<T,N,sse_>>;
+    return  bitwise_cast<r_t>( is_greater(bitwise_cast<s_t>(a0) - sm,
+                                          bitwise_cast<s_t>(a1) - sm
+                                         )
+                             );
   }
 
 } } }

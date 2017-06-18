@@ -12,41 +12,34 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GREATER_EQUAL_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/logical_not.hpp>
 #include <boost/simd/function/is_less.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_greater_equal_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  as_logical_t<pack<double,2,sse_>>
+  is_greater_equal_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<double,2,sse_> const& a0
+              , pack<double,2,sse_> const& a1
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpge_pd(a0,a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_greater_equal_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                         )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return bs::logical_not(bs::is_less(a0,a1));
-    }
-  };
+    return _mm_cmpge_pd(a0,a1);
+  }
 
+  template < typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<T>::value, as_logical_t<pack<T,N,sse_>>>::type
+  is_greater_equal_ ( BOOST_SIMD_SUPPORTS(sse2_)
+                    , pack<T,N,sse_> const& a0
+                    , pack<T,N,sse_> const& a1
+                    ) BOOST_NOEXCEPT
+  {
+    return simd::logical_not(simd::is_less(a0,a1));
+  }
 
 } } }
 

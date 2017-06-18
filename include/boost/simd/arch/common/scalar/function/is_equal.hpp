@@ -12,7 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_EQUAL_HPP_INCLUDED
 
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 
@@ -28,11 +28,13 @@ namespace boost { namespace simd { namespace detail
     return a == b;
   }
 
-  template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
   is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
            , logical<T> const &a
-           , logical<T> const & b
+           , logical<T> const &b
            ) BOOST_NOEXCEPT
   {
     return a == b;
@@ -41,7 +43,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T
             , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
            , T a
            , T b

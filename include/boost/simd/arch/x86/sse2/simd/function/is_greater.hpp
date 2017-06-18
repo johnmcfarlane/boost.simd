@@ -83,7 +83,7 @@ namespace boost { namespace simd { namespace detail
                                        , logical_and(is_equal(ah,bh)
                                                     , is_greater(al,bl))
                                        )
-                            );
+                           );
   }
 
   template < typename T, std::size_t N

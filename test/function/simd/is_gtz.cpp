@@ -25,7 +25,7 @@ void test(Env& runtime)
   bs::logical<T> b[N];
   for(std::size_t i = 0; i < N; ++i)
   {
-     a1[i] = (i%2) ? T(0) : T(i);
+     a1[i] = (i%2) ? T(i) : T(-i);
      b[i] = bs::is_gtz(a1[i]);
    }
   p_t aa1(&a1[0], &a1[0]+N);

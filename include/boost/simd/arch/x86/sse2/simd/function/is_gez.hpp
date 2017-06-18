@@ -12,34 +12,27 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GEZ_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/shuffle.hpp>
 #include <boost/simd/constant/zero.hpp>
-#include <boost/simd/detail/dispatch/meta/downgrade.hpp>
-#include <boost/simd/detail/dispatch/meta/downgrade.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_gez_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+  is_gez_ ( BOOST_SIMD_SUPPORTS(sse2_)
+          , pack<std::int64_t,2,sse_> const& a0
+          ) BOOST_NOEXCEPT
+
   {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      using itype = bd::as_integer_t<A0, signed>;
-      using  type = bd::downgrade_t<itype>;
-      const type tmp1 = bitwise_cast<type>(is_gez(bitwise_cast<type>(a0)));
-      const type tmp = shuffle<1,1,3,3>(tmp1);
-      return bitwise_cast<result>(tmp);
-    }
-  };
+    using p_t = pack<std::int64_t,2,sse_>;
+    using l_t = as_logical_t<p_t>;
+    using d_t = pack<std::int32_t,4,sse_>;
+    const d_t tmp1 = bitwise_cast<d_t>(is_gez(bitwise_cast<d_t>(a0)));
+    const d_t tmp = shuffle<1,1,3,3>(tmp1);
+    return bitwise_cast<l_t>(tmp);
+  }
 
 } } }
 

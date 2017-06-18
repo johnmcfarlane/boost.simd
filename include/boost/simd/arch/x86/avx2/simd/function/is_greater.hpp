@@ -9,89 +9,82 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/mata/convert_helpers.hpp>
+#include <boost/simd/detail/mata/size_picker.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::unsigned_<A0>, bs::avx_>
-                          , bs::pack_<bd::unsigned_<A0>, bs::avx_>
-                          )
-   {
-      using result = bs::as_logical_t<A0>;
-      BOOST_FORCEINLINE result operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        using stype =  bd::as_integer_t<A0, signed>;
-        auto const m = Signmask<stype>();
-        return bitwise_cast<result>((bitwise_cast<stype>(a0) - m) > (bitwise_cast<stype>(a1) - m));
-      }
-   };
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int64_t,4,avx_>>
+  v_is_greater_( pack<int64_t,4,avx_> const& a0
+               , pack<int64_t,4,avx_> const& a1
+               , case_<0> const &
+               ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmpgt_epi64(a0,a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_< bd::int64_<A0>, bs::avx_>
-                          , bs::pack_< bd::int64_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmpgt_epi64(a0,a1);
-      }
-   };
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int32_t,8,avx_>>
+  v_is_greater_( pack<int32_t,8,avx_> const& a0
+               , pack<int32_t,8,avx_> const& a1
+               , case_<0> const &
+               ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmpgt_epi32(a0,a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_< bd::int32_<A0>, bs::avx_>
-                          , bs::pack_< bd::int32_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmpgt_epi32(a0,a1);
-      }
-   };
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int16_t,16,avx_>>
+  v_is_greater_( pack<int16_t,16,avx_> const& a0
+               , pack<int16_t,16,avx_> const& a1
+               , case_<0> const &
+               ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmpgt_epi16(a0,a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_< bd::int16_<A0>, bs::avx_>
-                          , bs::pack_< bd::int16_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmpgt_epi16(a0,a1);
-      }
-   };
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int8_t,32,avx_>>
+  v_is_greater_( pack<int8_t,32,avx_> const& a0
+               , pack<int8_t,32,avx_> const& a1
+               , case_<0> const &
+               ) BOOST_NOEXCEPT
+  {
+    return _mm256_cmpgt_epi8(a0,a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD( is_greater_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_< bd::int8_<A0>, bs::avx_>
-                          , bs::pack_< bd::int8_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()(A0 const& a0, A0 const& a1) const BOOST_NOEXCEPT
-      {
-        return _mm256_cmpgt_epi8(a0,a1);
-      }
-   };
+  template < typename T,  std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_signed<T>, as_logical_t<pack<T,N,avx_>>>::type
+  is_greater_( BOOST_SIMD_SUPPORTS(avx2_)
+             , pack<T,N,avx_> const& a0
+             , pack<T,N,avx_> const& a1
+             ) BOOST_NOEXCEPT
+  {
+    return v_is_greater_(a0, a1, size_picker<T>());
+  }
+
+  template < typename T,  std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_unsigned<T>, as_logical_t<pack<T,N,avx_>>>::type
+  is_greater_( BOOST_SIMD_SUPPORTS(avx2_)
+             , pack<T,N,avx_> const& a0
+             , pack<T,N,avx_> const& a1
+             ) BOOST_NOEXCEPT
+  {
+    using r_t = as_logical_t<pack<T,N,avx_>>;
+    using s_t = si_t<pack<T,N,avx_>>;
+    auto const m = Signmask<s_t>();
+    return bitwise_cast<result>((bitwise_cast<s_t>(a0) - m) > (bitwise_cast<s_t>(a1) - m));
+  }
+
 } } }
 
 #endif

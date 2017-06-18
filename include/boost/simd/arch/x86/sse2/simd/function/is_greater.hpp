@@ -12,116 +12,98 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/logical_or.hpp>
-#include <boost/simd/function/minus.hpp>
 #include <boost/simd/function/shuffle.hpp>
 #include <boost/simd/constant/signmask.hpp>
-#include <boost/simd/detail/dispatch/meta/downgrade.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          )
+  BOOST_FORCEINLINE
+  as_logical_t<pack<double,2,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<double,2,sse_> const& a0
+              , pack<double,2,sse_> const& a1
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpgt_pd(a0,a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::unsigned_<A0>, bs::sse_>
-                          , bs::pack_<bd::unsigned_<A0>, bs::sse_>
-                          )
+    return _mm_cmpgt_pd(a0,a1);
+  }
+
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int8_t,16,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<int8_t,16,sse_> const& a0
+              , pack<int8_t,16,sse_> const& a1
+              ) BOOST_NOEXCEPT
   {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0
-                                        , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      using s_t = bd::as_integer_t<A0, signed>;
+    return _mm_cmpgt_epi8(a0,a1);
+  }
+
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int16_t,8,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<int16_t,8,sse_> const& a0
+              , pack<int16_t,8,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+    return _mm_cmpgt_epi16(a0,a1);
+  }
+
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int32_t,4,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<int32_t,4,sse_> const& a0
+              , pack<int32_t,4,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+    return _mm_cmpgt_epi32(a0,a1);
+  }
+
+  BOOST_FORCEINLINE
+  as_logical_t<pack<int64_t,2,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<int64_t,2,sse_> const& a0
+              , pack<int64_t,2,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+    using l_t = as_logical_t<pack<int64_t,2,sse_>>;
+    using d_t = pack<int32_t,4,sse_>;
+    using du_t = pack<uint32_t,4,sse_>;
+    du_t al = shuffle<0,0,2,2>(bitwise_cast<du_t>(a0));
+    du_t bl = shuffle<0,0,2,2>(bitwise_cast<du_t>(a1));
+    d_t ah  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a0));
+    d_t bh  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a1));
+    return bitwise_cast<l_t>(logical_or(is_greater(ah,bh)
+                                       , logical_and(is_equal(ah,bh)
+                                                    , is_greater(al,bl))
+                                       )
+                            );
+  }
+
+  template < typename T, std::size_t N
+             , typename = typename std::enable_if<std::is_unsigned<T>::value>
+  >
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T,N,sse_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
+              , pack<T,N,sse_> const& a0
+              , pack<T,N,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+      using s_t = si_t<pack<T,N,sse_>>;
       s_t sm = Signmask<s_t>();
-
-      return  bitwise_cast<result>( is_greater(bitwise_cast<s_t>(a0) - sm,
-                                               bitwise_cast<s_t>(a1) - sm
-                                              )
-                                  );
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int8_<A0>, bs::sse_>
-                          , bs::pack_<bd::int8_<A0>, bs::sse_>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpgt_epi8(a0,a1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                        , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpgt_epi16(a0,a1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int32_<A0>, bs::sse_>
-                          , bs::pack_<bd::int32_<A0>, bs::sse_>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0
-                                        , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_cmpgt_epi32(a0,a1);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( is_greater_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                          )
-  {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0
-                                        , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      using type = bd::downgrade_t<A0, signed>;
-      using utype = bd::downgrade_t<A0, unsigned>;
-      utype al = shuffle<0,0,2,2>(bitwise_cast<utype>(a0));
-      utype bl = shuffle<0,0,2,2>(bitwise_cast<utype>(a1));
-      type ah  = shuffle<1,1,3,3>(bitwise_cast<type >(a0));
-      type bh  = shuffle<1,1,3,3>(bitwise_cast<type >(a1));
-
-      return bitwise_cast<result>(logical_or(is_greater(ah,bh), logical_and(is_equal(ah,bh), is_greater(al,bl))));
-    }
-  };
+      using r_t = as_logical_t<pack<T,N,sse_>>;
+      return  bitwise_cast<r_t>( is_greater(bitwise_cast<s_t>(a0) - sm,
+                                            bitwise_cast<s_t>(a1) - sm
+                                           )
+                               );
+  }
 
 } } }
 

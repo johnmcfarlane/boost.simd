@@ -14,33 +14,38 @@
 #include <boost/simd/logical.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
-//#include <boost/simd/detail/meta/pick.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
 
-  BOOST_FORCEINLINE bool is_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
-                                   , bool a
-                                   , bool b
-                                   ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE bool
+  is_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+            , bool a
+            , bool b
+            ) BOOST_NOEXCEPT
   {
     return a == b;
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T> is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
-                                        , logical<T> a
-                                        , logical<T> b
-                                        ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE logical<T>
+  is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+           , logical<T> const &a
+           , logical<T> const & b
+           ) BOOST_NOEXCEPT
   {
     return a == b;
   }
 
-  template <typename T>
-  BOOST_FORCEINLINE logical<T> is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
-                                        , T a
-                                        , T b
-                                        ) BOOST_NOEXCEPT
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE logical<T>
+  is_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+           , T a
+           , T b
+           ) BOOST_NOEXCEPT
   {
     return a == b;
   }

@@ -27,7 +27,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   s_is_gtz_( T const & a0
            , std::true_type const &
            ) BOOST_NOEXCEPT
@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   s_is_gtz_( T a0
            , std::false_type const &
            ) BOOST_NOEXCEPT
@@ -47,7 +47,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T,
             typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_gtz_( BOOST_SIMD_SUPPORTS(cpu_)
          , T a0
          ) BOOST_NOEXCEPT

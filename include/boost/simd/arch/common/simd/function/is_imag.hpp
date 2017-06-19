@@ -14,21 +14,17 @@
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_imag_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( A0 const &a0) const BOOST_NOEXCEPT
-    {
-      return is_eqz(a0);
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_imag_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a0
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_eqz(a0)
+  )
+
 } } }
 
 

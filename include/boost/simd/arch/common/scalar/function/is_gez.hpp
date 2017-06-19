@@ -14,6 +14,7 @@
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/true.hpp>
 #include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 
@@ -28,7 +29,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE  as_logical_t<T>
   s_is_gez_( T
            , std::true_type const &
            ) BOOST_NOEXCEPT
@@ -37,7 +38,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   s_is_gez_( T a0
            , std::false_type const &
            ) BOOST_NOEXCEPT
@@ -48,7 +49,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T,
             typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_gez_( BOOST_SIMD_SUPPORTS(cpu_)
          , T a0
          ) BOOST_NOEXCEPT

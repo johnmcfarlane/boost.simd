@@ -13,7 +13,7 @@
 
 #include <boost/simd/function/logical_not.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T,
             typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_eqz_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0
               ) BOOST_NOEXCEPT
@@ -38,7 +38,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_eqz_( BOOST_SIMD_SUPPORTS(cpu_)
               , as_logical_t<T> const & a0
               ) BOOST_NOEXCEPT

@@ -12,44 +12,63 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_INF_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/false.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/is_equal.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_inf_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-     using result = bs::as_logical_t<A0> ;
-     BOOST_FORCEINLINE result operator()(const A0&) const BOOST_NOEXCEPT
-      {
-        return bs::False<result>();
-      }
-   };
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_inf_ ( pack<T,N> const& a0
+                 , std::true_type const &
+                 ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    ((a0 & Inf(as(a0))) == Inf(as(a0)))
+  )
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_inf_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE  bs::as_logical_t<A0>
-        operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-         return bs::is_equal(abs(a0),bs::Inf<A0>());
-      }
-   };
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_inf_ ( pack<T,N> const&
+                 , std::false_type const &
+                 ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    (False<pack<T,N>>())
+  )
+
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_inf_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_inf_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_inf_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N,simd_emulation_> const& a
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_inf, a)
+  )
+
+  // std decoator
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_inf_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , std_tag const &
+               , pack<T,N> const& a
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( std_(simd::is_inf), a)
+  )
 
 } } }
 

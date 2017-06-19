@@ -12,26 +12,22 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GTZ_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/is_gez.hpp>
 #include <boost/simd/function/is_nez.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_gtz_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+  is_gtz_ ( BOOST_SIMD_SUPPORTS(sse2_)
+          , pack<std::int64_t,2,sse_> const& a0
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      return logical_and(is_gez(a0), is_nez(a0));
-    }
-  };
+    return logical_and(is_gez(a0), is_nez(a0));
+  }
+
 } } }
 
 #endif

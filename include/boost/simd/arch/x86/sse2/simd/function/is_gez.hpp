@@ -24,7 +24,6 @@ namespace boost { namespace simd { namespace detail
   is_gez_ ( BOOST_SIMD_SUPPORTS(sse2_)
           , pack<std::int64_t,2,sse_> const& a0
           ) BOOST_NOEXCEPT
-
   {
     using p_t = pack<std::int64_t,2,sse_>;
     using l_t = as_logical_t<p_t>;

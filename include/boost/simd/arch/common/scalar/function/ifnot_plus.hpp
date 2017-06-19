@@ -12,6 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IFNOT_PLUS_HPP_INCLUDED
 
 #include <boost/simd/function/is_nez.hpp>
+#include <boost/simd/function/is_eqz.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail

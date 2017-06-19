@@ -21,11 +21,12 @@
 #include <boost/simd/detail/dispatch/meta/upgrade.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/simd/detail/meta/fsu_picker.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
   // regular case
-  template<typename T>
+  template<typename T >
   BOOST_FORCEINLINE T
   multiplies_(BOOST_SIMD_SUPPORTS(cpu_)
              , T a0

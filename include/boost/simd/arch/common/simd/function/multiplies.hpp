@@ -64,47 +64,47 @@ namespace boost { namespace simd { namespace detail
 
   // mixed cases
   // regular
-  template<typename T, std::size_t N>
+  template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   multiplies_(BOOST_SIMD_SUPPORTS(simd_)
           , pack<T,N> const & a0
-          , T const & a1) BOOST_NOEXCEPT
+          , U const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return multiplies_(a0, p_t(a1));
+    return multiplies(a0, p_t(a1));
   }
 
-  template<typename T, std::size_t N>
+  template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   multiplies_(BOOST_SIMD_SUPPORTS(simd_)
-          , T const & a0
+          , U const & a0
           , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return multiplies_(p_t(a0), a1);
+    return multiplies(p_t(a0), a1);
   }
 
   // saturated
-  template<typename T, std::size_t N>
+  template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   multiplies_(BOOST_SIMD_SUPPORTS(simd_)
              , const saturated_tag&
              , pack<T,N> const & a0
-             , T const & a1) BOOST_NOEXCEPT
+             , U const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return multiplies_(a0, p_t(a1));
+    return multiplies(a0, p_t(a1));
   }
 
-  template<typename T, std::size_t N>
+  template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   multiplies_(BOOST_SIMD_SUPPORTS(simd_)
            , const saturated_tag&
-             , T const & a0
+             , U const & a0
              , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return multiplies_(p_t(a0), a1);
+    return multiplies(p_t(a0), a1);
   }
 
 } } }

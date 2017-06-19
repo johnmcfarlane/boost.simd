@@ -10,6 +10,7 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_MULTIPLIES_HPP_INCLUDED
 
 #include <boost/simd/detail/pack.hpp>
+#include <boost/simd/function/plus.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/constant.hpp>
 #include <boost/simd/function/is_not_equal.hpp>
@@ -136,15 +137,13 @@ namespace boost { namespace simd { namespace detail
              ) BOOST_NOEXCEPT
   {
       using p_t  = pack<std::int32_t, 4, sse_>;
-      using ui_t = pack<std::uint32_t, 4, sse_>;
+      using u_t = pack<std::uint32_t, 4, sse_>;
       using up_t = pack<std::int64_t, 2, sse_>;
 
       up_t res0, res1;
       std::tie(res0, res1) = split_multiplies(a0, a1);
 
-      ui_t res2 = shift_right(bitwise_cast<ui_t>(a0 ^ a1), 4*CHAR_BIT-1)
-                  + ui_t(Valmax<std::int32_t>());
-
+      u_t res2 = shift_right(bitwise_cast<u_t>(a0 ^ a1), 4*CHAR_BIT-1) + Valmax<std::int32_t>() ;
       p_t hi = group( shift_right(res0, 4*CHAR_BIT)
                     , shift_right(res1, 4*CHAR_BIT)
                     );

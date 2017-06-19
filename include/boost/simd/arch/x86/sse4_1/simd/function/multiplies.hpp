@@ -17,7 +17,7 @@ namespace boost { namespace simd { namespace detail
 {
   template < typename T>
  BOOST_FORCEINLINE
- typename std::enable_if < std::is_integral<T>::value, pack<float,4,sse_>>::type
+ typename std::enable_if < std::is_integral<T>::value, pack<T,4,sse_>>::type
  multiplies_( BOOST_SIMD_SUPPORTS(sse4_1_)
             , pack<T,4,sse_> const& a0
             , pack<T,4,sse_> const& a1

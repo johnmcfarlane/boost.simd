@@ -13,6 +13,7 @@
 
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 

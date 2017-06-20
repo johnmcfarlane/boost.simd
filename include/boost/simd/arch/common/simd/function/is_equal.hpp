@@ -59,7 +59,7 @@ namespace boost { namespace simd { namespace detail
             , pack<T,N> const& b
             ) BOOST_NOEXCEPT
   {
-    return s_equal(pack<T,N>(a), b);
+    return is_equal(pack<T,N>(a), b);
   }
 
   // Emulated implementation

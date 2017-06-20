@@ -17,20 +17,15 @@
 #include <boost/simd/function/is_ltz.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_lez_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+  is_lez_ ( BOOST_SIMD_SUPPORTS(sse2_)
+          , pack<std::int64_t,2,sse_> const& a0
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      return logical_or(is_eqz(a0), is_ltz(a0));
-    }
-  };
+    return logical_or(is_eqz(a0), is_ltz(a0));
+  }
 
 } } }
 

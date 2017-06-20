@@ -13,31 +13,23 @@
 #include <boost/simd/detail/overload.hpp>
 
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/dispatch/meta/downgrade.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/is_ltz.hpp>
 
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_ltz_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE as_logical_t<pack<std::int64_t,2,sse_>>
+  is_lez_ ( BOOST_SIMD_SUPPORTS(sse2_)
+          , pack<std::int64_t,2,sse_> const& a0
+          ) BOOST_NOEXCEPT
   {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0 ) const BOOST_NOEXCEPT
-    {
-      using i32type =  bd::downgrade_t<A0>;
+      using i32type =  pack<std::int32_t,4,sse_>;
+      using r_t =  as_logical_t<pack<std::int64_t,2,sse_>>;
       i32type that = _mm_shuffle_epi32( is_ltz(bitwise_cast<i32type>(a0))
                                       , _MM_SHUFFLE(3,3,1,1)
                                       );
-      return  bitwise_cast<result>(that);
-    }
-  };
+      return  bitwise_cast<r_t>(that);
+  }
 
 } } }
 

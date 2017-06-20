@@ -11,7 +11,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOG_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOG_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/config.hpp>
 
 #include <boost/simd/function/any.hpp>
@@ -43,7 +43,6 @@
 #include <boost/simd/detail/constant/log_2hi.hpp>
 #include <boost/simd/detail/constant/log_2lo.hpp>
 
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Two implementations are given "musl_" and "plain_"
@@ -55,274 +54,269 @@
 // default to musl_
 ////////////////////////////////////////////////////////////////////////////////////
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  //================================================================================================
+  // regular (no decorator)
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> log_(BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return musl_(log)(a0);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> log_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                 , pack<T,N,simd_emulation_> const& a
+                                 ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::log, a);
+  }
+
+  //================================================================================================
+  // std_ decorator
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE
+  pack<T,N,X> log_( BOOST_SIMD_SUPPORTS(simd_)
+                  , std_tag const&
+                  , pack<T,N,X> const& a) BOOST_NOEXCEPT
+  {
+    return map_to(std_(simd::log), a);
+  }
 
 
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::single_<A0>, X>
-                          )
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<float,N> log_( BOOST_SIMD_SUPPORTS(simd_)
+                    , musl_tag const&
+                    , pack<float,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 const & a0) const BOOST_NOEXCEPT
-    {
-      return musl_(log)(a0);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::double_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (A0 const & a0) const BOOST_NOEXCEPT
-    {
-      return musl_(log)(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::musl_tag
-                          , bs::pack_< bd::single_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const musl_tag &, const A0& a0) const BOOST_NOEXCEPT
-    {
-      using uiA0 = bd::as_integer_t<A0, unsigned>;
-      using iA0 = bd::as_integer_t<A0,   signed>;
-      A0 x =  a0;
-      iA0 k(0);
-      auto isnez = is_nez(a0);
+    using p_t   = pack<float,N>;
+    using uip_t = pack<uint32_t,N>;
+    using ip_t  = pack<int32_t,N>;
+    p_t x =  a0;
+    ip_t k(0);
+    auto isnez = is_nez(a0);
 #ifndef BOOST_SIMD_NO_DENORMALS
-      auto test = is_less(a0, Smallestposval<A0>())&&isnez;
-      if (any(test))
-      {
-        k = if_minus(test, k, iA0(23));
-        x = if_else(test, x*A0(8388608ul), x);
-      }
-#endif
-      uiA0 ix = bitwise_cast<uiA0>(x);
-      /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      ix += uiA0(0x3f800000 - 0x3f3504f3);
-      k += bitwise_cast<iA0>(ix>>23) - iA0(0x7f);
-      ix = (ix&uiA0(0x007fffff)) + uiA0(0x3f3504f3);
-      x =  bitwise_cast<A0>(ix);
-      A0 f = dec(x);
-      A0 s = f/(Two<A0>() + f);
-      A0 z = sqr(s);
-      A0 w = sqr(z);
-      A0 t1= w*horn<A0, 0x3eccce13, 0x3e789e26>(w);
-      A0 t2= z*horn<A0, 0x3f2aaaaa, 0x3e91e9ee>(w);
-      A0 R = t2 + t1;
-
-      A0 hfsq = Half<A0>()*sqr(f);
-      A0 dk = tofloat(k);
-      A0 r = fma(dk, Log_2hi<A0>(), ((fma(s, (hfsq+R), dk*Log_2lo<A0>()) - hfsq) + f));
-#ifndef BOOST_SIMD_NO_INFINITIES
-      A0 zz = if_else(isnez, if_else(a0 == Inf<A0>(), Inf<A0>(), r), Minf<A0>());
-#else
-      A0 zz = if_else(isnez, r, Minf<A0>());
-#endif
-      return if_nan_else(is_ngez(a0), zz);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::musl_tag
-                             , bs::pack_< bd::double_<A0>, X>
-                             )
-  {
-    BOOST_FORCEINLINE A0 operator() (const musl_tag &, const A0& a0) const BOOST_NOEXCEPT
+    auto test = is_less(a0, Smallestposval<p_t>())&&isnez;
+    if (any(test))
     {
-      using uiA0 = bd::as_integer_t<A0, unsigned>;
-      using iA0 = bd::as_integer_t<A0,   signed>;
-      A0 x = a0;
-      uiA0 hx = bitwise_cast<uiA0>(x) >> 32;
-      iA0 k(0);
-      auto isnez = is_nez(a0);
+      k = if_minus(test, k, ip_t(23));
+      x = if_else(test, x*p_t(8388608ul), x);
+    }
+#endif
+    uip_t ix = bitwise_cast<uip_t>(x);
+    /* reduce x into [sqrt(2)/2, sqrt(2)] */
+    ix += uip_t(0x3f800000 - 0x3f3504f3);
+    k += bitwise_cast<ip_t>(ix>>23) - ip_t(0x7f);
+    ix = (ix&uip_t(0x007fffff)) + uip_t(0x3f3504f3);
+    x =  bitwise_cast<p_t>(ix);
+    p_t f = dec(x);
+    p_t s = f/(Two<p_t>() + f);
+    p_t z = sqr(s);
+    p_t w = sqr(z);
+    p_t t1= w*horn<p_t, 0x3eccce13, 0x3e789e26>(w);
+    p_t t2= z*horn<p_t, 0x3f2aaaaa, 0x3e91e9ee>(w);
+    p_t R = t2 + t1;
+
+    p_t hfsq = Half<p_t>()*sqr(f);
+    p_t dk = tofloat(k);
+    p_t r = fma(dk, Log_2hi<p_t>(), ((fma(s, (hfsq+R), dk*Log_2lo<p_t>()) - hfsq) + f));
+#ifndef BOOST_SIMD_NO_INFINITIES
+    p_t zz = if_else(isnez, if_else(a0 == Inf<p_t>(), Inf<p_t>(), r), Minf<p_t>());
+#else
+    p_t zz = if_else(isnez, r, Minf<p_t>());
+#endif
+    return if_nan_else(is_ngez(a0), zz);
+  }
+
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<double,N> log_( BOOST_SIMD_SUPPORTS(simd_)
+                     , musl_tag const&
+                     , pack<double,N> const& a0) BOOST_NOEXCEPT
+  {
+    using p_t = pack<double,N>;
+    using uip_t = pack<uint64_t,N>;
+    using ip_t  = pack<int64_t,N>;
+    p_t x = a0;
+    uip_t hx = bitwise_cast<uip_t>(x) >> 32;
+    ip_t k(0);
+    auto isnez = is_nez(a0);
 
 #ifndef BOOST_SIMD_NO_DENORMALS
-      auto test = is_less(a0, Smallestposval<A0>())&&isnez;
-      if (any(test))
-      {
-        k = if_minus(test, k, iA0(54));
-        x = if_else(test, x*A0(18014398509481984ull), x);
-      }
-#endif
-      /* reduce x into [sqrt(2)/2, sqrt(2)] */
-      hx += uiA0(0x3ff00000 - 0x3fe6a09e);
-      k += bitwise_cast<iA0>(hx>>20) - iA0(0x3ff);
-      A0 dk = tofloat(k);
-      hx = (hx&uiA0(0x000fffff)) + uiA0(0x3fe6a09e);
-      x = bitwise_cast<A0>(hx<<32 | (bitwise_and(uiA0(0xffffffffull), bitwise_cast<uiA0>(x))));
-
-      A0 f = dec(x);
-      A0 hfsq = Half<A0>()*sqr(f);
-      A0 s = f/(Two<A0>() + f);
-      A0 z = sqr(s);
-      A0 w = sqr(z);
-      A0 t1= w*horn<A0,
-                    0x3fd999999997fa04ll,
-                    0x3fcc71c51d8e78afll,
-                    0x3fc39a09d078c69fll
-                    > (w);
-      A0 t2= z*horn<A0,
-                    0x3fe5555555555593ll,
-                    0x3fd2492494229359ll,
-                    0x3fc7466496cb03dell,
-                    0x3fc2f112df3e5244ll
-                    > (w);
-      A0 R = t2+t1;
-      A0 r = fma(dk, Log_2hi<A0>(), ((fma(s, (hfsq+R), dk*Log_2lo<A0>()) - hfsq) + f));
-#ifndef BOOST_SIMD_NO_INFINITIES
-      A0 zz = if_else(isnez, if_else(a0 == Inf<A0>(), Inf<A0>(), r), Minf<A0>());
-#else
-      A0 zz = if_else(isnez, r, Minf<A0>());
-#endif
-      return if_nan_else(is_ngez(a0), zz);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::plain_tag
-                          , bs::pack_< bd::single_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const plain_tag &, const A0& a0) const BOOST_NOEXCEPT
+    auto test = is_less(a0, Smallestposval<p_t>())&&isnez;
+    if (any(test))
     {
-      A0 x =  a0;
-      A0 dk = Zero<A0>();
-      auto isnez = is_nez(a0);
-#ifndef BOOST_SIMD_NO_DENORMALS
-      auto test = is_less(a0, Smallestposval<A0>())&&isnez;
-      if (any(test))
-      {
-        dk = if_minus(test, dk, A0(23));
-        x = if_else(test, x*A0(8388608ul), x);
-      }
-#endif
-      A0 kk;
-      std::tie(x, kk) = frexp(x);
-      auto  x_lt_sqrthf = (Sqrt_2o_2<A0>() > x);
-      dk += if_dec(x_lt_sqrthf, kk);
-      A0 f = dec(x+if_else_zero(x_lt_sqrthf, x));
-      A0 s = f/(Two<A0>() + f);
-      A0 z = sqr(s);
-      A0 w = sqr(z);
-      A0 t1= w*horn<A0, 0x3eccce13, 0x3e789e26>(w);
-      A0 t2= z*horn<A0, 0x3f2aaaaa, 0x3e91e9ee>(w);
-      A0 R = t2 + t1;
-      A0 hfsq = Half<A0>()*sqr(f);
-      A0 r = fma(dk, Log_2hi<A0>(), ((fma(s, (hfsq+R), dk*Log_2lo<A0>()) - hfsq) + f));
-#ifndef BOOST_SIMD_NO_INFINITIES
-      A0 zz = if_else(isnez, if_else(a0 == Inf<A0>(), Inf<A0>(), r), Minf<A0>());
-#else
-      A0 zz = if_else(isnez, r, Minf<A0>());
-#endif
-      return if_nan_else(is_ngez(a0), zz);
+      k = if_minus(test, k, ip_t(54));
+      x = if_else(test, x*p_t(18014398509481984ull), x);
     }
-  };
+#endif
+    /* reduce x into [sqrt(2)/2, sqrt(2)] */
+    hx += uip_t(0x3ff00000 - 0x3fe6a09e);
+    k += bitwise_cast<ip_t>(hx>>20) - ip_t(0x3ff);
+    p_t dk = tofloat(k);
+    hx = (hx&uip_t(0x000fffff)) + uip_t(0x3fe6a09e);
+    x = bitwise_cast<p_t>(hx<<32 | (bitwise_and(uip_t(0xffffffffull), bitwise_cast<uip_t>(x))));
 
-  BOOST_DISPATCH_OVERLOAD_IF ( log_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::plain_tag
-                             , bs::pack_< bd::double_<A0>, X>
-                             )
+    p_t f = dec(x);
+    p_t hfsq = Half<p_t>()*sqr(f);
+    p_t s = f/(Two<p_t>() + f);
+    p_t z = sqr(s);
+    p_t w = sqr(z);
+    p_t t1= w*horn<p_t,
+      0x3fd999999997fa04ll,
+      0x3fcc71c51d8e78afll,
+      0x3fc39a09d078c69fll
+      > (w);
+    p_t t2= z*horn<p_t,
+      0x3fe5555555555593ll,
+      0x3fd2492494229359ll,
+      0x3fc7466496cb03dell,
+      0x3fc2f112df3e5244ll
+      > (w);
+    p_t R = t2+t1;
+    p_t r = fma(dk, Log_2hi<p_t>(), ((fma(s, (hfsq+R), dk*Log_2lo<p_t>()) - hfsq) + f));
+#ifndef BOOST_SIMD_NO_INFINITIES
+    p_t zz = if_else(isnez, if_else(a0 == Inf<p_t>(), Inf<p_t>(), r), Minf<p_t>());
+#else
+    p_t zz = if_else(isnez, r, Minf<p_t>());
+#endif
+    return if_nan_else(is_ngez(a0), zz);
+  }
+
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<float,N> log_( BOOST_SIMD_SUPPORTS(simd_)
+                    , plain_tag const&
+                    , pack<float,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const plain_tag &, const A0& a0) const BOOST_NOEXCEPT
-    {
-      A0 x =  a0;
-      A0 dk = Zero<A0>();
-      auto isnez = is_nez(a0);
+    using p_t = pack<float,N>;
+    p_t x =  a0;
+    p_t dk = Zero<p_t>();
+    auto isnez = is_nez(a0);
 #ifndef BOOST_SIMD_NO_DENORMALS
-      auto test = is_less(a0, Smallestposval<A0>())&&isnez;
-      if (any(test))
-      {
-        dk = if_minus(test, dk, A0(23));
-        x = if_else(test, x*A0(8388608ul), x);
-      }
-#endif
-      A0 kk;
-      std::tie(x, kk) = frexp(x);
-      auto  x_lt_sqrthf = (Sqrt_2o_2<A0>() > x);
-      dk += if_dec(x_lt_sqrthf, kk);
-      A0 f = dec(x+if_else_zero(x_lt_sqrthf, x));
-
-      // compute approximation
-      A0 s = f/(Two<A0>()+f);
-      A0 z = sqr(s);
-      A0 w = sqr(z);
-      A0 t1= w*horn<A0,
-        0x3fd999999997fa04ll,
-        0x3fcc71c51d8e78afll,
-        0x3fc39a09d078c69fll
-        > (w);
-      A0 t2= z*horn<A0,
-        0x3fe5555555555593ll,
-        0x3fd2492494229359ll,
-        0x3fc7466496cb03dell,
-        0x3fc2f112df3e5244ll
-        > (w);
-      A0 R = t2+t1;
-      A0 hfsq = Half<A0>()* sqr(f);
-      A0 r = fma(dk, Log_2hi<A0>(), ((fma(s, (hfsq+R), dk*Log_2lo<A0>()) - hfsq) + f));
-#ifndef BOOST_SIMD_NO_INFINITIES
-      A0 zz = if_else(isnez, if_else(a0 == Inf<A0>(), Inf<A0>(), r), Minf<A0>());
-#else
-      A0 zz = if_else(isnez, r, Minf<A0>());
-#endif
-      return if_nan_else(is_ngez(a0), zz);
+    auto test = is_less(a0, Smallestposval<p_t>())&&isnez;
+    if (any(test))
+    {
+      dk = if_minus(test, dk, p_t(23));
+      x = if_else(test, x*p_t(8388608ul), x);
     }
-  };
+#endif
+    p_t kk;
+    std::tie(x, kk) = frexp(x);
+    auto  x_lt_sqrthf = (Sqrt_2o_2<p_t>() > x);
+    dk += if_dec(x_lt_sqrthf, kk);
+    p_t f = dec(x+if_else_zero(x_lt_sqrthf, x));
+    p_t s = f/(Two<p_t>() + f);
+    p_t z = sqr(s);
+    p_t w = sqr(z);
+    p_t t1= w*horn<p_t, 0x3eccce13, 0x3e789e26>(w);
+    p_t t2= z*horn<p_t, 0x3f2aaaaa, 0x3e91e9ee>(w);
+    p_t R = t2 + t1;
+    p_t hfsq = Half<p_t>()*sqr(f);
+    p_t r = fma(dk, Log_2hi<p_t>(), ((fma(s, (hfsq+R), dk*Log_2lo<p_t>()) - hfsq) + f));
+#ifndef BOOST_SIMD_NO_INFINITIES
+    p_t zz = if_else(isnez, if_else(a0 == Inf<p_t>(), Inf<p_t>(), r), Minf<p_t>());
+#else
+    p_t zz = if_else(isnez, r, Minf<p_t>());
+#endif
+    return if_nan_else(is_ngez(a0), zz);
+  }
+
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE
+  pack<double,N> log_( BOOST_SIMD_SUPPORTS(simd_)
+                     , plain_tag const&
+                     , pack<double,N> const& a0) BOOST_NOEXCEPT
+  {
+    using p_t = pack<double,N>;
+    p_t x =  a0;
+    p_t dk = Zero<p_t>();
+    auto isnez = is_nez(a0);
+#ifndef BOOST_SIMD_NO_DENORMALS
+    auto test = is_less(a0, Smallestposval<p_t>())&&isnez;
+    if (any(test))
+    {
+      dk = if_minus(test, dk, p_t(23));
+      x = if_else(test, x*p_t(8388608ul), x);
+    }
+#endif
+    p_t kk;
+    std::tie(x, kk) = frexp(x);
+    auto  x_lt_sqrthf = (Sqrt_2o_2<p_t>() > x);
+    dk += if_dec(x_lt_sqrthf, kk);
+    p_t f = dec(x+if_else_zero(x_lt_sqrthf, x));
+
+    // compute approximation
+    p_t s = f/(Two<p_t>()+f);
+    p_t z = sqr(s);
+    p_t w = sqr(z);
+    p_t t1= w*horn<p_t,
+      0x3fd999999997fa04ll,
+      0x3fcc71c51d8e78afll,
+      0x3fc39a09d078c69fll
+      > (w);
+    p_t t2= z*horn<p_t,
+      0x3fe5555555555593ll,
+      0x3fd2492494229359ll,
+      0x3fc7466496cb03dell,
+      0x3fc2f112df3e5244ll
+      > (w);
+    p_t R = t2+t1;
+    p_t hfsq = Half<p_t>()* sqr(f);
+    p_t r = fma(dk, Log_2hi<p_t>(), ((fma(s, (hfsq+R), dk*Log_2lo<p_t>()) - hfsq) + f));
+#ifndef BOOST_SIMD_NO_INFINITIES
+    p_t zz = if_else(isnez, if_else(a0 == Inf<p_t>(), Inf<p_t>(), r), Minf<p_t>());
+#else
+    p_t zz = if_else(isnez, r, Minf<p_t>());
+#endif
+    return if_nan_else(is_ngez(a0), zz);
+  }
 
 } } }
 
 #endif
-  /*
-   *   1. Argument Reduction: find k and f such that
-   *                      x = 2^k * (1+f),
-   *         where  sqrt(2)/2 < 1+f < sqrt(2) .
-   *
-   *   2. Approximation of log(1+f).
-   *      Let s = f/(2+f) ; based on log(1+f) = log(1+s) - log(1-s)
-   *               = 2s + 2/3 s**3 + 2/5 s**5 + .....,
-   *               = 2s + s*R
-   *      We use a special Remez algorithm on [0,0.1716] to generate
-   *      a polynomial of degree 14 to approximate R The maximum error
-   *      of this polynomial approximation is bounded by 2**-58.45. In
-   *      other words,
-   *                      2      4      6      8      10      12      14
-   *          R(z) ~ Lg1*s +Lg2*s +Lg3*s +Lg4*s +Lg5*s  +Lg6*s  +Lg7*s
-   *      (the values of Lg1 to Lg7 are listed in the program)
-   *      and
-   *          |      2          14          |     -58.45
-   *          | Lg1*s +...+Lg7*s    -  R(z) | <= 2
-   *          |                             |
-   *      Note that 2s = f - s*f = f - hfsq + s*hfsq, where hfsq = f*f/2.
-   *      In order to guarantee error in log below 1ulp, we compute log
-   *      by
-   *              log(1+f) = f - s*(f - R)        (if f is not too large)
-   *              log(1+f) = f - (hfsq - s*(hfsq+R)).     (better accuracy)
-   *
-   *      3. Finally,  log(x) = k*ln2 + log(1+f).
-   *                          = k*ln2_hi+(f-(hfsq-(s*(hfsq+R)+k*ln2_lo)))
-   *         Here ln2 is split into two floating point number:
-   *                      ln2_hi + ln2_lo,
-   *         where n*ln2_hi is always exact for |n| < 2000.
-   */
+/*
+ *   1. Argument Reduction: find k and f such that
+ *                      x = 2^k * (1+f),
+ *         where  sqrt(2)/2 < 1+f < sqrt(2) .
+ *
+ *   2. Approximation of log(1+f).
+ *      Let s = f/(2+f) ; based on log(1+f) = log(1+s) - log(1-s)
+ *               = 2s + 2/3 s**3 + 2/5 s**5 + .....,
+ *               = 2s + s*R
+ *      We use a special Remez algorithm on [0,0.1716] to generate
+ *      a polynomial of degree 14 to approximate R The maximum error
+ *      of this polynomial approximation is bounded by 2**-58.45. In
+ *      other words,
+ *                      2      4      6      8      10      12      14
+ *          R(z) ~ Lg1*s +Lg2*s +Lg3*s +Lg4*s +Lg5*s  +Lg6*s  +Lg7*s
+ *      (the values of Lg1 to Lg7 are listed in the program)
+ *      and
+ *          |      2          14          |     -58.45
+ *          | Lg1*s +...+Lg7*s    -  R(z) | <= 2
+ *          |                             |
+ *      Note that 2s = f - s*f = f - hfsq + s*hfsq, where hfsq = f*f/2.
+ *      In order to guarantee error in log below 1ulp, we compute log
+ *      by
+ *              log(1+f) = f - s*(f - R)        (if f is not too large)
+ *              log(1+f) = f - (hfsq - s*(hfsq+R)).     (better accuracy)
+ *
+ *      3. Finally,  log(x) = k*ln2 + log(1+f).
+ *                          = k*ln2_hi+(f-(hfsq-(s*(hfsq+R)+k*ln2_lo)))
+ *         Here ln2 is split into two floating point number:
+ *                      ln2_hi + ln2_lo,
+ *         where n*ln2_hi is always exact for |n| < 2000.
+ */
+
+
+

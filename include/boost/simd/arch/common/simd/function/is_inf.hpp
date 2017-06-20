@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace detail
                  , std::true_type const &
                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    ((a0 & Inf(as(a0))) == Inf(as(a0)))
+    (abs(a0) ==  Inf(as(a0)))
   )
 
     template<typename T, std::size_t N>

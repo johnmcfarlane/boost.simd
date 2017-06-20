@@ -26,29 +26,40 @@ namespace boost { namespace simd { namespace detail
   )
 
   // mixed implementation
- template< typename T, std::size_t N, typename X, typename U
-           , typename =  std::enable_if<std::is_convertible<U, T>::value>
-  >
-  BOOST_FORCEINLINE auto
+  template< typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
   is_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
-              , pack<T,N,X> const& a
-              , U b
-              ) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    map_to( simd::is_greater, a, pack<T,N,X>(b))
-  )
+            , pack<T,N> const& a
+            , U b
+            ) BOOST_NOEXCEPT
+  {
+    return is_greater(a, pack<T,N>(b));
+  }
 
-  template< typename T, std::size_t N, typename X, typename U
-            , typename =  std::enable_if<std::is_convertible<U, T>::value>
-  >
-  BOOST_FORCEINLINE auto
+
+  template< typename T, std::size_t N, typename U >
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
   is_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
-              , U a
-              , pack<T,N,X> const& b
-              ) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    map_to( simd::is_greater, pack<T,N,X>(a), b)
-  )
+            , U a
+            , pack<T,N> const& b
+            ) BOOST_NOEXCEPT
+  {
+    return is_greater(pack<T,N>(a), b);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N, simd_emulation_>>
+  is_greater_ ( BOOST_SIMD_SUPPORTS(simd_)
+              , pack<T,N,simd_emulation_> const& a
+              , pack<T,N,simd_emulation_> const& b
+              ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::is_greater, a, b);
+  }
 
 } } }
 

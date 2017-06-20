@@ -88,7 +88,7 @@ namespace boost { namespace simd { namespace detail
                                 , case_<3> const &
                                 ) BOOST_NOEXCEPT
   {
-    using i16_t = std::int16_t;
+    using i16_t = pack<std::int16_t, N/2, sse_>;
     i16_t mask = Constant<i16_t,0x00FF>();
     return _mm_or_si128 ( _mm_and_si128(mask, _mm_mullo_epi16(a0,a1))
                         , _mm_slli_epi16

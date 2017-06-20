@@ -18,6 +18,7 @@
 #include <boost/simd/logical.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
+#include <cmath>
 
 namespace boost { namespace simd { namespace detail
 {

@@ -12,16 +12,17 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  template < typename T>
+  template < typename T, std::size_t N>
   BOOST_FORCEINLINE
-  as_logical_t<pack<T,N,avx_>>
+  typename std::enable_if<std::is_integral<T>::value
+                          , as_logical_t<pack<T,N,avx_>>>::type
   is_greater_equal_ ( BOOST_SIMD_SUPPORTS(avx2_)
-                    , pack<std::int8_t,32,avx_> const& a0
+                    , pack<T, N,avx_> const& a0
                     ) BOOST_NOEXCEPT
   {
-     return !(a1 > a0);
+    return !(a1 > a0);
   }
 
 } } }

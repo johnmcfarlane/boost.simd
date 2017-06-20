@@ -12,26 +12,21 @@
 #define BOOST_SIMD_ARCH_X86_SSE4_2_SIMD_FUNCTION_IS_LESS_EQUAL_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/function/logical_not.hpp>
+#include <boost/simd/detail/pack.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_less_equal_
-                          , (typename A0)
-                          , bs::sse4_2_
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                          , bs::pack_<bd::int64_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  as_logical_t<pack<std::int64_t,2,sse_>>
+  is_less_equal_ ( BOOST_SIMD_SUPPORTS(sse4_2_)
+                 , pack<std::int64_t,2,sse_> const& a0
+                 , pack<std::int64_t,2,sse_> const& a1
+                 ) BOOST_NOEXCEPT
   {
-    using result = as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
-    {
-      result that = _mm_cmpgt_epi64(a0,a1);
-      return logical_not(that);
-    }
-  };
+    as_logical_t<pack<std::int64_t,2,sse_>> that = _mm_cmpgt_epi64(a0,a1);
+    return logical_not(that);
+  }
 
 } } }
 

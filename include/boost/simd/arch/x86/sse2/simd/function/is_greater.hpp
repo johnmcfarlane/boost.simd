@@ -16,6 +16,7 @@
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/is_equal.hpp>
+#include <boost/simd/function/minus.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/logical_or.hpp>
 #include <boost/simd/function/shuffle.hpp>

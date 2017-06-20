@@ -10,27 +10,24 @@
 #define BOOST_SIMD_ARCH_X86_AVX2_SIMD_FUNCTION_IS_LESS_HPP_INCLUDED
 
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/is_greater.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-
-   BOOST_DISPATCH_OVERLOAD( is_less_
-                          , (typename A0)
-                          , bs::avx2_
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          , bs::pack_<bd::integer_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>
-      operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return a1 > a0;
-      }
-   };
+  template < typename T,  std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral < T>::value
+                          , as_logical_t<pack<T,N,avx_>>>::type
+  is_greater_( BOOST_SIMD_SUPPORTS(avx2_)
+             , pack<T,N,avx_> const& a0
+             , pack<T,N,avx_> const& a1
+             ) BOOST_NOEXCEPT
+  {
+    return a1 > a0;
+  }
 
 } } }
 

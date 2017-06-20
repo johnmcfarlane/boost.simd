@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_IS_LESSGREATER_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, is_lessgreater_, boost::dispatch::elementwise_<is_lessgreater_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, is_lessgreater_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::is_lessgreater_,is_lessgreater);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(is_lessgreater_,is_lessgreater);
 } }
 
 #endif
+

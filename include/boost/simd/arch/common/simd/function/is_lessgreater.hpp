@@ -10,48 +10,98 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_LESSGREATER_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/is_ord.hpp>
-#include <boost/simd/function/is_not_equal.hpp>
-#include <boost/simd/logical.hpp>
 #include <boost/simd/meta/as_logical.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF ( is_lessgreater_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::fundamental_<A0>, X >
-                          , bs::pack_< bd::fundamental_<A0>, X >
-                          )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N>>
+  v_is_lessgreater_ ( pack<T, N> const& a0
+                    , pack<T, N> const& a1
+                    , std::false_type const &
+                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    bs::as_logical_t<A0> operator()(A0 const& a0 , A0 const& a1) const BOOST_NOEXCEPT
-    {
-      return  a0 != a1;
-    }
-  };
+    return is_not_equal(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( is_lessgreater_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X >
-                          , bs::pack_< bd::floating_<A0>, X >
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N>>
+  v_is_lessgreater_ ( pack<T, N> const& a0
+                    , pack<T, N> const& a1
+                    , std::true_type const &
+                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE
-    bs::as_logical_t<A0> operator()(A0 const& a0 , A0 const& a1) const BOOST_NOEXCEPT
-    {
-      return logical_and(is_ord(a0,a1), (a0 != a1));
-    }
-  };
+    return logical_and(is_ord(a0,a1), is_not_equal(a0, a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N>>
+  is_lessgreater_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T, N> const& a
+                  , pack<T, N> const& b
+                  ) BOOST_NOEXCEPT
+  {
+    return v_is_lessgreater_(a, b, std::is_floating_point<T>());
+  }
+
+  // mixed implementation
+  template< typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_lessgreater_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N> const& a
+            , U b
+            ) BOOST_NOEXCEPT
+  {
+    return is_lessgreater(a, pack<T,N>(b));
+  }
+
+
+  template< typename T, std::size_t N, typename U >
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_lessgreater_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , U a
+            , pack<T,N> const& b
+            ) BOOST_NOEXCEPT
+  {
+    return is_lessgreater(pack<T,N>(a), b);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N, simd_emulation_>>
+  is_lessgreater_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N,simd_emulation_> const& a
+            , pack<T,N,simd_emulation_> const& b
+            ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::is_lessgreater, a, b);
+  }
+
+  // std implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N>>
+  is_lessgreater_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , std_tag const &
+                  , pack<T,N,simd_emulation_> const& a
+                  , pack<T,N,simd_emulation_> const& b
+                  ) BOOST_NOEXCEPT
+  {
+    return map_to( std_(is_lessgreater), a, b);
+  }
 
 } } }
 

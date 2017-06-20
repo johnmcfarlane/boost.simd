@@ -35,6 +35,26 @@ namespace boost { namespace simd { namespace detail
     return _mm256_cmp_ps(a0,a1, _CMP_GT_OQ);
   }
 
+  BOOST_FORCEINLINE
+  as_logical_t<pack<double,2,sse_>>
+  is_less_ ( BOOST_SIMD_SUPPORTS(avx_)
+              , pack<double,2,sse_> const& a0
+              , pack<double,2,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+    return _mm_cmp_pd(a0,a1, _CMP_GT_OQ);
+  }
+
+   BOOST_FORCEINLINE
+  as_logical_t<pack<float,4,sse_>>
+  is_less_ ( BOOST_SIMD_SUPPORTS(avx_)
+              , pack<float,4,sse_> const& a0
+              , pack<float,4,sse_> const& a1
+              ) BOOST_NOEXCEPT
+  {
+    return _mm_cmp_ps(a0,a1, _CMP_GT_OQ);
+  }
+
 } } }
 
 #endif

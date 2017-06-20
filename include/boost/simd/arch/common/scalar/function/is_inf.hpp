@@ -17,7 +17,7 @@
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/logical.hpp>
 #include <boost/config.hpp>
-#include <cmath>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {

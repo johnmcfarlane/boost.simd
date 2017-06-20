@@ -15,15 +15,13 @@
 #include <boost/simd/function/lo.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/constant/zero.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
+#include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/meta/downgrade.hpp>
-#include <boost/simd/detail/traits.hpp>
-#include <boost/simd/detail/predef.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/simd/detail/nsm.hpp>
+#include <type_traits>
+
 
 namespace boost { namespace simd { namespace detail
 {
@@ -35,7 +33,6 @@ namespace boost { namespace simd { namespace detail
     using s_t = ui_t<T>;
     s_t half_bits = sizeof(s_t)*(CHAR_BIT/2);
     return lo( shr(a0, half_bits) );
-
   }
 
   template<typename T, std::size_t N>

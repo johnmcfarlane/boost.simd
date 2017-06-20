@@ -12,28 +12,20 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LO_HPP_INCLUDED
 
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/constant/ratio.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( lo_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE ui_t<T> lo_( BOOST_SIMD_SUPPORTS(cpu_)
+                               , T const& a) BOOST_NOEXCEPT
   {
-    using result = bd::as_integer_t<A0,unsigned>;
+    using r_t = ui_t<T>;
+    r_t pattern((r_t(1) << sizeof(r_t)*(CHAR_BIT/2)) - 1);
+    return bitwise_and(pattern, a);
+  }
 
-    BOOST_FORCEINLINE result operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      result pattern((result(1) << sizeof(result)*(CHAR_BIT/2)) - 1);
-      return bitwise_and(pattern, a0);
-    }
-  };
 } } }
 
 

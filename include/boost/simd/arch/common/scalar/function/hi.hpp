@@ -13,16 +13,13 @@
 
 #include <boost/simd/function/lo.hpp>
 #include <boost/simd/function/shr.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
   template<typename T>
-  BOOST_FORCEINLINE ui_t<T> hi_(BOOST_SIMD_SUPPORTS(cpu_)
+  BOOST_FORCEINLINE ui_t<T> hi_( BOOST_SIMD_SUPPORTS(cpu_)
                                , T const& a) BOOST_NOEXCEPT
   {
     return lo( shr(a, sizeof( ui_t<T>)*(CHAR_BIT/2)));

@@ -14,22 +14,14 @@
 
 namespace boost { namespace simd { namespace ext
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-
-   BOOST_DISPATCH_OVERLOAD_IF( log2_
-                             , (typename A0)
-                             , (detail::is_native<bs::avx_>)
-                             , bs::avx_
-                             , bs::pack_<bd::double_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return plain_(log2)(a0);
-      }
-   };
-
+  // plain algorithm not using integers is better in avx
+  BOOST_FORCEINLINE
+  pack<double,4,avx_> log2_ ( BOOST_SIMD_SUPPORTS(avx_)
+                            , pack<double,4,avx_> const& a0
+                            ) BOOST_NOEXCEPT
+  {
+    return plain_(log2)(a0);
+  }
 
 } } }
 

@@ -12,7 +12,6 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOG_HPP_INCLUDED
 #include <boost/simd/function/std.hpp>
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/function/musl.hpp>
 #include <boost/simd/function/std.hpp>
 #include <boost/assert.hpp>
@@ -36,8 +35,6 @@
 
 #include <boost/simd/detail/constant/log_2hi.hpp>
 #include <boost/simd/detail/constant/log_2lo.hpp>
-
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

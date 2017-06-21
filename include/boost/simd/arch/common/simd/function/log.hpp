@@ -80,11 +80,11 @@ namespace boost { namespace simd { namespace detail
 
   //================================================================================================
   // std_ decorator
-  template<typename T, std::size_t N, typename X>
+  template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  pack<T,N,X> log_( BOOST_SIMD_SUPPORTS(simd_)
+  pack<T,N> log_( BOOST_SIMD_SUPPORTS(simd_)
                   , std_tag const&
-                  , pack<T,N,X> const& a) BOOST_NOEXCEPT
+                  , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     return map_to(std_(simd::log), a);
   }

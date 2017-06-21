@@ -19,14 +19,16 @@ namespace boost { namespace simd { namespace detail
 {
   template<typename T>
   BOOST_FORCEINLINE auto
-  sifloor_( T a0, std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  sifloor_( T a0
+          , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    /*saturated_*/(toint)(bs::floor(a0))
+    saturated_(toint)(bs::floor(a0))
   )
 
   template<typename T>
   BOOST_FORCEINLINE T
-  sifloor_( T, std::false_type const & a0) BOOST_NOEXCEPT
+  sifloor_( T a0
+          , std::false_type const ) BOOST_NOEXCEPT
   {
     return a0;
   }

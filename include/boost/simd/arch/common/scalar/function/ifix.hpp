@@ -14,19 +14,23 @@
 #include <boost/simd/function/toint.hpp>
 #include <boost/simd/function/saturated.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
  template<typename T>
  BOOST_FORCEINLINE auto
- sifix_( T a0, std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+ sifix_( T a0
+       , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
  (
-   /*saturated_*/(toint)(a0)
+   saturated_(toint)(a0)
  )
 
   template<typename T>
-  BOOST_FORCEINLINE T
-  sifix_( T, std::false_type const & a0) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  T
+  sifix_( T a0
+        , std::false_type const &) BOOST_NOEXCEPT
   {
     return a0;
   }

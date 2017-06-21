@@ -17,6 +17,7 @@
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/ldexp.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 template <typename T, int N, typename Env>
 void test(Env& runtime)
@@ -59,9 +60,10 @@ STF_CASE_TPL (" bs::saturated_(bs::toint) real", STF_IEEE_TYPES)
   using p_t = bs::pack<T>;
   using iT = bd::as_integer_t<T, signed>;
   using r_t = decltype(bs::saturated_(bs::toint)(p_t()));
+  using si_t = bd::as_integer_t<p_t, signed>;
 
-  // return type conformity test
-  STF_TYPE_IS(r_t, (bd::as_integer_t<p_t, signed>));
+//   // return type conformity test
+  STF_TYPE_IS(r_t, si_t);
 
   // specific values tests
   STF_EQUAL(bs::saturated_(bs::toint)(p_t(2)*bs::Valmax<p_t>()),  bs::Valmax<r_t>());
@@ -82,8 +84,10 @@ STF_CASE_TPL (" bs::saturated_(bs::toint) real", STF_IEEE_TYPES)
   int M =   sizeof(T)*8-1;
   for(int i=0; i < M ; i++, v*= p_t(2), iv <<= iT(1))
   {
-     STF_EQUAL(bs::saturated_(bs::toint)(v), r_t(bs::toint(v[0])));
-     STF_EQUAL(bs::saturated_(bs::toint)(-v), -r_t(bs::toint(v[0])));
+    T sv = v[0];
+    iT srv =  bs::saturated_(bs::toint)(sv);
+    STF_EQUAL(bs::saturated_(bs::toint)(v), si_t(srv));
+    STF_EQUAL(bs::saturated_(bs::toint)(-v), -si_t(srv));
   }
 
   int N = sizeof(T)*8-1;

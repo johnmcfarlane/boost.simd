@@ -12,41 +12,43 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NEZ_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/is_not_equal.hpp>
 #include <boost/simd/constant/zero.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF(is_nez_
-                         , (typename A0,typename X)
-                         , (detail::is_native<X>)
-                         , bd::cpu_
-                         , bs::pack_<bd::arithmetic_<A0>,X>
-                         )
+ // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nez_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_equal(a, Zero(as(a)))
+  )
 
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  is_nez_ ( BOOST_SIMD_SUPPORTS(simd_)
+          , as_logical_t<pack<T,N>> const& a0
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return is_not_equal(a0,Zero<A0>());
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD(is_nez_
-                         , (typename A0,typename X)
-                         , bd::cpu_
-                         , bs::pack_<bs::logical_<A0>,X>
-                         )
+    return a0;
+  }
 
-  {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nez_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_nez, a)
+  )
 
 } } }
 

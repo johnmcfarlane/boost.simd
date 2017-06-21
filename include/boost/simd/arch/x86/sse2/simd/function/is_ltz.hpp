@@ -19,7 +19,7 @@
 namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE as_logical_t<pack<std::int64_t,2,sse_>>
-  is_lez_ ( BOOST_SIMD_SUPPORTS(sse2_)
+  is_ltz_ ( BOOST_SIMD_SUPPORTS(sse2_)
           , pack<std::int64_t,2,sse_> const& a0
           ) BOOST_NOEXCEPT
   {

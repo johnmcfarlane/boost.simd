@@ -12,8 +12,7 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_FLINT_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
-#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/frac.hpp>
 #include <boost/simd/function/is_eqz.hpp>

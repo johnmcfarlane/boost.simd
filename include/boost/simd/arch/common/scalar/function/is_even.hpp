@@ -14,7 +14,7 @@
 #include <boost/simd/constant/half.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/is_flint.hpp>
-#include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace detail
    }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   s_is_even_( T a0
             , std::true_type const &
             ) BOOST_NOEXCEPT
@@ -37,7 +37,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   s_is_even_( T a0
             , std::false_type const &
             ) BOOST_NOEXCEPT
@@ -48,7 +48,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T,
             typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
-  BOOST_FORCEINLINE logical<T>
+  BOOST_FORCEINLINE as_logical_t<T>
   is_even_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0
               ) BOOST_NOEXCEPT

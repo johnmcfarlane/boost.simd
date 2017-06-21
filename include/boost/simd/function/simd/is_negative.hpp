@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_IS_NEGATIVE_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/is_negative.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/is_negative.hpp>
 
 #endif

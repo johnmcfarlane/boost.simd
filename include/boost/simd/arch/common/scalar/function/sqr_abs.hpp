@@ -13,36 +13,28 @@
 
 #include <boost/simd/function/sqr.hpp>
 #include <boost/simd/function/saturated.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( sqr_abs_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  // no peculiar simd implementation. Will be redefined for complex
+  template<typename T>
+  BOOST_FORCEINLINE
+  T sqr_abs_(BOOST_SIMD_SUPPORTS(cpu_)
+           , const T& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return multiplies(a0, a0);
-    }
-  };
+    return sqr(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( sqr_abs_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::saturated_tag
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T sqr_abs_(BOOST_SIMD_SUPPORTS(cpu_)
+           , saturated_tag const&
+           , const T& a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (saturated_tag const&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(sqr)(a0);
-    }
-  };
+    return saturated_(sqr)(a);
+  }
+
 } } }
 
 

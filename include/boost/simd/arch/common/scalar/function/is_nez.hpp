@@ -15,10 +15,11 @@
 #include <boost/simd/logical.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
- BOOST_FORCEINLINE bool
+  BOOST_FORCEINLINE bool
    is_nez_ ( BOOST_SIMD_SUPPORTS(cpu_)
                 , bool a0
                 ) BOOST_NOEXCEPT

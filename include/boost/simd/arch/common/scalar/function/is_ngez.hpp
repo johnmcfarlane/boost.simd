@@ -14,59 +14,58 @@
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/false.hpp>
 #include <boost/simd/function/is_nan.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_ngez_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bool operator() (const A0&) const BOOST_NOEXCEPT
-    {
-      return false;
-    }
-  };
+   BOOST_FORCEINLINE bool
+   is_ngez_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool
+                ) BOOST_NOEXCEPT
+   {
+     return false;
+   }
 
-  BOOST_DISPATCH_OVERLOAD ( is_ngez_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_ngez_( T a0
+            , std::true_type
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return (a0 < Zero<A0>());
-    }
-  };
+    return !(a0 >= Zero<A0>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_ngez_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_ngez_( T a0
+            , std::false_type
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return (a0 < Zero<A0>()) || is_nan(a0);
-    }
-  };
+    return False<T>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_ngez_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bs::logical_<A0> >
-                          )
+  template <typename T,
+            typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_ngez_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0& ) const BOOST_NOEXCEPT
-    {
-      return False<A0>();
-    }
-  };
+    return s_is_ngez_(a0,  std::is_floating_point<T>());
+  }
+
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_ngez_( BOOST_SIMD_SUPPORTS(cpu_)
+              , as_logical_t<T> const & a0
+              ) BOOST_NOEXCEPT
+  {
+    return False<T>();
+  }
+
 
 } } }
 

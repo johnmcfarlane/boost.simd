@@ -9,41 +9,62 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NGEZ_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NGEZ_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/is_not_greater_equal.hpp>
 #include <boost/simd/function/is_ltz.hpp>
 #include <boost/simd/constant/zero.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+ // Native implementation
 
-  BOOST_DISPATCH_OVERLOAD_IF ( is_ngez_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  s_is_ngez_ ( pack<T,N> const&
+             , std::false_type
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()( const A0& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-    (
-      is_not_greater_equal(a0, Zero<A0>())
-    )
-  };
+    return is_ltz(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( is_ngez_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE auto operator()( const A0& a0) const BOOST_NOEXCEPT_DECLTYPE_BODY
-    (
-      is_ltz(a0)
-    )
-  };
+  BOOST_FORCEINLINE
+  auto is_ngez_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                , std::true_type
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_greater_equal(a0, Zero<A0>()) ;
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_ngez_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    s_is_ngez_(a, std::is_floating_point(a));
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto s_is_ngez_ ( as_logical_t<pack<T,N>> const&
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    False<pack<T,N>>();
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_ngez_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_ngez, a)
+  )
+
+
 } } }
 
 #endif

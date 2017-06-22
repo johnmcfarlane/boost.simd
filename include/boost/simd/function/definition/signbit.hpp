@@ -12,17 +12,13 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_SIGNBIT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/function/definition/is_negative.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/function/is_negative.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using signbit_ = is_negative_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::signbit_,signbit);
+  auto  signbit = is_negative;
 } }
 
 #endif
+
+

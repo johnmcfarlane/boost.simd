@@ -12,25 +12,13 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_IS_NGTZ_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, is_ngtz_, boost::dispatch::elementwise_<is_ngtz_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, is_ngtz_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::is_ngtz_,is_ngtz);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(is_ngtz_,is_ngtz);
 } }
 
 #endif
+
+

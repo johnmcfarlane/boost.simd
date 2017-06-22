@@ -18,67 +18,57 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_normal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
+   BOOST_FORCEINLINE bool
+   is_normal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool a0
+                ) BOOST_NOEXCEPT
+   {
+     return a0;
+   }
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_normal_( T a0
+            , std::true_type const &
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() (A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_normal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+    return  is_finite(a0)&&is_nez(a0)&&is_not_denormal(a0);
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_normal_( T a0
+            , std::false_type const &
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_normal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return is_nez(a0);
+  }
+
+  template <typename T,
+            typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_normal_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE  bs::as_logical_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return   is_finite(a0)&&is_nez(a0)&&is_not_denormal(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_normal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+    return s_is_normal_(a0, std::is_floating_point<T>());
+  }
+
+ template <typename T,
+            typename =  typename std::enable_if<std::is_floating_point<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_normal_( BOOST_SIMD_SUPPORTS(cpu_)
+              , std_tag const &
+              , T a0
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::isnormal(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_normal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() (const std_tag &, A0 a0) const BOOST_NOEXCEPT
-    {
-      return {a0 != 0};
-    }
-  };
+    return std::isnormal(a0);
+  }
+
 } } }
 
 

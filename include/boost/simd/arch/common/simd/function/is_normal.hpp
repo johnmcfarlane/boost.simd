@@ -11,45 +11,64 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NORMAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NORMAL_HPP_INCLUDED
 
-#include <boost/simd/constant/smallestposval.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/logical_and.hpp>
 #include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/is_not_denormal.hpp>
 #include <boost/simd/function/is_finite.hpp>
-#include <boost/simd/function/logical_and.hpp>
-#include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_normal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::integer_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator() (const A0& a0) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF ( is_normal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE  bs::as_logical_t<A0> operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return   logical_and(logical_and(is_finite(a0), is_nez(a0)), is_not_denormal(a0));
-    }
-  };
-} } }
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_normal_ ( pack<T,N> const& a0
+                  , std::true_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    logical_and(logical_and(is_finite(a0), is_nez(a0)), is_not_denormal(a0))
+  )
+
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_normal_ ( pack<T,N> const& a0
+                  , std::false_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_nez(a0)
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_normal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_normal_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_normal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N,simd_emulation_> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_normal, a)
+  )
+
+  // std implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_normal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , std_tag const &
+                  , pack<T,N> const& a
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( std_(simd::is_normal), a)
+  )
+    } } }
 
 
 #endif

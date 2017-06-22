@@ -29,6 +29,7 @@ void test(Env& runtime)
    }
   p_t aa1(&a1[0], &a1[0]+N);
   pl_t bb(&b[0], &b[0]+N);
+  std::cout << "aa1 " << aa1 << std::endl;
   STF_IEEE_EQUAL(bs::is_ngez(aa1), bb);
 }
 

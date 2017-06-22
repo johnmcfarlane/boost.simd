@@ -30,14 +30,13 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  auto is_ngez_ ( BOOST_SIMD_SUPPORTS(simd_)
-                , pack<T,N> const& a0
-                , std::true_type
-               ) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    is_not_greater_equal(a0, Zero(as(a0)))
-  )
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  s_is_ngez_ ( pack<T,N> const& a0
+             , std::true_type
+             ) BOOST_NOEXCEPT
+  {
+    return is_not_greater_equal(a0, Zero(as(a0)));
+  }
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
@@ -45,13 +44,14 @@ namespace boost { namespace simd { namespace detail
                 , pack<T,N> const& a
                 ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    s_is_ngez_(a, std::is_floating_point<T>(a))
+    s_is_ngez_(a, std::is_floating_point<T>())
   )
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  auto s_is_ngez_ ( as_logical_t<pack<T,N>> const&
-                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  auto is_ngez_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , as_logical_t<pack<T,N>> const&
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     ( False<pack<T,N>>())
   )

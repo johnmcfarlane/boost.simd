@@ -13,7 +13,7 @@
 
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/constant/false.hpp>
-#include <boost/simd/function/is_nan.hpp>
+#include <boost/simd/function/is_ltz.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 
@@ -38,11 +38,11 @@ namespace boost { namespace simd { namespace detail
 
   template <typename T>
   BOOST_FORCEINLINE as_logical_t<T>
-  s_is_ngez_( T
+  s_is_ngez_( T a0
             , std::false_type
             ) BOOST_NOEXCEPT
   {
-    return False<T>();
+    return is_ltz(a0);
   }
 
   template <typename T,

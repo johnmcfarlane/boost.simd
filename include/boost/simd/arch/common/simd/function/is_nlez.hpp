@@ -12,41 +12,62 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NLEZ_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/is_gtz.hpp>
+#include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/is_not_less_equal.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_nlez_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_not_less_equal(a0, Zero<A0>());
-      }
-   };
+ // Native implementation
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_nlez_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_gtz(a0);
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  s_is_nlez_ ( pack<T,N> const& a0
+             , std::false_type
+             ) BOOST_NOEXCEPT
+  {
+    return is_gtz(a0);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nlez_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a0
+                , std::true_type
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_less_equal(a0, Zero(as(a0)))
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nlez_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    s_is_nlez_(a, std::is_floating_point<T>(a))
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto s_is_nlez_ ( as_logical_t<pack<T,N>> const& a0
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    (is_nez(a0))
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nlez_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_nlez, a)
+  )
 
 } } }
 #endif

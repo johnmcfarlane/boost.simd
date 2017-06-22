@@ -60,7 +60,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T>
   BOOST_FORCEINLINE as_logical_t<T>
   is_ngez_( BOOST_SIMD_SUPPORTS(cpu_)
-              , as_logical_t<T> const & a0
+              , as_logical_t<T> const &
               ) BOOST_NOEXCEPT
   {
     return False<T>();

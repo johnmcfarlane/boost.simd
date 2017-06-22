@@ -9,27 +9,41 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NLTZ_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NLTZ_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/constant/zero.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/is_not_less.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+// Native implementation
 
-  BOOST_DISPATCH_OVERLOAD_IF ( is_nltz_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return is_not_less(a0, Zero<A0>());
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nltz_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_less(a, Zero(as(a)))
+  )
+
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto s_is_nltz_ ( as_logical_t<pack<T,N>> const&
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    (True<pack<T,N>>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_nltz_ ( BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N,simd_emulation_> const& a
+         ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_nltz, a)
+  )
+
 } } }
 
 #endif

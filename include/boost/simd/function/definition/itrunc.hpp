@@ -12,17 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_ITRUNC_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/function/definition/is_negative.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/function/ifix.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using itrunc_ = ifix_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::itrunc_,itrunc);
+  auto  itrunc = ifix;
 } }
 
 #endif

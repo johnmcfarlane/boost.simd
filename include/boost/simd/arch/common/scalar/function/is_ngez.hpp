@@ -33,12 +33,12 @@ namespace boost { namespace simd { namespace detail
             , std::true_type
             ) BOOST_NOEXCEPT
   {
-    return !(a0 >= Zero<A0>());
+    return !(a0 >= Zero<T>());
   }
 
   template <typename T>
   BOOST_FORCEINLINE as_logical_t<T>
-  s_is_ngez_( T a0
+  s_is_ngez_( T
             , std::false_type
             ) BOOST_NOEXCEPT
   {

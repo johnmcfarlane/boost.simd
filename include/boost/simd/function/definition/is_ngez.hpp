@@ -19,3 +19,4 @@ namespace boost { namespace simd
   BOOST_SIMD_MAKE_CALLABLE(is_ngez_,is_ngez);
 } }
 
+#endif

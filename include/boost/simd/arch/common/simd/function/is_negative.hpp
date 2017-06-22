@@ -18,19 +18,21 @@
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
 #include <boost/simd/function/bitofsign.hpp>
+#include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/is_ltz.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
    // Native implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  auto v_is_negative_ ( pack<T,N> const& a0
-                      , std::true_type const &
-                      ) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    (is_equal(bitwise_or(bitofsign(a0), One(as(a0)), Moneas(a0))))
-  )
+  BOOST_FORCEINLINE as_logical_t< pack<T,N>>
+  v_is_negative_ ( pack<T,N> const& a0
+                 , std::true_type const &
+                 ) BOOST_NOEXCEPT
+  {
+    return is_equal(bitwise_or(bitofsign(a0), One(as(a0))),Mone(as(a0)));
+  }
+
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
@@ -42,13 +44,13 @@ namespace boost { namespace simd { namespace detail
   )
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE
-  auto is_negative_ ( BOOST_SIMD_SUPPORTS(simd_)
-                    , pack<T,N> const& a
-                    ) BOOST_NOEXCEPT_DECLTYPE_BODY
-  (
-    v_is_negative_(a, std::is_floating_point<T>())
-  )
+  BOOST_FORCEINLINE as_logical_t< pack<T,N>>
+  is_negative_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a
+               ) BOOST_NOEXCEPT
+  {
+    return v_is_negative_(a, std::is_floating_point<T>());
+  }
 
   // Emulated implementation
   template<typename T, std::size_t N>

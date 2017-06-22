@@ -17,22 +17,25 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  namespace bs = boost::simd;
-  BOOST_FORCEINLINE pack<double,2> acos_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pack<double,2> const& a0
-                                        ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE pack<double,2,sse_>
+  acos_( BOOST_SIMD_SUPPORTS(sse2_)
+       , pack<double,2,sse_> const& a0
+       ) BOOST_NOEXCEPT
   {
-    using result_t = pack<double,2>;
-    return result_t(bs::acos(double(a0[0])),  bs::acos(double(a0[1])));
+    using result_t = pack<double,2,sse_>;
+    return result_t(simd::acos(double(a0[0]))
+                   , simd::acos(double(a0[1])));
   }
 
-  BOOST_FORCEINLINE pack<double,2> acos_( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , pedantic_tag const &
-                                        , pack<double,2> const& a0
-                                        ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE pack<double,2,sse_>
+  acos_( BOOST_SIMD_SUPPORTS(sse2_)
+       , pedantic_tag const &
+       , pack<double,2,sse_> const& a0
+       ) BOOST_NOEXCEPT
   {
     using result_t = pack<double,2>;
-    return  result_t(bs::pedantic_(bs::acos)(double(a0[0])), bs::pedantic_(bs::acos)(double(a0[1])));
+    return  result_t(simd::pedantic_(simd::acos)(double(a0[0]))
+                    , simd::pedantic_(simd::acos)(double(a0[1])));
   }
 
 

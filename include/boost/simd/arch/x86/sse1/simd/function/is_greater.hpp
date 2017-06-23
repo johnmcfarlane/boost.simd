@@ -19,9 +19,9 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   as_logical_t<pack<float,4,sse_>>
   is_greater_ ( BOOST_SIMD_SUPPORTS(sse1_)
-              , pack<float,4,sse_> const& a0
-              , pack<float,4,sse_> const& a1
-              ) BOOST_NOEXCEPT
+                  , pack<float,4,sse_> const& a0
+                  , pack<float,4,sse_> const& a1
+                  ) BOOST_NOEXCEPT
   {
     return _mm_cmpgt_ps(a0,a1);
   }

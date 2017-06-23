@@ -12,83 +12,92 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_SHIFT_LEFT_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
+#include <boost/simd/function/bitwise_ornot.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
+#include <boost/simd/function/if_else_allbits.hpp>
+#include <boost/simd/function/is_ltz.hpp>
+#include <boost/simd/function/group.hpp>
+#include <boost/simd/function/split.hpp>
+#include <boost/simd/function/splat.hpp>
 #include <boost/simd/constant/signmask.hpp>
-//#include <boost/simd/detail/make_dependent.hpp>
+#include <boost/simd/constant/allbits.hpp>
+#include <boost/simd/constant/constant.hpp>
+#include <boost/simd/detail/make_dependent.hpp>
 
-namespace boost { namespace simd { namespace detail
+namespace boost { namespace simd { namespace ext
 {
- template < typename T, std::size_t N, typename I> // 64bits
-  BOOST_FORCEINLINE
-  pack<T,N,sse_> vi_shift_left_ ( pack<T,N,sse_> const& a0
-                                , I a1
-                                , case_<0> const &
-                                ) BOOST_NOEXCEPT
+  namespace bd =  boost::dispatch;
+  namespace bs =  boost::simd;
+  BOOST_DISPATCH_OVERLOAD ( shift_left_
+                          , (typename A0,typename A1 )
+                          , bs::sse2_
+                          , bs::pack_<bd::ints8_<A0>, bs::sse_>
+                          , bd::scalar_<bd::integer_<A1>>
+                          )
   {
-//    BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints64 sse2: a shift is out of range");
-    return _mm_slli_epi64(a0, int(a1));
-  }
+    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
+                                    , const A1 & a1 ) const BOOST_NOEXCEPT
+    {
+      using int_t =  detail::make_dependent_t<std::uint16_t,A0>;
+      using gen_t = pack<int_t, A0::static_size/2>;
+      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints8 sse2: a shift is out of range");
+      A0 const Mask1 = bitwise_cast<A0>( gen_t(0x00ff));
+      A0 const Mask2 = bitwise_cast<A0>( gen_t(0xff00));
+      A0 tmp  = bitwise_and(a0, Mask1);
+      A0 tmp1 = _mm_slli_epi16(tmp, int(a1));
+      tmp1 = bitwise_and(tmp1, Mask1);
+      tmp = bitwise_and(a0, Mask2);
+      A0 tmp3 = _mm_slli_epi16(tmp, int(a1));
+      return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
+    }
+  };
 
-  template < typename T, std::size_t N, typename I > // 32bits
-  BOOST_FORCEINLINE
-  pack<T,N,sse_> vi_shift_left_ ( pack<T,N,sse_> const& a0
-                                , I a1
-                                , case_<1> const &
-                                ) BOOST_NOEXCEPT
+  BOOST_DISPATCH_OVERLOAD ( shift_left_
+                          , (typename A0,typename A1 )
+                          , bs::sse2_
+                          , bs::pack_<bd::ints16_<A0>, bs::sse_>
+                          , bd::scalar_<bd::integer_<A1>>
+                         )
   {
-//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints32 sse2: a shift is out of range");
-    return _mm_slli_epi32(a0, int(a1));
-  }
+    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
+                                    , const A1 & a1 ) const BOOST_NOEXCEPT
+    {
+      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints16 sse2: a shift is out of range");
+      return _mm_slli_epi16(a0, a1);
+    }
+  };
 
-  template < typename T, std::size_t N, typename I > // 16bits
-  BOOST_FORCEINLINE
-  pack<T,N,sse_> vi_shift_left_ ( pack<T,N,sse_> const& a0
-                                , I a1
-                                , case_<2> const &
-                                ) BOOST_NOEXCEPT
+  BOOST_DISPATCH_OVERLOAD ( shift_left_
+                          , (typename A0,typename A1 )
+                          , bs::sse2_
+                          , bs::pack_<bd::ints32_<A0>, bs::sse_>
+                          , bd::scalar_<bd::integer_<A1>>
+                         )
   {
-//      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints16 sse2: a shift is out of range");
-    return _mm_slli_epi16(a0, int(a1));
-  }
+    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
+                                    , const A1 & a1 ) const BOOST_NOEXCEPT
+    {
+      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints32 sse2: a shift is out of range");
+      return _mm_slli_epi32(a0, a1);
+    }
+  };
 
-  template < typename T, std::size_t N, typename I > // 8bits
-  BOOST_FORCEINLINE
-  pack<T,N,sse_> vi_shift_left_ ( pack<T,N,sse_> const& a0
-                                , I a1
-                                , case_<3> const &
-                                ) BOOST_NOEXCEPT
+  BOOST_DISPATCH_OVERLOAD ( shift_left_
+                          , (typename A0,typename A1 )
+                          , bs::sse2_
+                          , bs::pack_<bd::ints64_<A0>, bs::sse_>
+                          , bd::scalar_<bd::integer_<A1>>
+                         )
   {
-//       using int_t =  detail::make_dependent_t<std::uint16_t,A0>;
-//       using gen_t = pack<int_t, A0::static_size/2>;
-    using p_t =  pack<T,N,sse_>;
-    using int_t = std::uint16_t;
-    using gen_t = pack<int_t, N/2, sse_>;
-//      BOOST_ASSERT_MSG(assert_good_shift<p_t>(a1), "shift_left ints8 sse2: a shift is out of range");
-    p_t const Mask1 = bitwise_cast<p_t>( gen_t(0x00ff));
-    p_t const Mask2 = bitwise_cast<p_t>( gen_t(0xff00));
-    p_t tmp  = bitwise_and(a0, Mask1);
-    p_t tmp1 = _mm_slli_epi16(tmp, int(a1));
-    tmp1 = bitwise_and(tmp1, Mask1);
-    tmp = bitwise_and(a0, Mask2);
-    p_t tmp3 = _mm_slli_epi16(tmp, int(a1));
-    return bitwise_or(tmp1, bitwise_and(tmp3, Mask2));
-  }
-
-  template < typename T, std::size_t N, typename I>
-  typename std::enable_if<std::is_integral<T>::value &&
-                          std::is_integral<I>::value, pack<T,N, sse_>>::type
-  shift_left_ ( BOOST_SIMD_SUPPORTS(sse2_)
-              , pack<T,N,sse_> const& a0
-              , I a1
-              ) BOOST_NOEXCEPT
-
-  {
-    return vi_shift_left_(a0, a1, size_picker<T>());
-  }
-
+    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
+                                    , const A1 & a1 ) const BOOST_NOEXCEPT
+    {
+      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left ints64 sse2: a shift is out of range");
+      return _mm_slli_epi64(a0, int(a1));
+    }
+  };
 } } }
 
 #endif

@@ -9,59 +9,51 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SHIFT_LEFT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_SHIFT_LEFT_HPP_INCLUDED
 
-#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/assert_utils.hpp>
-#include <boost/simd/detail/meta/convert_helpers.hpp>
-#include <boost/assert.hpp>
-#include <boost/config.hpp>
-#include <type_traits>
+#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/nsm.hpp>
+#include <boost/simd/detail/traits.hpp>
+#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
-namespace boost { namespace simd { namespace detail
+namespace boost { namespace simd { namespace ext
 {
-  // -----------------------------------------------------------------------------------------------
-  // regular cases
-  template<typename T,std::size_t N>
-  BOOST_FORCEINLINE
-  typename std::enable_if<std::is_floating_point<T>::value, pack<T, N>>::type
-  shift_left_( BOOST_SIMD_SUPPORTS(simd_)
-             , pack<T,N> const& v, int s
-             ) BOOST_NOEXCEPT
+  namespace bs = boost::simd;
+  namespace bd = boost::dispatch;
+
+  BOOST_DISPATCH_OVERLOAD_IF( shift_left_
+                            , (typename A0, typename A1, typename X)
+                            , (detail::is_native<X>)
+                            , bd::cpu_
+                            , bs::pack_<bd::floating_<A0>,X>
+                            , bd::scalar_<bd::fundamental_<A1>>
+                            )
   {
-//    using type = pack<typename std::make_unsigned<T>::type,N>;
-    using p_t  = pack<T,N>;
+    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A1& a1) const BOOST_NOEXCEPT
+    {
+      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left: a shift is out of range");
+      return bitwise_cast<A0> ( shift_left( bitwise_cast<bd::as_integer_t<A0, signed>>(a0)
+                                          , bd::as_integer_t<A0>(a1)
+                                          )
+                              );
+    }
+  };
 
-    //   BOOST_ASSERT_MSG(assert_good_shift<p_t>(s), "shift_left : shift is out of range");
-    return bitwise_cast<p_t>(shift_left( bitwise_cast<si_t<p_t>>(v), s));
-  }
-
-  template< typename T, typename U, std::size_t N
-            , typename X, typename Y
-            , typename = typename std::enable_if<std::is_integral<U>::value>::type
-  >
-  BOOST_FORCEINLINE pack<T,N,X>
-  shift_left_( BOOST_SIMD_SUPPORTS(simd_)
-             , pack<T,N,X> const& v
-             , pack<U,N,Y> const& s
-             ) BOOST_NOEXCEPT
-  {
-    // we map_to to maximize the potential of reusing the fast (pack,int) version
-    return map_to(simd::shift_left,v,s);
-  }
-
- //  template< typename T, typename U, std::size_t N
-//             , typename X
-//             , typename = typename std::enable_if<std::is_integral<U>::value>::type
-//   >
-//   BOOST_FORCEINLINE pack<T,N,X>
-//   shift_left_( BOOST_SIMD_SUPPORTS(simd_)
-//              , pack<T,N,X> const& v
-//              , U s
-//              ) BOOST_NOEXCEPT
-//   {
-//     // we map_to to maximize the potential of reusing the fast (pack,int) version
-//     return map_to(simd::shift_left,v,s);
-//   }
+   BOOST_DISPATCH_OVERLOAD_IF(shift_left_
+                             , (typename A0, typename A1, typename X)
+                             , (detail::is_native<X>)
+                             , bd::cpu_
+                             , bs::pack_<bd::floating_<A0>, X>
+                             , bs::pack_<bd::integer_<A1>, X>
+                             )
+   {
+      BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
+      {
+        using ntype =  bd::as_integer_t<A0, unsigned>;
+        BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "shift_left: a shift is out of range");
+        return bitwise_cast<A0>( shift_left(bitwise_cast<ntype>(a0), a1));
+      }
+   };
 } } }
 
 #endif

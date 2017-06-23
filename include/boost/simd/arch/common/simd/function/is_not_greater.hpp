@@ -23,17 +23,17 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE  auto
  v_is_not_greater_ ( pack<T, N, X> const& a
                    , pack<T, N, X> const& b
-                   , std::true_type const &
+                   , std::false_type const &
                    ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    is_less(b, a)
+    is_less_equal(b, a)
   )
 
   template<typename T, std::size_t N, typename X>
   BOOST_FORCEINLINE   auto
   v_is_not_greater_ ( pack<T, N, X> const& a
                     , pack<T, N, X> const& b
-                    , std::false_type const &
+                    , std::true_type const &
                     ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
     logical_not(is_greater(a, b))

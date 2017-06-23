@@ -13,7 +13,7 @@
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE
   as_logical_t<pack<double,4,avx_>>

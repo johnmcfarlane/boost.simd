@@ -10,45 +10,79 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_GREATER_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_GREATER_EQUAL_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
-
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
+#include <type_traits>
 #include <boost/simd/function/is_greater_equal.hpp>
 #include <boost/simd/function/is_less.hpp>
 #include <boost/simd/function/logical_not.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_not_greater_equal_
-                             , (typename A0, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::floating_<A0>, X>
-                             , bs::pack_<bd::floating_<A0>, X>
-                             )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return logical_not(is_greater_equal(a0,a1));
-      }
-   };
+ template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE  auto
+ v_is_not_greater_equal_ ( pack<T, N, X> const& a
+                   , pack<T, N, X> const& b
+                   , std::false_type const &
+                   ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_less(b, a)
+  )
+
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE   auto
+  v_is_not_greater_equal_ ( pack<T, N, X> const& a
+                    , pack<T, N, X> const& b
+                    , std::true_type const &
+                    ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    logical_not(is_greater_equal(a, b))
+  )
+
+  template<typename T, std::size_t N, typename X>
+  BOOST_FORCEINLINE  auto
+  is_not_greater_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T, N, X> const& a
+                 , pack<T, N, X> const& b
+                 ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_not_greater_equal_(a, b, std::is_floating_point<T>())
+  )
+
+  // mixed implementation
+  template< typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_greater_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N> const& a
+                  , U b
+                  ) BOOST_NOEXCEPT
+  {
+    return is_not_greater_equal(a, pack<T,N>(b));
+  }
 
 
-  BOOST_DISPATCH_OVERLOAD_IF(is_not_greater_equal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return is_less(a0,a1);
-      }
-   };
+  template< typename T, std::size_t N, typename U >
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_greater_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , U a
+                  , pack<T,N> const& b
+                  ) BOOST_NOEXCEPT
+  {
+    return is_not_greater_equal(pack<T,N>(a), b);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N, simd_emulation_>>
+  is_not_greater_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                  , pack<T,N,simd_emulation_> const& a
+                  , pack<T,N,simd_emulation_> const& b
+                  ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::is_not_greater_equal, a, b);
+  }
 
 } } }
 

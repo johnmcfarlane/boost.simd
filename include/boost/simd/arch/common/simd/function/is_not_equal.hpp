@@ -9,52 +9,81 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_EQUAL_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/bitwise_xor.hpp>
 #include <boost/simd/meta/is_bitwise_logical.hpp>
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/meta/as_arithmetic.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
   namespace bs = boost::simd;
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N>>
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T, N> const& a
+                , pack<T, N> const& b
+                ) BOOST_NOEXCEPT
+  {
+    return !(a == b);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( is_not_equal_
-                            , (typename A0,typename X)
-                            , detail::is_native<X>
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            )
-   {
-    BOOST_FORCEINLINE
-    bs::as_logical_t<A0> operator()(const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return !(a0 == a1);
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<bs::is_bitwise_logical_t<pack<T, N>>::value, as_logical_t<pack<T, N>>>::type
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , as_logical_t<pack<T, N>> const& a
+                , as_logical_t<pack<T, N>> const& b
+                ) BOOST_NOEXCEPT
+  {
+    using logi_t = as_logical_t<pack<T, N>>;
+    using cast_t = bs::as_arithmetic_t<pack<T, N>>;
+    return bitwise_cast<logi_t>(bitwise_xor(bitwise_cast<cast_t>(a),bitwise_cast<cast_t>(b)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( is_not_equal_
-                            , (typename A0,typename X)
-                            , ( nsm::and_ < bs::is_bitwise_logical_t<A0>
-                                              , detail::is_native<X>
-                                              >
-                              )
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>,X>
-                            , bs::pack_<bs::logical_<A0>,X>
-                            )
-   {
-    BOOST_FORCEINLINE A0 operator()(const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      using cast_t = bs::as_arithmetic_t<A0>;
-      return bitwise_cast<A0>(bitwise_xor(bitwise_cast<cast_t>(a0),bitwise_cast<cast_t>(a1)));
-    }
-  };
+
+
+  // mixed implementation
+  template< typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                , U b
+                ) BOOST_NOEXCEPT
+  {
+    return is_not_equal(a, pack<T,N>(b));
+  }
+
+
+  template< typename T, std::size_t N, typename U >
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , U a
+                , pack<T,N> const& b
+                ) BOOST_NOEXCEPT
+  {
+    return is_not_equal(pack<T,N>(a), b);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N, simd_emulation_>>
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N,simd_emulation_> const& a
+                , pack<T,N,simd_emulation_> const& b
+                ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::is_not_equal, a, b);
+  }
+
 } } }
 
 #endif

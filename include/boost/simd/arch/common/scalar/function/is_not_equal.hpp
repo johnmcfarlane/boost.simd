@@ -13,50 +13,44 @@
 
 #include <boost/config.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( is_not_equal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  is_not_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+            , bool a
+            , bool b
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 != a1);
-    }
-  };
+    return a != b;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_equal_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          , bd::scalar_< logical_<A0> >
-                          )
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_not_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+           , logical<T> const &a
+           , logical<T> const &b
+           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0.value() != a1.value());
-    }
-  };
+    return a.value() != b.value();
+  }
 
-  BOOST_DISPATCH_OVERLOAD (is_not_equal_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_not_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+           , T a
+           , T b
+           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a != b)
-    {
-      return a != b;
-    }
-  };
+    return a != b;
+  }
+
 } } }
 
 

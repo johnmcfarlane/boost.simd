@@ -21,37 +21,76 @@
 
 namespace boost { namespace simd { namespace ext
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_not_equal_with_equal_nans_
 
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return logical_xor(is_greater_equal(a0, a1), is_greater_equal(a1, a0));
-      }
-   };
+  // Native implementation
+  template<typename T, std::size_t N> //floating
+  BOOST_FORCEINLINE auto
+  s_is_not_equal_with_equal_nans_ ( pack<T,N> const& a0
+                              , pack<T,N> const& a1
+                              , std::true_type const &
+                              ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     logical_xor(is_greater_equal(a0, a1), is_greater_equal(a1, a0))
+  )
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_not_equal_with_equal_nans_
+  template<typename T, std::size_t N> //integral
+  BOOST_FORCEINLINE auto
+  s_is_not_equal_with_equal_nans_ ( pack<T,N> const& a0
+                              , pack<T,N> const& a1
+                              , std::false_type const &
+                              ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_equal(a0,a1)
+  )
 
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>   operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return is_not_equal(a0,a1);
-      }
-   };
+
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  is_not_equal_with_equal_nans_ ( BOOST_SIMD_SUPPORTS(simd_)
+                            , pack<T,N> const& a
+                            , pack<T,N> const& b
+                            ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     s_is_not_equal_with_equal_nans_(a, b, std::is_floating_point<T>())
+  )
+
+
+  // mixed implementation
+  template< typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_equal_with_equal_nans_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N> const& a
+            , U b
+            ) BOOST_NOEXCEPT
+  {
+    return is_not_equal_with_equal_nans(a, pack<T,N>(b));
+  }
+
+
+  template< typename T, std::size_t N, typename U >
+  BOOST_FORCEINLINE typename std::enable_if<std::is_convertible<U, T>::value
+                                            , as_logical_t< pack<T,N>>>::type
+  is_not_equal_with_equal_nans_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , U a
+            , pack<T,N> const& b
+            ) BOOST_NOEXCEPT
+  {
+    return is_not_equal_with_equal_nans(pack<T,N>(a), b);
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  as_logical_t<pack<T, N, simd_emulation_>>
+  is_not_equal_with_equal_nans_ ( BOOST_SIMD_SUPPORTS(simd_)
+            , pack<T,N,simd_emulation_> const& a
+            , pack<T,N,simd_emulation_> const& b
+            ) BOOST_NOEXCEPT
+  {
+    return map_to( simd::is_not_equal_with_equal_nans, a, b);
+  }
 
 } } }
 

@@ -63,10 +63,9 @@ namespace boost { namespace simd { namespace detail
     return _mm_unpacklo_epi8(a0,a1);
   }
 
-  template < typename T, std::size_t N
-            , typename =  typename std::enable_if<std::is_integral<T>::value>
-  >
-  pack<T,N,sse_> interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
+  template < typename T, std::size_t N>
+  typename std::enable_if<std::is_integral<T>::value, pack<T,N,sse_>>::type
+  interleave_first_ ( BOOST_SIMD_SUPPORTS(sse2_)
                                    ,  pack<T,N,sse_> const& a0
                                    , pack<T,N,sse_> const& a1
                                    ) BOOST_NOEXCEPT

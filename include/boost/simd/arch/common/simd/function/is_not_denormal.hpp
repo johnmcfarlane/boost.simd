@@ -14,42 +14,54 @@
 #include <boost/simd/constant/smallestposval.hpp>
 #include <boost/simd/constant/true.hpp>
 #include <boost/simd/function/abs.hpp>
+#include <boost/simd/function/exponentbits.hpp>
 #include <boost/simd/function/is_eqz.hpp>
+#include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/is_not_less.hpp>
 #include <boost/simd/function/logical_or.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_not_denormal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  v_is_not_denormal_ ( pack<T,N> const& a0
+                     , std::true_type const &
+                     ) BOOST_NOEXCEPT
   {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() (const A0& ) const BOOST_NOEXCEPT
-    {
-      return True<result>();
-    }
-  };
+    return logical_or(is_eqz(a0), is_greater(abs(a0), smallestposval(as(a0))));  // perhaps better but doexnot compile yet : logical_or(is_eqz(a0), is_nez(exponentbits(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF ( is_not_denormal_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::floating_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE  bs::as_logical_t<A0> operator() ( A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return logical_or(is_eqz(a0), is_not_less(bs::abs(a0), Smallestposval<A0>()));
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_not_denormal_ ( pack<T,N> const&
+                  , std::false_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    (True<pack<T,N>>())
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_denormal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_not_denormal_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_denormal_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N,simd_emulation_> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_not_denormal, a)
+  )
+
 } } }
 
 

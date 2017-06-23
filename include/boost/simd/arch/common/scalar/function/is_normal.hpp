@@ -14,9 +14,8 @@
 #include <boost/simd/function/is_not_denormal.hpp>
 #include <boost/simd/function/is_finite.hpp>
 #include <boost/simd/function/std.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
-#include <cmath>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {

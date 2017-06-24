@@ -30,7 +30,7 @@ namespace boost { namespace simd { namespace detail
   >
   BOOST_FORCEINLINE  as_logical_t<T>
   is_not_real_( BOOST_SIMD_SUPPORTS(cpu_)
-              , T a0
+              , T
               ) BOOST_NOEXCEPT
   {
     return False<T>();
@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
   template <typename T>
   BOOST_FORCEINLINE  as_logical_t<T>
   is_not_real_( BOOST_SIMD_SUPPORTS(cpu_)
-              , as_logical_t<T> const & a0
+              , as_logical_t<T> const &
               ) BOOST_NOEXCEPT
   {
     return False<T>();

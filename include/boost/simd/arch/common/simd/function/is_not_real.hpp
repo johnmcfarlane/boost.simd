@@ -22,7 +22,7 @@ namespace boost { namespace simd { namespace detail
                , pack<T,N> const&
                ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    False(as(a0));
+    (False<pack<T,N>>)
   )
 
 } } }

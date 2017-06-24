@@ -12,45 +12,55 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/constant/inf.hpp>
-#include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/true.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/is_not_equal.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_not_infinite_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-     using result = bs::as_logical_t<A0>;
-     BOOST_FORCEINLINE result operator()(const A0&) const BOOST_NOEXCEPT
-     {
-       return bs::True<result>();
-     }
-   };
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_not_infinite_ ( pack<T,N> const& a0
+                          , std::true_type const &
+                          ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_not_equal(bs::abs(a0),bs::Inf(as(a0)))
+  )
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_not_infinite_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_not_equal(bs::abs(a0),bs::Inf<A0>());
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_not_infinite_ ( pack<T,N> const&
+                          , std::false_type const &
+                          ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    ( True<pack<T,N>>())
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_infinite_ ( BOOST_SIMD_SUPPORTS(simd_)
+                        , pack<T,N> const& a
+                        ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_not_infinite_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_infinite_ ( BOOST_SIMD_SUPPORTS(simd_)
+                        , pack<T,N,simd_emulation_> const& a
+                        ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+     map_to( simd::is_not_infinite, a)
+  )
 
 } } }
+
 #endif
 

@@ -11,52 +11,52 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_INFINITE_HPP_INCLUDED
 
+#include <boost/simd/function/std.hpp>
+#include <boost/simd/function/is_eqz.hpp>
+#include <boost/simd/constant/true.hpp>
 #include <boost/simd/constant/inf.hpp>
-#include <boost/simd/function/abs.hpp>
-#include <boost/simd/logical.hpp>
-//#include <boost/simd/constant/true.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_not_infinite_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                            )
-  {
-    BOOST_FORCEINLINE bool operator() ( A0 ) const BOOST_NOEXCEPT
-    {
-      return true;
-    }
-  };
+  BOOST_FORCEINLINE bool
+   is_not_infinite_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool
+                ) BOOST_NOEXCEPT
+   {
+     return true;
+   }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_infinite_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE logical<T>
+  s_is_not_infinite_( T a0
+                , std::true_type const &
+                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 ) const BOOST_NOEXCEPT
-    {
-      return {true};
-    }
-  };
+    return   (simd::abs(a0) != Inf<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_infinite_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE logical<T>
+  s_is_not_infinite_( T
+                , std::false_type const &
+                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return  (simd::abs(a0) != Inf<A0>());
-    }
-  };
+    return True<T>();
+  }
+
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE logical<T>
+  is_not_infinite_( BOOST_SIMD_SUPPORTS(cpu_)
+            , T a0
+            ) BOOST_NOEXCEPT
+  {
+    return s_is_not_infinite_(a0, std::is_floating_point<T>());
+  }
+
 } } }
-
 
 #endif

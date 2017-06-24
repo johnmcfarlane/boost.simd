@@ -90,8 +90,8 @@ STF_CASE ("is_not_imag bool")
    STF_TYPE_IS(r_t, bool);
 
    // specific values tests
-  STF_EQUAL(is_not_imag(true), false);
-  STF_EQUAL(is_not_imag(false), true);
+  STF_EQUAL(is_not_imag(true), true);
+  STF_EQUAL(is_not_imag(false), false);
 }
 
 

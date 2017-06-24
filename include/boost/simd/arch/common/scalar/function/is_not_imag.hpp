@@ -11,37 +11,42 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
 
-#include <boost/simd/function/is_nez.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/function/is_eqz.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_not_imag_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bool  operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return !a0;
-    }
-  };
+  BOOST_FORCEINLINE bool
+   is_not_imag_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool a0
+                ) BOOST_NOEXCEPT
+   {
+     return a0;
+   }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_imag_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template <typename T,
+            typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE  as_logical_t<T>
+  is_not_imag_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0
+              ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0  a0) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0);
-    }
-  };
+    return a0;
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE  as_logical_t<T>
+  is_not_imag_( BOOST_SIMD_SUPPORTS(cpu_)
+              , as_logical_t<T> const & a0
+              ) BOOST_NOEXCEPT
+  {
+    return a0;
+  }
+
 } } }
 
 
 #endif
+

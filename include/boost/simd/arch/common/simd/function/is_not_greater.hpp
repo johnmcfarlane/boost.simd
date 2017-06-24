@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace detail
                    , std::false_type const &
                    ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    is_less_equal(b, a)
+    is_less_equal(a, b)
   )
 
   template<typename T, std::size_t N, typename X>

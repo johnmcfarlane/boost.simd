@@ -11,26 +11,20 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_NOT_IMAG_HPP_INCLUDED
 
-#include <boost/simd/function/scalar/is_nez.hpp>
-#include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/config.hpp>
+#include <boost/simd/function/is_eqz.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_not_imag_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
-  {
-    BOOST_FORCEINLINE as_logical_t<A0> operator() ( A0 const&  a0) const BOOST_NOEXCEPT
-    {
-      return is_nez(a0);
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_imag_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const& a0
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_nez(a0)
+  )
+
 } } }
 
 

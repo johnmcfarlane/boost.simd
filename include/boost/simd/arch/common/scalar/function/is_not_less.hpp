@@ -11,52 +11,68 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_LESS_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_NOT_LESS_HPP_INCLUDED
 
-#include <boost/simd/function/is_nan.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/function/is_unord.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_not_less_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  is_not_less_ ( BOOST_SIMD_SUPPORTS(cpu_)
+            , bool a
+            , bool b
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE  bool operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 >= a1);
-    }
-  };
+    return a >= b;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_less_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_not_less_( BOOST_SIMD_SUPPORTS(cpu_)
+           , logical<T> const &a
+           , logical<T> const &b
+           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 >= a1);
-    }
-  };
+    return a.value() >=  b.value();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_not_less_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_not_less_( T a
+                 , T b
+                 ,  std::true_type  const &
+                 ) BOOST_NOEXCEPT
   {
-     BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 >= a1) || simd::is_nan(a0) || simd::is_nan(a1);
-    }
-  };
+    return (a >= b) || is_unord(a, b);
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_not_less_( T a
+                   , T b
+                   ,  std::false_type  const &
+                   ) BOOST_NOEXCEPT
+  {
+    return a >= b;
+  }
+
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_not_less_( BOOST_SIMD_SUPPORTS(cpu_)
+               , T a
+               , T b
+               ) BOOST_NOEXCEPT
+  {
+    return s_is_not_less_(a, b,  std::is_floating_point<T>());
+  }
+
 } } }
 
-
 #endif
+

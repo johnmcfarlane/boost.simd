@@ -13,50 +13,49 @@
 
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/is_even.hpp>
-#include <boost/simd/function/dec.hpp>
-#include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/constant/one.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_odd_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bool operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+   BOOST_FORCEINLINE bool
+   is_odd_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool a0
+                ) BOOST_NOEXCEPT
+   {
+     return a0;
+   }
 
-  BOOST_DISPATCH_OVERLOAD ( is_odd_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_odd_( T a0
+            , std::true_type const &
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return (bitwise_and(a0,One<A0>()) != 0);
-    }
-  };
+    return is_even(dec(a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_odd_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_is_odd_( T a0
+            , std::false_type const &
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return is_even(dec(a0));
-    }
-  };
+    return (bitwise_and(a0,One<T>()) != 0);
+  }
+
+  template <typename T,
+            typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_odd_( BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0
+              ) BOOST_NOEXCEPT
+  {
+    return s_is_odd_(a0, std::is_floating_point<T>());
+  }
+
 } } }
-
 
 #endif

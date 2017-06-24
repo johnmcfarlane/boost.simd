@@ -12,45 +12,51 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_IS_ODD_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
-#include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/function/is_even.hpp>
 #include <boost/simd/function/is_nez.hpp>
-#include <boost/simd/function/dec.hpp>
+#include <boost/simd/function/is_even.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(is_odd_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return is_nez(bitwise_and(a0, One<A0>()));
-      }
-   };
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_odd_ ( pack<T,N> const& a0
+                  , std::true_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_even(dec(a0))
+  )
 
-   BOOST_DISPATCH_OVERLOAD_IF(is_odd_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return bs::is_even(dec(a0));
-      }
-   };
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto v_is_odd_ ( pack<T,N> const& a0
+                  , std::false_type const &
+                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    is_nez(bitwise_and(a0, One(as(a0))))
+  )
+
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_odd_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    v_is_odd_(a, std::is_floating_point<T>())
+  )
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_odd_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N,simd_emulation_> const& a
+                ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::is_odd, a)
+  )
 
 } } }
 #endif
-

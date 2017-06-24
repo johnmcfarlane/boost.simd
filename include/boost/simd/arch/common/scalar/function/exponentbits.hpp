@@ -18,20 +18,18 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( exponentbits_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T
+           , typename =  std::enable_if<std::is_floating_point<T>>
+           >
+  BOOST_FORCEINLINE
+  si_t<T> sexponent_(BOOST_SIMD_SUPPORTS(cpu_)
+                    ,  T a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return bitwise_and((2*simd::Maxexponent<A0>()+1)<<Nbmantissabits<A0>(), a0);
-    }
-  };
+    return bitwise_and((2*simd::Maxexponent<T>()+1)<<Nbmantissabits<T>(), a0);
+  }
+
 } } }
 
 

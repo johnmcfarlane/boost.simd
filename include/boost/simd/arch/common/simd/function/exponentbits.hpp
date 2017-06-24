@@ -12,35 +12,29 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_EXPONENTBITS_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/constant/maxexponent.hpp>
 #include <boost/simd/constant/nbmantissabits.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(exponentbits_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0, signed>;
-      BOOST_FORCEINLINE result operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        using s_type = bd::scalar_of_t<A0>;
-        using sint_type = bd::scalar_of_t<result>;
-        const sint_type me = Maxexponent<s_type>();
-        const sint_type nmb= Nbmantissabits<s_type>();
-        const result Mask =result((2*me+1)<<nmb);
-        return (bitwise_and(Mask, a0));
-      }
-   };
-
+  template<  typename T, std::size_t N
+             , typename =  std::enable_if<std::is_floating_point<T>>
+             >
+  BOOST_FORCEINLINE
+  si_t<pack<T, N>> exponentbits_( BOOST_SIMD_SUPPORTS(simd_)
+                                , pack<T,N> const& a0
+                                ) BOOST_NOEXCEPT
+  {
+    using r_t =  si_t<pack<T, N>;
+    using s_t =  si_t<T>;
+    s_t me = Maxexponent<s_type>();
+    s_t nmb= Nbmantissabits<s_type>();
+    r_t mask =result((2*me+1)<<nmb);
+    return (bitwise_and(mask, a0));
+  }
 
 } } }
 

@@ -18,7 +18,7 @@ namespace boost { namespace simd { namespace detail
 {
   BOOST_FORCEINLINE
   as_logical_t<pack<float,4,sse_>>
-  is_not_greater_ ( BOOST_SIMD_SUPPORTS(sse1_)
+  is_not_greater_equal_ ( BOOST_SIMD_SUPPORTS(sse1_)
               , pack<float,4,sse_> const& a0
               , pack<float,4,sse_> const& a1
               ) BOOST_NOEXCEPT

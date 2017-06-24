@@ -13,8 +13,6 @@
 #include <boost/simd/function/std.hpp>
 
 #include <boost/simd/constant/false.hpp>
-#include <boost/simd/constant/inf.hpp>
-#include <boost/simd/constant/minf.hpp>
 #include <boost/simd/logical.hpp>
 #include <boost/config.hpp>
 #include <type_traits>

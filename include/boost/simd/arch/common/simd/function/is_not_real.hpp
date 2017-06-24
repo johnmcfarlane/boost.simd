@@ -13,27 +13,18 @@
 
 #include <boost/simd/constant/false.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF ( is_not_real_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          )
-  {
-    using result = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result operator() ( A0 const& ) const BOOST_NOEXCEPT
-    {
-      return False<result>();
-    }
-  };
-} } }
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto is_not_real_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N> const&
+               ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    False(as(a0));
+  )
 
+} } }
 
 #endif

@@ -21,18 +21,18 @@
 namespace boost { namespace simd { namespace detail
 {
   template<  typename T, std::size_t N
-             , typename =  std::enable_if<std::is_floating_point<T>>
+             , typename =  std::enable_if<std::is_floating_point<T>::value>
              >
   BOOST_FORCEINLINE
   si_t<pack<T, N>> exponentbits_( BOOST_SIMD_SUPPORTS(simd_)
                                 , pack<T,N> const& a0
                                 ) BOOST_NOEXCEPT
   {
-    using r_t =  si_t<pack<T, N>;
+    using r_t =  si_t<pack<T, N>>;
     using s_t =  si_t<T>;
-    s_t me = Maxexponent<s_type>();
-    s_t nmb= Nbmantissabits<s_type>();
-    r_t mask =result((2*me+1)<<nmb);
+    s_t me = Maxexponent<T>();
+    s_t nmb= Nbmantissabits<T>();
+    r_t mask = r_t((2*me+1)<<nmb);
     return (bitwise_and(mask, a0));
   }
 

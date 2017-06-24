@@ -19,7 +19,7 @@
 #include <boost/simd/function/logical_not.hpp>
 #include <boost/simd/function/logical_xor.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
 
   // Native implementation

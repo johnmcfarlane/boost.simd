@@ -15,6 +15,7 @@
 #include <boost/simd/constant/true.hpp>
 #include <boost/simd/function/exponentbits.hpp>
 #include <boost/simd/function/is_nez.hpp>
+#include <boost/simd/function/is_eqz.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 

@@ -19,7 +19,7 @@
 namespace boost { namespace simd { namespace detail
 {
  BOOST_FORCEINLINE bool
-  is_not_equal_ ( BOOST_SIMD_SUPPORTS(cpu_)
+  is_not_equal_with_equal_nans ( BOOST_SIMD_SUPPORTS(cpu_)
             , bool a
             , bool b
             ) BOOST_NOEXCEPT
@@ -31,7 +31,7 @@ namespace boost { namespace simd { namespace detail
             , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
   BOOST_FORCEINLINE as_logical_t<T>
-  is_not_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+  is_not_equal_with_equal_nans_( BOOST_SIMD_SUPPORTS(cpu_)
            , logical<T> const &a
            , logical<T> const &b
            ) BOOST_NOEXCEPT
@@ -40,19 +40,18 @@ namespace boost { namespace simd { namespace detail
   }
 
   template <typename T>
-  >
   BOOST_FORCEINLINE as_logical_t<T>
-  s_is_not_equal_( T a
+  s_is_not_equal_with_equal_nans_( T a
                  , T b
                  ,  std::true_type  const &
                  ) BOOST_NOEXCEPT
   {
     return (a >= b) != (b >= a);   //(a != b) && !(simd::is_nan(a0) && simd::is_nan(a1));;
   }
+
   template <typename T>
-  >
   BOOST_FORCEINLINE as_logical_t<T>
-  s_is_not_equal_( T a
+  s_is_not_equal_with_equal_nans_( T a
                  , T b
                  ,  std::false_type  const &
                  ) BOOST_NOEXCEPT
@@ -64,12 +63,12 @@ namespace boost { namespace simd { namespace detail
             , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
   >
   BOOST_FORCEINLINE as_logical_t<T>
-  is_not_equal_( BOOST_SIMD_SUPPORTS(cpu_)
+  is_not_equal_with_equal_nans_( BOOST_SIMD_SUPPORTS(cpu_)
                , T a
                , T b
                ) BOOST_NOEXCEPT
   {
-    return s_is_not_equal_(a, b,  std::is_floating_point<T>());
+    return s_is_not_equal_with_equal_nans_(a, b,  std::is_floating_point<T>());
   }
 
 } } }

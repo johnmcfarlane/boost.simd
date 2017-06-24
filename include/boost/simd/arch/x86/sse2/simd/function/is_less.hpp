@@ -68,7 +68,7 @@ namespace boost { namespace simd { namespace detail
            , pack<int64_t,2,sse_> const& a1
            ) BOOST_NOEXCEPT
   {
-    return map_to(simd::is_less, a0, a1);
+    return as_logical_t<pack<int64_t,2,sse_>>{a0[0] < a1[0], a0[1] < a1[1]}; //map_to(simd::is_less, a0, a1);
   }
 
   template < typename T, std::size_t N >

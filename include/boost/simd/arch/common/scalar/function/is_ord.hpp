@@ -11,53 +11,48 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_ORD_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_ORD_HPP_INCLUDED
 
-#include <boost/simd/function/is_not_nan.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/function/is_not_nan.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( is_ord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bool operator() ( A0 , A0 ) const BOOST_NOEXCEPT
-    {
-      return true;
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( is_ord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  is_ord_ ( BOOST_SIMD_SUPPORTS(cpu_)
+            , bool
+            , bool
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 , A0 ) const BOOST_NOEXCEPT
-    {
-      return {true};
-    }
-  };
+    return true;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_ord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_ord_( BOOST_SIMD_SUPPORTS(cpu_)
+           , logical<T> const &
+           , logical<T> const &
+           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return is_not_nan(a0) && is_not_nan(a1);
-    }
-  };
+    return true;
+  }
+
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_ord_( BOOST_SIMD_SUPPORTS(cpu_)
+           , T a0
+           , T a1
+           ) BOOST_NOEXCEPT
+  {
+    return is_not_nan(a0) && is_not_nan(a1);
+  }
+
 } } }
-
 
 #endif

@@ -14,62 +14,71 @@
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/ten.hpp>
 #include <boost/simd/function/abs.hpp>
+#include <boost/simd/function/exp10.hpp>
 #include <boost/simd/function/is_ltz.hpp>
 #include <boost/simd/function/is_odd.hpp>
 #include <boost/simd/function/rec.hpp>
 #include <boost/simd/function/sqr.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
 #include <boost/config.hpp>
-#include <boost/mpl/if.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( tenpower_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::int_<A0> >
-                          )
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_tenpower_(T a, detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 expo) const BOOST_NOEXCEPT
-    {
+    return exp10(a);
+  }
 
-      result_t result = One<result_t>();
-      result_t base = Ten<result_t>();
-      auto neg = is_ltz(expo);
-      expo =  boost::simd::abs(expo);
-      while(expo)
-      {
-        if (is_odd(expo)) result *= base;
-        expo >>= 1;
-        base = sqr(base);
-      }
-      return neg ? rec(result) : result;
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( tenpower_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::uint_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE f_t<T>
+  s_tenpower_(T expo, detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 expo) const BOOST_NOEXCEPT
+    using r_t =  f_t<T>;
+
+    r_t result = One<r_t>();
+    r_t base = Ten<r_t>();
+    auto neg = is_ltz(expo);
+    expo = simd::abs(expo);
+    while(expo)
     {
-      result_t result = One<result_t>();
-      result_t base = Ten<result_t>();
-      while(expo)
-      {
-        if (is_odd(expo)) result *= base;
-        expo >>= 1;
-        base = sqr(base);
-      }
-      return result;
+      if (is_odd(expo)) result *= base;
+      expo >>= 1;
+      base = sqr(base);
     }
-  };
+    return neg ? rec(result) : result;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_tenpower_(T expo, detail::case_<2> const&) BOOST_NOEXCEPT
+  {
+    using r_t =  f_t<T>;
+
+    r_t result = One<r_t>();
+    r_t base = Ten<r_t>();
+    while(expo)
+    {
+      if (is_odd(expo)) result *= base;
+      expo >>= 1;
+      base = sqr(base);
+    }
+    return result;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE f_t<T>
+  tenpower_(BOOST_SIMD_SUPPORTS(cpu_)
+                          , T a) BOOST_NOEXCEPT
+  {
+    return s_tenpower_(a, fsu_picker<T>{});
+  }
+
 } } }
 
 

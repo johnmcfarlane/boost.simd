@@ -11,6 +11,7 @@
 #include <boost/simd/pack.hpp>
 #include <boost/simd/function/tenpower.hpp>
 #include <boost/simd/function/bits.hpp>
+#include <boost/simd/function/min.hpp>
 #include <boost/simd/meta/cardinal_of.hpp>
 #include <simd_test.hpp>
 #include <boost/simd/constant/inf.hpp>
@@ -38,7 +39,7 @@ void test(Env& runtime)
   fT b[N];
   for(int i = 0; i < N; ++i)
   {
-    a1[i] = (i%2) ? T(i) : T(-i);
+    a1[i] = (i%2) ? T(i) : bs::min(T(-i), T(i));
     b[i] = bs::tenpower(a1[i]) ;
   }
   p_t aa1(&a1[0], &a1[0]+N);
@@ -59,7 +60,7 @@ STF_CASE_TPL("Check tenpower on pack" , (int32_t)(int64_t)(uint32_t)(uint64_t))/
 
 
 
-STF_CASE_TPL (" tenpower unsigned_int", STF_UNSIGNED_INTEGRAL_TYPES)
+STF_CASE_TPL (" tenpower unsigned_int", (uint32_t)(uint64_t))//STF_UNSIGNED_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;
@@ -75,7 +76,7 @@ STF_CASE_TPL (" tenpower unsigned_int", STF_UNSIGNED_INTEGRAL_TYPES)
   STF_ULP_EQUAL(tenpower(bs::Zero<p_t>()), bs::One<r_t>(), 0.5);
 } // end of test for unsigned_int_
 
-STF_CASE_TPL (" tenpower signed_int",  STF_SIGNED_INTEGRAL_TYPES)
+STF_CASE_TPL (" tenpower signed_int",  (int32_t)(int64_t))//STF_SIGNED_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   namespace bd = boost::dispatch;

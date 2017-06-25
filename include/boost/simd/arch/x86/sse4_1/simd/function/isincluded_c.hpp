@@ -12,43 +12,46 @@
 #define BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_ISINCLUDED_C_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( isincluded_c_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                         )
+  template < typename T, std::size_t N >
+  BOOST_FORCEINLINE bool
+  v_isincluded_c_ ( pack<T,N,sse_> const& a0
+                , pack<T,N,sse_> const& a1
+                , std::false_type const &
+                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0
-                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_testz_si128(a1, a0);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( isincluded_c_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::floating_<A0>, bs::sse_>
-                          , bs::pack_<bd::floating_<A0>, bs::sse_>
-                         )
+    return _mm_testz_si128(a1, a0);
+  }
+
+  template < typename T, std::size_t N >
+  BOOST_FORCEINLINE bool
+  v_isincluded_c_ ( pack<T,N,sse_> const& a0
+                , pack<T,N,sse_> const& a1
+                , std::true_type const &
+                ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0
-                                      , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      using i_t = bd::as_integer_t<A0>;
-      return isincluded_c(bitwise_cast<i_t>(a0), bitwise_cast<i_t>(a1));
-    }
-  };
+    using p_t = i_t<pack<T, N>>;
+    return isincluded_c(bitwise_cast<p_t>(a0), bitwise_cast<p_t>(a1));
+  }
+
+  template < typename T, std::size_t N >
+  BOOST_FORCEINLINE bool
+  isincluded_c_ ( BOOST_SIMD_SUPPORTS(sse2_)
+           , pack<T,N,sse_> const& a0
+           , pack<T,N,sse_> const& a1
+           ) BOOST_NOEXCEPT
+  {
+    return v_isincluded_c_(a0, a1, std::is_floating_point<T>());
+  }
+
 
 } } }
 
 #endif
+

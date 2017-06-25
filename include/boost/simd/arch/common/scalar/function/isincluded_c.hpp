@@ -9,26 +9,44 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ISINCLUDED_C_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ISINCLUDED_C_HPP_INCLUDED
 
-#include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/function/is_eqz.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/function/scalar/bitwise_or.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( isincluded_c_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          )
+
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  s_isincluded_c_( T a0
+                 , T a1
+                 , std::true_type  const &
+                 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return  is_eqz(bitwise_and(a1,a0));
-    }
-  };
+    using p_t = i_t<T>;
+    return  (bitwise_cast<p_t>(a0) & bitwise_cast<p_t>(a1)) == Zero<p_t>();
+  }
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  s_isincluded_c_( T a0
+                 , T a1
+                 , std::false_type const &
+                 ) BOOST_NOEXCEPT
+  {
+    return  !(a0 & a1);
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  isincluded_c_( BOOST_SIMD_SUPPORTS(cpu_)
+               , T a0
+               , T a1
+               ) BOOST_NOEXCEPT
+  {
+    return  s_isincluded_c_(a0, a1, std::is_floating_point<T>()); ;
+  }
+
 } } }
+
 
 #endif

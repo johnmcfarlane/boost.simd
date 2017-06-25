@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_ISINCLUDED_C_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/isincluded_c.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/isincluded_c.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)

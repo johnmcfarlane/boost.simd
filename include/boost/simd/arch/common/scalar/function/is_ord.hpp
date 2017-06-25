@@ -13,7 +13,6 @@
 
 #include <boost/simd/logical.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/function/is_not_nan.hpp>
 #include <boost/config.hpp>
 #include <type_traits>
 
@@ -50,7 +49,7 @@ namespace boost { namespace simd { namespace detail
            , T a1
            ) BOOST_NOEXCEPT
   {
-    return is_not_nan(a0) && is_not_nan(a1);
+    return (a0 == a0) && (a1 == a1);
   }
 
 } } }

@@ -11,56 +11,50 @@
 
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/all.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/logical_or.hpp>
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD(is_simd_logical_
-                         , (typename A0,typename X)
-                         , bd::cpu_
-                         , bs::pack_<bd::integer_<A0>,X>
-                         )
+ //================================================================================================
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool vis_simd_logical_( pack<T,N> const& a0
+                        , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      return bs::all(logical_or(is_equal(a0, Allbits<A0>()), is_eqz(a0)));
-    }
-  };
+    return is_simd_logical(bitwise_cast<si_t<pack<T, N>>>(a0));
+  }
 
-  BOOST_DISPATCH_OVERLOAD(is_simd_logical_
-                         , (typename A0,typename X)
-                         , bd::cpu_
-                         , bs::pack_<bd::floating_<A0>,X>
-                         )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool vis_simd_logical_( pack<T,N> const& a0
+                        , std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0, unsigned>;
-      return is_simd_logical(bitwise_cast<iA0>(a0));
-    }
-  };
+    return bs::all(logical_or(is_equal(a0, Allbits<pack<T, N>>()), is_eqz(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD(is_simd_logical_
-                         , (typename A0,typename X)
-                         , bd::cpu_
-                         , bs::pack_<bs::logical_<A0>,X>
-                         )
-
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool is_simd_logical_(BOOST_SIMD_SUPPORTS(simd_)
+                       , pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator()(A0 const&) const
-    {
-      return true;
-    }
-  };
+    return vis_simd_logical_(a0, std::is_floating_point<T>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool is_simd_logical_(BOOST_SIMD_SUPPORTS(simd_)
+                       , as_logical_t<pack<T,N>> const& ) BOOST_NOEXCEPT
+  {
+    return true;
+  }
+
 } } }
 
 #endif

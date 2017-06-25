@@ -14,6 +14,8 @@
 
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/function/logical_and.hpp>
+#include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/constant/true.hpp>
 
 
@@ -27,7 +29,7 @@ namespace boost { namespace simd { namespace detail
                  , std::true_type const &
                  ) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    (a0 == a0) && (a1 == a1)
+    logical_and((a0 == a0), (a1 == a1))
   )
 
   template<typename T, std::size_t N>

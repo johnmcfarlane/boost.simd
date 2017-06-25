@@ -16,9 +16,10 @@
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/is_equal.hpp>
+#include <boost/simd/function/is_less.hpp>
 #include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/logical_and.hpp>
-#include <boost/simd/function/logical_or.hpp>
+#include <boost/simd/function/bitwise_and.hpp>
+#include <boost/simd/function/bitwise_or.hpp>
 #include <boost/simd/function/shuffle.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
@@ -80,11 +81,17 @@ namespace boost { namespace simd { namespace detail
     du_t bl = shuffle<0,0,2,2>(bitwise_cast<du_t>(a1));
     d_t ah  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a0));
     d_t bh  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a1));
-    return bitwise_cast<l_t>(logical_or(is_greater(ah,bh)
-                                       , logical_and(is_equal(ah,bh)
-                                                    , is_greater(al,bl))
+    return bitwise_cast<l_t>(bitwise_or(is_less(bh, ah)
+                                       , bitwise_and(is_equal(ah,bh)
+                                                    , is_less(bl,al))
                                        )
                             );
+
+//      return bitwise_cast<l_t>(logical_or(is_less(bh, ah)
+//                                        , logical_and(is_equal(ah,bh)
+//                                                     , is_less(bl,al))
+//                                        )
+//                             );
   }
 
   template < typename T, std::size_t N >

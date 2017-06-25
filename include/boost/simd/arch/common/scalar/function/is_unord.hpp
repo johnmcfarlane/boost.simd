@@ -12,82 +12,46 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IS_UNORD_HPP_INCLUDED
 #include <boost/simd/function/std.hpp>
 
-#include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
-#include <cmath>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( is_unord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::bool_<A0> >
-                          , bd::scalar_< bd::bool_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bool operator() ( A0 , A0 ) const BOOST_NOEXCEPT
-    {
-      return false;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_unord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 , A0 ) const BOOST_NOEXCEPT
-    {
-      return {false};
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_unord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return simd::is_nan(a0) || simd::is_nan(a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( is_unord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() (const std_tag &
-                                             , A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return std::isunordered(a0, a1);
-    }
-  };
 
-   BOOST_DISPATCH_OVERLOAD ( is_unord_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  is_unord_ ( BOOST_SIMD_SUPPORTS(cpu_)
+            , bool
+            , bool
+            ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() (const std_tag &
-                                             , A0 , A0 ) const BOOST_NOEXCEPT
-    {
-      return {false};
-    }
-  };
+    return false;
+  }
+
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE as_logical_t<T>
+  is_unord_( BOOST_SIMD_SUPPORTS(cpu_)
+           , logical<T> const &
+           , logical<T> const &
+           ) BOOST_NOEXCEPT
+  {
+    return false;
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE typename std::enable_if<std::is_arithmetic<T>::value
+                                            , as_logical_t<T>>::type
+  is_unord_( BOOST_SIMD_SUPPORTS(cpu_)
+           , T a0
+           , T a1
+           ) BOOST_NOEXCEPT
+  {
+    return (a0!= a0) || (a1!= a1);
+  }
+
 } } }
-
 
 #endif

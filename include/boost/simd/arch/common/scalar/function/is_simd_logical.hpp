@@ -12,49 +12,59 @@
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
-  BOOST_DISPATCH_OVERLOAD ( is_simd_logical_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::integer_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  is_simd_logical_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                   , bool
+                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0 == genmask(a0);
-    }
-  };
+    return true;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_simd_logical_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  is_simd_logical_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                   , logical<T>
+                   ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return is_simd_logical(bitwise_cast<bd::as_integer_t<A0>>(a0));
-    }
-  };
+    return true;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( is_simd_logical_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<logical_<A0> >
-                          )
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  s_is_simd_logical_( T a0
+                    , std::true_type const &
+                    ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 const&) const BOOST_NOEXCEPT
-    {
-      return {true};
-    }
-  };
+    return is_simd_logical(bitwise_cast<si_t<T>>(a0));;
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE bool
+  s_is_simd_logical_( T a0
+                    , std::false_type const &
+                    ) BOOST_NOEXCEPT
+  {
+    return a0 == genmask(a0);
+  }
+
+  template <typename T,
+            typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE bool
+  is_simd_logical_( BOOST_SIMD_SUPPORTS(cpu_)
+                  , T a0
+                  ) BOOST_NOEXCEPT
+  {
+    return s_is_simd_logical_(a0, std::is_floating_point<T>());
+  }
+
 } } }
+
 
 #endif

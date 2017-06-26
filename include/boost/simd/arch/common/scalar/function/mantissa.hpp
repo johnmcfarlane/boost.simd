@@ -18,40 +18,42 @@
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( mantissa_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T smantissa_( T a0
+              , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    if(!a0) return a0;
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if(is_invalid(a0)) return a0;
+#endif
+    return bitwise_or(bitwise_and(a0,Mantissamask<T>()),One<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( mantissa_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T smantissa_( T a0
+              , std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if(!a0) return a0;
-    #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_invalid(a0)) return a0;
-    #endif
-      return bitwise_or(bitwise_and(a0,Mantissamask<A0>()),One<A0>());
-    }
-  };
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T mantissa_(BOOST_SIMD_SUPPORTS(cpu_)
+             , T a) BOOST_NOEXCEPT
+  {
+    return smantissa_(a, std::is_floating_point<T>());
+  }
+
 } } }
 
-
 #endif
+

@@ -21,8 +21,8 @@
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
 #include <boost/simd/function/bitwise_and.hpp>
-
 #include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 #ifndef BOOST_SIMD_NO_INVALIDS
 #include <boost/simd/function/if_zero_else.hpp>

@@ -14,52 +14,55 @@
 
 #include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/function/max.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 #include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
- BOOST_DISPATCH_OVERLOAD ( maxnum_
-                         , (typename A0)
-                         , bd::cpu_
-                         , bd::scalar_< bd::arithmetic_<A0> >
-                         , bd::scalar_< bd::arithmetic_<A0> >
-                         )
- {
-   BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-   {
-     return boost::simd::max(a0, a1);
-   }
- };
-  BOOST_DISPATCH_OVERLOAD ( maxnum_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  ///////////////////////////////////////////////////////////////////////
+  // regular
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_maxnum_( T a0
+           , T a1
+           , std::true_type const &
+           ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      if (is_nan(a0)) return a1;
-      else return simd::max(a0, a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( maxnum_
-                          , (typename A0)
-                          , bd::cpu_
-                          , boost::simd::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (const std_tag &,  A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return std::fmax(a0, a1);
-    }
-  };
-} } }
+    return (is_nan(a0)) ? a1 : simd::max(a0, a1);
+  }
 
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_maxnum_( T a0
+           , T a1
+           , std::false_type const &
+           ) BOOST_NOEXCEPT
+  {
+    return simd::max(a0, a1);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  maxnum_(BOOST_SIMD_SUPPORTS(cpu_)
+      , T a0
+      , T a1) BOOST_NOEXCEPT
+  {
+    return  s_maxnum_(a0, a1, std::is_floating_point<T>());
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // std
+  template<typename T>
+  BOOST_FORCEINLINE T
+  maxnum_(BOOST_SIMD_SUPPORTS(cpu_)
+      , std_tag const &
+      , T a0
+      , T a1) BOOST_NOEXCEPT
+  {
+    return std::fmax(a0, a1);
+  }
+
+} } }
 
 #endif

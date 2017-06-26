@@ -13,25 +13,48 @@
 
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/function/is_nez.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( mask2logical_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+ BOOST_FORCEINLINE bool
+   mask2logical_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                , bool a0
+                ) BOOST_NOEXCEPT
+   {
+     return a0;
+   }
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_mask2logical_( T a0
+                , std::true_type const &
+                ) BOOST_NOEXCEPT
   {
-    auto operator() ( A0 a0) const BOOST_NOEXCEPT -> decltype(is_nez(a0))
-    {
-      BOOST_ASSERT_MSG((a0 != A0(0)) || (a0 != Allbits<A0>()), "Argument to mask2logical is not a valid logical mask");
-      return is_nez(a0);
-    }
-  };
+    return  a0;
+  }
+
+  template <typename T>
+  BOOST_FORCEINLINE as_logical_t<T>
+  s_mask2logical_( T a0
+                , std::false_type const &
+                ) BOOST_NOEXCEPT
+  {
+    return is_nez(a0);
+  }
+
+  template <typename T
+            , typename =  typename std::enable_if<std::is_arithmetic<T>::value>
+  >
+  BOOST_FORCEINLINE logical<T>
+  mask2logical_( BOOST_SIMD_SUPPORTS(cpu_)
+            , T a0
+            ) BOOST_NOEXCEPT
+  {
+    return s_mask2logical_(a0, std::is_floating_point<T>());
+  }
+
 } } }
 
 

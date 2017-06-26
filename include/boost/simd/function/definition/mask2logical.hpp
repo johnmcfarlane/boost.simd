@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_MASK2LOGICAL_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, mask2logical_, boost::dispatch::elementwise_<mask2logical_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, mask2logical_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::mask2logical_,mask2logical);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(mask2logical_,mask2logical);
 } }
 
 #endif
+

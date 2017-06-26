@@ -13,39 +13,53 @@
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/is_nez.hpp>
+#include <boost/simd/constant/zero.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/meta/is_bitwise_logical.hpp>
 #include <boost/assert.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF (  mask2logical_
-                             , (typename A0,typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::arithmetic_<A0>,X>
-                             )
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  v_mask2logical_ ( pack<T,N> const& a0
+                  , std::true_type const &
+                  ) BOOST_NOEXCEPT
   {
-    using result_t = bs::as_logical_t<A0>;
-    BOOST_FORCEINLINE result_t operator()(const A0& a0) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(assert_is_mask(a0), "Argument to mask2logical is not a valid logical mask");
-      return do_(a0, typename is_bitwise_logical<A0>::type{});
-    }
+    return bitwise_cast<as_logical_t<pack<T,N>>>(a0);
+  }
 
-    BOOST_FORCEINLINE result_t do_(const A0& a0, tt::true_type const&) const BOOST_NOEXCEPT
-    {
-      return bitwise_cast<result_t>(a0);
-    }
+  template<typename T, std::size_t N>    //this is never to be called
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  v_mask2logical_ ( pack<T,N> const& a0
+                  , std::false_type const &
+                  ) BOOST_NOEXCEPT
+  {
+    return is_nez(a0);
+  }
 
-    BOOST_FORCEINLINE result_t do_(const A0& a0, tt::false_type const&) const BOOST_NOEXCEPT
-    {
-      return a0 != 0;
-    }
-  };
-} } }
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+  mask2logical_ ( BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a
+                ) BOOST_NOEXCEPT
+  {
+
+    BOOST_ASSERT_MSG(assert_is_mask(a), "Argument to mask2logical is not a valid logical mask");
+    return v_mask2logical_(a, is_bitwise_logical<pack<T,N>>());
+  }
+
+  // Emulated implementation
+    template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto mask2logical_ ( BOOST_SIMD_SUPPORTS(simd_)
+                     , pack<T,N,simd_emulation_> const& a
+                     ) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to( simd::mask2logical, a)
+  )
+
+    } } }
 
 #endif

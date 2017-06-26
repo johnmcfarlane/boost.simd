@@ -12,50 +12,37 @@
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_MAX_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( max_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<double,2,sse_>
+  max_ ( BOOST_SIMD_SUPPORTS(sse2_)
+       , pack<double,2,sse_> const& a0
+       , pack<double,2,sse_> const& a1
+       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_max_pd(a1,a0);
-    }
-  };
+    return _mm_max_pd(a1, a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( max_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<std::int16_t,8,sse_>
+  max_ ( BOOST_SIMD_SUPPORTS(sse2_)
+       , pack<std::int16_t,8,sse_> const& a0
+       , pack<std::int16_t,8,sse_> const& a1
+       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_max_epi16(a0,a1);
-    }
-  };
+    return _mm_max_epi16(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( max_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::uint8_<A0>, bs::sse_>
-                          , bs::pack_<bd::uint8_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<std::uint8_t,16,sse_>
+  max_ ( BOOST_SIMD_SUPPORTS(sse2_)
+       , pack<std::uint8_t,16,sse_> const& a0
+       , pack<std::uint8_t,16,sse_> const& a1
+       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_max_epu8(a0,a1);
-    }
-  };
+    return _mm_max_epu8(a0, a1);
+  }
 
 } } }
 

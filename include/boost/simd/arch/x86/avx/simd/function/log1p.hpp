@@ -9,27 +9,19 @@
 #ifndef BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_LOG1P_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_AVX_SIMD_FUNCTION_LOG1P_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-
-   BOOST_DISPATCH_OVERLOAD_IF( log1p_
-                             , (typename A0)
-                             , (detail::is_native<bs::avx_>)
-                             , bs::avx_
-                             , bs::pack_<bd::single_<A0>, bs::avx_>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return plain_(log1p)(a0);
-      }
-   };
-
+  // plain algorithm not using integers is better in avx
+  BOOST_FORCEINLINE
+  pack<double,4,avx_> log1p_ ( BOOST_SIMD_SUPPORTS(avx_)
+                            , pack<double,4,avx_> const& a0
+                            ) BOOST_NOEXCEPT
+  {
+    return plain_(log1p)(a0);
+  }
 
 } } }
 

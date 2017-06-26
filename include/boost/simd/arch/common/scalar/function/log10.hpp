@@ -308,7 +308,9 @@ namespace boost { namespace simd { namespace detail
           , plain_tag const &
           , T a) BOOST_NOEXCEPT
   {
-    return log10(a);
+    return  musl_(log10)(a);  //the scalar "plain" version of the algorithm is never speedier than the "musl" version.
+    // the call is here to allow a scalar fallback to simd calls when the plain version is speedier in simd
+  }
   }
 
 } } }

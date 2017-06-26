@@ -16,23 +16,21 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( maxmag_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  ///////////////////////////////////////////////////////////////////////
+  // regular
+  template<typename T>
+  BOOST_FORCEINLINE T
+  maxmag_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a0
+         , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      A0 aa0 = simd::abs(a0);
-      A0 aa1 = simd::abs(a1);
-      return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : simd::max(a0, a1);
-    }
-  };
+    T aa0 = simd::abs(a0);
+    T aa1 = simd::abs(a1);
+    return aa0 < aa1 ? a1 : aa1 <  aa0 ? a0 : simd::max(a0, a1);
+  }
+
 } } }
 
 

@@ -11,58 +11,52 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MIN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_MIN_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/function/pedantic.hpp>
 #include <boost/simd/function/std.hpp>
-#include <algorithm>
+#include <type_traits>
+#include <cmath>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( min_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  ///////////////////////////////////////////////////////////////////////
+  // regular
+  template<typename T>
+  BOOST_FORCEINLINE T
+  min_(BOOST_SIMD_SUPPORTS(cpu_)
+      , T a0
+      , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return (a1 < a0) ? a1 : a0;
-    }
-  };
+    return (a1 <  a0) ? a1 : a0;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( min_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()( pedantic_tag const&, A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return  (a1 < a0) ? a1 : a0;
-    }
-  };
+  ///////////////////////////////////////////////////////////////////////
+  // pedantic
 
-  BOOST_DISPATCH_OVERLOAD ( min_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  min_(BOOST_SIMD_SUPPORTS(cpu_)
+      , T a0
+      , T a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( std_tag const&, A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return std::min(a0, a1);
-    }
-  };
+    return (a1 <  a0) ? a1 : a0;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  // std
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  min_(BOOST_SIMD_SUPPORTS(cpu_)
+      , std_tag const &
+      , T a0
+      , T a1) BOOST_NOEXCEPT
+  {
+    return std::min(a0, a1);
+  }
 
 } } }
 
 
 #endif
+

@@ -12,29 +12,17 @@
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_MIN_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#if !defined(BOOST_SIMD_NO_NANS) && defined(BOOST_SIMD_COMPILER_GCC)
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/if_else.hpp>
-#include <boost/simd/function/is_unord.hpp>
-#endif
-
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( min_
-                          , (typename A0)
-                          , bs::sse1_
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<float,4,sse_>
+  min_ ( BOOST_SIMD_SUPPORTS(sse1_)
+       , pack<float,4,sse_> const& a0, pack<float,4,sse_> const& a1
+       ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0
-                                    , const A0 & a1 ) const BOOST_NOEXCEPT
-    {
-      return _mm_min_ps(a1, a0);
-    }
-  };
+    return _mm_min_ps(a1, a0);
+  }
+
 } } }
 
 #endif

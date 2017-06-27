@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
       , T a0
       , T a1, std::true_type const &) BOOST_NOEXCEPT
   {
-    return max(a0, a1);
+    return (a0 <  a1) ? a1 : a0;
   }
 
   ///////////////////////////////////////////////////////////////////////

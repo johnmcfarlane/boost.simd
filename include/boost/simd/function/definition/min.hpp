@@ -10,27 +10,14 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
 #define BOOST_SIMD_FUNCTION_DEFINITION_MIN_HPP_INCLUDED
-
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, min_, boost::dispatch::elementwise_<min_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, min_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::min_,min);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(min_,min);
 } }
 
 #endif
+
+#include <boost/simd/config.hpp>

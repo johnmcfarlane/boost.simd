@@ -9,62 +9,131 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_MIN_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_MIN_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/function/pedantic.hpp>
+#include <boost/simd/function/std.hpp>
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_less.hpp>
 #include <boost/simd/function/is_nan.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD_IF( min_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>, X>
-                            , bs::pack_<bd::arithmetic_<A0>, X>
-                            )
+  //regular
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return if_else(is_less(a1, a0), a1, a0);
-    }
-  };
+    return  if_else(is_less(a1, a0), a1, a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( min_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pedantic_tag
-                            , bs::pack_<bd::integer_<A0>, X>
-                            , bs::pack_<bd::integer_<A0>, X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , T const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( pedantic_tag const&
-                                   , const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return bs::min(a0, a1);
-    }
-  };
+    using p_t = pack<T, N>;
+    return min_(a0, p_t(a1));
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF( min_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pedantic_tag
-                            , bs::pack_<bd::floating_<A0>, X>
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+          , T const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()( pedantic_tag const&
-                                   , const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-    {
-      return if_else(is_nan(a1), a0, bs::min(a0, a1));
-    }
-  };
+    using p_t = pack<T, N>;
+    return min_(p_t(a0), a1);
+  }
+  // regular emulated
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N,simd_emulation_> const & a0
+          , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(min, a0, a1);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+  //pedantic
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  spmin_( pack<T,N> const & a0
+        , pack<T,N> const & a1
+        , std::true_type const &) BOOST_NOEXCEPT
+  {
+    return if_else(is_nan(a1), a0, bs::min(a0, a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  spmin_( pack<T,N> const & a0
+        , pack<T,N> const & a1
+        , std::false_type const &) BOOST_NOEXCEPT
+  {
+    return bs::min(a0, a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N> const & a0
+      , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    return spmin_(a0, a1, std::is_floating_point<T>());
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N> const & a0
+      , T const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return pedantic_(min)(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , T const & a0
+      , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return pedantic_(min)(p_t(a0), a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+      , pedantic_tag const &
+      , pack<T,N,simd_emulation_> const & a0
+      , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(pedantic_(min), a0, a1);
+  }
+
+ template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  min_(BOOST_SIMD_SUPPORTS(simd_)
+      , std_tag const &
+      , pack<T,N> const & a0
+      , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(std::min, a0, a1);
+  }
+
 } } }
 
 #endif
+

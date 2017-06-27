@@ -10,6 +10,8 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_MAX_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_MAX_HPP_INCLUDED
+
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 
 

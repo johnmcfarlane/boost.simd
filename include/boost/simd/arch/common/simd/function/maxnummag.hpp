@@ -12,46 +12,70 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_MAXNUMMAG_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/function/maxmag.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(maxnummag_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::integer_<A0>, X>
-                          , bs::pack_<bd::integer_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return maxmag(a0, a1);
-      }
-   };
+  //regular
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  v_maxnummag_( pack<T,N> const & a0
+              , pack<T,N> const & a1
+              , std::true_type const &) BOOST_NOEXCEPT
+  {
+    return maxmag(if_else(is_nan(a0),a1,a0), a1);
+  }
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  v_maxnummag_( pack<T,N> const & a0
+              , pack<T,N> const & a1
+              , std::false_type const &) BOOST_NOEXCEPT
+  {
+    return  maxmag(a0, a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(maxnummag_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::unspecified_<A0>, X>
-                          , bs::pack_<bd::unspecified_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return maxmag(if_else(is_nan(a0),a1,a0), a1);
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  maxnummag_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    return v_maxnummag_(a0, a1, std::is_floating_point<T>());
+  }
 
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  maxnummag_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N> const & a0
+          , T const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return maxnummag_(a0, p_t(a1));
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  maxnummag_(BOOST_SIMD_SUPPORTS(simd_)
+          , T const & a0
+          , pack<T,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return maxnummag_(p_t(a0), a1);
+  }
+  // regular emulated
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  maxnummag_(BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N,simd_emulation_> const & a0
+          , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(maxnummag, a0, a1);
+  }
 
 } } }
 
 #endif
-

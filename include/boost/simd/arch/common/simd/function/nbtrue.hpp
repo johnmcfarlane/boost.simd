@@ -9,50 +9,39 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_NBTRUE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_NBTRUE_HPP_INCLUDED
 
+
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
+#include <boost/simd/constant/false.hpp>
 #include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/extract.hpp>
 #include <boost/simd/function/slice.hpp>
 #include <boost/simd/function/if_one_else_zero.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
-{
-  namespace bd = ::boost::dispatch;
-  namespace bs = ::boost::simd;
+namespace boost { namespace simd { namespace detail
+ {
 
-  BOOST_DISPATCH_OVERLOAD ( nbtrue_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bd::fundamental_<A0>,X>
-                          )
+   template < typename A>
+  struct st_nbtrue
   {
-    BOOST_FORCEINLINE std::size_t operator()(A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return nbtrue(is_nez(a0));
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( nbtrue_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pack_<bs::logical_<A0>,X>
-                          )
-  {
-    BOOST_FORCEINLINE std::size_t operator()(A0 const& a0) const BOOST_NOEXCEPT
+    BOOST_FORCEINLINE std::size_t operator()(A const& a0)  const BOOST_NOEXCEPT
     {
-      return do_( a0, typename A0::storage_kind(), typename A0::traits::static_range{});
+      return do_( a0, typename A::storage_kind(), typename A::traits::static_range{});
     }
 
     // Aggregate case: add the nbtrue of both sides
     template<typename... N> static BOOST_FORCEINLINE
-    std::size_t do_(A0 const& a0, aggregate_storage const&, nsm::list<N...> const&) BOOST_NOEXCEPT
+    std::size_t do_(A const& a0, aggregate_storage const&, nsm::list<N...> const&) BOOST_NOEXCEPT
     {
       return nbtrue(slice_low(a0)) + nbtrue(slice_high(a0));
     }
 
     // Other case: Compute nbtrue piecewise
     template<typename K, typename... N> static BOOST_FORCEINLINE
-    std::size_t do_(A0 const& a0, K const&, nsm::list<N...> const&) BOOST_NOEXCEPT
+    std::size_t do_(A const& a0, K const&, nsm::list<N...> const&) BOOST_NOEXCEPT
     {
       std::size_t that = 0;
 
@@ -64,6 +53,27 @@ namespace boost { namespace simd { namespace ext
       return that;
     }
   };
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<!std::is_arithmetic<T>::value, std::size_t>::type
+  nbtrue_(BOOST_SIMD_SUPPORTS(simd_)
+                     , pack<T,N> const& a) BOOST_NOEXCEPT
+  {
+    st_nbtrue<as_logical_t<pack<T,N>>> r;
+    return r(a);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_arithmetic<T>::value, std::size_t>::type
+  nbtrue_(BOOST_SIMD_SUPPORTS(simd_)
+                     , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    //   as_logical_t<pack<T,N>> inz = False<pack<T,N>>(); //is_nez(a0);
+    return nbtrue(is_nez(a0));
+  }
+
 } } }
 
 #endif

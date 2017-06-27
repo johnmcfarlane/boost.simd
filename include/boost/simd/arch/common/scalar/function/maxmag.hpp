@@ -13,7 +13,6 @@
 
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/max.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail

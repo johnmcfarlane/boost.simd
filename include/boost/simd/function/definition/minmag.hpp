@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_MINMAG_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, minmag_, boost::dispatch::elementwise_<minmag_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, minmag_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::minmag_,minmag);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(minmag_,minmag);
 } }
 
 #endif

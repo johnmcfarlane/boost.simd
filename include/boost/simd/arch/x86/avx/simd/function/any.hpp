@@ -13,14 +13,15 @@
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/detail/constant/butsign.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
 
   template< typename T, std::size_t N>
   BOOST_FORCEINLINE
-  bool vany_ (pack<T,N,avx_> const& a0
+  bool v_any_ (pack<T,N,avx_> const& a0
              , std::false_type const &
              ) BOOST_NOEXCEPT
   {
@@ -29,7 +30,7 @@ namespace boost { namespace simd { namespace detail
 
   template< typename T, std::size_t N>
   BOOST_FORCEINLINE
-  bool vany_ (pack<T,N,avx_> const& a0
+  bool v_any_ (pack<T,N,avx_> const& a0
              , std::true_type const &
              ) BOOST_NOEXCEPT
   {
@@ -44,7 +45,7 @@ namespace boost { namespace simd { namespace detail
             , pack<T,N,avx_> const& a0
             ) BOOST_NOEXCEPT
   {
-    return vany_(a0, std::is_floating_point<T>());
+    return v_any_(a0, std::is_floating_point<T>());
   }
 
 } } }

@@ -11,10 +11,11 @@
 
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/constant/butsign.hpp>
 #include <boost/simd/constant/allbits.hpp>
+#include <boost/simd/detail/constant/butsign.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -25,7 +26,7 @@ namespace boost { namespace simd { namespace detail
              , std::false_type const &
              ) BOOST_NOEXCEPT
   {
-    return  _mm_testnzc_si128(a0, Allbits(as(a0))); // is it bool or logical < T >
+    return  bool(_mm_testnzc_si128(a0, Allbits(as(a0)))); // is it bool or logical < T >
   }
 
   template< typename T, std::size_t N>
@@ -36,16 +37,27 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t  = pack<T,N,sse_>;
     using ip_t = i_t<p_t>;
-    return _mm_testnzc_si128(bitwise_cast<ip_t>(a0), Butsign<ip_t>());
+    return bool(_mm_testnzc_si128(bitwise_cast<ip_t>(a0), Butsign<ip_t>()));
+  }
+
+  template< typename T, std::size_t N  >
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_arithmetic<T>::value,  bool>::type
+  any_ (BOOST_SIMD_SUPPORTS(sse4_1_)
+            , pack<T,N,sse_> const& a0
+            ) BOOST_NOEXCEPT
+  {
+    return v_any_(a0, std::is_floating_point<T>());
   }
 
   template< typename T, std::size_t N>
   BOOST_FORCEINLINE
   bool any_ (BOOST_SIMD_SUPPORTS(sse4_1_)
-            , pack<T,N,sse_> const& a0
+            , pack<as_logical_t<T>,N,sse_> const& a0
             ) BOOST_NOEXCEPT
   {
-    return v_any_(a0, std::is_floating_point<T>());
+    using p_t =  pack<T,N,sse_>;
+    return any_(bitwise_cast<p_t>(a0));
   }
 
 } } }

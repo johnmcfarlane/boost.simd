@@ -24,76 +24,75 @@
 #include <boost/config.hpp>
 #include <cmath>
 
-namespace boost { namespace simd {
-  namespace ext
-  {
-    namespace bd = boost::dispatch;
-    BOOST_DISPATCH_OVERLOAD ( nextafter_
-                            , (typename A0)
-                            , bd::cpu_
-                            , bd::scalar_< bd::floating_<A0> >
-                            , bd::scalar_< bd::floating_<A0> >
-                            )
-    {
-      BOOST_FORCEINLINE A0 operator() ( A0 x, A0 y) const BOOST_NOEXCEPT
-      {
-        return  (y >  x)  ? next(x) : ((y <  x) ?  prev(x) : x);
-      }
-    };
-    BOOST_DISPATCH_OVERLOAD ( nextafter_
-                            , (typename A0)
-                            , bd::cpu_
-                            , bd::scalar_< bd::arithmetic_<A0> >
-                            , bd::scalar_< bd::arithmetic_<A0> >
-                            )
-    {
-      BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-      {
-        return a0+sign(a1-a0);
-      }
-    };
-    BOOST_DISPATCH_OVERLOAD ( nextafter_
-                            , (typename A0)
-                            , bd::cpu_
-                            , bd::scalar_< bd::unsigned_<A0> >
-                            , bd::scalar_< bd::unsigned_<A0> >
-                            )
-    {
-      BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-      {
-        return (a1 == a0) ? a0 : (a1 > a0) ? saturated_(inc)(a0) : saturated_(dec)(a0);
-      }
-    };
-    BOOST_DISPATCH_OVERLOAD ( nextafter_
-                            , (typename A0)
-                            , bd::cpu_
-                            , boost::simd::std_tag
-                            , bd::scalar_< bd::floating_<A0> >
-                            , bd::scalar_< bd::floating_<A0> >
-                            )
-    {
-      BOOST_FORCEINLINE A0 operator() (const std_tag &, A0  a0, A0 a1
-                                      ) const BOOST_NOEXCEPT
-      {
-        return std::nextafter(a0, a1);
-      }
-    };
-    BOOST_DISPATCH_OVERLOAD ( nextafter_
-                            , (typename A0)
-                            , bd::cpu_
-                            , boost::simd::std_tag
-                            , bd::scalar_< bd::integer_<A0> >
-                            , bd::scalar_< bd::integer_<A0> >
-                            )
-    {
-      BOOST_FORCEINLINE A0 operator() (const std_tag &, A0  a0, A0 a1
-                                      ) const BOOST_NOEXCEPT
-      {
-        return bs::nextafter(a0, a1);
-      }
-    };
-  }
-} }
+namespace boost { namespace simd { namespace detail
+{
 
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_nextafter_( T x
+              , T y
+              , detail::case_<0> const&) BOOST_NOEXCEPT
+  {
+    return  (y >  x)  ? next(x) : ((y <  x) ?  prev(x) : x);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_nextafter_( T a0
+              , T a1
+              , detail::case_<1> const&) BOOST_NOEXCEPT
+  {
+    return a0+sign(a1-a0);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_nextafter_(T a0
+              , T a1
+              , detail::case_<2> const&) BOOST_NOEXCEPT
+  {
+    return (a1 == a0) ? a0 : (a1 > a0) ? saturated_(inc)(a0) : saturated_(dec)(a0);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  nextafter_(BOOST_SIMD_SUPPORTS(cpu_)
+             , T const& a
+             , T const& b) BOOST_NOEXCEPT
+  {
+    return s_nextafter_(a, b, fsu_picker<T>{});
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  std_nextafter_( T a0
+                , T a1
+                , std::false_type const&) BOOST_NOEXCEPT
+  {
+    return next_after(a0, a1);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  std_nextafter_(T a0
+                , T a1
+                , std::true_type const&) BOOST_NOEXCEPT
+  {
+    return std::nextafter(a0, a1);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  next_after_(BOOST_SIMD_SUPPORTS(cpu_)
+             , std_tag const &
+             , T const& a
+             , T const& b) BOOST_NOEXCEPT
+  {
+    return std_nextafter_(a, b, std::is_floating_point<T>{});
+  }
+
+} } }
 
 #endif

@@ -11,6 +11,5 @@
 #define BOOST_SIMD_FUNCTION_SIMD_NEXTPOW2_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/nextpow2.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 
 #endif

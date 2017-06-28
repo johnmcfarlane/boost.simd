@@ -18,58 +18,52 @@
 #include <boost/simd/function/ifrexp.hpp>
 #include <boost/simd/function/dec.hpp>
 #include <boost/simd/function/reversebits.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <tuple>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
+#include <boost/simd/detail/meta/convert_helpers>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( nextpow2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_ < bd::unsigned_<A0> >
-                          )
+ //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE si_t<T>
+  s_nextpow2_( T x
+              , detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (!a0) return a0;
-      return sizeof(A0)*8-ffs(reversebits(a0));
-    }
-  };
+    T m;
+    si_t<T> p;
+    std::tie(m, p) = pedantic_(ifrexp)(simd::abs(a0));
+    return (m == Half<T>()) ? saturated_(dec)(p) :  p;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( nextpow2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_ < bd::signed_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE si_t<T>
+  s_nextpow2_( T a0
+              , detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (!a0) return a0;
-      return sizeof(A0)*8-ffs(reversebits(saturated_(abs)(a0)));
-    }
-  };
+    if (!a0) return a0;
+    return sizeof(T)*8-ffs(reversebits(saturated_(abs)(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( nextpow2_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_ < bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE si_t<T>
+  s_nextpow2_(T a0
+              , detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_integer_t<A0, signed>;
-    BOOST_FORCEINLINE result_t operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      A0 m;
-      result_t p;
-      std::tie(m, p) = pedantic_(ifrexp)(bs::abs(a0));
-      return (m == Half<A0>()) ? saturated_(dec)(p) :  p;
-    }
-  };
+    if (!a0) return a0;
+    return sizeof(T)*8-ffs(reversebits(a0));
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE si_t<T>
+  nextpow2_(BOOST_SIMD_SUPPORTS(cpu_)
+             , T const& a) BOOST_NOEXCEPT
+  {
+    return s_nextpow2_(a, fsu_picker<T>{});
+  }
+
 } } }
 
 

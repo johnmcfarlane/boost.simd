@@ -12,17 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_NEG_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/function/definition/unary_minus.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/function/unary_minus.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    using neg_ = unary_minus_;
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::neg_,neg);
+  auto neg = unary_minus;
 } }
 
 #endif

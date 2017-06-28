@@ -13,38 +13,42 @@
 
 #include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/function/sign.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( negate_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::signed_<A0> >
-                          , bd::scalar_< bd::signed_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return a0*sign(a1);
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( negate_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::unsigned_<A0> >
-                          , bd::scalar_< bd::unsigned_<A0> >
-                          )
+  template < typename T >
+  BOOST_FORCEINLINE
+  T s_negate_( T a0
+             , T a1
+             , std::true_type const &
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return bool(is_nez(a1))*a0;
-    }
-  };
+    return a0*sign(a1);
+  }
+
+  template < typename T>
+  BOOST_FORCEINLINE
+  T s_negate_( T a0
+            , T a1
+            , std::false_type const &
+            ) BOOST_NOEXCEPT
+  {
+    return bool(is_nez(a1))*a0;
+  }
+
+  template< typename T>
+  BOOST_FORCEINLINE
+  T negate_( BOOST_SIMD_SUPPORTS(cpu_)
+           , T a0
+           , T a1
+           ) BOOST_NOEXCEPT
+  {
+    return s_negate_(a0, a1, std::is_signed<T>());
+  }
+
 } } }
-
 
 #endif

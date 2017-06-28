@@ -10,55 +10,42 @@
 */
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSSE3_SIMD_FUNCTION_NEGATE_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 #define BOOST_SIMD_ARCH_X86_SSSE3_SIMD_FUNCTION_NEGATE_HPP_INCLUDED
 
-#include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/function/genmask.hpp>
+#include <boost/simd/detail/pack.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( negate_
-                          , (typename A0)
-                          , bs::ssse3_
-                          , bs::pack_<bd::int32_<A0>, bs::sse_>
-                          , bs::pack_<bd::int32_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<std::int8_t,16,sse_>
+  negate_( BOOST_SIMD_SUPPORTS(ssse3_)
+         , pack<std::int8_t,16,sse_> const& a0
+         , pack<std::int8_t,16,sse_> const& a1
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
-    {
-      return _mm_sign_epi32(a0, a1);
-    }
-  };
+    return _mm_sign_epi8(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( negate_
-                          , (typename A0)
-                          , bs::ssse3_
-                          , bs::pack_<bd::int8_<A0>, bs::sse_>
-                          , bs::pack_<bd::int8_<A0>, bs::sse_>
-                        )
+  BOOST_FORCEINLINE
+  pack<std::int16_t,8,sse_>
+  negate_( BOOST_SIMD_SUPPORTS(ssse3_)
+         , pack<std::int16_t,8,sse_> const& a0
+         , pack<std::int16_t,8,sse_> const& a1
+          ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
-    {
-      return _mm_sign_epi8(a0, a1);
-    }
-  };
+    return _mm_sign_epi16(a0, a1);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( negate_
-                          , (typename A0)
-                          , bs::ssse3_
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                          , bs::pack_<bd::int16_<A0>, bs::sse_>
-                         )
+  BOOST_FORCEINLINE
+  pack<std::int32_t,4,sse_>
+  negate_( BOOST_SIMD_SUPPORTS(ssse3_)
+         , pack<std::int32_t,4,sse_> const& a0
+         , pack<std::int32_t,4,sse_> const& a1
+         ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( const A0 & a0, const A0 & a1) const BOOST_NOEXCEPT
-    {
-      return _mm_sign_epi16(a0, a1);
-    }
-  };
-
+    return _mm_sign_epi32(a0, a1);
+  }
 } } }
 
 #endif

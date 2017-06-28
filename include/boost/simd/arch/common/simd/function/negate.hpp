@@ -12,43 +12,54 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_NEGATE_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
 #include <boost/simd/function/is_nez.hpp>
-#include <boost/simd/function/multiplies.hpp>
 #include <boost/simd/function/sign.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(negate_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::signed_<A0>, X>
-                          , bs::pack_<bd::signed_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return a0*sign(a1);
-      }
-   };
+  namespace bs = boost::simd;
 
-   BOOST_DISPATCH_OVERLOAD_IF(negate_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::unsigned_<A0>, X>
-                          , bs::pack_<bd::unsigned_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const A0& a1) const BOOST_NOEXCEPT
-      {
-        return if_else_zero(is_nez(a1), a0);
-      }
-   };
+  //================================================================================================
+  // regular case
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  v_negate_( pack<T,N> a0
+           , pack<T,N> a1
+           , std::true_type const&) BOOST_NOEXCEPT
+  {
+    return a0*sign(a1);
+  }
 
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  v_negate_( pack<T,N> a0
+           , pack<T,N> a1
+           , std::false_type const&) BOOST_NOEXCEPT
+  {
+    return if_else_zero(is_nez(a1), a0);
+  }
+
+  // Native implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  negate_(BOOST_SIMD_SUPPORTS(simd_)
+         , pack<T,N> const& a0
+         , pack<T,N> const& a1) BOOST_NOEXCEPT
+  {
+    return v_negate_(a0, a1, std::is_signed<T>{});
+  }
+
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  negate_ ( BOOST_SIMD_SUPPORTS(simd_)
+          , pack<T,N,simd_emulation_> const& a0
+          , pack<T,N,simd_emulation_> const& a1
+          ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::negate, a0, a1);
+  }
 
 } } }
 

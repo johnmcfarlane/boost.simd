@@ -9,40 +9,45 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_NONE_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE4_1_SIMD_FUNCTION_NONE_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/detail/constant/butsign.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( none_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::integer_<A0>, bs::sse_>
-                         )
-  {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return bool(_mm_testz_si128(a0, Allbits<A0>()));
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( none_
-                          , (typename A0)
-                          , bs::sse4_1_
-                          , bs::pack_<bd::floating_<A0>, bs::sse_>
-                         )
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool v_none_ (pack<T,N,sse_> const& a0
+             , std::false_type const &
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bool operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      using iA0 = bd::as_integer_t<A0>;
-      return bool(_mm_testz_si128(bitwise_cast<iA0>(a0), Butsign<iA0>()));
-    }
-  };
+    return _mm_testz_si128(a0, Allbits(as(a0))); // is it bool or logical < T >
+  }
+
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool v_none_ (pack<T,N,sse_> const& a0
+             , std::true_type const &
+             ) BOOST_NOEXCEPT
+  {
+    using p_t  = pack<T,N,sse_>;
+    using ip_t = bd::as_integer_t<p_t>;
+    return _mm_testz_si128(bitwise_cast<ip_t>(a0), Butsign<ip_t>());
+  }
+
+  template< typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  bool none_ (BOOST_SIMD_SUPPORTS(sse4_1_)
+            , pack<T,N,sse_> const& a0
+            ) BOOST_NOEXCEPT
+  {
+    return v_none_(a0, std::is_floating_point<T>());
+  }
 
 } } }
 

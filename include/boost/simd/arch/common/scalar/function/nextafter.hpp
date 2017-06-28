@@ -20,9 +20,9 @@
 #include <boost/simd/function/inc.hpp>
 #include <boost/simd/function/prev.hpp>
 #include <boost/simd/function/sign.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <cmath>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
 namespace boost { namespace simd { namespace detail
 {

@@ -14,6 +14,7 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/trunc.hpp>
 #include <boost/simd/function/if_dec.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -49,7 +50,7 @@ namespace boost { namespace simd { namespace detail
                                   , pack<T,N,simd_emulation_> const& a
                                   ) BOOST_NOEXCEPT
   {
-    return map_to(simd::floor, a);
+    return map_to(std_(floor), a);
   }
 
   //================================================================================================

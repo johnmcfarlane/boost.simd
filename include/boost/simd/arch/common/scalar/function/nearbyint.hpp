@@ -13,85 +13,68 @@
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/detail/enforce_precision.hpp>
 #include <boost/simd/function/abs.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/function/std.hpp>
 #include <boost/simd/function/raw.hpp>
 #include <boost/simd/function/is_negative.hpp>
 #include <cmath>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( nearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T s_nearbyint_( T a0
+                , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      detail::enforce_precision<A0> enforcer;
-      const A0 v = bs::abs(a0);
-      const A0 t2n = Twotonmb<A0>();
-      A0 d0 = (v+t2n);
-      A0 d = (d0-t2n);
-      d = (v < t2n)?d:v;
-      return is_negative(a0) ? -d : d;
-    }
-  };
+    detail::enforce_precision<T> enforcer;
+    const T v = bs::abs(a0);
+    const T t2n = Twotonmb<T>();
+    T d0 = (v+t2n);
+    T d = (d0-t2n);
+    d = (v < t2n)?d:v;
+    return is_negative(a0) ? -d : d;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( nearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T s_nearbyint_( T a
+                , std::false_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( nearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()( raw_tag const&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return nearbyint(a0);
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( nearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator()( raw_tag const&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( nearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::std_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T nearbyint_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (const std_tag&, A0 a0) const BOOST_NOEXCEPT
-    {
-      return std::nearbyint(a0);
-    }
-  };
+    return s_nearbyint_(a, std::is_floating_point<T>());
+  }
+
+  //std_ decorator
+  template<typename T >
+  BOOST_FORCEINLINE
+  T nearbyint_(BOOST_SIMD_SUPPORTS(cpu_)
+              , std_tag const &
+              , T a) BOOST_NOEXCEPT
+  {
+    return  T(std::nearbyint(a));
+  }
+
+  //raw_ decorator
+  template<typename T >
+  BOOST_FORCEINLINE
+  T nearbyint_(BOOST_SIMD_SUPPORTS(cpu_)
+              , raw_tag const &
+              , T a) BOOST_NOEXCEPT
+  {
+    return  nearbyint(a);
+  }
+
 } } }
+
 
 #endif

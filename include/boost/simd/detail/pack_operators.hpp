@@ -15,7 +15,7 @@
 #include <boost/simd/function/definition/multiplies.hpp>
 #include <boost/simd/function/definition/divides.hpp>
 #include <boost/simd/function/definition/is_equal.hpp>
-#include <boost/simd/function/definition/rem.hpp>
+#include <boost/simd/function/definition/is_not_equal.hpp>
 #include <boost/simd/function/definition/is_less.hpp>
 #include <boost/simd/function/definition/is_less_equal.hpp>
 #include <boost/simd/function/definition/is_greater.hpp>
@@ -30,7 +30,7 @@
 #include <boost/simd/function/definition/logical_and.hpp>
 #include <boost/simd/function/definition/logical_or.hpp>
 #include <boost/simd/function/definition/logical_not.hpp>
-#include <boost/simd/function/definition/rem.hpp>
+
 #include <boost/simd/function/definition/unary_plus.hpp>
 #include <boost/simd/function/definition/unary_minus.hpp>
 #include <boost/simd/detail/nsm.hpp>

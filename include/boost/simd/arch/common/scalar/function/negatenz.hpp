@@ -17,48 +17,46 @@
 #include <boost/simd/function/signnz.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( negatenz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::signed_<A0> >
-                          , bd::scalar_<bd::signed_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return multiplies(a0, signnz(a1));
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( negatenz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::unsigned_<A0> >
-                          , bd::scalar_<bd::unsigned_<A0> >
-                          )
+  //================================================================================================
+  // regular cases
+  template<typename T>
+  BOOST_FORCEINLINE T s_negatenz_( T a0
+                                 , T a1
+                                 , detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+    return bitwise_xor(bitofsign(a1), a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( negatenz_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T s_negatenz_( T a0
+                                 , T a1
+                                 , detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return bitwise_xor(bitofsign(a1), a0);
-    }
-  };
+    return a0*signnz(a1);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T s_negatenz_( T a0
+                                 , T
+                                 , detail::case_<2> const&) BOOST_NOEXCEPT
+  {
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T negatenz_(BOOST_SIMD_SUPPORTS(cpu_)
+                               , T a0
+                               , T a1
+                               ) BOOST_NOEXCEPT
+  {
+    return s_negatenz_(a0, a1, fsu_picker<T>{});
+  }
+
 } } }
 
 

@@ -15,36 +15,37 @@
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/function/inc.hpp>
 #include <boost/simd/function/successor.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
-{
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( next_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return inc(a0);
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( next_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+namespace boost { namespace simd { namespace detail
+{
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T s_next_( T a
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (a0 == Inf<A0>()) return a0;
-      return successor(a0);
-    }
-  };
+    return (a == Inf<T>()) ? a : successor(a);
+  }
+
+  template<typename T >
+  BOOST_FORCEINLINE
+  T s_next_( T a
+           , std::false_type) BOOST_NOEXCEPT
+  {
+    return inc(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T next_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a) BOOST_NOEXCEPT
+  {
+    return s_next_(a, std::is_floating_point<T>());
+  }
+
 } } }
 
 

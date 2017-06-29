@@ -18,6 +18,7 @@
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/inc.hpp>
 #include <boost/simd/function/is_equal.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {

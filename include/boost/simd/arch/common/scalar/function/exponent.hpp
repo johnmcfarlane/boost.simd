@@ -13,13 +13,10 @@
 
 #include <boost/simd/detail/constant/maxexponent.hpp>
 #include <boost/simd/constant/nbmantissabits.hpp>
-//#include <boost/simd/function/exponentbits.hpp>
 #include <boost/simd/function/if_else_zero.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/is_invalid.hpp>
 #include <boost/simd/function/shr.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
 #include <cmath>

@@ -12,21 +12,21 @@
 #include <boost/simd/detail/meta/value_type.hpp>
 #include <boost/simd/as.hpp>
 #include <type_traits>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
   template<typename Type>
-  BOOST_FORCEINLINE  bd::as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  detail::i_t<Type> nbmantissabits_( as_<Type> const&, as_<float> const& ) BOOST_NOEXCEPT
   {
-    using iType = bd::as_integer_t<Type>;
+    using iType = detail::i_t<Type>;
     return iType(23);
   }
 
   template<typename Type>
-  BOOST_FORCEINLINE  bd::as_integer_t<Type> nbmantissabits_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE  detail::i_t<Type> nbmantissabits_( as_<Type> const&, as_<double> const& ) BOOST_NOEXCEPT
   {
-    using iType =  bd::as_integer_t<Type>;
+    using iType =  detail::i_t<Type>;
     return iType(52);
   }
 

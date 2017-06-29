@@ -49,7 +49,7 @@ namespace boost { namespace simd { namespace detail
            , typename =  typename std::enable_if<std::is_integral<U>::value &&
                                                  (sizeof(T) == sizeof(U))>
   >
-  BOOST_FORCEINLINE
+  //  BOOST_FORCEINLINE
   pack<T,N>
   nthroot_(BOOST_SIMD_SUPPORTS(simd_)
           , pack<T,N> const& a0
@@ -102,7 +102,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N, typename U
            , typename =  typename std::enable_if<std::is_integral<U>::value && sizeof(T) == sizeof(U)>
   >
- BOOST_FORCEINLINE
+  // BOOST_FORCEINLINE
   pack<T,N,simd_emulation_>
   nthroot_ ( BOOST_SIMD_SUPPORTS(simd_)
            , pack<T,N,simd_emulation_> const& a0
@@ -151,7 +151,8 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<std::is_integral<U>::value &&
            (sizeof(T) == sizeof(U))>
   >
-  BOOST_FORCEINLINE  pack<T,N>
+  //  BOOST_FORCEINLINE
+  pack<T,N>
   nthroot_(BOOST_SIMD_SUPPORTS(simd_)
           , raw_tag const &
           , pack<T,N> const& a0

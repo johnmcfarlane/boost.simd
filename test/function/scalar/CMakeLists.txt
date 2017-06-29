@@ -6,6 +6,7 @@
 ##                            http://www.boost.org/LICENSE_1_0.txt
 ##===================================================================================================
 ## Larger test suites go there
+add_subdirectory(aligned_load)
 add_subdirectory(div)
 add_subdirectory(rem)
 

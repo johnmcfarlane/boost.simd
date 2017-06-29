@@ -1,77 +1,81 @@
 //==================================================================================================
-/**
-  Copyright 2016 NumScale SAS
+/*
+  Copyright 2017 NumScale SAS
 
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-**/
+*/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ALIGNED_LOAD_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_ALIGNED_LOAD_HPP_INCLUDED
 
 #include <boost/simd/mask.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/adapted/std/iterator.hpp>
-#include <boost/simd/detail/dispatch/adapted/common/pointer.hpp>
-#include <boost/simd/detail/dispatch/adapted/std/integral_constant.hpp>
+#include <boost/simd/as.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
+  //------------------------------------------------------------------------------------------------
+  // Iterator with target/offset
+  template<typename Target, typename Iterator>
+  BOOST_FORCEINLINE Target aligned_load_( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , Iterator ptr, simd::as_<Target> const&
+                                        ) BOOST_NOEXCEPT
+  {
+    return static_cast<Target>(simd::aligned_load(ptr));
+  }
+
+  template<typename Target, typename Iterator>
+  BOOST_FORCEINLINE Target aligned_load_( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , Iterator ptr
+                                        , std::ptrdiff_t offset
+                                        , simd::as_<Target> const&
+                                        ) BOOST_NOEXCEPT
+  {
+    std::advance(ptr,offset);
+    return static_cast<Target>(simd::aligned_load(ptr));
+  }
 
   //------------------------------------------------------------------------------------------------
-  // aligned_load from an input iterator
-  BOOST_DISPATCH_OVERLOAD ( aligned_load_
-                          , (typename Target, typename Pointer)
-                          , bd::cpu_
-                          , bd::input_iterator_<bd::scalar_<bd::unspecified_<Pointer>>>
-                          , bd::target_< bd::scalar_<bd::unspecified_<Target>> >
-                          )
+  // Misaligned Iterator
+  template<typename Iterator, std::ptrdiff_t Misalignment>
+  BOOST_FORCEINLINE   auto aligned_load_( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , Iterator ptr
+                                        , std::integral_constant<std::ptrdiff_t,Misalignment> const&
+                                        ) BOOST_NOEXCEPT
+                  ->  decltype(*ptr)
   {
-    using target = typename Target::type;
+    return simd::aligned_load(ptr,-Misalignment);
+  }
 
-    BOOST_FORCEINLINE target operator()(Pointer p, Target const&) const BOOST_NOEXCEPT
-    {
-      return static_cast<target>(*p);
-    }
-  };
+  template<typename Target, typename Iterator, std::ptrdiff_t Misalignment>
+  BOOST_FORCEINLINE Target aligned_load_( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , Iterator ptr
+                                        , std::integral_constant<std::ptrdiff_t,Misalignment> const&
+                                        , simd::as_<Target> const&
+                                        ) BOOST_NOEXCEPT
+  {
+    return simd::aligned_load<Target>(ptr,-Misalignment);
+  }
 
   //------------------------------------------------------------------------------------------------
-  // aligned_load from a pointer + a misalignment
-  BOOST_DISPATCH_OVERLOAD ( aligned_load_
-                          , (typename Target, typename Pointer, typename Misalignment)
-                          , bd::cpu_
-                          , bd::pointer_<bd::unspecified_<Pointer>,1u>
-                          , bd::constant_< bd::integer_<Misalignment>>
-                          , bd::target_< bd::scalar_<bd::unspecified_<Target>> >
-                          )
+  //  masked pointer
+  template<typename T, typename M, bool Z>
+  BOOST_FORCEINLINE T aligned_load_ ( BOOST_SIMD_SUPPORTS(cpu_)
+                                    , detail::masked_pointer<T,M,Z> const& ptr
+                                    ) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
+    return ptr.mask() ? boost::simd::aligned_load(ptr.get()) : T(ptr.value());
+  }
 
-    BOOST_FORCEINLINE
-    target operator()(Pointer p, Misalignment const&, Target const&) const BOOST_NOEXCEPT
-    {
-      return static_cast<target>(*(p + Misalignment::value));
-    }
-  };
-
-  //------------------------------------------------------------------------------------------------
-  // aligned_load from a masked pointer
-  BOOST_DISPATCH_OVERLOAD ( aligned_load_
-                          , (typename Target, typename Pointer, typename Zero)
-                          , bd::cpu_
-                          , bd::masked_pointer_<bd::scalar_<bd::unspecified_<Pointer>>,Zero>
-                          , bd::target_< bd::scalar_<bd::unspecified_<Target>> >
-                          )
+  template<typename Target, typename T, typename M, bool Z>
+  BOOST_FORCEINLINE Target aligned_load_( BOOST_SIMD_SUPPORTS(cpu_)
+                                        , detail::masked_pointer<T,M,Z> const& ptr
+                                        , simd::as_<Target> const&
+                                        ) BOOST_NOEXCEPT
   {
-    using target = typename Target::type;
-
-    BOOST_FORCEINLINE target operator()(Pointer p, Target const&) const BOOST_NOEXCEPT
-    {
-      return p.mask() ? boost::simd::aligned_load<target>(p.get()) : static_cast<target>(p.value());
-    }
-  };
+    return static_cast<Target>( simd::aligned_load(ptr) );
+  }
 } } }
 
 #endif

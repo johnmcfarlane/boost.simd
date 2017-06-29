@@ -11,7 +11,7 @@
 #define BOOST_SIMD_FUNCTION_SIMD_ALIGNED_LOAD_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/aligned_load.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
+/*
 #include <boost/simd/arch/common/simd/function/aligned_load.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)
@@ -28,5 +28,6 @@
 #    include <boost/simd/arch/x86/avx2/simd/function/aligned_load.hpp>
 #  endif
 #endif
+*/
 
 #endif

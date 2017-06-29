@@ -12,57 +12,48 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_QUADRANT_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/floor.hpp>
 #include <boost/simd/constant/four.hpp>
 #include <boost/simd/constant/quarter.hpp>
 #include <boost/simd/constant/three.hpp>
 #include <boost/simd/function/toint.hpp>
 #include <boost/simd/function/tofloat.hpp>
+#include <type_traits>
 
-
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD_IF(quadrant_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::floating_<A0>, X>
-                            )
-  {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      A0 a = a0*Quarter<A0>();
-      return (a-floor(a))*Four<A0>();
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF(quadrant_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::single_<A0>, X>
-                            )
-  {
-    BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
+  //================================================================================================
+  // regular (no decorator)
 
-      return tofloat(quadrant(toint(a0)));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD_IF( quadrant_
-                            , (typename A0, typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_< bd::integer_<A0>, X >
-                            )
+  // Native implementation
+  template< std::size_t N>
+  BOOST_FORCEINLINE pack<float,N>
+  quadrant_(BOOST_SIMD_SUPPORTS(simd_)
+           , pack<float,N> const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return a0&Three<A0>();
-    }
-  };
+    return tofloat(quadrant(toint(a0)));
+  }
+
+  template< std::size_t N>
+  BOOST_FORCEINLINE pack<double,N>
+  quadrant_(BOOST_SIMD_SUPPORTS(simd_)
+           , pack<double,N> const& a0) BOOST_NOEXCEPT
+  {
+    auto a = a0*Quarter(as(a0));
+    return (a-floor(a))*Four(as(a0));
+  }
+
+  template< typename T, std::size_t N,
+            typename =  typename std::enable_if<is_integral<T>::value>
+  >
+  BOOST_FORCEINLINE pack<T,N>
+  quadrant_(BOOST_SIMD_SUPPORTS(simd_)
+           , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return a0&Three(as(a0));
+  }
+
 } } }
 
 #endif

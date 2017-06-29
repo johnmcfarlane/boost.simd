@@ -1,12 +1,10 @@
 //==================================================================================================
-/*!
-    @file
-
-    @Copyright 2016 Numscale SAS
+/**
+    Copyright 2017 Numscale SAS
 
     Distributed under the Boost Software License, Version 1.0.
     (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
-*/
+**/
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_IS_GREATER_HPP_INCLUDED
@@ -15,12 +13,6 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/function/is_equal.hpp>
-#include <boost/simd/function/is_less.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/bitwise_and.hpp>
-#include <boost/simd/function/bitwise_or.hpp>
-#include <boost/simd/function/shuffle.hpp>
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <type_traits>
@@ -65,33 +57,6 @@ namespace boost { namespace simd { namespace detail
               ) BOOST_NOEXCEPT
   {
     return _mm_cmpgt_epi32(a0,a1);
-  }
-
-  BOOST_FORCEINLINE
-  as_logical_t<pack<int64_t,2,sse_>>
-  is_greater_ ( BOOST_SIMD_SUPPORTS(sse2_)
-              , pack<int64_t,2,sse_> const& a0
-              , pack<int64_t,2,sse_> const& a1
-              ) BOOST_NOEXCEPT
-  {
-    using l_t = as_logical_t<pack<int64_t,2,sse_>>;
-    using d_t = pack<int32_t,4,sse_>;
-    using du_t = pack<uint32_t,4,sse_>;
-    du_t al = shuffle<0,0,2,2>(bitwise_cast<du_t>(a0));
-    du_t bl = shuffle<0,0,2,2>(bitwise_cast<du_t>(a1));
-    d_t ah  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a0));
-    d_t bh  = shuffle<1,1,3,3>(bitwise_cast<d_t>(a1));
-    return bitwise_cast<l_t>(bitwise_or(is_less(bh, ah)
-                                       , bitwise_and(is_equal(ah,bh)
-                                                    , is_less(bl,al))
-                                       )
-                            );
-
-//      return bitwise_cast<l_t>(logical_or(is_less(bh, ah)
-//                                        , logical_and(is_equal(ah,bh)
-//                                                     , is_less(bl,al))
-//                                        )
-//                             );
   }
 
   template < typename T, std::size_t N >

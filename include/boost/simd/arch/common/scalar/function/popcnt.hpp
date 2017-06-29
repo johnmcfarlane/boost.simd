@@ -78,35 +78,27 @@ namespace boost { namespace simd { namespace detail
 #endif
   }
 
-  template<typename T>
-  BOOST_FORCEINLINE
-  ui_t<T> ffs_( BOOST_SIMD_SUPPORTS(cpu_)
-              , T a0) BOOST_NOEXCEPT
-  {
-    return s1_popcnt_(a0, size_picker<T>());
-  }
-
 
   template<typename T>
   BOOST_FORCEINLINE  ui_t<T> //floating
-  ffs_( T a0
-      , std::true_type const & ) BOOST_NOEXCEPT
+  s0_popcnt_( T a0
+            , std::true_type const & ) BOOST_NOEXCEPT
   {
     return s1_popcnt_(sbits(a0), size_picker<T>());
   }
 
   template<typename T>
   BOOST_FORCEINLINE  ui_t<T> //integers
-  ffs_( T a0
-      , std::true_type const & ) BOOST_NOEXCEPT
+  s0_popcnt_( T a0
+            , std::false_type const & ) BOOST_NOEXCEPT
   {
     return s1_popcnt_(a0, size_picker<T>());
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> ffs_( BOOST_SIMD_SUPPORTS(cpu_)
-              , T a0) BOOST_NOEXCEPT
+  ui_t<T> popcnt_( BOOST_SIMD_SUPPORTS(cpu_)
+                 , T a0) BOOST_NOEXCEPT
   {
     return s0_popcnt_(a0, std::is_floating_point<T>());
   }

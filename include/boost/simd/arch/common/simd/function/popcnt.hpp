@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
   pack<T,N> popcnt_(BOOST_SIMD_SUPPORTS(simd_)
                  , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    return map_to(simd::popcnt, a)
+    return map_to(simd::popcnt, a);
   }
 
 } } }

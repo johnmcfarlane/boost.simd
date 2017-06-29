@@ -18,68 +18,69 @@
 #include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/function/dec.hpp>
 #include <boost/simd/function/minus.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/assert.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( predecessor_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::integer_<A0> >
-                          )
+  // one parameter
+  template<typename T>
+  BOOST_FORCEINLINE
+  T s_predecessor_( T a0
+                  , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      BOOST_ASSERT_MSG(is_gez(a1), "predecessor rank must be non negative");
-      if (Valmin<A0>()+a1 > a0) return Valmin<A0>();
-      return a0-a1;
-    }
-  };
+    return (is_nan(a0)) ? a0 : bitfloating(saturated_(dec)(bitinteger(a0)));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( predecessor_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T s_predecessor_( T a0
+                  , std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(dec)(a0);
-    }
-  };
+    return saturated_(dec)(a0);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( predecessor_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::integer_<A1> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE
+  T predecessor_(BOOST_SIMD_SUPPORTS(cpu_)
+                , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      using i_t = bd::as_integer_t<A0>;
-      BOOST_ASSERT_MSG(is_gez(a1), "predecessor rank must be non negative");
-      if (is_nan(a0)) return a0;
-      return bitfloating(saturated_(minus)(bitinteger(a0), i_t(a1)));
-    }
-  };
+    return s_predecessor_(a, std::is_floating_point<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( predecessor_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  // two parameters
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T
+  spredecessor_( T a0
+               , U a1
+               , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (is_nan(a0)) return a0;
-      return bitfloating(saturated_(dec)(bitinteger(a0)));
-    }
-  };
+    BOOST_ASSERT_MSG(is_gez(a1), "predecessor rank must be non negative");
+    return  (is_nan(a0)) ? a0 : bitfloating(saturated_(minus)(bitinteger(a0), si_t<T>(a1)));
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE T
+  spredecessor_( T a0
+               , U a1
+               , std::false_type const &) BOOST_NOEXCEPT
+  {
+    BOOST_ASSERT_MSG(is_gez(a1), "predecessor rank must be non negative");
+    return (Valmin<T>()+a1 > a0) ? Valmin<T>() : a0-a1;
+  }
+
+  template<typename T, typename U,
+           typename = typename std::enable_if<is_integral<U>::value>
+  >
+  BOOST_FORCEINLINE T
+  predecessor_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a0
+              , U a1) BOOST_NOEXCEPT
+  {
+    return spredecessor_(a0, a1, std::is_floating_point<T>());
+  }
+
 } } }
 
 

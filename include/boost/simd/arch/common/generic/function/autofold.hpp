@@ -12,6 +12,7 @@
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/combine.hpp>
 #include <boost/simd/function/splatted.hpp>
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/function/all_reduce.hpp>
 #include <boost/simd/as.hpp>
 #include <boost/simd/detail/dispatch/detail/declval.hpp>
@@ -29,13 +30,13 @@ namespace boost { namespace simd { namespace ext
                                   , bs::pack_<bd::unspecified_<Arg>, Ext>
                                   )
   {
-    using result_t  = decltype( bd::functor<F>()( bd::detail::declval<typename Arg::value_type>() ) );
+    using result_t  = decltype( detail::callable_object<F>()( bd::detail::declval<typename Arg::value_type>() ) );
     using pr_t      = typename Arg::template rebind<result_t>;
 
     BOOST_FORCEINLINE result_t do_(Arg const& a0, aggregate_storage const&) const
     {
-      bd::functor<F>      f;
-      bd::functor<BinOp> op;
+      detail::callable_object<F>      f;
+      detail::callable_object<BinOp> op;
 
       return op( f(a0.storage()[0]), f(a0.storage()[1]));
     }
@@ -43,8 +44,8 @@ namespace boost { namespace simd { namespace ext
     template<typename K>
     BOOST_FORCEINLINE result_t do_(Arg const& a0, K const&) const
     {
-      return extract<0> ( detail::all_reduce( bd::functor<BinOp>{}
-                                            , bd::functor<NeutralElement>{}(as_<pr_t>{})
+      return extract<0> ( detail::all_reduce( detail::callable_object<BinOp>{}
+                                            , detail::callable_object<NeutralElement>{}(as_<pr_t>{})
                                             , a0
                                             )
                         );
@@ -65,14 +66,14 @@ namespace boost { namespace simd { namespace ext
                                   , bs::pack_<bd::unspecified_<Arg>, Ext>
                                   )
   {
-    using result_t  = decltype( bd::functor<F>()( bd::detail::declval<typename Arg::value_type>() ) );
+    using result_t  = decltype( detail::callable_object<F>()( bd::detail::declval<typename Arg::value_type>() ) );
     using pr_t      = typename Arg::template rebind<result_t>;
 
 
     BOOST_FORCEINLINE pr_t do_(Arg const& a0, aggregate_storage const&) const
     {
-      bd::functor<F>      f;
-      bd::functor<BinOp> op;
+      detail::callable_object<F>      f;
+      detail::callable_object<BinOp> op;
 
       auto r = op( splatted_(f)(a0.storage()[0]), splatted_(f)(a0.storage()[1]));
       return combine(r, r);
@@ -81,8 +82,8 @@ namespace boost { namespace simd { namespace ext
     template<typename K>
     BOOST_FORCEINLINE pr_t do_(Arg const& a0, K const&) const
     {
-      return  detail::all_reduce( bd::functor<BinOp>{}
-                                , bd::functor<NeutralElement>{}(as_<pr_t>{})
+      return  detail::all_reduce( detail::callable_object<BinOp>{}
+                                , detail::callable_object<NeutralElement>{}(as_<pr_t>{})
                                 , a0
                                 );
     }

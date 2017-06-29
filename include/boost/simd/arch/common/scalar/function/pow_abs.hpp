@@ -20,6 +20,7 @@
 #include <boost/simd/constant/log2_em1.hpp>
 #include <boost/simd/constant/mhalf.hpp>
 #include <boost/simd/constant/minf.hpp>
+#include <boost/simd/constant/sixteen.hpp>
 #include <boost/simd/detail/constant/powlargelim.hpp>
 #include <boost/simd/detail/constant/powlowlim.hpp>
 #include <boost/simd/constant/ratio.hpp>
@@ -37,105 +38,92 @@
 #include <boost/simd/function/log.hpp>
 #include <boost/simd/function/pow2.hpp>
 #include <boost/simd/function/sqr.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/config.hpp>
 #include <tuple>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( pow_abs_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A1> >
-                          )
+  template < typename T>
+  BOOST_FORCEINLINE T pow_abs_reduc(const T& x)
   {
-    inline A0 operator() ( A0 const& a0, A1 const& a1) const BOOST_NOEXCEPT
-    {
-      const A0 Oneo_16 = Ratio<A0, 1, 16>();
-      using i_t = bd::as_integer_t<A0>;
-      const i_t Sixteen = Ratio<i_t, 16>();
-      A0 x =  bs::abs(a0);
-      if (x == One<A0>()) return x;
-      if (is_eqz(x)) return is_eqz(a1) ? One<A0>() : is_ltz(a1) ? Inf<A0>() : Zero<A0>();
-    #ifndef BOOST_SIMD_NO_INFINITIES
-      if(x == a1 && a1 == Inf<A0>())  return Inf<A0>();
-      if(x == Inf<A0>() && a1 == Minf<A0>()) return Zero<A0>();
-      if(a1 == Inf<A0>()) return (x < One<A0>()) ? Zero<A0>() : Inf<A0>();
-      if(a1 == Minf<A0>()) return (x >  One<A0>()) ? Zero<A0>() : Inf<A0>();
-      if(x == Inf<A0>()) return (a1 < Zero<A0>()) ? Zero<A0>() : ((a1 == Zero<A0>()) ? One<A0>() : Inf<A0>());
-    #endif
-    #ifndef BOOST_SIMD_NO_INVALIDS
-      if(is_nan(a0)) return is_eqz(a1) ? One<A0>() : a0;
-      if(is_nan(a1)) return Nan<A0>();
-    #endif
-      i_t e;
-      std::tie(x, e) = pedantic_(bs::ifrexp)(x);
-      i_t i  = detail::pow_kernel<A0>::select(x);
-      A0 z = sqr(x);
-      A0 w = detail::pow_kernel<A0>::pow1(x, z);
-      w = fma(Mhalf<A0>(), z, w);
-      w = fma(Log2_em1<A0>(), w, w);
-      z = fma(Log2_em1<A0>(), x, w);
-      z += x;
-      w =  fma(A0(-i), Oneo_16, A0(e));
-      A0 ya = reduc(a1);
-      A0 yb = a1 - ya;
-      A0 W = fma(z, a1, w*yb);
-      A0 Wa = reduc(W);
-      A0 Wb = W - Wa;
-      W = fma(w, ya, Wa);
-      Wa = reduc(W);
-      A0 u = W - Wa;
-      W = Wb + u;
-      Wb = reduc(W);
-      w = Ratio<A0, 16>()*(Wa + Wb);
+    // Find a multiple of 1/16 that is within 1/16 of x.
+    return Ratio<T, 1, 16>()*floor(Sixteen<T>()*x);
+  }
 
-      // Test the power of 2 for overflow
-      if( w > Powlargelim<A0>() ) return Inf<A0>();
-      if( w < Powlowlim<A0>()   ) return Zero<A0>();
-      e = w;
-      Wb = W - Wb;  //
-      if( Wb > 0.0f ) //
-      {
-        ++e;
-        Wb -= Oneo_16; //
-      }
-      z = detail::pow_kernel<A0>::pow2(Wb)*Wb; //
-      i = (e/Sixteen) + (e>=0);
-      e = fms(i, Sixteen, e);
-      w =  detail::pow_kernel<A0>::twomio16(e);
-      z = fma(w, z, w);
-      z = pedantic_(ldexp)( z, i );
-      return z;
-    }
-  private :
-    static BOOST_FORCEINLINE A0 reduc(A0 x) BOOST_NOEXCEPT
-    {
-      // Find a multiple of 1/16 that is within 1/16 of x.
-      return Ratio<A0, 1, 16>()*floor(Ratio<A0, 16>()*x);
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( pow_abs_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A1> >
-                          )
+  template<typename T>
+  inline T
+  pow_abs_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , T a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(const raw_tag &, A0 a0, A1 a1) const BOOST_NOEXCEPT
+    const T Oneo_16 = Ratio<T, 1, 16>();
+    using i_t = bd::as_integer_t<T>;
+    const i_t Sixteen = Ratio<i_t, 16>();
+    T x =  bs::abs(a0);
+    if (x == One<T>()) return x;
+    if (is_eqz(x)) return is_eqz(a1) ? One<T>() : is_ltz(a1) ? Inf<T>() : Zero<T>();
+#ifndef BOOST_SIMD_NO_INFINITIES
+    if(x == a1 && a1 == Inf<T>())  return Inf<T>();
+    if(x == Inf<T>() && a1 == Minf<T>()) return Zero<T>();
+    if(a1 == Inf<T>()) return (x < One<T>()) ? Zero<T>() : Inf<T>();
+    if(a1 == Minf<T>()) return (x >  One<T>()) ? Zero<T>() : Inf<T>();
+    if(x == Inf<T>()) return (a1 < Zero<T>()) ? Zero<T>() : ((a1 == Zero<T>()) ? One<T>() : Inf<T>());
+#endif
+#ifndef BOOST_SIMD_NO_INVALIDS
+    if(is_nan(a0)) return is_eqz(a1) ? One<T>() : a0;
+    if(is_nan(a1)) return Nan<T>();
+#endif
+    i_t e;
+    std::tie(x, e) = pedantic_(bs::ifrexp)(x);
+    i_t i  = detail::pow_kernel<T>::select(x);
+    T z = sqr(x);
+    T w = detail::pow_kernel<T>::pow1(x, z);
+    w = fma(Mhalf<T>(), z, w);
+    w = fma(Log2_em1<T>(), w, w);
+    z = fma(Log2_em1<T>(), x, w);
+    z += x;
+    w =  fma(T(-i), Oneo_16, T(e));
+    T ya = pow_abs_reduc(a1);
+    T yb = a1 - ya;
+    T W = fma(z, a1, w*yb);
+    T Wa = pow_abs_reduc(W);
+    T Wb = W - Wa;
+    W = fma(w, ya, Wa);
+    Wa = pow_abs_reduc(W);
+    T u = W - Wa;
+    W = Wb + u;
+    Wb = pow_abs_reduc(W);
+    w = Ratio<T, 16>()*(Wa + Wb);
+
+    // Test the power of 2 for overflow
+    if( w > Powlargelim<T>() ) return Inf<T>();
+    if( w < Powlowlim<T>()   ) return Zero<T>();
+    e = w;
+    Wb = W - Wb;
+    if( Wb > 0.0f )
     {
-      return bs::exp(a1*bs::log(bs::abs(a0)));
+      ++e;
+      Wb -= Oneo_16;
     }
-  };
+    z = detail::pow_kernel<T>::pow2(Wb)*Wb;
+    i = (e/Sixteen) + (e>=0);
+    e = fms(i, Sixteen, e);
+    w =  detail::pow_kernel<T>::twomio16(e);
+    z = fma(w, z, w);
+    z = pedantic_(ldexp)( z, i );
+    return z;
+  }
 
-
+  template<typename T>
+  BOOST_FORCEINLINE T
+  pow_abs_(BOOST_SIMD_SUPPORTS(cpu_)
+          , raw_tag const &
+          , T a0
+          , T a1) BOOST_NOEXCEPT
+  {
+    return simd::exp(a1*simd::log(simd::abs(a0)));
+  }
 
 } } }
 

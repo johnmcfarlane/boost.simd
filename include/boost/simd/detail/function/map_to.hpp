@@ -27,6 +27,12 @@ namespace boost { namespace simd { namespace detail
     using type = P0;
   };
 
+  template<typename T, std::size_t N, typename X>
+  struct first_pack< pack<T,N,X> >
+  {
+    using type = pack<T,N,X>;
+  };
+
   template<typename T, std::size_t N, typename X, typename... Pn>
   struct first_pack< pack<T,N,X>, Pn...>
   {

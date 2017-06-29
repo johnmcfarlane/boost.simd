@@ -8,7 +8,7 @@
 */
 //==================================================================================================
 #include <boost/simd/constant/allbits.hpp>
-//#include <boost/simd/constant/nan.hpp>
+#include <boost/simd/constant/nan.hpp>
 #include <boost/simd/as.hpp>
 #include <limits>
 #include <scalar_test.hpp>

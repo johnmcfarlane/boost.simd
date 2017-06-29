@@ -50,8 +50,8 @@ namespace boost { namespace simd { namespace detail
   template<typename T>
   BOOST_FORCEINLINE
   T log10_(BOOST_SIMD_SUPPORTS(cpu_)
-         , std_tag const&
-         , T a0) BOOST_NOEXCEPT
+          , std_tag const&
+          , T a0) BOOST_NOEXCEPT
   {
     return std::log10(a0);
   }
@@ -62,7 +62,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   typename  std::enable_if<std::is_floating_point<T>::value, T>::type
   log10_(BOOST_SIMD_SUPPORTS(cpu_)
-          , T a0) BOOST_NOEXCEPT
+        , T a0) BOOST_NOEXCEPT
   {
     return musl_(log10)(a0);
   }
@@ -296,7 +296,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   typename  std::enable_if<std::is_integral<T>::value, T>::type
   log10_(BOOST_SIMD_SUPPORTS(cpu_)
-          , T a) BOOST_NOEXCEPT
+        , T a) BOOST_NOEXCEPT
   {
     return s_log10_(a,std::is_signed<T>());
   }
@@ -305,12 +305,11 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   T
   log10_(BOOST_SIMD_SUPPORTS(cpu_)
-          , plain_tag const &
-          , T a) BOOST_NOEXCEPT
+        , plain_tag const &
+        , T a) BOOST_NOEXCEPT
   {
     return  musl_(log10)(a);  //the scalar "plain" version of the algorithm is never speedier than the "musl" version.
     // the call is here to allow a scalar fallback to simd calls when the plain version is speedier in simd
-  }
   }
 
 } } }

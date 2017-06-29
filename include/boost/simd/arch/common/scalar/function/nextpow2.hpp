@@ -21,15 +21,15 @@
 #include <boost/config.hpp>
 #include <tuple>
 #include <boost/simd/detail/meta/fsu_picker.hpp>
-#include <boost/simd/detail/meta/convert_helpers>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
  //================================================================================================
   // regular cases
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>
-  s_nextpow2_( T x
+  BOOST_FORCEINLINE i_t<T>
+  s_nextpow2_( T a0
               , detail::case_<0> const&) BOOST_NOEXCEPT
   {
     T m;
@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE i_t<T>
   s_nextpow2_( T a0
               , detail::case_<1> const&) BOOST_NOEXCEPT
   {
@@ -48,7 +48,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE i_t<T>
   s_nextpow2_(T a0
               , detail::case_<2> const&) BOOST_NOEXCEPT
   {
@@ -57,7 +57,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE i_t<T>
   nextpow2_(BOOST_SIMD_SUPPORTS(cpu_)
              , T const& a) BOOST_NOEXCEPT
   {

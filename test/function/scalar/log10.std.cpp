@@ -19,6 +19,7 @@
 #include <boost/simd/constant/mzero.hpp>
 #include <boost/simd/constant/ten.hpp>
 #include <boost/simd/constant/three.hpp>
+#include <boost/simd/constant/two.hpp>
 
 
 STF_CASE_TPL (" log10 std",  STF_IEEE_TYPES)

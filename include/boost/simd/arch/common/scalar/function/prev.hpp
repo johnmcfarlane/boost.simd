@@ -14,36 +14,37 @@
 #include <boost/simd/constant/minf.hpp>
 #include <boost/simd/function/dec.hpp>
 #include <boost/simd/function/predecessor.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( prev_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T>
+  BOOST_FORCEINLINE
+  T s_prev_( T a
+           , std::true_type const &) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return dec(a0);
-    }
-  };
+    return (a == Minf<T>()) ? a : predecessor(a);
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( prev_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T >
+  BOOST_FORCEINLINE
+  T s_prev_( T a
+           , std::false_type) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      if (a0 == Minf<A0>()) return a0;
-      return predecessor(a0);
-    }
-  };
+    return dec(a);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T prev_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a) BOOST_NOEXCEPT
+  {
+    return s_prev_(a, std::is_floating_point<T>());
+  }
+
 } } }
 
 

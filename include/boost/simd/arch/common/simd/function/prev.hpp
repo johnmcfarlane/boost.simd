@@ -12,42 +12,50 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_PREV_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/dec.hpp>
-#include <boost/simd/function/if_allbits_else.hpp>
+#include <boost/simd/function/if_nan_else.hpp>
 #include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/function/next.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD_IF(prev_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::arithmetic_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return dec(a0);
-      }
-   };
+  //================================================================================================
+  // regular (no decorator)
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> v_prev_( pack<T,N> const& a0
+                   , std::true_type const &) BOOST_NOEXCEPT
+  {
+    return if_nan_else(is_nan(a0), -bs::next(-a0));
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(prev_
-                          , (typename A0, typename X)
-                          , (detail::is_native<X>)
-                          , bd::cpu_
-                          , bs::pack_<bd::floating_<A0>, X>
-                          )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0) const BOOST_NOEXCEPT
-      {
-        return if_allbits_else(is_nan(a0), -bs::next(-a0));
-      }
-   };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> v_prev_( pack<T,N> const& a0
+                   , std::false_type const &) BOOST_NOEXCEPT
+  {
+    return dec(a0);
+  }
 
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N> prev_(BOOST_SIMD_SUPPORTS(simd_)
+                 , pack<T,N> const& a0) BOOST_NOEXCEPT
+  {
+    return v_prev_(a0, std::is_floating_point<T>());
+  }
+
+ // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<T,N,simd_emulation_> prev_ ( BOOST_SIMD_SUPPORTS(simd_)
+                                  , pack<T,N,simd_emulation_> const& a
+                                  ) BOOST_NOEXCEPT
+  {
+    return map_to(simd::prev, a);
+  }
 
 } } }
 

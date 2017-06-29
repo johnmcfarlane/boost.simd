@@ -16,6 +16,7 @@
 #include <boost/simd/function/inc.hpp>
 #include <boost/simd/function/successor.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
 
 namespace boost { namespace simd { namespace detail

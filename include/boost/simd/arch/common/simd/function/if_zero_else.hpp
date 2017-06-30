@@ -14,6 +14,7 @@
 #include <boost/simd/meta/is_bitwise_logical.hpp>
 #include <boost/simd/function/bitwise_andnot.hpp>
 #include <boost/simd/function/genmask.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
 
 namespace boost { namespace simd { namespace detail
@@ -22,8 +23,8 @@ namespace boost { namespace simd { namespace detail
   // regular
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
-  pack<U,N> vif_zero_else_( pack<T,N> const& a0
-                             , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
+  pack<U,N> vif_zero_else_( as_logical_t<pack<T,N>> const& a0
+                          , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
   {
     return bitwise_andnot(a1, genmask(a0));
   }
@@ -31,7 +32,15 @@ namespace boost { namespace simd { namespace detail
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
   pack<U,N> vif_zero_else_( pack<T,N> const& a0
-                             , pack<U,N> const& a1, std::false_type const &) BOOST_NOEXCEPT
+                          , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
+  {
+    return bitwise_andnot(a1, genmask(is_nez(a0)));
+  }
+
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N> vif_zero_else_( pack<T,N> const& a0
+                          , pack<U,N> const& a1, std::false_type const &) BOOST_NOEXCEPT
   {
     return if_else(a0,Zero(as(a1)), a1);
   }
@@ -39,21 +48,21 @@ namespace boost { namespace simd { namespace detail
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
   pack<U,N> if_zero_else_(BOOST_SIMD_SUPPORTS(simd_)
-                            , pack<T,N> const& a0
-                            , pack<U,N> const& a1 ) BOOST_NOEXCEPT
+                         , pack<T,N> const& a0
+                         , pack<U,N> const& a1 ) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
     return vif_zero_else_(a0, a1, nsm::and_<simd::is_bitwise_logical<p_t>
                          , nsm::bool_<sizeof(T) == sizeof(U)> >());
-  }
+}
 
   // Emulated implementation
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
   pack<U,N,simd_emulation_> if_zero_else_ ( BOOST_SIMD_SUPPORTS(simd_)
-                                             , pack<T,N,simd_emulation_> const& a0
-                                             , pack<U,N,simd_emulation_> const& a1
-                                             ) BOOST_NOEXCEPT
+                                          , pack<T,N,simd_emulation_> const& a0
+                                          , pack<U,N,simd_emulation_> const& a1
+                                          ) BOOST_NOEXCEPT
   {
     return map_to(simd::if_zero_else, a0, a1);
   }
@@ -62,8 +71,8 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   if_zero_else_(BOOST_SIMD_SUPPORTS(simd_)
-                  , pack<T,N> const & a0
-                  , U  a1) BOOST_NOEXCEPT
+               , pack<T,N> const & a0
+               , U  a1) BOOST_NOEXCEPT
   {
     using p_t = pack<U, N>;
     return if_zero_else_(a0, p_t(a1));
@@ -72,8 +81,8 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N, typename U>
   BOOST_FORCEINLINE pack<T,N>
   if_zero_else_(BOOST_SIMD_SUPPORTS(simd_)
-                  , T  a0
-                  , pack<U,N> const & a1) BOOST_NOEXCEPT
+               , T  a0
+               , pack<U,N> const & a1) BOOST_NOEXCEPT
   {
     return a0 ? Zero(as(a1)) : a1;
   }

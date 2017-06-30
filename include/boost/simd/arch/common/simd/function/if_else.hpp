@@ -37,7 +37,6 @@ namespace boost { namespace simd { namespace detail
     as_logical_t<pack<C,N>> t = is_nez(a0);
     auto m = genmask(t);
     return bitwise_or(bitwise_and(a1,m), bitwise_andnot(a2,m));
-//    return if_else(t, a1, a2);
   }
 
   template<typename C, typename T, std::size_t N>

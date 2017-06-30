@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace detail
                                   , pack<T,N,simd_emulation_> const& a
                                   ) BOOST_NOEXCEPT
   {
-    return map_to(std_(floor), a);
+    return map_to(floor, a);
   }
 
   //================================================================================================

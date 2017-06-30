@@ -16,6 +16,7 @@
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/meta/is_bitwise_logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -23,10 +24,18 @@ namespace boost { namespace simd { namespace detail
   // regular
   template<typename T, typename U, std::size_t N>
   BOOST_FORCEINLINE
-  pack<U,N> vif_else_zero_( pack<T,N> const& a0
+  pack<U,N> vif_else_zero_( as_logical_t<pack<T,N>> const& a0
                           , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
   {
     return bitwise_and(a1, genmask(a0));
+  }
+
+  template<typename T, typename U, std::size_t N>
+  BOOST_FORCEINLINE
+  pack<U,N> vif_else_zero_( pack<T,N> const& a0
+                          , pack<U,N> const& a1, std::true_type const &) BOOST_NOEXCEPT
+  {
+    return bitwise_and(a1, genmask(is_nez(a0)));
   }
 
   template<typename T, typename U, std::size_t N>
@@ -44,9 +53,8 @@ namespace boost { namespace simd { namespace detail
                          , pack<U,N> const& a1 ) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return vif_else_zero_(a0, a1, simd::is_bitwise_logical<p_t>());
- //    nsm::and_<simd::is_bitwise_logical<p_t>
-//                          , nsm::bool_<sizeof(T) == sizeof(U)> >());
+    return vif_else_zero_(a0, a1,  nsm::and_<simd::is_bitwise_logical<p_t>
+                         , nsm::bool_<sizeof(T) == sizeof(U)> >());
 }
 
   // Emulated implementation

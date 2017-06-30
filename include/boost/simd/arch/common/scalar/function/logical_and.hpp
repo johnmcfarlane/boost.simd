@@ -9,9 +9,8 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 
+#include <boost/simd/logical.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/meta/hierarchy/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail

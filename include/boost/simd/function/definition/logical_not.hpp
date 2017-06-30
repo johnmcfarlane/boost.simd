@@ -12,25 +12,12 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_LOGICAL_NOT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, logical_not_, boost::dispatch::elementwise_<logical_not_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, logical_not_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::logical_not_,logical_not);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(logical_not_,logical_not);
 } }
 
 #endif
+

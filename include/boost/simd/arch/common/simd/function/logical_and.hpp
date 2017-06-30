@@ -9,6 +9,7 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOGICAL_AND_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/detail/traits.hpp>
 #include <boost/simd/function/mask2logical.hpp>
@@ -28,9 +29,7 @@ namespace boost { namespace simd { namespace detail
                , pack<T2,N> const& a1
                ) BOOST_NOEXCEPT
   {
-    //   as_logical_t<pack<T1,N>> t1 = is_nez(a0);
-    // as_logical_t<pack<T2,N>> t2 = is_nez(a1);
-       return mask2logical(bitwise_and(genmask(is_nez(a0)) , genmask(is_nez(a1))));
+    return mask2logical(bitwise_and(genmask(is_nez(a0)) , genmask(is_nez(a1))));
   }
 
   template< typename T1, std::size_t N, typename T2 >
@@ -40,8 +39,7 @@ namespace boost { namespace simd { namespace detail
                , as_logical_t<pack<T2,N>> const& a1
                ) BOOST_NOEXCEPT
   {
-    return mask2logical(bitwise_and(genmask(a0)
-                                   , genmask(a1)));
+    return mask2logical(bitwise_and(genmask(a0), genmask(a1)));
   }
 
   template< typename T1, std::size_t N, typename T2 >
@@ -51,8 +49,7 @@ namespace boost { namespace simd { namespace detail
                , pack<T2,N> const& a1
                ) BOOST_NOEXCEPT
   {
-    return mask2logical(bitwise_and(genmask(a0)
-                                   , genmask(is_nez(a1))));
+    return mask2logical(bitwise_and(genmask(a0), genmask(is_nez(a1))));
   }
 
   template< typename T1, std::size_t N, typename T2 >
@@ -62,8 +59,7 @@ namespace boost { namespace simd { namespace detail
                , as_logical_t<pack<T2,N>> const& a1
                ) BOOST_NOEXCEPT
   {
-    return mask2logical(bitwise_and(genmask(is_nez(a0))
-                                   , genmask(a1)));
+    return mask2logical(bitwise_and(genmask(is_nez(a0)), genmask(a1)));
   }
 
   template< typename T1, std::size_t N, typename T2 >

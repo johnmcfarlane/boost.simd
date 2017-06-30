@@ -9,43 +9,41 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOGICAL_NOT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_LOGICAL_NOT_HPP_INCLUDED
 
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/is_eqz.hpp>
 #include <boost/simd/function/complement.hpp>
 #include <boost/simd/function/mask2logical.hpp>
 #include <boost/simd/meta/as_logical.hpp>
-#include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/traits.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+ // Native implementations
+   template<typename T, std::size_t N>
+   BOOST_FORCEINLINE as_logical_t<pack<T,N>>
+   logical_not_ (BOOST_SIMD_SUPPORTS(simd_)
+                , pack<T,N> const& a0) BOOST_NOEXCEPT
+   {
+     return  is_eqz(a0);
+   }
 
-  BOOST_DISPATCH_OVERLOAD_IF( logical_not_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bd::arithmetic_<A0>,X>
-                            )
-  {
-    BOOST_FORCEINLINE bs::as_logical_t<A0> operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return is_eqz(a0);
-    }
-  };
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE
+  auto logical_not_ (BOOST_SIMD_SUPPORTS(simd_)
+                   ,as_logical_t<pack<T,N>> const& a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    mask2logical(complement(a0))
+  )
 
-  BOOST_DISPATCH_OVERLOAD_IF( logical_not_
-                            , (typename A0,typename X)
-                            , (detail::is_native<X>)
-                            , bd::cpu_
-                            , bs::pack_<bs::logical_<A0>,X>
-                            )
+  // Emulated implementation
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE as_logical_t<pack<T,N,simd_emulation_>>
+  logical_not_ ( BOOST_SIMD_SUPPORTS(simd_)
+               , pack<T,N,simd_emulation_> const& a
+               ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bs::as_logical_t<A0>  operator()( const A0& a0) const BOOST_NOEXCEPT
-    {
-      return mask2logical(complement(genmask(a0)));
-    }
-  };
+    return map_to(simd::logical_not, a);
+  }
+
 } } }
 
 #endif

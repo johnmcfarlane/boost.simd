@@ -12,49 +12,36 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_NOT_HPP_INCLUDED
 
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( logical_not_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::arithmetic_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return !a0;
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( logical_not_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bs::logical_<A0> >
-                          )
+  BOOST_FORCEINLINE bool
+  logical_not_(BOOST_SIMD_SUPPORTS(cpu_)
+              , bool a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return !a0;
-    }
-  };
+    return !a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( logical_not_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE logical<T>
+  logical_not_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()(T const& a) const BOOST_NOEXCEPT -> decltype(!a)
-    {
-      return !a;
-    }
-  };
+    return !a;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE logical<T>
+  logical_not_(BOOST_SIMD_SUPPORTS(cpu_)
+              , logical<T> const & a
+              ) BOOST_NOEXCEPT
+  {
+    return !a.value();
+  }
+
 } } }
-
 
 #endif

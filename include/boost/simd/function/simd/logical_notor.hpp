@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_LOGICAL_NOTOR_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/logical_notor.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/logical_notor.hpp>
+// only one implementation scalar/simd common
 
 #endif

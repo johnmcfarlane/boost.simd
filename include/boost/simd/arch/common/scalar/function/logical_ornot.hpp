@@ -11,51 +11,25 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_ORNOT_HPP_INCLUDED
 
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/function/logical_not.hpp>
 #include <boost/config.hpp>
+// this is also the simd common version
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( logical_ornot_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
+  template< typename T1, typename T2, typename Arch >
+  BOOST_FORCEINLINE as_logical_t<T1>
+  logical_ornot_ ( BOOST_SIMD_SUPPORTS(Arch)
+               , T1 const& a0
+               , T2 const& a1
+                 ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 || !a1);
-    }
-  };
+    return logical_or(a0, logical_not(a1));
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( logical_ornot_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          , bd::scalar_< logical_<A1> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return {a0.value() || !a1.value()};
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( logical_ornot_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
-  {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a||!b)
-    {
-      return a || !b;
-    }
-  }; } } }
+} } }
 
 
 #endif

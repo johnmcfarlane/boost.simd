@@ -15,7 +15,7 @@
 #include <boost/simd/logical.hpp>
 #include <boost/simd/function/logical_not.hpp>
 #include <boost/config.hpp>
-// this is also the simd version
+// this is also the simd common version
 
 namespace boost { namespace simd { namespace detail
 {

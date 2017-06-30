@@ -11,7 +11,5 @@
 #define BOOST_SIMD_FUNCTION_SIMD_LOGICAL_ORNOT_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/logical_ornot.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
-#include <boost/simd/arch/common/simd/function/logical_ornot.hpp>
-
+// only one implementation scalar/simd common
 #endif

@@ -12,50 +12,56 @@
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_LOGICAL_ANDNOT_HPP_INCLUDED
 
 #include <boost/simd/logical.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( logical_andnot_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::fundamental_<A0> >
-                          , bd::scalar_< bd::fundamental_<A1> >
-                          )
-  {
-    BOOST_FORCEINLINE logical<A0> operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return (a0 && !a1);
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( logical_andnot_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< logical_<A0> >
-                          , bd::scalar_< logical_<A1> >
-                          )
+  BOOST_FORCEINLINE bool
+  logical_andnot_(BOOST_SIMD_SUPPORTS(cpu_)
+              , bool a
+              , bool b) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return {a0.value() && !a1.value()};
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( logical_andnot_
-                          , (typename T)
-                          ,  bd::cpu_
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          ,  bd::scalar_<bd::unspecified_<T>>
-                          )
+    return a && !b;
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE logical<T>
+  logical_andnot_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a
+              , U b) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE auto operator()(T const& a, T const& b) const BOOST_NOEXCEPT -> decltype(a&&!b)
-    {
-      return a && !b;
-    }
-  };
+    return a && !b;
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE logical<T>
+  logical_andnot_(BOOST_SIMD_SUPPORTS(cpu_)
+              , logical<T> const & a
+              , U b) BOOST_NOEXCEPT
+  {
+    return a.value() && !b;
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE logical<T>
+  logical_andnot_(BOOST_SIMD_SUPPORTS(cpu_)
+              , logical<T> const & a
+              , logical<U> const & b) BOOST_NOEXCEPT
+  {
+    return a.value() && !b.value();
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE logical<T>
+  logical_andnot_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T const & a
+              , logical<U> const & b) BOOST_NOEXCEPT
+  {
+    return a && !b.value();
+  }
+
 } } }
-
 
 #endif

@@ -11,11 +11,11 @@
 
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
-#include <boost/simd/meta/cardinal_of.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+
 
 namespace boost { namespace simd { namespace detail
 {
@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<float,8,avx_>
   if_else_( BOOST_SIMD_SUPPORTS(avx_)
-          , pack<logical<T>,8,avx_> const& a0
+          , as_logical_t<pack<T,8,avx_>> const& a0
           , pack<float,8,avx_> const& a1
           , pack<float,8,avx_> const& a2
           ) BOOST_NOEXCEPT
@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<double,4,avx_>
   if_else_( BOOST_SIMD_SUPPORTS(avx_)
-          , pack<logical<T>,4,avx_> const& a0
+          , as_logical_t<pack<T,4,avx_>> const& a0
           , pack<double,4,avx_> const& a1
           , pack<double,4,avx_> const& a2
           ) BOOST_NOEXCEPT
@@ -52,14 +52,15 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<U,N,sse_>
   if_else_( BOOST_SIMD_SUPPORTS(avx_)
-          , pack<logical<T>,N,avx_> const& a0
+          ,  as_logical_t<pack<T,N,avx_>> const& a0
           , pack<U,N,avx_> const& a1
           , pack<U,N,avx_> const& a2
           ) BOOST_NOEXCEPT
   {
     using p_t = pack<U,N,avx_>;
     using pf_t = f_t<p_t>;
-    return bitwise_cast<p_t>(if_else(a0, bitwise_cast<pf_t>(a1), bitwise_cast<pf_t>(a2)));
+    return bitwise_cast<p_t>(if_else(a0, bitwise_cast<pf_t>(a1)
+                                    , bitwise_cast<pf_t>(a2)));
   }
 
 } } }

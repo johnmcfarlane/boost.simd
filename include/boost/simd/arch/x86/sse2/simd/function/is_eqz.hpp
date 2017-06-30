@@ -21,7 +21,7 @@
 namespace boost { namespace simd { namespace detail
 {
 
-  BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+  BOOST_FORCEINLINE as_logical_t<pack<std::int64_t,2,sse_>>
   is_eqz_ ( BOOST_SIMD_SUPPORTS(sse2_)
           , pack<std::int64_t,2,sse_> const& a
           ) BOOST_NOEXCEPT

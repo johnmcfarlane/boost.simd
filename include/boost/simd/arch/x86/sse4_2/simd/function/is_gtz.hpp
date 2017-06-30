@@ -15,10 +15,11 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/is_greater.hpp>
 #include <boost/simd/constant/zero.hpp>
+#include <boost/simd/meta/as_logical.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
- BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
+ BOOST_FORCEINLINE as_logical_t<pack<std::int64_t,2,sse_>>
  is_gtz_ ( BOOST_SIMD_SUPPORTS(sse4_2_)
          , pack<std::int64_t,2,sse_> const& a0
          ) BOOST_NOEXCEPT

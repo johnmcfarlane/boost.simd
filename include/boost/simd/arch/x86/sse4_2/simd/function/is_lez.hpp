@@ -19,10 +19,10 @@
 
 namespace boost { namespace simd { namespace detail
 {
- BOOST_FORCEINLINE pack<logical<std::int64_t>,2,sse_>
- is_lez_ ( BOOST_SIMD_SUPPORTS(sse4_2_)
-         , pack<std::int64_t,2,sse_> const& a0
-         ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE as_logical_t<pack<std::int64_t,2,sse_>>
+  is_lez_ ( BOOST_SIMD_SUPPORTS(sse4_2_)
+          , pack<std::int64_t,2,sse_> const& a0
+          ) BOOST_NOEXCEPT
 
  {
    return logical_not(is_greater(a0, Zero(as(a0))));

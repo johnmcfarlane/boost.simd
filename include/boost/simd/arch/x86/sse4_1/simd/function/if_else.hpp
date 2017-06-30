@@ -15,14 +15,14 @@
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/genmask.hpp>
-
+#include <boost/simd/meta/as_logical.hpp>
 namespace boost { namespace simd { namespace detail
 {
   template < typename T>
   BOOST_FORCEINLINE
   pack<float,4,sse_>
   if_else_( BOOST_SIMD_SUPPORTS(sse4_1_)
-          , pack<logical<T>, 4, sse_> const& a0
+          , as_logical_t<pack<T, 4, sse_>> const& a0
           , pack<float,4,sse_> const& a1
           , pack<float,4,sse_> const& a2
           ) BOOST_NOEXCEPT
@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<double,2,sse_>
   if_else_( BOOST_SIMD_SUPPORTS(sse4_1_)
-          , pack<logical<T>,2,sse_> const& a0
+          , as_logical_t<pack<T,2,sse_>> const& a0
           , pack<double,2,sse_> const& a1
           , pack<double,2,sse_> const& a2
           ) BOOST_NOEXCEPT
@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<U,N,sse_>
   if_else_( BOOST_SIMD_SUPPORTS(sse4_1_)
-          , pack<logical<T>,N,sse_> const& a0
+          , as_logical_t<pack<T,N,sse_>> const& a0
           , pack<U,N,sse_> const& a1
           , pack<U,N,sse_> const& a2
           ) BOOST_NOEXCEPT

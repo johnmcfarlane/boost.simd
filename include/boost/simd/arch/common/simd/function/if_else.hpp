@@ -27,20 +27,23 @@ namespace boost { namespace simd { namespace detail
 {
   //==========================================================================
   //regular
-  template<typename C, typename T, std::size_t N>
+  template<typename C, typename T, std::size_t N >
   BOOST_FORCEINLINE pack<T,N>
   if_else_(BOOST_SIMD_SUPPORTS(simd_)
            , pack<C,N> const & a0
            , pack<T,N> const & a1
            , pack<T,N> const & a2) BOOST_NOEXCEPT
   {
-    return if_else(is_nez(a0), a1, a2);
+    as_logical_t<pack<C,N>> t = is_nez(a0);
+    auto m = genmask(t);
+    return bitwise_or(bitwise_and(a1,m), bitwise_andnot(a2,m));
+//    return if_else(t, a1, a2);
   }
 
   template<typename C, typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N>
   if_else_(BOOST_SIMD_SUPPORTS(simd_)
-          , pack<logical<C>,N> const & a0
+          , as_logical_t<pack<C,N>> const & a0
           , pack<T,N> const & a1
           , pack<T,N> const & a2) BOOST_NOEXCEPT
   {
@@ -63,7 +66,7 @@ namespace boost { namespace simd { namespace detail
   template<typename C, typename T, std::size_t N>
   BOOST_FORCEINLINE pack<T,N,simd_emulation_>
   if_else_(BOOST_SIMD_SUPPORTS(simd_)
-          , pack<logical<C>,N,simd_emulation_> const & a0
+          , as_logical_t<pack<C,N,simd_emulation_>> const & a0
           , pack<T,N,simd_emulation_> const & a1
           , pack<T,N,simd_emulation_> const & a2) BOOST_NOEXCEPT
   {

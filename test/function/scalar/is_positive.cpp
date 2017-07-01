@@ -92,7 +92,7 @@ STF_CASE ( "is_positive bool")
 
   // specific values tests
   STF_EQUAL(is_positive(true), true);
-  STF_EQUAL(is_positive(false), false);
+  STF_EQUAL(is_positive(false), true);
 }
 
 

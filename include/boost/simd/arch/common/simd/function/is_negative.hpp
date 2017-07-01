@@ -20,6 +20,7 @@
 #include <boost/simd/function/bitofsign.hpp>
 #include <boost/simd/function/is_equal.hpp>
 #include <boost/simd/function/is_ltz.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {

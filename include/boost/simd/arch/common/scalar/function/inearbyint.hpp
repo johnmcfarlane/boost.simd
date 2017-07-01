@@ -10,66 +10,66 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INEARBYINT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_INEARBYINT_HPP_INCLUDED
-
 #include <boost/simd/function/pedantic.hpp>
-#include <boost/simd/function/nearbyint.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/function/nearbyint.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <boost/simd/function/floor.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_<bd::integer_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  s_inearbyint_( T a0
+          , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    toint(nearbyint(a0))
+  )
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  s_inearbyint_( T a0
+          , std::false_type const ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (pedantic_tag const &
-                                    , A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  inearbyint_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    s_inearbyint_(a0, std::is_floating_point<T>())
+  )
+
+  //pedantic
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  sp_inearbyint_( T a0
+                , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    saturated_(toint)(bs::nearbyint(a0))
+  )
+
+    template<typename T>
+  BOOST_FORCEINLINE T
+  sp_inearbyint_( T a0
+                , std::false_type const ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() (pedantic_tag const &
-                                                      , A0 a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(toint)(nearbyint(a0));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::integer_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() (A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0 ) const BOOST_NOEXCEPT
-    {
-      return toint(nearbyint(a0));
-    }
-  };
+    return a0;
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  inearbyint_(BOOST_SIMD_SUPPORTS(cpu_)
+             , pedantic_tag const &
+             , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    sp_inearbyint_(a0, std::is_floating_point<T>())
+  )
+
 } } }
 
-
 #endif
+

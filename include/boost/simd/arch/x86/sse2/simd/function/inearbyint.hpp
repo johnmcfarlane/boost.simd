@@ -10,25 +10,18 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INEARBYINT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_INEARBYINT_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
+#include <boost/simd/detail/pack.hpp>
 
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pack_<bd::single_<A0>, bs::sse_>
-                          )
+  template<std::size_t N>
+  BOOST_FORCEINLINE  pack<std::int32_t,4,sse_>
+  inearbyint_(BOOST_SIMD_SUPPORTS(sse2_)
+             , pack<float,4,sse_> a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE  bd::as_integer_t<A0> operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_cvtps_epi32(a0);
-    }
-  };
+     return _mm_cvtps_epi32(a0);
+  }
 
 } } }
 

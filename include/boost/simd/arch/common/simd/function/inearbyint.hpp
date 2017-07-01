@@ -12,108 +12,106 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_INEARBYINT_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/constant/valmin.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_greater.hpp>
 #include <boost/simd/function/is_less.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/function/splat.hpp>
-#include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 #ifndef BOOST_SIMD_NO_NANS
 #include <boost/simd/function/is_nan.hpp>
 #include <boost/simd/function/if_zero_else.hpp>
 #endif
 
-namespace boost { namespace simd { namespace ext
-{
-   namespace bd = boost::dispatch;
-   namespace bs = boost::simd;
-   BOOST_DISPATCH_OVERLOAD(inearbyint_
-                          , (typename A0, typename X)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bs::pack_<bd::single_<A0>, X>
-                          )
-   {
-      using result = bd::as_integer_t<A0>;
-      BOOST_FORCEINLINE result operator()(pedantic_tag const &
-                                         , const A0& a0) const BOOST_NOEXCEPT
-      {
-        using sr_t = bd::scalar_of_t<result>;
-        static const A0 Vax =  splat<A0>(bs::Valmax<sr_t>());
-        static const A0 Vix =  splat<A0>(bs::Valmin<sr_t>());
-      #ifndef BOOST_SIMD_NO_NANS
-        A0 aa0 = if_zero_else(is_nan(a0), a0);
-        return if_else(bs::is_less(aa0, Vix), Valmin<result>(),
-                       if_else(bs::is_greater(aa0, Vax), Valmax<result>(),
-                               inearbyint(aa0)
-                              )
-                      );
-      #else
-        return if_else(bs::is_less(a0, Vix), Valmin<result>(),
-                       if_else(bs::is_greater(a0, Vax), Valmax<result>(),
-                               inearbyint(a0)
-                              )
-                      );
-      #endif
-      }
-   };
+#include <boost/config.hpp>
 
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::generic_<bd::integer_<A0> >
-                          )
+namespace boost { namespace simd { namespace detail
+{
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  vinearbyint_( pack<T,N> const & a0
+         , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    toint(simd::nearbyint(a0))
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N>
+  vinearbyint_( pack<T,N> const & a0
+         , std::false_type const & ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (pedantic_tag const &
-                                    , A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bs::pedantic_tag
-                          , bd::generic_<bd::double_<A0> >
-                          )
+    return a0;
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  inearbyint_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N> const & a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    vinearbyint_(a0, std::is_floating_point<T>())
+  )
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE auto
+  inearbyint_(BOOST_SIMD_SUPPORTS(simd_)
+        , pack<T,N,simd_emulation_> const & a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    map_to(inearbyint, a0)
+  )
+
+  //pedantic
+  template<std::size_t N>
+  BOOST_FORCEINLINE pack<std::int64_t, N>
+  inearbyint_(BOOST_SIMD_SUPPORTS(simd_)
+             , pedantic_tag const &
+             , pack<double,N> const & a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() (pedantic_tag const &
-                                         , A0 const& a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(toint)(nearbyint(a0));
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::generic_<bd::integer_<A0> >
-                          )
+    return saturated_(toint)(nearbyint(a0));
+  }
+
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE  pack<std::int32_t, N>
+  inearbyint_(BOOST_SIMD_SUPPORTS(simd_)
+             , pedantic_tag const &
+             , pack<float,N> const & a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() (A0 const& a0 ) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::generic_<bd::floating_<A0> >
+    using p_t = pack<float,N>;
+    using sr_t = std::int32_t;
+    using r_t = pack<std::int32_t, N>;
+    p_t Vax(simd::Valmax<sr_t>());
+    p_t Vix(simd::Valmin<sr_t>());
+#ifndef BOOST_SIMD_NO_NANS
+    p_t aa0 = if_zero_else(is_nan(a0), a0);
+    return if_else(simd::is_less(aa0, Vix), Valmin<r_t>(),
+                   if_else(simd::is_greater(aa0, Vax), Valmax<r_t>(),
+                           inearbyint(aa0)
                           )
+                  );
+#else
+    return if_else(simd::is_less(a0, Vix), Valmin<r_t>(),
+                   if_else(simd::is_greater(a0, Vax), Valmax<r_t>(),
+                           inearbyint(a0)
+                          )
+                  );
+#endif
+  }
+
+
+  template<typename T, std::size_t N,
+           typename =  typename std::enable_if<std::is_integral<T>::value>::type
+  >
+  BOOST_FORCEINLINE  pack<T,N>
+  inearbyint_(BOOST_SIMD_SUPPORTS(simd_)
+             , pedantic_tag const &
+             , pack<T,N> const & a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 const& a0
-                                                      ) const BOOST_NOEXCEPT
-    {
-      return toint(nearbyint(a0));
-    }
-  };
+    return a0;
+  }
+
 } } }
 
-
 #endif
-

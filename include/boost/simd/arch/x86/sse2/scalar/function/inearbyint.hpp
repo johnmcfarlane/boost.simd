@@ -10,44 +10,32 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SCALAR_FUNCTION_INEARBYINT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SCALAR_FUNCTION_INEARBYINT_HPP_INCLUDED
-#include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/inf.hpp>
 #include <boost/simd/function/is_nan.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bd::scalar_<bd::double_<A0>>
-                          )
-  {
-    BOOST_FORCEINLINE  bd::as_integer_t<A0> operator() ( const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return _mm_cvtsd_si64(_mm_set_sd(a0));
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( inearbyint_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::pedantic_tag
-                          , bd::scalar_<bd::double_<A0>>
-                          )
+  template<std::size_t N>
+  BOOST_FORCEINLINE  std::int64_t
+  inearbyint_(BOOST_SIMD_SUPPORTS(sse1_)
+             ,double a0) BOOST_NOEXCEPT
   {
-    using iA0 = bd::as_integer_t<A0>;
-    BOOST_FORCEINLINE iA0 operator() (bs::pedantic_tag const&
-                                     , const A0 & a0) const BOOST_NOEXCEPT
-    {
-      if (BOOST_UNLIKELY(is_nan(a0))) return Zero<iA0>();
-      if (BOOST_UNLIKELY(a0 == Inf<A0>())) return Valmax<iA0>();
-      return _mm_cvtsd_si64(_mm_set_sd(a0));
-    }
-  };
+    return _mm_cvtss_si64(_mm_set_ss(a0));
+  }
+
+  template<std::size_t N>
+  BOOST_FORCEINLINE  std::int64_t
+  inearbyint_(BOOST_SIMD_SUPPORTS(sse1_)
+             , pedantic_tag const &
+             , double a0) BOOST_NOEXCEPT
+  {
+    if (BOOST_UNLIKELY(is_nan(a0))) return Zero<std::int64_t>();
+    if (BOOST_UNLIKELY(a0 == Inf<double>())) return Valmax<std::int64_t>();
+    return _mm_cvtss_si64(_mm_set_ss(a0));
+  }
 
 } } }
 

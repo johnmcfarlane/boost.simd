@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
   vifix_( pack<T,N> const & a0
          , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    /*simd::saturated_*/(toint)(a0)
+    simd::saturated_(toint)(a0)
   )
 
   template<typename T, std::size_t N>

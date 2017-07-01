@@ -16,6 +16,8 @@
 #include <boost/simd/constant/nan.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/zero.hpp>
+#include <boost/simd/constant/mhalf.hpp>
+#include <boost/simd/constant/half.hpp>
 #include <boost/simd/function/next.hpp>
 #include <boost/simd/function/prev.hpp>
 

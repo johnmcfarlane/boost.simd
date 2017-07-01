@@ -25,7 +25,7 @@ namespace boost { namespace simd { namespace detail
   viceil_( pack<T,N> const & a0
          , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
   (
-    /*simd::saturated_*/(toint)(bs::ceil(a0))
+    simd::saturated_(toint)(bs::ceil(a0))
   )
 
   template<typename T, std::size_t N>

@@ -11,46 +11,36 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IROUND_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_IROUND_HPP_INCLUDED
 
-#include <boost/simd/constant/half.hpp>
-#include <boost/simd/constant/mhalf.hpp>
-#include <boost/simd/function/if_else.hpp>
-#include <boost/simd/function/is_ltz.hpp>
-#include <boost/simd/function/plus.hpp>
-#include <boost/simd/function/toint.hpp>
 #include <boost/simd/function/round.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/function/toint.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
- BOOST_DISPATCH_OVERLOAD ( iround_
-                         , (typename A0)
-                         , bd::cpu_
-                         , bd::scalar_<bd::arithmetic_<A0> >
-                         )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return a0;
-    }
-  };
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  siround_( T a0
+          , std::true_type const &) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    saturated_(toint)(simd::round(a0))
+  )
 
-  BOOST_DISPATCH_OVERLOAD ( iround_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<A0> >
-                          )
+  template<typename T>
+  BOOST_FORCEINLINE T
+  siround_( T a0
+          , std::false_type const ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE bd::as_integer_t<A0> operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return saturated_(toint)(bs::round(a0));
-    }
-  };
+    return a0;
+  }
 
+  template<typename T>
+  BOOST_FORCEINLINE auto
+  iround_(BOOST_SIMD_SUPPORTS(cpu_)
+         , T a0) BOOST_NOEXCEPT_DECLTYPE_BODY
+  (
+    siround_(a0, std::is_floating_point<T>())
+  )
 
 } } }
-
 
 #endif

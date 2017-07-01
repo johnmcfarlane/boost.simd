@@ -53,7 +53,7 @@ namespace boost { namespace simd { namespace detail
                    , pack<float,N, X> const& a) BOOST_NOEXCEPT
   {
     using p_t = pack<float, N>;
-    // Exhaustive test for: boost::dispatch::functor<bs::tag::asinh_, bs::tag::sse4_2_>
+    // Exhaustive test for: <asinh_,sse4_2_>
     //              versus: float(boost::math::asinh(double)
     //              With T: bs::native<float, bs::tag::sse_, void>
     //            in range: [-3.40282e+38, 3.40282e+38]

@@ -14,21 +14,20 @@
 #include <boost/simd/detail/pack.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename T> using bit_t =  boost::dispatch::as_integer_t<T, unsigned>;
 
   template<typename T, std::size_t N >
   BOOST_FORCEINLINE
-  bit_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
+  uit_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
                       , pack<T, N> a
                       ) BOOST_NOEXCEPT
   {
-    using result_t = bit_t<pack<T, N>>;
-    return bitwise_cast<result_t>(a);
+    using r_t = ui_t<pack<T, N>>;
+    return bitwise_cast<r_t>(a);
   }
 
 } } }

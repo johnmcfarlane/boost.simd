@@ -15,19 +15,18 @@
 #include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/simd/detail/dispatch/meta/as_integer.hpp>
 #include <boost/simd/function/bitinteger.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename T> using bit_t =  boost::dispatch::as_integer_t<T, unsigned>;
-
   template<typename T >
   BOOST_FORCEINLINE
-  bit_t<T> bits_( BOOST_SIMD_SUPPORTS(cpu_)
+  ui_t<T> bits_( BOOST_SIMD_SUPPORTS(cpu_)
                 , T a
                 ) BOOST_NOEXCEPT
   {
-    using result_t = bit_t<T>;
+    using result_t = uit_t<T>;
     return  bitwise_cast<result_t>(a);
   }
 

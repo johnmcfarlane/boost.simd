@@ -57,7 +57,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   //regular
-  //Exhaustive test for: boost::dispatch::functor<boost::simd::tag::acos_, boost::simd::sse4_2_>
+  //Exhaustive test for: acos_, sse4_2_>
   //             versus: raw_acos
   //             With T: boost::simd::pack<float, 4ul, boost::simd::sse_>
   //           in range: [-1, 1]

@@ -11,31 +11,30 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
+#include <type_traits>
 
 namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-
   template<typename T>
-  BOOST_FORCEINLINE T band_(T a, T b, tt_::false_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T band_(T a, T b, std::false_type ) BOOST_NOEXCEPT
   {
     // same type, T is not IEEE
     return a & b;
   }
 
   template<typename T, typename U>
-  BOOST_FORCEINLINE T band_(T a, U b, tt_::false_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T band_(T a, U b, std::false_type ) BOOST_NOEXCEPT
   {
     // different type, T is not IEEE
     return a & bitwise_cast<T>(b);
   }
 
   template<typename T, typename U>
-  BOOST_FORCEINLINE T band_(T a, U b, tt_::true_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T band_(T a, U b, std::true_type ) BOOST_NOEXCEPT
   {
     // different type, T is IEEE
-    using b_t = bd::as_integer_t<T, unsigned>;
+    using b_t = ui_t<T>;
     return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) & bitwise_cast<b_t>(b)));
   }
 
@@ -46,7 +45,7 @@ namespace boost { namespace simd { namespace detail
                   , "simd::bitwise_and - Arguments have incompatible size"
                   );
 
-    return band_(a ,b, tt_::is_floating_point<T>{});
+    return band_(a ,b, std::is_floating_point<T>{});
   }
 } } }
 

@@ -14,21 +14,19 @@
 #include <boost/simd/constant/signmask.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_floating.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
 
-  template<typename T> using btf_t =  boost::dispatch::as_floating_t<T>;
 
   template<typename T
            , typename = typename std::enable_if<std::is_integral<T>::value>::type
            , typename = typename std::enable_if<sizeof(T) >= 4>
   >
   BOOST_FORCEINLINE
-  btf_t<T> sbitfloating_(T const& a
+  f_t<T> sbitfloating_(T const& a
                         , std::true_type const &
                         ) BOOST_NOEXCEPT
   {
@@ -42,7 +40,7 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<sizeof(T) >= 4>
 >
   BOOST_FORCEINLINE
-  btf_t<T> sbitfloating_( T a
+  f_t<T> sbitfloating_( T a
                         , std::false_type const &
                         ) BOOST_NOEXCEPT
   {
@@ -52,7 +50,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  btf_t<T> bitfloating_( BOOST_SIMD_SUPPORTS(cpu_)
+  f_t<T> bitfloating_( BOOST_SIMD_SUPPORTS(cpu_)
                         , T a
                         ) BOOST_NOEXCEPT
   {

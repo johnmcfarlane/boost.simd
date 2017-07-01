@@ -11,7 +11,7 @@
 
 #include <boost/simd/config.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 
 namespace boost { namespace simd { namespace detail
 {
@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE T bor_(T a, U b, tt_::true_type ) BOOST_NOEXCEPT
   {
     // different type, T is IEEE
-    using b_t = bd::as_integer_t<T, unsigned>;
+    using b_t = ui_t<T>;
     return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) | bitwise_cast<b_t>(b)));
   }
 

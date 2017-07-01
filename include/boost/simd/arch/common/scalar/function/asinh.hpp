@@ -68,7 +68,7 @@ namespace boost { namespace simd { namespace detail
   float asinh_(BOOST_SIMD_SUPPORTS(cpu_)
              , float a) BOOST_NOEXCEPT
   {
-    // Exhaustive test for: boost::dispatch::functor<bs::tag::asinh_, boost::simd::tag::sse4_2_>
+    // Exhaustive test for: asinh_, sse4_2_>
     //              versus:  float(boost::math::asinh(double)
     //              With T: float
     //            in range: [-3.40282e+38, 3.40282e+38]

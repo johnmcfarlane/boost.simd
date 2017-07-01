@@ -15,24 +15,29 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
 
   template<typename T>
-  BOOST_FORCEINLINE T bxor_(T a, T b, tt_::false_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T
+  bxor_(T a, T b
+       , tt_::false_type ) BOOST_NOEXCEPT
   {
     // same type, T is not IEEE
     return a ^ b;
   }
 
   template<typename T, typename U>
-  BOOST_FORCEINLINE T bxor_(T a, U b, tt_::false_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T
+  bxor_(T a, U b
+       , tt_::false_type ) BOOST_NOEXCEPT
   {
     // different type, T is not IEEE
     return a ^ bitwise_cast<T>(b);
   }
 
   template<typename T, typename U>
-  BOOST_FORCEINLINE T bxor_(T a, U b, tt_::true_type ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T
+  bxor_(T a, U b
+       , tt_::true_type ) BOOST_NOEXCEPT
   {
     // different type, T is IEEE
     using b_t = bd::as_integer_t<T, unsigned>;
@@ -40,7 +45,9 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, typename U>
-  BOOST_FORCEINLINE T bitwise_xor_(BOOST_SIMD_SUPPORTS(cpu_), T a, U b) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE T
+  bitwise_xor_(BOOST_SIMD_SUPPORTS(cpu_)
+              , T a, U b) BOOST_NOEXCEPT
   {
     static_assert ( sizeof(T) == sizeof(U)
                   , "simd::bitwise_xor - Arguments have incompatible size"

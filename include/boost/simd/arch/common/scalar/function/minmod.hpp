@@ -16,50 +16,43 @@
 #include <boost/simd/function/is_gez.hpp>
 #include <boost/simd/function/is_nltz.hpp>
 #include <boost/simd/function/min.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( minmod_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::int_<A0> >
-                          , bd::scalar_< bd::int_<A0> >
-                          )
-  {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return is_gez(bitwise_xor(a0, a1)) ? simd::min(a0, a1): Zero<A0>();
-    }
-  };
 
-  BOOST_DISPATCH_OVERLOAD ( minmod_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::uint_<A0> >
-                          , bd::scalar_< bd::uint_<A0> >
-                          )
+  template<typename T> BOOST_FORCEINLINE
+  T sminmod_( T a0, T a1
+          , detail::case_<0> const& ) BOOST_NOEXCEPT// IEEE case
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return simd::min(a0,a1);
-    }
-  };
+     return is_nltz(a0*a1) ? simd::min(a0,a1) : Zero<T>();
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( minmod_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T> BOOST_FORCEINLINE // signed integral case
+  T sminmod_ ( T  a0, T  a1
+             , detail::case_<1> const&
+             ) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A0 a1) const BOOST_NOEXCEPT
-    {
-      return is_nltz(a0*a1) ? simd::min(a0,a1) : Zero<A0>();
-    }
-  };
+    return is_gez(bitwise_xor(a0, a1)) ? simd::min(a0, a1): Zero<T>();
+  }
+
+  template<typename T> BOOST_FORCEINLINE
+  T sminmod_( T a0, T& a1
+            , detail::case_<2> const& ) BOOST_NOEXCEPT // unsigned integral case
+  {
+    return simd::min(a0,a1);
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE
+  T minmod_(BOOST_SIMD_SUPPORTS(cpu_)
+           , T  a
+           , T  b) BOOST_NOEXCEPT
+  {
+    return sminmod_ ( a ,b, fsu_picker<T>());
+  }
+
 } } }
 
 

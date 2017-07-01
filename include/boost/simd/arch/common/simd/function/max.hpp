@@ -37,7 +37,7 @@ namespace boost { namespace simd { namespace detail
           , T const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return max_(a0, p_t(a1));
+    return max(a0, p_t(a1));
   }
 
   template<typename T, std::size_t N>
@@ -47,7 +47,7 @@ namespace boost { namespace simd { namespace detail
           , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return max_(p_t(a0), a1);
+    return max(p_t(a0), a1);
   }
   // regular emulated
   template<typename T, std::size_t N>

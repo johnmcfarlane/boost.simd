@@ -40,7 +40,7 @@ namespace boost { namespace simd { namespace detail
           , T const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return minmag_(a0, p_t(a1));
+    return minmag(a0, p_t(a1));
   }
 
   template<typename T, std::size_t N>
@@ -50,7 +50,7 @@ namespace boost { namespace simd { namespace detail
           , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    return minmag_(p_t(a0), a1);
+    return minmag(p_t(a0), a1);
   }
   // regular emulated
   template<typename T, std::size_t N>

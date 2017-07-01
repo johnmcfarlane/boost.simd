@@ -9,8 +9,6 @@
 #ifndef BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE1_SIMD_FUNCTION_BITWISE_OR_HPP_INCLUDED
 
-#include <boost/simd/function/bitwise_cast.hpp>
-#include <boost/simd/detail/traits.hpp>
 #include <boost/simd/detail/pack.hpp>
 
 namespace boost { namespace simd { namespace detail

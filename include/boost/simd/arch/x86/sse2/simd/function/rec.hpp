@@ -8,29 +8,19 @@
 //==================================================================================================
 #ifndef BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_REC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_X86_SSE2_SIMD_FUNCTION_REC_HPP_INCLUDED
-
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/raw.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd =  boost::dispatch;
-  namespace bs =  boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( rec_
-                          , (typename A0)
-                          , bs::sse2_
-                          , bs::raw_tag
-                          , bs::pack_<bd::double_<A0>, bs::sse_>
-                          )
+   template<std::size_t N>
+  BOOST_FORCEINLINE  pack<double,2,sse_>
+  rec_(BOOST_SIMD_SUPPORTS(sse2_)
+             , raw_tag const&
+             , pack<double,2,sse_> a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator()(raw_tag const&, const A0 & a0) const BOOST_NOEXCEPT
-    {
-      return  _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(a0))); //The maximum error for this approximation is 1.5e-12
-    }
-  };
+    return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(a0))); //The maximum error for this approximation is 1.5e-12
+  }
 
 } } }
-
 
 #endif

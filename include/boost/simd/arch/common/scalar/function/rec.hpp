@@ -9,60 +9,60 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REC_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REC_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/valmax.hpp>
 #include <boost/simd/constant/zero.hpp>
 #include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/raw.hpp>
 #include <boost/simd/function/sign.hpp>
+#include <boost/simd/detail/meta/fsu_picker.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
 
 #ifdef BOOST_MSVC
   #pragma warning(push)
   #pragma warning(disable: 4723) // potential divide by 0
 #endif
 
-  BOOST_DISPATCH_OVERLOAD ( rec_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::floating_<A0> >
-                          )
+  template<typename T> BOOST_FORCEINLINE T
+  srec_( T a
+       , case_<0> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return One<A0>()/a0;
-    }
-  };
+    return One<T>()/a;
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( rec_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          )
+  template<typename T> BOOST_FORCEINLINE T
+  srec_( T a0
+       , case_<1> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0) const BOOST_NOEXCEPT
-    {
-      return (a0 ? ((bs::abs(a0) == One<A0>()) ? sign(a0) : Zero<A0>()) : Valmax<A0>());
-    }
-  };
+    return (a0 ? ((bs::abs(a0) == One<T>()) ? sign(a0) : Zero<T>()) : Valmax<T>());
+  }
 
-  BOOST_DISPATCH_OVERLOAD ( rec_
-                          , (typename T)
-                          , bd::cpu_
-                          , bs::raw_tag
-                          , bd::scalar_<bd::unspecified_<T>>
-                          )
+  template<typename T> BOOST_FORCEINLINE T
+  srec_( T a0
+       , case_<2> const&) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(const raw_tag &, T a) const BOOST_NOEXCEPT
-    {
-      return rec(a);
-    }
-  };
+    return (a0 ? ((a0 == One<T>()) ? a0 : Zero<T>()) : Valmax<T>());
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  rec_( BOOST_SIMD_SUPPORTS(cpu_)
+      , T a) BOOST_NOEXCEPT
+  {
+    return srec_(a, fsu_picker<T>{});
+  }
+
+  template<typename T>
+  BOOST_FORCEINLINE T
+  rec_( BOOST_SIMD_SUPPORTS(cpu_)
+      , raw_tag const&, T a) BOOST_NOEXCEPT
+  {
+    return rec(a);
+  }
+
 } } }
 
 #ifdef BOOST_MSVC

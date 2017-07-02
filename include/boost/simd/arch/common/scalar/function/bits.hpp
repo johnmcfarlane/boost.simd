@@ -26,8 +26,8 @@ namespace boost { namespace simd { namespace detail
                 , T a
                 ) BOOST_NOEXCEPT
   {
-    using result_t = uit_t<T>;
-    return  bitwise_cast<result_t>(a);
+    using r_t = ui_t<T>;
+    return  bitwise_cast<r_t>(a);
   }
 
 } } }

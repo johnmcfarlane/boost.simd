@@ -22,7 +22,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N >
   BOOST_FORCEINLINE
-  uit_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
+  ui_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
                       , pack<T, N> a
                       ) BOOST_NOEXCEPT
   {

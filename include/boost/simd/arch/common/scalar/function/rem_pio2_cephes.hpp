@@ -19,7 +19,6 @@
 #include <boost/simd/detail/constant/pio2_1.hpp>
 #include <boost/simd/detail/constant/pio2_2.hpp>
 #include <boost/simd/detail/constant/pio2_3.hpp>
-#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <utility>
 
 namespace boost { namespace simd { namespace detail

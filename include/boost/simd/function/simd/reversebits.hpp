@@ -11,7 +11,6 @@
 #define BOOST_SIMD_FUNCTION_SIMD_REVERSEBITS_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/reversebits.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/reversebits.hpp>
 
 #endif

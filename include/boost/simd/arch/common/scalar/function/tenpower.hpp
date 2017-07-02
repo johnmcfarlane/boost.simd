@@ -36,10 +36,10 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE f_t<T>
+  BOOST_FORCEINLINE as_f_t<T>
   s_tenpower_(T expo, detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    using r_t =  f_t<T>;
+    using r_t =  as_f_t<T>;
 
     r_t result = One<r_t>();
     r_t base = Ten<r_t>();
@@ -58,7 +58,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE T
   s_tenpower_(T expo, detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    using r_t =  f_t<T>;
+    using r_t =  as_f_t<T>;
 
     r_t result = One<r_t>();
     r_t base = Ten<r_t>();
@@ -72,7 +72,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE f_t<T>
+  BOOST_FORCEINLINE as_f_t<T>
   tenpower_(BOOST_SIMD_SUPPORTS(cpu_)
                           , T a) BOOST_NOEXCEPT
   {

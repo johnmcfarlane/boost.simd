@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
                 , std::true_type const &
                 ) BOOST_NOEXCEPT
   {
-    using p_t = i_t<pack<T, N>>;
+    using p_t = as_i_t<pack<T, N>>;
     return isincluded_c(bitwise_cast<p_t>(a0), bitwise_cast<p_t>(a1));
   }
 

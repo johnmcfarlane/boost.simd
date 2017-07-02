@@ -21,7 +21,7 @@
 namespace boost { namespace simd { namespace detail
 {
  template<typename T>
- BOOST_FORCEINLINE i_t<T>
+ BOOST_FORCEINLINE as_i_t<T>
  siceil_( T a0
         , std::true_type const &) BOOST_NOEXCEPT
  {

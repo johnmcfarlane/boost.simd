@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
                   ) BOOST_NOEXCEPT
   {
     using p_t = pack<T,4,avx_>;
-    using fp_t = f_t<p_t>;
+    using fp_t = as_f_t<p_t>;
     return  bitwise_cast<p_t>(fp_t( _mm256_unpacklo_pd( bitwise_cast<fp_t>(a0)
                                                       , bitwise_cast<fp_t>(a1)
                                                       )
@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
                   ) BOOST_NOEXCEPT
   {
     using p_t = pack<T,8,avx_>;
-    using fp_t = f_t<p_t>;
+    using fp_t = as_f_t<p_t>;
     auto b0 = bitwise_cast<fp_t>(a0);
     auto b1 = bitwise_cast<fp_t>(a1);
     return  bitwise_cast<p_t>(fp_t( _mm256_unpacklo_ps( _mm256_shuffle_ps(b0, b0, _MM_SHUFFLE(3,1,2,0))

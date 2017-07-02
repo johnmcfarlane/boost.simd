@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace detail
     using p_t =  pack<T,N>;
     // workaround for UBSan
 #ifdef USE_UBSAN
-    using u_t =  ui_t<p_t>;
+    using u_t =  as_ui_t<p_t>;
     return if_else(is_greater(saturated_(abs)(a0), bs::Sqrtvalmax<p_t>()),
                    bs::Valmax<p_t>(), bitwise_cast<p_t>(sqr(bitwise_cast<u_t>(a0))));
 #else

@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace detail
   void piece(const A0& a0, R& r) BOOST_NOEXCEPT
   {
     r.set ( I::value
-          , bs::bitwise_and ( bs::Signmask<i_t<typename A0::value_type>>()
+          , bs::bitwise_and ( bs::Signmask<as_i_t<typename A0::value_type>>()
                             , bs::extract<I::value>(a0)
                             ) != 0
           );

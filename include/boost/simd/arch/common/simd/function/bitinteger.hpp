@@ -27,11 +27,11 @@ namespace boost { namespace simd { namespace detail
           , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
   >
   BOOST_FORCEINLINE
-  si_t<pack<T, N>> bitinteger_( BOOST_SIMD_SUPPORTS(simd_)
+  as_si_t<pack<T, N>> bitinteger_( BOOST_SIMD_SUPPORTS(simd_)
                       , pack<T, N> a
                       ) BOOST_NOEXCEPT
   {
-    using r_t = si_t<pack<T, N>>;
+    using r_t = as_si_t<pack<T, N>>;
     r_t a0 = simd::bitwise_cast<r_t>(a);
     return if_else(bs::is_positive(a), a0, Signmask<r_t>()-a0 );
   }

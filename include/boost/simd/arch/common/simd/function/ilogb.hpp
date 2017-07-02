@@ -32,36 +32,36 @@ namespace boost { namespace simd { namespace detail
 {
    // regular
   template<typename T, std::size_t N>
-   BOOST_FORCEINLINE i_t<pack<T,N>>
+   BOOST_FORCEINLINE as_i_t<pack<T,N>>
    silogb_( pack<T,N> const & a0, std::true_type const &) BOOST_NOEXCEPT //floating
    {
-   return if_else(is_inf(a0), Valmax<i_t<pack<T,N>>>(), exponent(a0));
+   return if_else(is_inf(a0), Valmax<as_i_t<pack<T,N>>>(), exponent(a0));
    }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   ssilogb_( pack<T,N> const & a0, std::true_type const &) BOOST_NOEXCEPT //large integral
   {
-      return bitwise_cast<i_t<pack<T,N>>>(ilogb(pack_cast<f_t<T>>(a0)));
+      return bitwise_cast<as_i_t<pack<T,N>>>(ilogb(pack_cast<as_f_t<T>>(a0)));
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   ssilogb_( pack<T,N> const & a0, std::false_type const &) BOOST_NOEXCEPT //small integral 1 or 2 split
   {
     auto s0 = split(a0);
-    return bitwise_cast<i_t<pack<T,N>>>(group(ilogb(s0[0]), ilogb(s0[1])));
+    return bitwise_cast<as_i_t<pack<T,N>>>(group(ilogb(s0[0]), ilogb(s0[1])));
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   silogb_( pack<T,N> const & a0, std::false_type const &) BOOST_NOEXCEPT //integral
   {
     return ssilogb_(a0, nsm::bool_<sizeof(T) >= 4>());
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   ilogb_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N> const & a0) BOOST_NOEXCEPT
   {
     return silogb_(a0, std::is_floating_point<T>());
@@ -69,7 +69,7 @@ namespace boost { namespace simd { namespace detail
 
   // emulation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N,simd_emulation_>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N,simd_emulation_>>
   ilog2_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N,simd_emulation_> const & a0) BOOST_NOEXCEPT
   {
     return map_to(simd::ilogb, a0);
@@ -79,12 +79,12 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N,
            typename = typename std::enable_if<std::is_floating_point<T>::value>
   >
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   ilogb_(BOOST_SIMD_SUPPORTS(simd_)
         , pedantic_tag const &
         , pack<T,N> const & a0) BOOST_NOEXCEPT
   {
-    using result_t = i_t<pack<T,N>>;
+    using result_t = as_i_t<pack<T,N>>;
     result_t fp_ilogbnan(FP_ILOGBNAN);
     result_t fp_ilogb0(FP_ILOGB0);
     return if_else(is_nan(a0), fp_ilogbnan,

@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   template<typename T>
   BOOST_FORCEINLINE
-  si_t<T> s_toint_( T a0
+  as_si_t<T> s_toint_( T a0
            , std::true_type const &) BOOST_NOEXCEPT
   {
     return a0;
@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T >
   BOOST_FORCEINLINE
-  si_t<T> s_toint_( T a0
+  as_si_t<T> s_toint_( T a0
            , std::false_type) BOOST_NOEXCEPT
   {
    return a0;
@@ -42,7 +42,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  si_t<T> toint_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_si_t<T> toint_(BOOST_SIMD_SUPPORTS(cpu_)
          , T a) BOOST_NOEXCEPT
   {
     return s_toint_(a, std::is_floating_point<T>());
@@ -51,11 +51,11 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   // saturated_ decorator
   template<typename T>  //floating
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE as_si_t<T>
   s_toint_(T a0
           , detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    using r_t =  si_t<T>;
+    using r_t =  as_si_t<T>;
 #ifndef BOOST_SIMD_NO_NANS
       if (simd::is_nan(a0)) return Zero<r_t>();
 #endif
@@ -65,7 +65,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>         //signed
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE as_si_t<T>
   s_toint_(T a
           , detail::case_<1> const&) BOOST_NOEXCEPT
   {
@@ -73,16 +73,16 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>     //unsigned
+  BOOST_FORCEINLINE as_si_t<T>     //unsigned
   s_toint_(T a
           , detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    using r_t =  si_t<T>;
+    using r_t =  as_si_t<T>;
     return r_t(saturate<r_t>(a));
   }
 
   template<typename T>
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE as_si_t<T>
   toint_( BOOST_SIMD_SUPPORTS(cpu_)
         , saturated_tag const&
         , T const& a) BOOST_NOEXCEPT

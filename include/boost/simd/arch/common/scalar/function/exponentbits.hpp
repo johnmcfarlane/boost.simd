@@ -25,7 +25,7 @@ namespace boost { namespace simd { namespace detail
            , typename =  std::enable_if<std::is_floating_point<T>::value>
            >
   BOOST_FORCEINLINE
-  si_t<T> exponentbits_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_si_t<T> exponentbits_(BOOST_SIMD_SUPPORTS(cpu_)
                     ,  T a0) BOOST_NOEXCEPT
   {
     return bitwise_and((2*simd::Maxexponent<T>()+1)<<Nbmantissabits<T>(), a0);

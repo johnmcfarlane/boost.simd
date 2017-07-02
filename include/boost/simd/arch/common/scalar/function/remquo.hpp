@@ -24,7 +24,7 @@ namespace boost { namespace simd { namespace detail
 {
 
   template<typename T>
-  BOOST_FORCEINLINE std::pair<T,si_t<T>>
+  BOOST_FORCEINLINE std::pair<T,as_si_t<T>>
   remquo_(BOOST_SIMD_SUPPORTS(cpu_)
          , T a0
          , T a1) BOOST_NOEXCEPT
@@ -39,7 +39,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE std::pair<T,si_t<T>>
+  BOOST_FORCEINLINE std::pair<T,as_si_t<T>>
   remquo_(BOOST_SIMD_SUPPORTS(cpu_)
          , std_tag const &
          , T a0

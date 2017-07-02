@@ -27,12 +27,12 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<sizeof(T) >= 4>
   >
   BOOST_FORCEINLINE
-  f_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
+  as_f_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
                                 , std::true_type const &
                                 ) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    using pf_t = f_t<p_t>;
+    using pf_t = as_f_t<p_t>;
     auto s = bitwise_cast<p_t>(Signmask<pf_t>());
     return bitwise_cast<pf_t>(if_else(is_gez(a), a, s-a));
   }
@@ -41,18 +41,18 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<sizeof(T) >= 4>
   >
   BOOST_FORCEINLINE
-  f_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
+  as_f_t<pack<T,N>> vbitfloating_( pack<T,N> const& a
                                 , std::false_type const &
                                 ) BOOST_NOEXCEPT
   {
     using p_t = pack<T, N>;
-    using pf_t = f_t<p_t>;
+    using pf_t = as_f_t<p_t>;
     return simd::bitwise_cast<pf_t>(a);
   }
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  f_t<pack<T,N>> bitfloating_(BOOST_SIMD_SUPPORTS(simd_)
+  as_f_t<pack<T,N>> bitfloating_(BOOST_SIMD_SUPPORTS(simd_)
                                , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     return vbitfloating_(a, std::is_signed<T>());
@@ -61,7 +61,7 @@ namespace boost { namespace simd { namespace detail
   // Emulated implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  f_t<pack<T,N>> bitfloating_ ( BOOST_SIMD_SUPPORTS(simd_)
+  as_f_t<pack<T,N>> bitfloating_ ( BOOST_SIMD_SUPPORTS(simd_)
                                   , pack<T,N,simd_emulation_> const& a
                                   ) BOOST_NOEXCEPT
   {

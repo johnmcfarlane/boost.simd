@@ -24,7 +24,7 @@ namespace boost { namespace simd { namespace detail
   frexp_(BOOST_SIMD_SUPPORTS(cpu_)
         , T a0) BOOST_NOEXCEPT
   {
-    using p_t = std::pair<T, si_t<T>>;
+    using p_t = std::pair<T, as_si_t<T>>;
     p_t that = ifrexp(a0);
     return {that.first, T(that.second)};
   }
@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
         , pedantic_tag const &
         , T a0) BOOST_NOEXCEPT
   {
-    using p_t = std::pair<T, si_t<T>>;
+    using p_t = std::pair<T, as_si_t<T>>;
     p_t that = pedantic_(ifrexp)(a0);
     return {that.first, T(that.second)};
   }
@@ -48,7 +48,7 @@ namespace boost { namespace simd { namespace detail
         , raw_tag const &
         , T a0) BOOST_NOEXCEPT
   {
-    using p_t = std::pair<T, si_t<T>>;
+    using p_t = std::pair<T, as_si_t<T>>;
     p_t  that = raw_(ifrexp)(a0);
     return {that.first, T(that.second)};
   }
@@ -60,7 +60,7 @@ namespace boost { namespace simd { namespace detail
         , std_tag const &
         , T a0) BOOST_NOEXCEPT
   {
-    using p_t = std::pair<T, si_t<T>>;
+    using p_t = std::pair<T, as_si_t<T>>;
     p_t that =std_(ifrexp)(a0);
     return {that.first, T(that.second)};
   }

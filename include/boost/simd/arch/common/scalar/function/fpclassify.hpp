@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T
            , typename = typename std::enable_if<std::is_floating_point<T>::value>::type
   >
-  BOOST_FORCEINLINE si_t<T>
+  BOOST_FORCEINLINE as_si_t<T>
   fpclassify_( BOOST_SIMD_SUPPORTS(cpu_)
              , T a
              ) BOOST_NOEXCEPT

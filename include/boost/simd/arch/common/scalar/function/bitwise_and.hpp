@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE T band_(T a, U b, std::true_type ) BOOST_NOEXCEPT
   {
     // different type, T is IEEE
-    using b_t = ui_t<T>;
+    using b_t = as_ui_t<T>;
     return bitwise_cast<T>(b_t(bitwise_cast<b_t>(a) & bitwise_cast<b_t>(b)));
   }
 

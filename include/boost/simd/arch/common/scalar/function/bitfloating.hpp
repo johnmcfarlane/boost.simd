@@ -26,7 +26,7 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<sizeof(T) >= 4>
   >
   BOOST_FORCEINLINE
-  f_t<T> sbitfloating_(T const& a
+  as_f_t<T> sbitfloating_(T const& a
                         , std::true_type const &
                         ) BOOST_NOEXCEPT
   {
@@ -40,17 +40,17 @@ namespace boost { namespace simd { namespace detail
            , typename = typename std::enable_if<sizeof(T) >= 4>
 >
   BOOST_FORCEINLINE
-  f_t<T> sbitfloating_( T a
+  as_f_t<T> sbitfloating_( T a
                         , std::false_type const &
                         ) BOOST_NOEXCEPT
   {
-    using result_t = bd::as_floating_t<T>;
-    return simd::bitwise_cast<result_t>(a);
+    using r_t = as_f_t<T>;
+    return simd::bitwise_cast<r_t>(a);
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  f_t<T> bitfloating_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_f_t<T> bitfloating_( BOOST_SIMD_SUPPORTS(cpu_)
                         , T a
                         ) BOOST_NOEXCEPT
   {

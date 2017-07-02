@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
                  , std::true_type  const &
                  ) BOOST_NOEXCEPT
   {
-    using p_t = i_t<T>;
+    using p_t = as_i_t<T>;
     return  (bitwise_cast<p_t>(a0) & bitwise_cast<p_t>(a1)) == Zero<p_t>();
   }
   template <typename T>

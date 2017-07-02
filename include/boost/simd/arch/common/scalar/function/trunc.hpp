@@ -64,7 +64,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   T srtrunc_( T const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-     return T(si_t<T>(a0));
+     return T(as_si_t<T>(a0));
   }
 
   template<typename T>

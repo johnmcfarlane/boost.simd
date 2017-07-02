@@ -59,7 +59,7 @@ namespace boost { namespace simd { namespace detail
         ) BOOST_NOEXCEPT
   {
       using p_t =  pack<int8_t,16,sse_>;
-      return bitwise_cast<p_t>(ilogb(bitwise_cast<ui_t<p_t>>(saturated_(abs)(a0))));
+      return bitwise_cast<p_t>(ilogb(bitwise_cast<as_ui_t<p_t>>(saturated_(abs)(a0))));
   }
 
 } } }

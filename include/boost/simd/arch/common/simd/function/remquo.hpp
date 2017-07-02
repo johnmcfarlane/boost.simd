@@ -27,7 +27,7 @@ namespace boost { namespace simd { namespace detail
 {
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE std::pair<pack<T,N>, si_t<pack<T,N>>>
+  BOOST_FORCEINLINE std::pair<pack<T,N>, as_si_t<pack<T,N>>>
   remquo_(BOOST_SIMD_SUPPORTS(simd_)
           , pack<T,N> const & a0
           , pack<T,N> const & a1) BOOST_NOEXCEPT

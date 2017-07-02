@@ -22,11 +22,11 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N >
   BOOST_FORCEINLINE
-  ui_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
+  as_ui_t<pack<T, N>> bits_( BOOST_SIMD_SUPPORTS(simd_)
                       , pack<T, N> a
                       ) BOOST_NOEXCEPT
   {
-    using r_t = ui_t<pack<T, N>>;
+    using r_t = as_ui_t<pack<T, N>>;
     return bitwise_cast<r_t>(a);
   }
 

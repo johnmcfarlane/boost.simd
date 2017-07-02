@@ -57,7 +57,7 @@ namespace boost { namespace simd { namespace detail
                , std::true_type const &) BOOST_NOEXCEPT
   {
     BOOST_ASSERT_MSG(is_gez(a1), "predecessor rank must be non negative");
-    return  (is_nan(a0)) ? a0 : bitfloating(saturated_(minus)(bitinteger(a0), si_t<T>(a1)));
+    return  (is_nan(a0)) ? a0 : bitfloating(saturated_(minus)(bitinteger(a0), as_si_t<T>(a1)));
   }
 
   template<typename T, typename U>

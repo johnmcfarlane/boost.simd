@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE simd::bitset<1> hmsb_(BOOST_SIMD_SUPPORTS(cpu_)
                                          , T const& a0) BOOST_NOEXCEPT
   {
-    return {bitwise_and(Signmask<i_t<T>>(), a0) != 0};
+    return {bitwise_and(Signmask<as_i_t<T>>(), a0) != 0};
   }
 
 } } }

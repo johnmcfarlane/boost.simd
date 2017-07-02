@@ -61,7 +61,7 @@ namespace boost { namespace simd { namespace detail
                       ) BOOST_NOEXCEPT
   {
    using p_t = pack<T,8,avx_>;
-    return hmsb(bitwise_cast<f_t<p_t>>(a0));
+    return hmsb(bitwise_cast<as_f_t<p_t>>(a0));
   }
 
 } } }

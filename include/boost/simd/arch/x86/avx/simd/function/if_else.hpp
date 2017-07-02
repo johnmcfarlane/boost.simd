@@ -58,7 +58,7 @@ namespace boost { namespace simd { namespace detail
           ) BOOST_NOEXCEPT
   {
     using p_t = pack<U,N,avx_>;
-    using pf_t = f_t<p_t>;
+    using pf_t = as_f_t<p_t>;
     return bitwise_cast<p_t>(if_else(a0, bitwise_cast<pf_t>(a1)
                                     , bitwise_cast<pf_t>(a2)));
   }

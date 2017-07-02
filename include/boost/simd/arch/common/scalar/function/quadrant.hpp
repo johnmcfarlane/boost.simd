@@ -23,7 +23,7 @@ namespace boost { namespace simd { namespace detail
   T squadrant_( T a0
               , std::true_type const &) BOOST_NOEXCEPT
   {
-    return quadrant(si_t<T>(a0));
+    return quadrant(as_si_t<T>(a0));
   }
 
   template<typename T>

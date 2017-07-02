@@ -125,7 +125,7 @@ namespace boost { namespace simd { namespace detail
                     , U a1
                     ) BOOST_NOEXCEPT
   {
-    using pi_t = pack<i_t<U>,N>;
+    using pi_t = pack<as_i_t<U>,N>;
     return  nthroot(a0, pi_t(a1));
   }
 
@@ -196,7 +196,7 @@ namespace boost { namespace simd { namespace detail
                     , U a1
                     ) BOOST_NOEXCEPT
   {
-    using pi_t = pack<i_t<U>,N>;
+    using pi_t = pack<as_i_t<U>,N>;
     return  raw_(nthroot)(a0, pi_t(a1));
   }
 

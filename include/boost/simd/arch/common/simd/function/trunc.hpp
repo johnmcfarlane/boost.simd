@@ -74,7 +74,7 @@ namespace boost { namespace simd { namespace detail
   BOOST_FORCEINLINE
   pack<T,N> vrtrunc_( pack<T,N> const& a0, std::true_type const &) BOOST_NOEXCEPT
   {
-//    return  pack_cast<T>(pack_cast<si_t<T>>(a0));
+//    return  pack_cast<T>(pack_cast<as_si_t<T>>(a0));
     return  pack_cast<T>(toint(a0));
   }
 

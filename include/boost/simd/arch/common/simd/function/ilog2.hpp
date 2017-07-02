@@ -25,23 +25,23 @@
 namespace boost { namespace simd { namespace detail
 {
    template<typename T, std::size_t N>
-   BOOST_FORCEINLINE i_t<pack<T,N>>
+   BOOST_FORCEINLINE as_i_t<pack<T,N>>
    silog2_( pack<T,N> const & a0, std::true_type const &) BOOST_NOEXCEPT //floating
    {
      return simd::exponent(a0);
 
    }
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   silog2_( pack<T,N> const & a0, std::false_type const &) BOOST_NOEXCEPT //integral
   {
-    using pi_t = i_t<pack<T,N>>;
+    using pi_t = as_i_t<pack<T,N>>;
     return saturated_(dec)((sizeof(T)*8)-bitwise_cast<pi_t>(clz(a0)));
   }
 
   // regular
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N>>
   ilog2_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N> const & a0) BOOST_NOEXCEPT
   {
     BOOST_ASSERT_MSG( assert_all(a0 > 0)
@@ -51,7 +51,7 @@ namespace boost { namespace simd { namespace detail
 
   // emulation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE i_t<pack<T,N,simd_emulation_>>
+  BOOST_FORCEINLINE as_i_t<pack<T,N,simd_emulation_>>
   ilog2_(BOOST_SIMD_SUPPORTS(simd_), pack<T,N,simd_emulation_> const & a0) BOOST_NOEXCEPT
   {
     BOOST_ASSERT_MSG( assert_all(a0 > 0)

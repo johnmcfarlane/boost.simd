@@ -287,7 +287,7 @@ namespace boost { namespace simd { namespace detail
   T s_log10_(T a
             , std::true_type const &) BOOST_NOEXCEPT
   {
-    using ui_t = ui_t<T>;
+    using ui_t = as_ui_t<T>;
     BOOST_ASSERT_MSG( a > 0, "log10 is not defined for zero or negative integers." );
     return T(si_log10_(ui_t(a), size_picker<T>()));
   }

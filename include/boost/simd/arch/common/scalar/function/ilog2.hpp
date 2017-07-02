@@ -21,7 +21,7 @@ namespace boost { namespace simd { namespace detail
 {
   // floating point
   template<typename T> BOOST_FORCEINLINE
-  si_t<T> silog2_( T a0, std::true_type const&) BOOST_NOEXCEPT
+  as_si_t<T> silog2_( T a0, std::true_type const&) BOOST_NOEXCEPT
   {
     BOOST_ASSERT_MSG( a0 > 0
                     , "Logarithm is not defined for zero or negative values." );

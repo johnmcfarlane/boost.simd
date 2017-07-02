@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace detail
   bool vis_simd_logical_( pack<T,N> const& a0
                         , std::true_type const &) BOOST_NOEXCEPT
   {
-    return is_simd_logical(bitwise_cast<si_t<pack<T, N>>>(a0));
+    return is_simd_logical(bitwise_cast<as_si_t<pack<T, N>>>(a0));
   }
 
   template<typename T, std::size_t N>

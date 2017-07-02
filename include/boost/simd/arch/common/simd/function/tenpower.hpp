@@ -43,12 +43,12 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  f_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_f_t<pack<T,N>>
   vtenpower_(pack<T,N> a, detail::case_<1> const&) BOOST_NOEXCEPT
   {
     // tenpower on signed integral values
     using p_t = pack<T,N>;
-    using r_t = f_t<p_t>;
+    using r_t = as_f_t<p_t>;
 
     r_t res = One<r_t>();
     r_t base = Ten<r_t>();
@@ -63,12 +63,12 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  f_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_f_t<pack<T,N>>
   vtenpower_(pack<T,N> a0, detail::case_<2> const&) BOOST_NOEXCEPT
   {
     // tenpower on unsigned values is identity
     using p_t = pack<T,N>;
-    using r_t = f_t<p_t>;
+    using r_t = as_f_t<p_t>;
 
     r_t res = One<r_t>();
     r_t base = Ten<r_t>();
@@ -84,7 +84,7 @@ namespace boost { namespace simd { namespace detail
 
   // Native implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE f_t<pack<T,N>>
+  BOOST_FORCEINLINE as_f_t<pack<T,N>>
   tenpower_(BOOST_SIMD_SUPPORTS(simd_)
            , pack<T,N> const& a) BOOST_NOEXCEPT
   {
@@ -93,7 +93,7 @@ namespace boost { namespace simd { namespace detail
 
   // Emulated implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE f_t<pack<T,N,simd_emulation_>>
+  BOOST_FORCEINLINE as_f_t<pack<T,N,simd_emulation_>>
   tenpower_ ( BOOST_SIMD_SUPPORTS(simd_)
             , pack<T,N,simd_emulation_> const& a
             ) BOOST_NOEXCEPT

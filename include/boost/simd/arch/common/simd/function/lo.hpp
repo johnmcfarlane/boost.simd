@@ -24,21 +24,21 @@ namespace boost { namespace simd { namespace detail
 {
  template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T, N>> vlo_(pack<T,N> const& a0
+  as_ui_t<pack<T, N>> vlo_(pack<T,N> const& a0
                        , std::true_type const &) BOOST_NOEXCEPT
   {
-    using r_t = ui_t<pack<T, N>>;
+    using r_t = as_ui_t<pack<T, N>>;
     using d_t = pack<int32_t>;
     return bitwise_cast<r_t>(interleave_even(bitwise_cast<d_t>(a0), Zero<d_t>()));
   }
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T, N>> vlo_(pack<T,N> const& a0
+  as_ui_t<pack<T, N>> vlo_(pack<T,N> const& a0
                        , std::false_type const &) BOOST_NOEXCEPT
   {
-    using s_t = ui_t<T>;
-    using r_t = ui_t<pack < T, N>>;
+    using s_t = as_ui_t<T>;
+    using r_t = as_ui_t<pack < T, N>>;
     r_t sh((s_t(1) << sizeof(s_t)*(CHAR_BIT/2)) - 1);
     return bitwise_and(sh, a0);
 
@@ -46,7 +46,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T, N>> lo_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<pack<T, N>> lo_(BOOST_SIMD_SUPPORTS(cpu_)
                       , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     return vlo_(a, nsm::bool_< sizeof(T)== 8>());
@@ -54,7 +54,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T, N, simd_emulation_>>
+  as_ui_t<pack<T, N, simd_emulation_>>
   lo_(BOOST_SIMD_SUPPORTS(cpu_)
      , pack<T,N, simd_emulation_> const& a) BOOST_NOEXCEPT
   {

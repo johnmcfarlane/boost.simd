@@ -27,7 +27,7 @@ namespace boost { namespace simd { namespace detail
 {
 
   template<typename T>  BOOST_FORCEINLINE
-  ui_t<T> s1_popcnt_(T a0
+  as_ui_t<T> s1_popcnt_(T a0
                     , detail::case_<0> const&) BOOST_NOEXCEPT // 64bits
   {
 #if defined BOOST_MSVC && defined _WIN64
@@ -43,7 +43,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> s1_popcnt_(T a0
+  as_ui_t<T> s1_popcnt_(T a0
                     , detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
   {
 #ifdef BOOST_MSVC
@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> s1_popcnt_(T a0
+  as_ui_t<T> s1_popcnt_(T a0
                     , detail::case_<2> const&) BOOST_NOEXCEPT //16bits
   {
 #ifdef BOOST_MSVC
@@ -68,7 +68,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> s1_popcnt_(T a0
+  as_ui_t<T> s1_popcnt_(T a0
                     , detail::case_<3> const&) BOOST_NOEXCEPT //8bits
   {
 #ifdef BOOST_MSVC
@@ -80,7 +80,7 @@ namespace boost { namespace simd { namespace detail
 
 
   template<typename T>
-  BOOST_FORCEINLINE  ui_t<T> //floating
+  BOOST_FORCEINLINE  as_ui_t<T> //floating
   s0_popcnt_( T a0
             , std::true_type const & ) BOOST_NOEXCEPT
   {
@@ -88,7 +88,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE  ui_t<T> //integers
+  BOOST_FORCEINLINE  as_ui_t<T> //integers
   s0_popcnt_( T a0
             , std::false_type const & ) BOOST_NOEXCEPT
   {
@@ -97,7 +97,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> popcnt_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> popcnt_( BOOST_SIMD_SUPPORTS(cpu_)
                  , T a0) BOOST_NOEXCEPT
   {
     return s0_popcnt_(a0, std::is_floating_point<T>());

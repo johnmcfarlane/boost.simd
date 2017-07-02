@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
              ) BOOST_NOEXCEPT
   {
     using p_t  = pack<T,N,sse_>;
-    using ip_t = i_t<p_t>;
+    using ip_t = as_i_t<p_t>;
     return bool(_mm_testnzc_si128(bitwise_cast<ip_t>(a0), Butsign<ip_t>()));
   }
 

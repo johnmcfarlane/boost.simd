@@ -23,18 +23,18 @@ namespace boost { namespace simd { namespace detail
  // Native implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>>
+  as_ui_t<pack<T,N>>
   firstbitunset_(BOOST_SIMD_SUPPORTS(simd_)
                 , pack<T,N> const& a0) BOOST_NOEXCEPT
   {
-    using result_t = ui_t<pack<T,N>>;
+    using result_t = as_ui_t<pack<T,N>>;
     return bitwise_andnot(inc(simd::bitwise_cast<result_t>(a0)), a0);
   }
 
   // Emulated implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N,simd_emulation_>>
+  as_ui_t<pack<T,N,simd_emulation_>>
   firstbitunset_ ( BOOST_SIMD_SUPPORTS(simd_)
                  , pack<T,N,simd_emulation_> const& a
                  ) BOOST_NOEXCEPT

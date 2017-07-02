@@ -19,10 +19,10 @@
 namespace boost { namespace simd { namespace detail
 {
   template<typename T>
-  BOOST_FORCEINLINE ui_t<T> hi_( BOOST_SIMD_SUPPORTS(cpu_)
+  BOOST_FORCEINLINE as_ui_t<T> hi_( BOOST_SIMD_SUPPORTS(cpu_)
                                , T const& a) BOOST_NOEXCEPT
   {
-    return lo( shr(a, sizeof( ui_t<T>)*(CHAR_BIT/2)));
+    return lo( shr(a, sizeof( as_ui_t<T>)*(CHAR_BIT/2)));
   }
 
 } } }

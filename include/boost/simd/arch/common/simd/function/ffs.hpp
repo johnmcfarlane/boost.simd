@@ -34,7 +34,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
+  as_ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
                        , detail::case_<0> const&) BOOST_NOEXCEPT // 64bits
 
   {
@@ -43,11 +43,11 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
+  as_ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
                        , detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
 
   {
-    using result_t = ui_t<pack<T,N>>;
+    using result_t = as_ui_t<pack<T,N>>;
     result_t v =  bitwise_cast<result_t>(firstbitset(a0));
     return  bitwise_and(genmask(v)
                        ,inc(bitwise_or(
@@ -63,11 +63,11 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
+  as_ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
                        , detail::case_<2> const&) BOOST_NOEXCEPT // 16bits
 
   {
-    using result_t = ui_t<pack<T,N>>;
+    using result_t = as_ui_t<pack<T,N>>;
     result_t v = bitwise_cast<result_t>( firstbitset(a0));
     return  bitwise_and(genmask(v)
                        ,inc(bitwise_or(
@@ -82,11 +82,11 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
+  as_ui_t<pack<T,N>> vffs_(pack<T,N> const& a0
                        , detail::case_<3> const&) BOOST_NOEXCEPT // 8bits
 
   {
-    using result_t = ui_t<pack<T,N>>;
+    using result_t = as_ui_t<pack<T,N>>;
     result_t v = bitwise_cast<result_t>(firstbitset(a0));
     return  bitwise_and(genmask(v)
                        ,inc(bitwise_or(
@@ -99,7 +99,7 @@ namespace boost { namespace simd { namespace detail
 
   // Native implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE ui_t<pack<T,N>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
+  BOOST_FORCEINLINE as_ui_t<pack<T,N>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
                                          , pack<T,N> const& a
                                          ) BOOST_NOEXCEPT
   {
@@ -108,7 +108,7 @@ namespace boost { namespace simd { namespace detail
 
   // Emulated implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE ui_t<pack<T,N,simd_emulation_>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
+  BOOST_FORCEINLINE as_ui_t<pack<T,N,simd_emulation_>> ffs_ ( BOOST_SIMD_SUPPORTS(simd_)
                                                          , pack<T,N,simd_emulation_> const& a
                                                          ) BOOST_NOEXCEPT
   {

@@ -29,14 +29,14 @@
 namespace boost { namespace simd { namespace detail
 {
   template<typename T>  BOOST_FORCEINLINE
-  ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0) BOOST_NOEXCEPT ;
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sclz_(T a0, detail::case_<0> const&) BOOST_NOEXCEPT //64bits
+  as_ui_t<T> sclz_(T a0, detail::case_<0> const&) BOOST_NOEXCEPT //64bits
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
     BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
 
@@ -49,9 +49,9 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sclz_(T a0, detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
+  as_ui_t<T> sclz_(T a0, detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
     BOOST_ASSERT_MSG( t1, "clz not defined for 0" );
 
@@ -64,25 +64,25 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sclz_(T a0, detail::case_<2> const&) BOOST_NOEXCEPT //16bits
+  as_ui_t<T> sclz_(T a0, detail::case_<2> const&) BOOST_NOEXCEPT //16bits
   {
-    using i_t = ui_t<T>;
+    using i_t = as_ui_t<T>;
     i_t t1 = bitwise_cast<i_t>(a0);
     return clz(uint32_t(t1))-16;
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sclz_(T a0, detail::case_<3> const&) BOOST_NOEXCEPT //8bits
+  as_ui_t<T> sclz_(T a0, detail::case_<3> const&) BOOST_NOEXCEPT //8bits
   {
-      using i_t = ui_t<T>;
+      using i_t = as_ui_t<T>;
       i_t t1 = bitwise_cast<i_t>(a0);
       return clz(uint32_t(t1))-24;
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> clz_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0) BOOST_NOEXCEPT
   {
     return sclz_(a0, size_picker<T>());

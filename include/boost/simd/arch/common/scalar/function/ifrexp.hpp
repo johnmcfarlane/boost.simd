@@ -40,7 +40,7 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  template < typename T> using pair_it = std::pair<T, si_t<T>>;
+  template < typename T> using pair_it = std::pair<T, as_si_t<T>>;
 
   // raw case
   template<typename T>
@@ -49,7 +49,7 @@ namespace boost { namespace simd { namespace detail
         , raw_tag const &
          , T a0) BOOST_NOEXCEPT
   {
-    using r2_t = si_t<T>;
+    using r2_t = as_si_t<T>;
     auto m1f  = Mask1frexp<T>();
     auto r1   = bitwise_cast<r2_t>(bitwise_and(m1f, a0));
     auto    x   = bitwise_andnot(a0, m1f);
@@ -76,7 +76,7 @@ namespace boost { namespace simd { namespace detail
          , pedantic_tag const &
          , T a0) BOOST_NOEXCEPT
   {
-    using r2_t = si_t<T>;
+    using r2_t = as_si_t<T>;
     if (a0 == 0 || is_invalid(a0))
     {
       return pair_it<T>{a0, 0};

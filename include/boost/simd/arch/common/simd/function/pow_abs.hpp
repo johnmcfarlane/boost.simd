@@ -77,7 +77,7 @@ namespace boost { namespace simd { namespace detail
           , pack<T,N> const & a1) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    using pi_t = si_t<p_t>;
+    using pi_t = as_si_t<p_t>;
     pi_t e;
     p_t ax = bs::abs(a0);
     p_t x;

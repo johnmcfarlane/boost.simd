@@ -23,10 +23,10 @@
 namespace boost { namespace simd { namespace detail
 {
   template<typename T>  BOOST_FORCEINLINE
-  ui_t<T> sffs_(T a0
+  as_ui_t<T> sffs_(T a0
                , detail::case_<0> const&) BOOST_NOEXCEPT // 64bits
   {
-    using  result_t = ui_t<T>;
+    using  result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
 
 #ifdef __GNUC__
@@ -70,10 +70,10 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sffs_(T a0
+  as_ui_t<T> sffs_(T a0
                , detail::case_<1> const&) BOOST_NOEXCEPT // 32bits
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
 
 #ifdef __GNUC__
@@ -101,10 +101,10 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sffs_(T a0
+  as_ui_t<T> sffs_(T a0
                , detail::case_<2> const&) BOOST_NOEXCEPT //16bits
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
     using i_t = typename detail::make_dependent<uint32_t, T>::type;
     return result_t(bs::ffs(i_t(t1)));
@@ -112,10 +112,10 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sffs_(T a0
+  as_ui_t<T> sffs_(T a0
                , detail::case_<3> const&) BOOST_NOEXCEPT //8bits
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     result_t t1 = bitwise_cast<result_t>(a0);
     using i_t = typename detail::make_dependent<uint32_t, T>::type;
     return result_t(bs::ffs(i_t(t1)));
@@ -123,7 +123,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> ffs_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> ffs_( BOOST_SIMD_SUPPORTS(cpu_)
               , T a0) BOOST_NOEXCEPT
   {
     return sffs_(a0, size_picker<T>());

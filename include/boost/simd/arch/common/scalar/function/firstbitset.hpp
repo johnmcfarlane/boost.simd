@@ -24,25 +24,25 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   template<typename T >
   BOOST_FORCEINLINE
-  ui_t<T> sfirstbitset_( T a0
+  as_ui_t<T> sfirstbitset_( T a0
            , std::false_type) BOOST_NOEXCEPT
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     return a0 & (~a0+One<result_t>());
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> sfirstbitset_( T a0
+  as_ui_t<T> sfirstbitset_( T a0
            , std::true_type const &) BOOST_NOEXCEPT
   {
-    using result_t = ui_t<T>;
+    using result_t = as_ui_t<T>;
     return sfirstbitset_(bitwise_cast<result_t>(a0) , std::false_type());
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> firstbitset_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> firstbitset_(BOOST_SIMD_SUPPORTS(cpu_)
          , T a) BOOST_NOEXCEPT
   {
     return sfirstbitset_(a, std::is_floating_point<T>());

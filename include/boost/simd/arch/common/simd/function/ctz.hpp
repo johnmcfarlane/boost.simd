@@ -25,10 +25,10 @@ namespace boost { namespace simd { namespace detail
   // Native implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N>> ctz_(BOOST_SIMD_SUPPORTS(simd_)
+  as_ui_t<pack<T,N>> ctz_(BOOST_SIMD_SUPPORTS(simd_)
                       , pack<T,N> const& a) BOOST_NOEXCEPT
   {
-    using result_t = ui_t<pack<T,N>>;
+    using result_t = as_ui_t<pack<T,N>>;
     result_t t =  bitwise_cast<result_t>(a);
     BOOST_ASSERT_MSG( assert_all(t), "ctz not defined for 0" );
     return bitwise_cast<result_t>(dec(bs::ffs(t)));
@@ -37,7 +37,7 @@ namespace boost { namespace simd { namespace detail
   // Emulated implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  ui_t<pack<T,N,simd_emulation_>> ctz_ ( BOOST_SIMD_SUPPORTS(simd_)
+  as_ui_t<pack<T,N,simd_emulation_>> ctz_ ( BOOST_SIMD_SUPPORTS(simd_)
                                        , pack<T,N,simd_emulation_> const& a
                                        ) BOOST_NOEXCEPT
   {

@@ -24,12 +24,12 @@ namespace boost { namespace simd { namespace detail
              , typename =  std::enable_if<std::is_floating_point<T>::value>
              >
   BOOST_FORCEINLINE
-  si_t<pack<T, N>> exponentbits_( BOOST_SIMD_SUPPORTS(simd_)
+  as_si_t<pack<T, N>> exponentbits_( BOOST_SIMD_SUPPORTS(simd_)
                                 , pack<T,N> const& a0
                                 ) BOOST_NOEXCEPT
   {
-    using r_t =  si_t<pack<T, N>>;
-    using s_t =  si_t<T>;
+    using r_t =  as_si_t<pack<T, N>>;
+    using s_t =  as_si_t<T>;
     s_t me = Maxexponent<T>();
     s_t nmb= Nbmantissabits<T>();
     r_t mask = r_t((2*me+1)<<nmb);

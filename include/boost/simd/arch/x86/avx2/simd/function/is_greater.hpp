@@ -80,7 +80,7 @@ namespace boost { namespace simd { namespace ext
              ) BOOST_NOEXCEPT
   {
     using r_t = as_logical_t<pack<T,N,avx_>>;
-    using s_t = si_t<pack<T,N,avx_>>;
+    using s_t = as_si_t<pack<T,N,avx_>>;
     auto const m = Signmask<s_t>();
     return bitwise_cast<result>((bitwise_cast<s_t>(a0) - m) > (bitwise_cast<s_t>(a1) - m));
   }

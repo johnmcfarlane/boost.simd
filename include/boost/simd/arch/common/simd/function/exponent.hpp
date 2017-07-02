@@ -41,13 +41,13 @@ namespace boost { namespace simd { namespace detail
   // Native implementation
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  si_t<pack<T, N>> vexponent_(pack<T,N> const& a0
+  as_si_t<pack<T, N>> vexponent_(pack<T,N> const& a0
                             , std::true_type const &) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    using r_t = si_t<pack<T, N>>;
+    using r_t = as_si_t<pack<T, N>>;
     //computes exponent bits
-    using sint_type = si_t<T>;
+    using sint_type = as_si_t<T>;
     const sint_type me = Maxexponent<T>();
     const sint_type nmb = Nbmantissabits<T>();
     const r_t Mask =r_t((2*me+1)<<nmb);
@@ -69,15 +69,15 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T, std::size_t N >
   BOOST_FORCEINLINE
-  si_t<pack<T, N>> vexponent_( pack<T,N> const& a
+  as_si_t<pack<T, N>> vexponent_( pack<T,N> const& a
                        , std::false_type) BOOST_NOEXCEPT
   {
-    return Zero<si_t<pack<T, N>>>();
+    return Zero<as_si_t<pack<T, N>>>();
   }
 
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
-  si_t<pack<T, N>>  exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_si_t<pack<T, N>>  exponent_(BOOST_SIMD_SUPPORTS(cpu_)
                             , pack<T,N> const& a) BOOST_NOEXCEPT
   {
     return vexponent_(a, std::is_floating_point<T>());
@@ -87,7 +87,7 @@ namespace boost { namespace simd { namespace detail
   // std_ decorator
   template<typename T, std::size_t N, typename X>
   BOOST_FORCEINLINE
-  si_t<pack<T,N,X>> exponent_( BOOST_SIMD_SUPPORTS(simd_)
+  as_si_t<pack<T,N,X>> exponent_( BOOST_SIMD_SUPPORTS(simd_)
                    , std_tag const&
                    , pack<T,N,X> const& a) BOOST_NOEXCEPT
   {

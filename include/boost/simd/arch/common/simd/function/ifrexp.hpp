@@ -56,7 +56,7 @@ namespace boost { namespace simd { namespace detail
   {
     using p_t = pack<T,N>;
     auto m1f = Mask1frexp<p_t>();
-    auto r1 = bitwise_cast<si_t<p_t>>(bitwise_and(m1f, a0));
+    auto r1 = bitwise_cast<as_si_t<p_t>>(bitwise_and(m1f, a0));
     auto x  = bitwise_andnot(a0, m1f);
 
     return  pair_it<pack<T,N>>{ bitwise_or(x,Mask2frexp<p_t>())
@@ -96,7 +96,7 @@ namespace boost { namespace simd { namespace detail
     auto  aa0 = a0;
 #endif
 
-    auto r1 = simd::bitwise_cast<si_t<p_t>>(bitwise_and(aa0, Mask1frexp<p_t>())); //extract exp.
+    auto r1 = simd::bitwise_cast<as_si_t<p_t>>(bitwise_and(aa0, Mask1frexp<p_t>())); //extract exp.
     auto x  = bitwise_andnot(aa0, Mask1frexp<p_t>());
     r1 = shr(r1,Nbmantissabits<T>()) - Maxexponentm1<p_t>();
     auto r0 = bitwise_or(x,Mask2frexp<p_t>());

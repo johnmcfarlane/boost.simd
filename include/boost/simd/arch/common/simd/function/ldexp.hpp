@@ -55,7 +55,7 @@ namespace boost { namespace simd { namespace detail
                    ) BOOST_NOEXCEPT
   {
     using p_t =  pack<T,N>;
-    using pi_t = si_t<pack<T,N>>;
+    using pi_t = as_si_t<pack<T,N>>;
     pi_t ik =  a1+Maxexponent<p_t>();
     ik = shift_left(ik, Nbmantissabits<T>());
     return a0*bitwise_cast<p_t>(ik);
@@ -67,7 +67,7 @@ namespace boost { namespace simd { namespace detail
                             , pack<U,N> const & a1
                             ) BOOST_NOEXCEPT
   {
-    return vldexp_(a0, pack_cast<si_t<T>>(a1), std::is_floating_point<T>());
+    return vldexp_(a0, pack_cast<as_si_t<T>>(a1), std::is_floating_point<T>());
   }
 
 //--------------------------------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
   pack<T,N> vpldexp_( pack<T,N> const & a0
-                    , si_t<pack<T,N>> const & a1
+                    , as_si_t<pack<T,N>> const & a1
                     , std::false_type const &
                     ) BOOST_NOEXCEPT
   {
@@ -86,11 +86,11 @@ namespace boost { namespace simd { namespace detail
   template<typename T, std::size_t N>
   BOOST_FORCEINLINE
   pack<T,N> vpldexp_( pack<T,N> const & a0
-                    , si_t<pack<T,N>> const & a1
+                    , as_si_t<pack<T,N>> const & a1
                     , std::true_type const &
                     ) BOOST_NOEXCEPT
   {
-      using pi_t = si_t<pack<T,N>>;
+      using pi_t = as_si_t<pack<T,N>>;
       using p_t = pack<T, N>;
       pi_t e = a1;
       p_t f = One<p_t>();
@@ -115,7 +115,7 @@ namespace boost { namespace simd { namespace detail
                                     , pack<U,N> const & a1
                                     ) BOOST_NOEXCEPT
   {
-    return vpldexp_(a0, pack_cast<si_t<T>>(a1), std::is_floating_point<T>());
+    return vpldexp_(a0, pack_cast<as_si_t<T>>(a1), std::is_floating_point<T>());
   }
 
 
@@ -140,7 +140,7 @@ namespace boost { namespace simd { namespace detail
                    ) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    auto ik =  si_t<T>(a1)+Maxexponent<T>();
+    auto ik =  as_si_t<T>(a1)+Maxexponent<T>();
     ik = shift_left(ik, Nbmantissabits<T>());
     return a0*p_t(bitwise_cast<T>(ik));
   }
@@ -184,7 +184,7 @@ namespace boost { namespace simd { namespace detail
                    ,  std::true_type const &
                    ) BOOST_NOEXCEPT
   {
-    using si_t = si_t<T>;
+    using si_t = as_si_t<T>;
     using p_t = pack<T, N>;
     auto e = a1;
     p_t f = One<p_t>();

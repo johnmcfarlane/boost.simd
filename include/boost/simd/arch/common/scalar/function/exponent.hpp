@@ -27,10 +27,10 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   template<typename T>
   BOOST_FORCEINLINE
-  si_t<T> sexponent_( T a0
+  as_si_t<T> sexponent_( T a0
            , std::true_type const &) BOOST_NOEXCEPT
   {
-    using r_t = si_t<T>;
+    using r_t = as_si_t<T>;
     if (is_invalid(a0) || is_eqz(a0)) return r_t(0);
     const int nmb = int(Nbmantissabits<T>());
     auto exponentbits = bitwise_and((2*Maxexponent<T>()+1)<<Nbmantissabits<T>(), a0);
@@ -40,15 +40,15 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T >
   BOOST_FORCEINLINE
-  si_t<T> sexponent_( T
+  as_si_t<T> sexponent_( T
                     , std::false_type) BOOST_NOEXCEPT
   {
-    return Zero<si_t<T>>();
+    return Zero<as_si_t<T>>();
   }
 
   template<typename T>
   BOOST_FORCEINLINE
-  si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
                    , T a) BOOST_NOEXCEPT
   {
     return sexponent_(a, std::is_floating_point<T>());
@@ -58,7 +58,7 @@ namespace boost { namespace simd { namespace detail
   // std_ decorator
   template<typename T>
   BOOST_FORCEINLINE
-  si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_si_t<T> exponent_(BOOST_SIMD_SUPPORTS(cpu_)
                    , std_tag const&
                    , T a) BOOST_NOEXCEPT
   {

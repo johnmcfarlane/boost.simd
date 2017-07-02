@@ -22,11 +22,11 @@ namespace boost { namespace simd { namespace detail
 {
   template<typename T >
   BOOST_FORCEINLINE
-  ui_t<T> bits_( BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> bits_( BOOST_SIMD_SUPPORTS(cpu_)
                 , T a
                 ) BOOST_NOEXCEPT
   {
-    using r_t = ui_t<T>;
+    using r_t = as_ui_t<T>;
     return  bitwise_cast<r_t>(a);
   }
 

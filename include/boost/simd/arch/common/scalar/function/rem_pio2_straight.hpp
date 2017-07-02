@@ -32,8 +32,7 @@ namespace boost { namespace simd { namespace detail
     xr -= Pio2_2<T>();
     xr -= Pio2_3<T>();
     return { One<T>(), xr};
-    }
-  };
+  }
 
 } } }
 

@@ -41,7 +41,7 @@ namespace boost { namespace simd { namespace detail
                     , std::true_type const &
                     ) BOOST_NOEXCEPT
   {
-    return is_simd_logical(bitwise_cast<si_t<T>>(a0));;
+    return is_simd_logical(bitwise_cast<as_si_t<T>>(a0));;
   }
 
   template <typename T>

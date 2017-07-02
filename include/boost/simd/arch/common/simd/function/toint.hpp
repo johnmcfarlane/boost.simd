@@ -27,7 +27,7 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   // regular case
   template<typename T, std::size_t N> //floating
-  BOOST_FORCEINLINE si_t<pack<T,N>>
+  BOOST_FORCEINLINE as_si_t<pack<T,N>>
   v_toint_(pack<T,N> a
        , detail::case_<0> const&) BOOST_NOEXCEPT
   {
@@ -35,7 +35,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   v_toint_(pack<T,N> a
           , detail::case_<1> const&) BOOST_NOEXCEPT
   {
@@ -43,17 +43,17 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   v_toint_(pack<T,N> a
           , detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    using r_t =  si_t<pack<T,N>>;
+    using r_t =  as_si_t<pack<T,N>>;
     return bitwise_cast<r_t>(a);
   }
 
   // Native implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   toint_(BOOST_SIMD_SUPPORTS(simd_)
         , pack<T,N> const& a) BOOST_NOEXCEPT
   {
@@ -62,7 +62,7 @@ namespace boost { namespace simd { namespace detail
 
   // Emulated implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE si_t<pack<T,N,simd_emulation_>>
+  BOOST_FORCEINLINE as_si_t<pack<T,N,simd_emulation_>>
   toint_ ( BOOST_SIMD_SUPPORTS(simd_)
          , pack<T,N,simd_emulation_> const& a
          ) BOOST_NOEXCEPT
@@ -93,7 +93,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N, typename X >
-  BOOST_FORCEINLINE si_t<pack<T,N,X>>
+  BOOST_FORCEINLINE as_si_t<pack<T,N,X>>
   toint_(BOOST_SIMD_SUPPORTS(simd_)
         , pedantic_tag const &
         , pack<T,N,X> const& a) BOOST_NOEXCEPT
@@ -105,12 +105,12 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   //saturated_ decorator
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   vs_toint_(pack<T,N> a0
            , detail::case_<0> const&) BOOST_NOEXCEPT
   {
     using p_t  = pack<T,N>;
-    using r_t  = si_t<pack<T,N>>;
+    using r_t  = as_si_t<pack<T,N>>;
     using sr_t = bd::scalar_of_t<r_t>;
     const p_t Vax(bs::Valmax<sr_t>());
     const p_t Vix(bs::Valmin<sr_t>());
@@ -131,7 +131,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   vs_toint_(pack<T,N>a
            , detail::case_<1> const&) BOOST_NOEXCEPT
   {
@@ -139,16 +139,16 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE si_t<pack<T,N>>
+  BOOST_FORCEINLINE as_si_t<pack<T,N>>
   vs_toint_(pack<T,N> a0
            , detail::case_<2> const&) BOOST_NOEXCEPT
   {
-    using r_t = si_t<pack<T,N>>;
+    using r_t = as_si_t<pack<T,N>>;
     return bitwise_cast<r_t>(saturate<r_t>(a0));
   }
 
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE  si_t<pack<T,N>>
+  BOOST_FORCEINLINE  as_si_t<pack<T,N>>
   toint_(BOOST_SIMD_SUPPORTS(simd_)
         , saturated_tag const &
         , pack<T,N> const& a) BOOST_NOEXCEPT
@@ -158,7 +158,7 @@ namespace boost { namespace simd { namespace detail
 
   // Emulated implementation
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE si_t<pack<T,N,simd_emulation_>>
+  BOOST_FORCEINLINE as_si_t<pack<T,N,simd_emulation_>>
   toint_ ( BOOST_SIMD_SUPPORTS(simd_)
          , saturated_tag const &
          , pack<T,N,simd_emulation_> const& a

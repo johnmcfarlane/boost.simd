@@ -27,14 +27,14 @@ namespace boost { namespace simd { namespace detail
 {
   // floating point
   template<typename T> BOOST_FORCEINLINE
-  i_t<T> silogb_( T a0, std::true_type const&) BOOST_NOEXCEPT
+  as_i_t<T> silogb_( T a0, std::true_type const&) BOOST_NOEXCEPT
   {
-    return is_inf(a0) ? Valmax<si_t<T>>() : exponent(a0);
+    return is_inf(a0) ? Valmax<as_si_t<T>>() : exponent(a0);
   }
 
   // integral
   template<typename T> BOOST_FORCEINLINE
-  i_t<T> silogb_( T a0, std::false_type const&) BOOST_NOEXCEPT
+  as_i_t<T> silogb_( T a0, std::false_type const&) BOOST_NOEXCEPT
   {
     return simd::ilogb(f_t<T>(a0));
   }

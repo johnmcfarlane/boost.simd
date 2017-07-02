@@ -69,7 +69,7 @@ namespace boost { namespace simd { namespace detail
               , pack<T,N,sse_> const& a1
               ) BOOST_NOEXCEPT
   {
-    using s_t = si_t<pack<T,N,sse_>>;
+    using s_t = as_si_t<pack<T,N,sse_>>;
     s_t sm = Signmask<s_t>();
     using r_t = as_logical_t<pack<T,N,sse_>>;
     return  bitwise_cast<r_t>( is_greater(bitwise_cast<s_t>(a0) - sm,

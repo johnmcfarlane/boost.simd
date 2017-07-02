@@ -20,7 +20,7 @@ namespace boost { namespace simd { namespace detail
   // regular (no decorator)
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> s_touint_( T a0
+  as_ui_t<T> s_touint_( T a0
            , std::true_type const &) BOOST_NOEXCEPT
   {
     return a0;
@@ -28,7 +28,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T >
   BOOST_FORCEINLINE
-  ui_t<T> s_touint_( T a0
+  as_ui_t<T> s_touint_( T a0
            , std::false_type) BOOST_NOEXCEPT
   {
    return a0;
@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
 
   template<typename T>
   BOOST_FORCEINLINE
-  ui_t<T> touint_(BOOST_SIMD_SUPPORTS(cpu_)
+  as_ui_t<T> touint_(BOOST_SIMD_SUPPORTS(cpu_)
          , T a) BOOST_NOEXCEPT
   {
     return s_touint_(a, std::is_floating_point<T>());
@@ -45,27 +45,27 @@ namespace boost { namespace simd { namespace detail
   //================================================================================================
   // saturated_ decorator
   template<typename T>  //floating
-  BOOST_FORCEINLINE ui_t<T>
+  BOOST_FORCEINLINE as_ui_t<T>
   s_touint_(T a0
           , detail::case_<0> const&) BOOST_NOEXCEPT
   {
-    using r_t =  ui_t<T>;
+    using r_t =  as_ui_t<T>;
     if (is_ngez(a0)) return Zero<r_t>();
     if (a0 >= Valmax<r_t>()) return Valmax<r_t>();
     return r_t(a0);
   }
 
   template<typename T>         //signed
-  BOOST_FORCEINLINE ui_t<T>
+  BOOST_FORCEINLINE as_ui_t<T>
   s_touint_(T a
           , detail::case_<1> const&) BOOST_NOEXCEPT
   {
-    using r_t =  ui_t<T>;
+    using r_t =  as_ui_t<T>;
     return r_t(saturate<r_t>(a));
   }
 
   template<typename T>
-  BOOST_FORCEINLINE ui_t<T>     //unsigned
+  BOOST_FORCEINLINE as_ui_t<T>     //unsigned
   s_touint_(T a
           , detail::case_<2> const&) BOOST_NOEXCEPT
   {
@@ -73,7 +73,7 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T>
-  BOOST_FORCEINLINE ui_t<T>
+  BOOST_FORCEINLINE as_ui_t<T>
   touint_( BOOST_SIMD_SUPPORTS(cpu_)
         , saturated_tag const&
         , T const& a) BOOST_NOEXCEPT

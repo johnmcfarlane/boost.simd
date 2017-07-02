@@ -11,107 +11,66 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROL_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_ROL_HPP_INCLUDED
 
-#include <boost/simd/detail/nsm.hpp>
-#include <boost/simd/meta/cardinal_of.hpp>
+#include <boost/simd/detail/pack.hpp>
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
 #include <boost/simd/function/dec.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/shift_left.hpp>
-#include <boost/simd/function/shift_right.hpp>
-#include <boost/simd/function/splat.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/detail/dispatch/meta/scalar_of.hpp>
+#include <boost/simd/function/shl.hpp>
+#include <boost/simd/function/shr.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/config.hpp>
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
 
-  BOOST_DISPATCH_OVERLOAD ( rol_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::unsigned_<A0>, X>
-                          , bd::scalar_< bd::unsigned_<A1> >
-                          )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value, pack<T,N>>::type
+  rol_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const & a0
+      , pack<U,N> const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 a1) const
-    {
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "rol : rotation is out of range");
+    using p_t = pack<T,N>;
+    BOOST_ASSERT_MSG(assert_good_shift<p_t>(a1), "rol : rotation is out of range");
+    U constexpr width = sizeof(T)*CHAR_BIT;
+    return shl(a0, a1) | shr(a0, (width-a1) & (width-1));
+  }
 
-      using s_t = bd::scalar_of_t<A0>;
-      static const A1 width = sizeof(s_t)*CHAR_BIT-1;
-      A1 n(a1);
-      return (shift_left(a0, n)) | (shift_right(a0, (-n&width)));
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD ( rol_
-                          , (typename A0, typename A1, typename X)
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bd::scalar_< bd::integer_<A1> >
-  )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value, pack<T,N>>::type
+  rol_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N> const & a0
+      , U const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const&  a0, A1 a1 ) const
-    {
-      using i_t  = bd::as_integer_t<A0, unsigned>;
-      using is_t = bd::as_integer_t<i_t, unsigned>;
-      return bitwise_cast<A0>( rol ( bitwise_cast<i_t>(a0)
-                                   , is_t(a1)
-                                   )
-                             );
-    }
-  };
+    BOOST_ASSERT_MSG(assert_good_shift<T>(a1), "rol : rotation is out of range");
+    constexpr std::size_t width = sizeof(T)*CHAR_BIT-1;
+    size_t n(a1);
+    return (shl(a0, n)) | (shr(a0, (-n&width)));
+  }
 
-
-  BOOST_DISPATCH_OVERLOAD_IF ( rol_
-                             , (typename A0, typename A1, typename X)
-                             , ( nsm::and_<
-                                 detail::is_native<X>,
-                                 nsm::bool_<bs::cardinal_of<A0>::value == bs::cardinal_of<A1>::value>
-                                 >
-                               )
-                             , bd::cpu_
-                             , bs::pack_< bd::unsigned_<A0>, X>
-                             , bs::pack_< bd::unsigned_<A1>, X>
-                             )
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value, pack<T,N>>::type
+  rol_(BOOST_SIMD_SUPPORTS(simd_)
+      , T const & a0
+      , pack<U,N> const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 const& a1 ) const
-    {
-      using s_t = bd::scalar_of_t<A0>;
-      BOOST_ASSERT_MSG(assert_good_shift<A0>(a1), "rol : rotation is out of range");
+    using p_t = pack<T, N>;
+    return rol(p_t(a0), a1);
+  }
 
-      s_t static const width = sizeof(s_t)*CHAR_BIT;
-      return shift_left(a0, a1) | shift_right(a0, (width-a1) & (width-1));
-    }
-  };
-
-  BOOST_DISPATCH_OVERLOAD_IF ( rol_
-                          , (typename A0, typename A1, typename X)
-                          , ( nsm::and_<
-                              detail::is_native<X>,
-                              nsm::bool_<bs::cardinal_of<A0>::value == bs::cardinal_of<A1>::value>
-                              >
-                             )
-                          , bd::cpu_
-                          , bs::pack_< bd::arithmetic_<A0>, X>
-                          , bs::pack_< bd::integer_<A1>, X>
-  )
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  rol_(BOOST_SIMD_SUPPORTS(simd_)
+      , pack<T,N,simd_emulation_> const & a0
+      , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 const& a0, A1 const& a1 ) const
-    {
-      using i_t = bd::as_integer_t<A0, unsigned>;
-      return bitwise_cast<A0>( rol ( bitwise_cast<i_t>(a0)
-                                   , bitwise_cast<i_t>(a1)
-                                   )
-                             );
-    }
-  };
+    return map_to(rol, a0, a1);
+  }
+
 } } }
-
 
 #endif

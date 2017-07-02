@@ -26,32 +26,5 @@ STF_CASE_TPL (" rol integer", STF_INTEGRAL_TYPES)
     STF_EQUAL(rol(T(1),T(i)), T(T(1)<<i) );
   }
 
-/*
-  STF_ASSERT(rol(T(1),T(-1)));
-  STF_ASSERT(rol(T(1),T(w+1)));
-*/
 }
-
-STF_CASE_TPL (" rolreal", STF_IEEE_TYPES)
-{
-  namespace bs = boost::simd;
-  namespace bd = boost::dispatch;
-  using bs::rol;
-  using bs::bitwise_cast;
-  using iT = bd::as_integer_t<T> ;
-
-  STF_EXPR_IS( rol(T(), iT()), T);
-
-  iT w = sizeof(T)*CHAR_BIT;
-
-  for(iT i=0;i<w;++i)
-    STF_EQUAL( rol(bitwise_cast<T>(iT(1)),iT(i))
-                  , bitwise_cast<T>(iT(1)<<i)
-                  );
-/*
-  STF_ASSERT(rol(T(1),iT(-1)));
-  STF_ASSERT(rol(T(1),iT(w+1)));
-*/
-}
-
 

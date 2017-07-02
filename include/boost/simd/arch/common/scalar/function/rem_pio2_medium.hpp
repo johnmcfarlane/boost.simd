@@ -11,12 +11,9 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REM_PIO2_MEDIUM_HPP_INCLUDED
 
-#include <boost/simd/detail/dispatch/function/overload.hpp>
 #include <boost/config.hpp>
 #include <boost/simd/function/nearbyint.hpp>
 #include <boost/simd/function/toint.hpp>
-#include <boost/simd/detail/dispatch/meta/as_integer.hpp>
-#include <boost/simd/constant/three.hpp>
 #include <boost/simd/detail/constant/pio2_1.hpp>
 #include <boost/simd/detail/constant/pio2_1t.hpp>
 #include <boost/simd/detail/constant/pio2_2.hpp>
@@ -24,42 +21,30 @@
 #include <boost/simd/detail/constant/pio2_3.hpp>
 #include <boost/simd/detail/constant/pio2_3t.hpp>
 #include <boost/simd/constant/twoopi.hpp>
-#include <boost/simd/function/minus.hpp>
-#include <boost/simd/function/multiplies.hpp>
-#include <boost/simd/function/bitwise_and.hpp>
 #include <boost/simd/function/quadrant.hpp>
 #include <utility>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD (rem_pio2_medium_
-                          , (typename A0)
-                          , bd::cpu_
-                          , bd::scalar_ < bd::floating_<A0> >
-                          )
+  template<typename T, typename Arch>
+  BOOST_FORCEINLINE   std::pair<T, T>
+  rem_pio2_medium_(BOOST_SIMD_SUPPORTS(Arch)
+                  , T const& t) BOOST_NOEXCEPT
   {
-    using result_t = std::pair<A0, A0>;
-    BOOST_FORCEINLINE result_t operator() ( A0 t) const
-    {
-      const A0 fn = nearbyint(t*Twoopi<A0>());
-      A0 r  = t-fn*Pio2_1<A0>();
-      A0 w  = fn*Pio2_1t<A0>();
-      A0 t2 = r;
-      w  = fn*Pio2_2<A0>();
-      r  = t2-w;
-      w  = fn*Pio2_2t<A0>()-((t2-r)-w);
-      t2 = r;
-      w  = fn*Pio2_3<A0>();
-      r  = t2-w;
-      w  = fn*Pio2_3t<A0>()-((t2-r)-w);
-      return  {quadrant(fn), r-w};
-    }
-  };
+    T fn = nearbyint(t*Twoopi<T>());
+    T r  = t-fn*Pio2_1<T>();
+    T w  = fn*Pio2_1t<T>();
+    T t2 = r;
+    w  = fn*Pio2_2<T>();
+    r  = t2-w;
+    w  = fn*Pio2_2t<T>()-((t2-r)-w);
+    t2 = r;
+    w  = fn*Pio2_3<T>();
+    r  = t2-w;
+    w  = fn*Pio2_3t<T>()-((t2-r)-w);
+    return  {quadrant(fn), r-w};
+  }
 
 } } }
-
 
 #endif

@@ -29,7 +29,7 @@ namespace boost { namespace simd { namespace detail
   rem_pio2_cephes_(BOOST_SIMD_SUPPORTS(Arch)
                   , T const& x) BOOST_NOEXCEPT
   {
-    T xi =  bs::nearbyint(x*Twoopi<T>());
+    T xi =  nearbyint(x*Twoopi<T>());
     T xr  = fnms(xi, Pio2_1<T>(), x);
     xr -= xi*Pio2_2<T>();
     xr -= xi*Pio2_3<T>();

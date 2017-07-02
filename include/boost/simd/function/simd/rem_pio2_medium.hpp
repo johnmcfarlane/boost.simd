@@ -11,6 +11,5 @@
 #define BOOST_SIMD_FUNCTION_SIMD_REM_PIO2_MEDIUM_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/rem_pio2_medium.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 
 #endif

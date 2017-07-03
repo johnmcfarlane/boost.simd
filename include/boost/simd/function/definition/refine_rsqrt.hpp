@@ -12,11 +12,6 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_REFINE_RSQRT_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
-
-#include <boost/simd/config.hpp>
 #include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd

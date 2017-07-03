@@ -12,7 +12,6 @@
 #include <boost/simd/detail/overload.hpp>
 #include <boost/simd/meta/as_arithmetic.hpp>
 #include <boost/simd/function/if_else.hpp>
-#include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/constant/allbits.hpp>
 #include <boost/simd/meta/is_bitwise_logical.hpp>
 
@@ -39,7 +38,7 @@ namespace boost { namespace simd { namespace ext
 
     BOOST_FORCEINLINE result_t do_( A0 const& a0, tt::true_type const& ) const BOOST_NOEXCEPT
     {
-      return bitwise_cast<result_t>(is_nez(a0)); // WHY isnez here ? logical_ < A0 >  is not always allbits/zero ?
+      return bitwise_cast<result_t>(a0); // WHY isnez here ? logical_ < A0 >  is not always allbits/zero ?
     }
 
     BOOST_FORCEINLINE result_t do_( A0 const& a0, tt::false_type const& ) const BOOST_NOEXCEPT

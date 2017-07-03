@@ -47,8 +47,8 @@ namespace boost { namespace simd { namespace detail
                                             , pack<T,4,sse_>
                                             >::type
   make_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , as_<pack<T,4,sse_>> const&, Values const&... values
-                                        ) BOOST_NOEXCEPT
+        , as_<pack<T,4,sse_>> const&, Values const&... values
+        ) BOOST_NOEXCEPT
   {
     static_assert ( sizeof...(Values) == 4
                   , "simd::make - Invalid number of arguments"
@@ -58,9 +58,10 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, typename... Values>
-  BOOST_FORCEINLINE pack<T,8,sse_> make_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                                        , as_<pack<T,8,sse_>> const&, Values const&... values
-                                        ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE typename std::enable_if<std::is_integral<T>::value, pack<T,8,sse_>>::type
+  make_ ( BOOST_SIMD_SUPPORTS(sse2_)
+        , as_<pack<T,8,sse_>> const&, Values const&... values
+        ) BOOST_NOEXCEPT
   {
     static_assert ( sizeof...(Values) == 8
                   , "simd::make - Invalid number of arguments"
@@ -70,9 +71,10 @@ namespace boost { namespace simd { namespace detail
   }
 
   template<typename T, typename... Values>
-  BOOST_FORCEINLINE pack<T,16,sse_> make_ ( BOOST_SIMD_SUPPORTS(sse2_)
-                                          , as_<pack<T,16,sse_>> const&, Values const&... values
-                                          ) BOOST_NOEXCEPT
+  BOOST_FORCEINLINE typename std::enable_if<std::is_integral<T>::value, pack<T,16,sse_>>::type
+  make_ ( BOOST_SIMD_SUPPORTS(sse2_)
+        , as_<pack<T,16,sse_>> const&, Values const&... values
+        ) BOOST_NOEXCEPT
   {
     static_assert ( sizeof...(Values) == 16
                   , "simd::make - Invalid number of arguments"

@@ -9,7 +9,11 @@
 //==================================================================================================
 #include <boost/simd/function/genmask.hpp>
 #include <boost/simd/constant/allbits.hpp>
+#include <boost/simd/constant/zero.hpp>
+#include <boost/simd/function/is_nez.hpp>
 #include <boost/simd/logical.hpp>
+#include <boost/simd/meta/as_logical.hpp>
+#include <boost/simd/detail/meta/convert_helpers.hpp>
 #include <boost/simd/pack.hpp>
 #include <simd_test.hpp>
 
@@ -18,18 +22,28 @@ void testl(Env& runtime)
 {
   namespace bs = boost::simd;
   using lT = bs::logical<T>;
-  using pl_t = bs::pack<lT, N>;
+  using iT = bs::detail::as_i_t<T>;
+  using pl_t = bs::pack<bs::logical<T>, N>;
+//  using lp_t = bs::as_logical<bs::pack<T, N>>;
+  using ii_t = bs::pack<iT, N>;
   using p_t = bs::pack<T, N>;
   lT a1[N];
   T b[N];
+  iT ii[N];
   for(std::size_t i = 0; i < N; ++i)
   {
+    ii[i] = i%2;
     a1[i] = (i%2) ? bs::True<lT>() : bs::False<lT>();
     b[i] = bs::genmask(a1[i]);
   }
   pl_t aa1(&a1[0], &a1[0]+N);
+  ii_t ii1(&ii[0], &ii[0]+N);
+  auto zz1 = bs::is_nez(ii1);
+  auto rr1 = bs::genmask(zz1);
+  std::cout << rr1 << std::endl;
   p_t bb(&b[0], &b[0]+N);
   STF_IEEE_EQUAL(bs::genmask(aa1), bb);
+//  STF_IEEE_EQUAL(bs::genmask(zz1), bb);
 }
 
 STF_CASE_TPL("Check genmask on pack of logical", STF_NUMERIC_TYPES)

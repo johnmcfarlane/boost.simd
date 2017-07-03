@@ -11,38 +11,35 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_RROR_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_RROR_HPP_INCLUDED
 
+#include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/rol.hpp>
 #include <boost/simd/function/ror.hpp>
-#include <boost/simd/detail/dispatch/function/overload.hpp>
+#include <type_traits>
 #include <boost/config.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  BOOST_DISPATCH_OVERLOAD ( rror_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::int_<A1> >
-                          )
+  template<typename T, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value && std::is_signed<U>::value, T>::type
+  rror_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , U a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return (a1 > 0) ? ror(a0, a1) :rol(a0, -a1);
-    }
-  };
-  BOOST_DISPATCH_OVERLOAD ( rror_
-                          , (typename A0, typename A1)
-                          , bd::cpu_
-                          , bd::scalar_< bd::arithmetic_<A0> >
-                          , bd::scalar_< bd::uint_<A1> >
-                          )
+    BOOST_ASSERT_MSG(assert_good_rotation<T>(a1), "rror : rotation is out of range");
+    return (a1 > 0) ? ror(a0, a1) :rol(a0, -a1);
+  }
+
+  template<typename T, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_unsigned<U>::value, T>::type
+  rror_(BOOST_SIMD_SUPPORTS(cpu_)
+          , T a0
+          , U a1) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE A0 operator() ( A0 a0, A1 a1) const BOOST_NOEXCEPT
-    {
-      return ror(a0, a1);
-    }
-  };
+    BOOST_ASSERT_MSG(assert_good_shift<T>(a1), "rror : rotation is out of range");
+    return  ror(a0, a1);
+  }
 } } }
 
 

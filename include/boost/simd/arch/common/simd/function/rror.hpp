@@ -12,66 +12,95 @@
 #define BOOST_SIMD_ARCH_COMMON_SIMD_FUNCTION_RROR_HPP_INCLUDED
 #include <boost/simd/detail/overload.hpp>
 
-#include <boost/simd/meta/hierarchy/simd.hpp>
+#include <boost/simd/detail/pack.hpp>
+#include <boost/simd/function/abs.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/if_else.hpp>
 #include <boost/simd/function/is_gtz.hpp>
 #include <boost/simd/function/rol.hpp>
 #include <boost/simd/function/ror.hpp>
-#include <boost/simd/function/unary_minus.hpp>
-#ifndef NDEBUG
-#include <boost/simd/function/max.hpp>
-#include <boost/simd/constant/zero.hpp>
-#endif
+#include <type_traits>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value && std::is_signed<U>::value, pack<T,N>>::type
+  v_rror_( pack<T,N> const & a0
+         , pack<U,N> const & a1
+         , std::true_type const &) BOOST_NOEXCEPT
+  {
+#ifndef NDEBUG
+    auto aa1 = simd::abs(a1);
+    return if_else(is_gtz(a1), ror(a0, aa1), rol(a0, aa1));
+#else
+    return if_else(is_gtz(a1), ror(a0, a1), rol(a0, -a1));
+#endif
+  }
 
-  BOOST_DISPATCH_OVERLOAD_IF(rror_
-                             , (typename A0, typename A1, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::arithmetic_<A0>, X>
-                             , bs::pack_<bd::int_<A1>, X>
-                             )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-      {
-        #ifndef NDEBUG
-        return bitwise_cast<A0>( if_else ( is_gtz(a1)
-                                                  , ror ( bitwise_cast<A1>(a0)
-                                                        , max(Zero<A1>(),a1)
-                                                        )
-                                                  , rol ( bitwise_cast<A1>(a0)
-                                                        , max(Zero<A1>(),-a1)
-                                                        )
-                                                  )
-                                        );
-        #else
-        return bitwise_cast<A0>( if_else ( is_gtz(a1)
-                                                  , ror(bitwise_cast<A1>(a0), a1)
-                                                  , rol(bitwise_cast<A1>(a0),-a1)
-                                                  )
-                                        );
-        #endif
-      }
-   };
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_unsigned<U>::value, pack<T,N>>::type
+  v_rror_( pack<T,N> const & a0
+         , pack<U,N> const & a1
+         , std::false_type const &) BOOST_NOEXCEPT
+  {
+    return  ror(a0, a1);
+  }
 
-   BOOST_DISPATCH_OVERLOAD_IF(rror_
-                             , (typename A0, typename A1, typename X)
-                             , (detail::is_native<X>)
-                             , bd::cpu_
-                             , bs::pack_<bd::arithmetic_<A0>, X>
-                             , bs::pack_<bd::uint_<A1>, X>
-                             )
-   {
-      BOOST_FORCEINLINE A0 operator()( const A0& a0, const  A1&  a1) const BOOST_NOEXCEPT
-      {
-        return bitwise_cast<A0>( ror( bitwise_cast<A1>(a0), a1 ) );
-      }
-   };
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value, pack<T,N>>::type
+  rror_(BOOST_SIMD_SUPPORTS(simd_)
+       , pack<T,N> const & a0
+       , pack<U,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T,N>;
+    BOOST_ASSERT_MSG(assert_good_rotation<p_t>(a1), "rror : rotation is out of range");
+    return v_rror_(a0, a1, std::is_signed<T>());
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_unsigned<U>::value, pack<T,N>>::type
+  rror_(BOOST_SIMD_SUPPORTS(simd_)
+       , pack<T,N> const & a0
+       , U const & a1) BOOST_NOEXCEPT
+  {
+    return ror(a0, a1);
+  }
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_signed<U>::value, pack<T,N>>::type
+  rror_(BOOST_SIMD_SUPPORTS(simd_)
+       , pack<T,N> const & a0
+       , U const & a1) BOOST_NOEXCEPT
+  {
+    return if_else(is_gtz(a1), ror(a0, a1), rol(a0, -a1));
+  }
+
+
+  template<typename T, std::size_t N, typename U>
+  BOOST_FORCEINLINE
+  typename std::enable_if<std::is_integral<U>::value, pack<T,N>>::type
+  rror_(BOOST_SIMD_SUPPORTS(simd_)
+       , T const & a0
+       , pack<U,N> const & a1) BOOST_NOEXCEPT
+  {
+    using p_t = pack<T, N>;
+    return rror(p_t(a0), a1);
+  }
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
+  rror_(BOOST_SIMD_SUPPORTS(simd_)
+       , pack<T,N,simd_emulation_> const & a0
+       , pack<T,N,simd_emulation_> const & a1) BOOST_NOEXCEPT
+  {
+    return map_to(rror, a0, a1);
+  }
+
 } } }
 
 #endif

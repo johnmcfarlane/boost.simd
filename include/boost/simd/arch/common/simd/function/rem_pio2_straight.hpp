@@ -36,7 +36,7 @@ namespace boost { namespace simd { namespace detail
     return {if_one_else_zero(test),if_else(test, xr, x)};
   }
 
-  struct rem_cephes_aux1
+  struct rem_straight_aux1
   {
     template < typename T>
     BOOST_FORCEINLINE T
@@ -46,7 +46,7 @@ namespace boost { namespace simd { namespace detail
     }
   };
 
-  struct rem_cephes_aux2
+  struct rem_straight_aux2
   {
     template < typename T>
     BOOST_FORCEINLINE T
@@ -65,8 +65,8 @@ namespace boost { namespace simd { namespace detail
   rem_pio2_straight_(BOOST_SIMD_SUPPORTS(simd_)
                     , pack<T,N,simd_emulation_> const& x) BOOST_NOEXCEPT
   {
-    auto test = map_to(rem_cephes_aux1(), x);
-    auto xr   = map_to(rem_cephes_aux2(), x, test);
+    auto test = map_to(rem_straight_aux1(), x);
+    auto xr   = map_to(rem_straight_aux2(), x, test);
     return {test, xr};
   }
 

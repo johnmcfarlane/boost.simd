@@ -12,25 +12,11 @@
 #define BOOST_SIMD_FUNCTION_DEFINITION_RROR_HPP_INCLUDED
 
 #include <boost/simd/config.hpp>
-#include <boost/simd/detail/dispatch/function/make_callable.hpp>
-#include <boost/simd/detail/dispatch/hierarchy/functions.hpp>
-#include <boost/simd/detail/dispatch.hpp>
+#include <boost/simd/detail/overload.hpp>
 
 namespace boost { namespace simd
 {
-  namespace tag
-  {
-    BOOST_DISPATCH_MAKE_TAG(ext, rror_, boost::dispatch::elementwise_<rror_>);
-  }
-
-  namespace ext
-  {
-    BOOST_DISPATCH_FUNCTION_DECLARATION(tag, rror_)
-  }
-
-  BOOST_DISPATCH_CALLABLE_DEFINITION(tag::rror_,rror);
-
-
+  BOOST_SIMD_MAKE_CALLABLE(rror_,rror);
 } }
 
 #endif

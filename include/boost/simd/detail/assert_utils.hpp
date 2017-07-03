@@ -84,6 +84,11 @@ namespace boost { namespace simd
     return assert_good_shift<A0>(t, typename std::is_unsigned<sA1>::type{});
   }
 
+  template<typename A0, typename A1>
+  BOOST_FORCEINLINE bool assert_good_rotation( A1 const& t )
+  {
+    return assert_good_shift<A0>(t, std::true_type());
+  }
 } }
 
 #endif

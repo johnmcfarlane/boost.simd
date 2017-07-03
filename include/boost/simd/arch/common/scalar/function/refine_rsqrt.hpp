@@ -9,31 +9,23 @@
 #ifndef BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REFINE_RSQRT_HPP_INCLUDED
 #define BOOST_SIMD_ARCH_COMMON_SCALAR_FUNCTION_REFINE_RSQRT_HPP_INCLUDED
 
-#include <boost/simd/detail/overload.hpp>
 #include <boost/simd/function/fnms.hpp>
-#include <boost/simd/function/fma.hpp>
 #include <boost/simd/function/sqr.hpp>
-#include <boost/simd/constant/one.hpp>
 #include <boost/simd/constant/half.hpp>
+#include <boost/simd/constant/three.hpp>
 
-namespace boost { namespace simd { namespace ext
+namespace boost { namespace simd { namespace detail
 {
-  namespace bd = boost::dispatch;
-  namespace bs = boost::simd;
-
-  BOOST_DISPATCH_OVERLOAD ( refine_rsqrt_
-                          , (typename T)
-                          , bd::cpu_
-                          , bd::scalar_<bd::floating_<T>>
-                          , bd::scalar_<bd::floating_<T>>
-                          )
+  template<typename T, typename Arch>
+  BOOST_FORCEINLINE
+  T refine_rec_(BOOST_SIMD_SUPPORTS(Arch)
+               , T const& a0) BOOST_NOEXCEPT
   {
-    BOOST_FORCEINLINE T operator()(T a0, T x) const BOOST_NOEXCEPT
-    {
-      // Newton-Raphson
-      return fma( fnms(a0, sqr(x), One<T>()), x*Half<T>(), x);
-    }
-  };
+    // Newton-Raphson
+    return x * Half<T>() * fnms(a0, sqr(x), Three<T>());
+  }
+
 } } }
 
 #endif
+

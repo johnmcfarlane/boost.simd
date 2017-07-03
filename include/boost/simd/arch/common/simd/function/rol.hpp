@@ -15,7 +15,6 @@
 #include <boost/simd/detail/assert_utils.hpp>
 #include <boost/simd/function/bitwise_cast.hpp>
 #include <boost/simd/function/bitwise_or.hpp>
-#include <boost/simd/function/dec.hpp>
 #include <boost/simd/function/shl.hpp>
 #include <boost/simd/function/shr.hpp>
 #include <boost/simd/detail/meta/convert_helpers.hpp>

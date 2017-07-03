@@ -24,7 +24,8 @@ namespace boost { namespace simd
     @par Header <boost/simd/function/ror.hpp>
 
     @par Note
-    This function asserts if the integral parameter is out of range
+    This function asserts if the integral parameter is out of range and is not
+    defined for floating entries
 
     @see  rol, rror, rrol
 

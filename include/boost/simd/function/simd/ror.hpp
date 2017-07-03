@@ -11,13 +11,9 @@
 #define BOOST_SIMD_FUNCTION_SIMD_ROR_HPP_INCLUDED
 
 #include <boost/simd/function/scalar/ror.hpp>
-#include <boost/simd/arch/common/generic/function/autodispatcher.hpp>
 #include <boost/simd/arch/common/simd/function/ror.hpp>
 
 #if defined(BOOST_HW_SIMD_X86_OR_AMD_AVAILABLE)
-#  if BOOST_HW_SIMD_X86_OR_AMD >= BOOST_HW_SIMD_X86_SSE_VERSION
-#    include <boost/simd/arch/x86/sse1/simd/function/ror.hpp>
-#  endif
 #  if BOOST_HW_SIMD_X86_AMD_XOP
 #    include <boost/simd/arch/x86/xop/simd/function/ror.hpp>
 #  endif

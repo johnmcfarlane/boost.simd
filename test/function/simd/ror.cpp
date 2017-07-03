@@ -40,7 +40,7 @@ void test(Env& runtime)
   STF_IEEE_EQUAL(bs::ror(aa1, M-1), dd);
 }
 
-STF_CASE_TPL("Check ror on pack and scalar" , STF_NUMERIC_TYPES)
+STF_CASE_TPL("Check ror on pack and scalar" , STF_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   using p_t = bs::pack<T>;
@@ -77,7 +77,7 @@ void tests(Env& runtime)
   STF_IEEE_EQUAL(bs::ror(aa1, iT(M-1)), dd);
 }
 
-STF_CASE_TPL("Check ror on pack" , STF_NUMERIC_TYPES)
+STF_CASE_TPL("Check ror on pack" , STF_INTEGRAL_TYPES)
 {
   namespace bs = boost::simd;
   using p_t = bs::pack<T>;

@@ -24,24 +24,50 @@
 namespace boost { namespace simd { namespace detail
 {
   template<typename T, std::size_t N>
-  BOOST_FORCEINLINE pack<T,N>
+  BOOST_FORCEINLINE std::pair <pack<T,N>, pack<T,N>>
   rem_pio2_straight_(BOOST_SIMD_SUPPORTS(simd_)
                     , pack<T,N> const& x) BOOST_NOEXCEPT
   {
     using p_t = pack<T,N>;
-    auto test = x > Pio_4<A0>();
+    auto test = x > Pio_4<p_t>();
     p_t xr = x-Pio2_1<p_t>();
     xr -= Pio2_2<p_t>();
     xr -= Pio2_3<p_t>();
     return {if_one_else_zero(test),if_else(test, xr, x)};
   }
 
-  template<typename T, std::size_t N>
-  BOOST_FORCEINLINE pack<T,N,simd_emulation_>
-  rem_pio2_straight_(BOOST_SIMD_SUPPORTS(simd_)
-                    , pack<T,N,simd_emulation_> const& a) BOOST_NOEXCEPT
+  struct rem_cephes_aux1
   {
-    return map_to(rem_pio2_straight, a);
+    template < typename T>
+    BOOST_FORCEINLINE T
+    operator()(const T & x) const  BOOST_NOEXCEPT
+    {
+      return if_one_else_zero(x > Pio_4<T>());
+    }
+  };
+
+  struct rem_cephes_aux2
+  {
+    template < typename T>
+    BOOST_FORCEINLINE T
+    operator()(const T & x, const T & test) const  BOOST_NOEXCEPT
+    {
+      T xr = x-Pio2_1<T>();
+      xr -= Pio2_2<T>();
+      xr -= Pio2_3<T>();
+      return if_else(test, xr, x);
+    }
+  };
+
+  template<typename T, std::size_t N>
+  BOOST_FORCEINLINE std::pair < pack<T,N,simd_emulation_>, pack<T,N,simd_emulation_>>
+
+  rem_pio2_straight_(BOOST_SIMD_SUPPORTS(simd_)
+                    , pack<T,N,simd_emulation_> const& x) BOOST_NOEXCEPT
+  {
+    auto test = map_to(rem_cephes_aux1(), x);
+    auto xr   = map_to(rem_cephes_aux2(), x, test);
+    return {test, xr};
   }
 
 } } }

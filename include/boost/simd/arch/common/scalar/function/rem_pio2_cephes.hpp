@@ -23,6 +23,7 @@
 
 namespace boost { namespace simd { namespace detail
 {
+
   template<typename T, typename Arch>
   BOOST_FORCEINLINE   std::pair<T, T>
   rem_pio2_cephes_(BOOST_SIMD_SUPPORTS(Arch)

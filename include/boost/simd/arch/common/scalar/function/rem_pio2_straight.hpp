@@ -22,7 +22,8 @@
 
 namespace boost { namespace simd { namespace detail
 {
-  template<typename T, typename Arch>
+
+  template<typename T>
   BOOST_FORCEINLINE   std::pair<T, T>
   rem_pio2_straight_(BOOST_SIMD_SUPPORTS(cpu_)
                     , T const& x) BOOST_NOEXCEPT
@@ -31,7 +32,7 @@ namespace boost { namespace simd { namespace detail
     T xr = x-Pio2_1<T>();
     xr -= Pio2_2<T>();
     xr -= Pio2_3<T>();
-    return { One<T>(), xr};
+    return {One<T>(), xr};
   }
 
 } } }

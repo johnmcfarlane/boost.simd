@@ -26,7 +26,7 @@ void test(Env& runtime)
   T e[N];
   for(std::size_t i = 0; i < N; ++i)
   {
-     a1[i] = (i%2) ? T(i) : T(-i);
+     a1[i] = (i%2) ? T(i) : -T(i);
      std::tie(e[i], m[i]) = bs::rem_pio2_straight(a1[i]);
    }
   p_t aa1(&a1[0], &a1[0]+N);

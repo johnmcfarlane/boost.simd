@@ -13,7 +13,6 @@
 
 #include <boost/config.hpp>
 #include <boost/simd/function/nearbyint.hpp>
-#include <boost/simd/function/toint.hpp>
 #include <boost/simd/detail/constant/pio2_1.hpp>
 #include <boost/simd/detail/constant/pio2_1t.hpp>
 #include <boost/simd/detail/constant/pio2_2.hpp>
